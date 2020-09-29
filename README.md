@@ -38,4 +38,4 @@ Golang itu struktural programming, bukan OOP, jadi jangan terlalu buat modul gen
 
 ## FrontEnd
 
-FrontEnd dibuat dengan ReactJS
+FrontEnd dibuat dengan ReactJS HTML+CSS biasa (tampilan awal, tanpa framework bootstrap/material-ui), dan React-Admin untuk bagian Admin (https://marmelab.com/react-admin/)
