@@ -43,8 +43,8 @@ Selain itu, mendukung Hot Reload (kompilasi otomatis saat file diubah) saat deve
   
 2. Dengan Docker
 
-  Buat Docker Image.
-  Contoh : ```docker build --tag alumni_backend:1.0 .```
+  Buat Docker Image dan jadikan semua isi file ```.env``` sebagai konfigurasi.
+  Contoh Command : ```docker build --tag alumni_backend:1.0 .```
 
 
 ## FrontEnd
@@ -75,5 +75,5 @@ Frontend dibuat dengan instalan NodeJS (v12.18.x) dan sebelumnya udah tersedia N
 
 2. Dengan Docker
 
-  Buat Docker Image
-  Contoh : ```docker build --tag alumni_frontend:1.0 .```
+  Buat Docker Image dan jadikan semua isi file ```.env``` sebagai konfigurasi.
+  Contoh Command : ```docker build --tag alumni_frontend:1.0 .```
