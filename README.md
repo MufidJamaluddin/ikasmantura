@@ -16,9 +16,10 @@ Website Ikatan Alumni SMA Negeri Situraja
 
 Back-End API dibuat dengan framework Golang Fiber (https://github.com/gofiber/fiber) dan GORM (https://gorm.io/). 
 
-Selain itu, mendukung Hot Reload (kompilasi otomatis) saat development dengan Air (https://github.com/cosmtrek/air).
+Untuk download PDF pakai WKHTMLTOPDF (wrapper nya: https://github.com/SebastiaanKlippert/go-wkhtmltopdf, file instalan-nya: https://wkhtmltopdf.org/), bisa nggak include pas development.
 
-Golang itu struktural programming, bukan OOP, jadi jangan terlalu buat modul generik (nanti 2021 Golang rilis resmi generic).
+Selain itu, mendukung Hot Reload (kompilasi otomatis saat file diubah) saat development dengan Air (https://github.com/cosmtrek/air).
+
 
 ### Cara Jalankan BackEnd
 
@@ -30,12 +31,49 @@ Golang itu struktural programming, bukan OOP, jadi jangan terlalu buat modul gen
   Mode Biasa : ```go run backend```
   Hot Reload : ```air```
   
-4. Kompilasi Backend 
-  Ubah OS Target : ```set GOOS=windows``` atau ```set GOOS=linux```
-  Kompilasi      : ```go run build``` 
-  Binary hasil kompilasi bisa dideploy
+4. Kompilasi
+
+  ```go build```
+  
+### Deployment BackEnd
+
+1. Tanpa Docker
+  
+  Deploy manual saja binary hasil kompilasi
+  
+2. Dengan Docker
+
+  Buat Docker Image.
+  Contoh : ```docker build --tag alumni_backend:1.0 .```
 
 
 ## FrontEnd
 
 FrontEnd dibuat dengan ReactJS HTML+CSS biasa (tampilan awal, tanpa framework bootstrap/material-ui), dan React-Admin untuk bagian Admin (https://marmelab.com/react-admin/)
+
+### Cara Jalankan FrontEnd
+
+Frontend dibuat dengan instalan NodeJS (v12.18.x) dan sebelumnya udah tersedia NPM (v6.14.x) atau Yarn (2.x).
+
+1. Install Library yang Dibutuhkan
+
+  ```yarn install```
+
+2. Jalankan Aplikasi dan Edit Kode (Hot Reload)
+ 
+  ```yarn start```
+  
+3. Build Aplikasi, nanti jadi asset statik di folder ```/build``` dan siap deploy tanpa NodeJS.
+
+  ```yarn build```
+  
+### Deployment FrontEnd
+
+1. Tanpa Docker
+
+  Deploy semua isi folder /build ke File Server / Apache / Nginx sebagai static files.
+
+2. Dengan Docker
+
+  Buat Docker Image
+  Contoh : ```docker build --tag alumni_frontend:1.0 .```
