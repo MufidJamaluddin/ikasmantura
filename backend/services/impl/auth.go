@@ -1,10 +1,10 @@
 package impl
 
 import (
-	"backend/dto"
 	error2 "backend/error"
 	"backend/models"
 	"backend/utils"
+	"backend/viewmodels"
 	"crypto/sha1"
 	"fmt"
 	"gorm.io/gorm"
@@ -16,7 +16,7 @@ type AuthServiceImpl struct {
 	SecretKey string
 }
 
-func (p *AuthServiceImpl) toData(in *models.User, out *dto.UserDto) {
+func (p *AuthServiceImpl) toData(in *models.User, out *viewmodels.UserDto) {
 	out.Id = in.ID
 	out.Name = in.Name
 	out.Username = in.Username
@@ -31,13 +31,13 @@ func (p *AuthServiceImpl) toData(in *models.User, out *dto.UserDto) {
 	utils.FillUpdated(in, out)
 }
 
-func (p *AuthServiceImpl) Login(data *dto.LoginDto) error {
+func (p *AuthServiceImpl) Login(data *viewmodels.LoginDto) error {
 	var (
-		model         models.User
-		hasher        hash.Hash
-		hashUserPwd   []byte
+		model          models.User
+		hasher         hash.Hash
+		hashUserPwd    []byte
 		hashUserPwdStr string
-		userPwd       []byte
+		userPwd        []byte
 	)
 
 	p.DB.Where("username = ?", data.Username).FirstOrInit(&model)

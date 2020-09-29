@@ -1,10 +1,10 @@
 package impl
 
 import (
-	"backend/dto"
 	"backend/models"
 	"backend/repository"
 	"backend/utils"
+	"backend/viewmodels"
 	"database/sql"
 	"gorm.io/gorm"
 )
@@ -21,7 +21,7 @@ type AlbumServiceImpl struct {
 	DB *gorm.DB
 }
 
-func (p *AlbumServiceImpl) toModel(data *dto.AlbumDto, out *models.Album) {
+func (p *AlbumServiceImpl) toModel(data *viewmodels.AlbumDto, out *models.Album) {
 	out.ID = data.Id
 	out.Title = data.Title
 
@@ -29,7 +29,7 @@ func (p *AlbumServiceImpl) toModel(data *dto.AlbumDto, out *models.Album) {
 	utils.FillUpdated(data, out)
 }
 
-func (p *AlbumServiceImpl) toData(in *models.Album, out *dto.AlbumDto) {
+func (p *AlbumServiceImpl) toData(in *models.Album, out *viewmodels.AlbumDto) {
 	out.Id = in.ID
 	out.Title = in.Title
 
@@ -37,7 +37,7 @@ func (p *AlbumServiceImpl) toData(in *models.Album, out *dto.AlbumDto) {
 	utils.FillUpdated(in, out)
 }
 
-func (p *AlbumServiceImpl) GetTotal(search *dto.AlbumParam) (uint, error) {
+func (p *AlbumServiceImpl) GetTotal(search *viewmodels.AlbumParam) (uint, error) {
 	var (
 		err   error
 		model models.Album
@@ -56,7 +56,7 @@ func (p *AlbumServiceImpl) GetTotal(search *dto.AlbumParam) (uint, error) {
 	return uint(total), err
 }
 
-func (p *AlbumServiceImpl) Find(search *dto.AlbumParam, callback func(*dto.AlbumDto)) error {
+func (p *AlbumServiceImpl) Find(search *viewmodels.AlbumParam, callback func(*viewmodels.AlbumDto)) error {
 	var (
 		err   error
 		model models.Album
@@ -81,7 +81,7 @@ func (p *AlbumServiceImpl) Find(search *dto.AlbumParam, callback func(*dto.Album
 	return err
 }
 
-func (p *AlbumServiceImpl) FindById(id uint, out *dto.AlbumDto) error {
+func (p *AlbumServiceImpl) FindById(id uint, out *viewmodels.AlbumDto) error {
 	var (
 		err   error
 		model models.Album
@@ -93,7 +93,7 @@ func (p *AlbumServiceImpl) FindById(id uint, out *dto.AlbumDto) error {
 	return err
 }
 
-func (p *AlbumServiceImpl) Update(id uint, data *dto.AlbumDto) error {
+func (p *AlbumServiceImpl) Update(id uint, data *viewmodels.AlbumDto) error {
 	var (
 		err   error
 		model models.Album
@@ -106,7 +106,7 @@ func (p *AlbumServiceImpl) Update(id uint, data *dto.AlbumDto) error {
 	return err
 }
 
-func (p *AlbumServiceImpl) Save(out *dto.AlbumDto) error {
+func (p *AlbumServiceImpl) Save(out *viewmodels.AlbumDto) error {
 	var (
 		err   error
 		model models.Album
@@ -119,7 +119,7 @@ func (p *AlbumServiceImpl) Save(out *dto.AlbumDto) error {
 	return err
 }
 
-func (p *AlbumServiceImpl) Delete(id uint, out *dto.AlbumDto) error {
+func (p *AlbumServiceImpl) Delete(id uint, out *viewmodels.AlbumDto) error {
 	var (
 		err   error
 		model models.Album

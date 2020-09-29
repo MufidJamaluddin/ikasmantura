@@ -1,10 +1,10 @@
 package impl
 
 import (
-	"backend/dto"
 	"backend/models"
 	"backend/repository"
 	"backend/utils"
+	"backend/viewmodels"
 	"database/sql"
 	"gorm.io/gorm"
 )
@@ -21,7 +21,7 @@ type DepartmentServiceImpl struct {
 	DB *gorm.DB
 }
 
-func (p *DepartmentServiceImpl) toModel(data *dto.DepartmentDto, out *models.Department) {
+func (p *DepartmentServiceImpl) toModel(data *viewmodels.DepartmentDto, out *models.Department) {
 	out.ID = data.Id
 	out.Name = data.Name
 	out.Type = data.Type
@@ -33,7 +33,7 @@ func (p *DepartmentServiceImpl) toModel(data *dto.DepartmentDto, out *models.Dep
 	utils.FillUpdated(data, out)
 }
 
-func (p *DepartmentServiceImpl) toData(in *models.Department, out *dto.DepartmentDto) {
+func (p *DepartmentServiceImpl) toData(in *models.Department, out *viewmodels.DepartmentDto) {
 	out.Id = in.ID
 	out.Name = in.Name
 	out.UserId = in.UserId
@@ -44,7 +44,7 @@ func (p *DepartmentServiceImpl) toData(in *models.Department, out *dto.Departmen
 	utils.FillUpdated(in, out)
 }
 
-func (p *DepartmentServiceImpl) GetTotal(search *dto.DepartmentParam) (uint, error) {
+func (p *DepartmentServiceImpl) GetTotal(search *viewmodels.DepartmentParam) (uint, error) {
 	var (
 		err   error
 		model models.Department
@@ -62,7 +62,7 @@ func (p *DepartmentServiceImpl) GetTotal(search *dto.DepartmentParam) (uint, err
 	return uint(total), err
 }
 
-func (p *DepartmentServiceImpl) Find(search *dto.DepartmentParam, callback func(*dto.DepartmentDto)) error {
+func (p *DepartmentServiceImpl) Find(search *viewmodels.DepartmentParam, callback func(*viewmodels.DepartmentDto)) error {
 	var (
 		err   error
 		model models.Department
@@ -87,7 +87,7 @@ func (p *DepartmentServiceImpl) Find(search *dto.DepartmentParam, callback func(
 	return err
 }
 
-func (p *DepartmentServiceImpl) FindById(id uint, out *dto.DepartmentDto) error {
+func (p *DepartmentServiceImpl) FindById(id uint, out *viewmodels.DepartmentDto) error {
 	var (
 		err   error
 		model models.Department
@@ -99,7 +99,7 @@ func (p *DepartmentServiceImpl) FindById(id uint, out *dto.DepartmentDto) error 
 	return err
 }
 
-func (p *DepartmentServiceImpl) Update(id uint, out *dto.DepartmentDto) error {
+func (p *DepartmentServiceImpl) Update(id uint, out *viewmodels.DepartmentDto) error {
 	var (
 		err   error
 		model models.Department
@@ -112,7 +112,7 @@ func (p *DepartmentServiceImpl) Update(id uint, out *dto.DepartmentDto) error {
 	return err
 }
 
-func (p *DepartmentServiceImpl) Save(out *dto.DepartmentDto) error {
+func (p *DepartmentServiceImpl) Save(out *viewmodels.DepartmentDto) error {
 	var (
 		err   error
 		model models.Department
@@ -125,7 +125,7 @@ func (p *DepartmentServiceImpl) Save(out *dto.DepartmentDto) error {
 	return err
 }
 
-func (p *DepartmentServiceImpl) Delete(id uint, out *dto.DepartmentDto) error {
+func (p *DepartmentServiceImpl) Delete(id uint, out *viewmodels.DepartmentDto) error {
 	var (
 		err   error
 		model models.Department

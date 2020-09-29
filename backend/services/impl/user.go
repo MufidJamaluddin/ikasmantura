@@ -1,10 +1,10 @@
 package impl
 
 import (
-	"backend/dto"
 	"backend/models"
 	"backend/repository"
 	"backend/utils"
+	"backend/viewmodels"
 	"database/sql"
 	"gorm.io/gorm"
 )
@@ -21,7 +21,7 @@ type UserServiceImpl struct {
 	DB *gorm.DB
 }
 
-func (p *UserServiceImpl) toModel(data *dto.UserDto, out *models.User) {
+func (p *UserServiceImpl) toModel(data *viewmodels.UserDto, out *models.User) {
 	out.ID = data.Id
 	out.Name = data.Name
 	out.Username = data.Username
@@ -37,7 +37,7 @@ func (p *UserServiceImpl) toModel(data *dto.UserDto, out *models.User) {
 	utils.FillUpdated(data, out)
 }
 
-func (p *UserServiceImpl) toData(in *models.User, out *dto.UserDto) {
+func (p *UserServiceImpl) toData(in *models.User, out *viewmodels.UserDto) {
 	out.Id = in.ID
 	out.Name = in.Name
 	out.Username = in.Username
@@ -53,7 +53,7 @@ func (p *UserServiceImpl) toData(in *models.User, out *dto.UserDto) {
 	utils.FillUpdated(in, out)
 }
 
-func (p *UserServiceImpl) GetTotal(search *dto.UserParam) (uint, error) {
+func (p *UserServiceImpl) GetTotal(search *viewmodels.UserParam) (uint, error) {
 	var (
 		err   error
 		model models.User
@@ -72,7 +72,7 @@ func (p *UserServiceImpl) GetTotal(search *dto.UserParam) (uint, error) {
 	return uint(total), err
 }
 
-func (p *UserServiceImpl) Find(search *dto.UserParam, callback func(*dto.UserDto)) error {
+func (p *UserServiceImpl) Find(search *viewmodels.UserParam, callback func(*viewmodels.UserDto)) error {
 	var (
 		err   error
 		model models.User
@@ -97,7 +97,7 @@ func (p *UserServiceImpl) Find(search *dto.UserParam, callback func(*dto.UserDto
 	return err
 }
 
-func (p *UserServiceImpl) FindById(id uint, out *dto.UserDto) error {
+func (p *UserServiceImpl) FindById(id uint, out *viewmodels.UserDto) error {
 	var (
 		err   error
 		model models.User
@@ -109,7 +109,7 @@ func (p *UserServiceImpl) FindById(id uint, out *dto.UserDto) error {
 	return err
 }
 
-func (p *UserServiceImpl) Update(id uint, out *dto.UserDto) error {
+func (p *UserServiceImpl) Update(id uint, out *viewmodels.UserDto) error {
 	var (
 		err   error
 		model models.User
@@ -122,7 +122,7 @@ func (p *UserServiceImpl) Update(id uint, out *dto.UserDto) error {
 	return err
 }
 
-func (p *UserServiceImpl) Save(out *dto.UserDto) error {
+func (p *UserServiceImpl) Save(out *viewmodels.UserDto) error {
 	var (
 		err   error
 		model models.User
@@ -135,7 +135,7 @@ func (p *UserServiceImpl) Save(out *dto.UserDto) error {
 	return err
 }
 
-func (p *UserServiceImpl) Delete(id uint, out *dto.UserDto) error {
+func (p *UserServiceImpl) Delete(id uint, out *viewmodels.UserDto) error {
 	var (
 		err   error
 		model models.User

@@ -59,7 +59,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.AboutDto"
+                            "$ref": "#/definitions/viewmodels.AboutDto"
                         }
                     },
                     "400": {
@@ -111,7 +111,7 @@ var doc = `{
                     "202": {
                         "description": "Accepted",
                         "schema": {
-                            "$ref": "#/definitions/dto.AlbumDto"
+                            "$ref": "#/definitions/viewmodels.AlbumDto"
                         }
                     },
                     "400": {
@@ -185,7 +185,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.AlbumDto"
+                                "$ref": "#/definitions/viewmodels.AlbumDto"
                             }
                         }
                     },
@@ -224,7 +224,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.AlbumDto"
+                            "$ref": "#/definitions/viewmodels.AlbumDto"
                         }
                     }
                 ],
@@ -232,7 +232,7 @@ var doc = `{
                     "202": {
                         "description": "Accepted",
                         "schema": {
-                            "$ref": "#/definitions/dto.AlbumDto"
+                            "$ref": "#/definitions/viewmodels.AlbumDto"
                         }
                     },
                     "400": {
@@ -270,7 +270,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.AlbumDto"
+                            "$ref": "#/definitions/viewmodels.AlbumDto"
                         }
                     },
                     "400": {
@@ -315,7 +315,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.AlbumDto"
+                            "$ref": "#/definitions/viewmodels.AlbumDto"
                         }
                     }
                 ],
@@ -323,7 +323,7 @@ var doc = `{
                     "202": {
                         "description": "Accepted",
                         "schema": {
-                            "$ref": "#/definitions/dto.AlbumDto"
+                            "$ref": "#/definitions/viewmodels.AlbumDto"
                         }
                     },
                     "400": {
@@ -369,7 +369,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.ArticleDto"
+                            "$ref": "#/definitions/viewmodels.ArticleDto"
                         }
                     },
                     "400": {
@@ -458,7 +458,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.ArticleDto"
+                                "$ref": "#/definitions/viewmodels.ArticleDto"
                             }
                         }
                     },
@@ -497,7 +497,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.ArticleDto"
+                            "$ref": "#/definitions/viewmodels.ArticleDto"
                         }
                     },
                     "400": {
@@ -542,7 +542,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.ArticleDto"
+                            "$ref": "#/definitions/viewmodels.ArticleDto"
                         }
                     }
                 ],
@@ -550,7 +550,7 @@ var doc = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/dto.ArticleDto"
+                            "$ref": "#/definitions/viewmodels.ArticleDto"
                         }
                     },
                     "400": {
@@ -582,7 +582,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.LoginDto"
+                            "$ref": "#/definitions/viewmodels.LoginDto"
                         }
                     }
                 ],
@@ -590,7 +590,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.LoginDto"
+                            "$ref": "#/definitions/viewmodels.LoginDto"
                         }
                     },
                     "400": {
@@ -671,7 +671,7 @@ var doc = `{
                     "202": {
                         "description": "Accepted",
                         "schema": {
-                            "$ref": "#/definitions/dto.DepartmentDto"
+                            "$ref": "#/definitions/viewmodels.DepartmentDto"
                         }
                     },
                     "400": {
@@ -755,7 +755,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.DepartmentDto"
+                                "$ref": "#/definitions/viewmodels.DepartmentDto"
                             }
                         }
                     },
@@ -794,7 +794,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.DepartmentDto"
+                            "$ref": "#/definitions/viewmodels.DepartmentDto"
                         }
                     }
                 ],
@@ -802,7 +802,7 @@ var doc = `{
                     "202": {
                         "description": "Accepted",
                         "schema": {
-                            "$ref": "#/definitions/dto.DepartmentDto"
+                            "$ref": "#/definitions/viewmodels.DepartmentDto"
                         }
                     },
                     "400": {
@@ -840,7 +840,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.DepartmentDto"
+                            "$ref": "#/definitions/viewmodels.DepartmentDto"
                         }
                     },
                     "400": {
@@ -885,7 +885,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.DepartmentDto"
+                            "$ref": "#/definitions/viewmodels.DepartmentDto"
                         }
                     }
                 ],
@@ -893,7 +893,7 @@ var doc = `{
                     "202": {
                         "description": "Accepted",
                         "schema": {
-                            "$ref": "#/definitions/dto.DepartmentDto"
+                            "$ref": "#/definitions/viewmodels.DepartmentDto"
                         }
                     },
                     "400": {
@@ -939,7 +939,7 @@ var doc = `{
                     "202": {
                         "description": "Accepted",
                         "schema": {
-                            "$ref": "#/definitions/dto.EventDto"
+                            "$ref": "#/definitions/viewmodels.EventDto"
                         }
                     },
                     "400": {
@@ -1104,7 +1104,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.EventDto"
+                                "$ref": "#/definitions/viewmodels.EventDto"
                             }
                         }
                     },
@@ -1143,7 +1143,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.EventDto"
+                            "$ref": "#/definitions/viewmodels.EventDto"
                         }
                     }
                 ],
@@ -1151,7 +1151,7 @@ var doc = `{
                     "202": {
                         "description": "Accepted",
                         "schema": {
-                            "$ref": "#/definitions/dto.EventDto"
+                            "$ref": "#/definitions/viewmodels.EventDto"
                         }
                     },
                     "400": {
@@ -1189,7 +1189,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.EventDto"
+                            "$ref": "#/definitions/viewmodels.EventDto"
                         }
                     },
                     "400": {
@@ -1234,7 +1234,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.EventDto"
+                            "$ref": "#/definitions/viewmodels.EventDto"
                         }
                     }
                 ],
@@ -1242,7 +1242,7 @@ var doc = `{
                     "202": {
                         "description": "Accepted",
                         "schema": {
-                            "$ref": "#/definitions/dto.EventDto"
+                            "$ref": "#/definitions/viewmodels.EventDto"
                         }
                     },
                     "400": {
@@ -1320,7 +1320,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.AlbumPhotoDto"
+                                "$ref": "#/definitions/viewmodels.AlbumPhotoDto"
                             }
                         }
                     },
@@ -1359,7 +1359,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.AlbumPhotoDto"
+                            "$ref": "#/definitions/viewmodels.AlbumPhotoDto"
                         }
                     }
                 ],
@@ -1367,7 +1367,7 @@ var doc = `{
                     "202": {
                         "description": "Accepted",
                         "schema": {
-                            "$ref": "#/definitions/dto.AlbumPhotoDto"
+                            "$ref": "#/definitions/viewmodels.AlbumPhotoDto"
                         }
                     },
                     "400": {
@@ -1405,7 +1405,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.AlbumPhotoDto"
+                            "$ref": "#/definitions/viewmodels.AlbumPhotoDto"
                         }
                     },
                     "400": {
@@ -1450,7 +1450,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.AlbumPhotoDto"
+                            "$ref": "#/definitions/viewmodels.AlbumPhotoDto"
                         }
                     }
                 ],
@@ -1458,7 +1458,7 @@ var doc = `{
                     "202": {
                         "description": "Accepted",
                         "schema": {
-                            "$ref": "#/definitions/dto.AlbumPhotoDto"
+                            "$ref": "#/definitions/viewmodels.AlbumPhotoDto"
                         }
                     },
                     "400": {
@@ -1502,7 +1502,7 @@ var doc = `{
                     "202": {
                         "description": "Accepted",
                         "schema": {
-                            "$ref": "#/definitions/dto.AlbumPhotoDto"
+                            "$ref": "#/definitions/viewmodels.AlbumPhotoDto"
                         }
                     },
                     "400": {
@@ -1554,7 +1554,7 @@ var doc = `{
                     "202": {
                         "description": "Accepted",
                         "schema": {
-                            "$ref": "#/definitions/dto.UserDto"
+                            "$ref": "#/definitions/viewmodels.UserDto"
                         }
                     },
                     "400": {
@@ -1648,7 +1648,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.UserDto"
+                                "$ref": "#/definitions/viewmodels.UserDto"
                             }
                         }
                     },
@@ -1687,7 +1687,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.UserDto"
+                            "$ref": "#/definitions/viewmodels.UserDto"
                         }
                     }
                 ],
@@ -1695,7 +1695,7 @@ var doc = `{
                     "202": {
                         "description": "Accepted",
                         "schema": {
-                            "$ref": "#/definitions/dto.UserDto"
+                            "$ref": "#/definitions/viewmodels.UserDto"
                         }
                     },
                     "400": {
@@ -1733,7 +1733,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.UserDto"
+                            "$ref": "#/definitions/viewmodels.UserDto"
                         }
                     },
                     "400": {
@@ -1778,7 +1778,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.UserDto"
+                            "$ref": "#/definitions/viewmodels.UserDto"
                         }
                     }
                 ],
@@ -1786,7 +1786,7 @@ var doc = `{
                     "202": {
                         "description": "Accepted",
                         "schema": {
-                            "$ref": "#/definitions/dto.UserDto"
+                            "$ref": "#/definitions/viewmodels.UserDto"
                         }
                     },
                     "400": {
@@ -1800,7 +1800,7 @@ var doc = `{
         }
     },
     "definitions": {
-        "dto.AboutDto": {
+        "viewmodels.AboutDto": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -1829,7 +1829,7 @@ var doc = `{
                 }
             }
         },
-        "dto.AlbumDto": {
+        "viewmodels.AlbumDto": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -1855,7 +1855,7 @@ var doc = `{
                 }
             }
         },
-        "dto.AlbumParam": {
+        "viewmodels.AlbumParam": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -1881,7 +1881,7 @@ var doc = `{
                 }
             }
         },
-        "dto.AlbumPhotoDto": {
+        "viewmodels.AlbumPhotoDto": {
             "type": "object",
             "properties": {
                 "albumId": {
@@ -1913,7 +1913,7 @@ var doc = `{
                 }
             }
         },
-        "dto.AlbumPhotoParam": {
+        "viewmodels.AlbumPhotoParam": {
             "type": "object",
             "properties": {
                 "albumId": {
@@ -1945,7 +1945,7 @@ var doc = `{
                 }
             }
         },
-        "dto.ArticleDto": {
+        "viewmodels.ArticleDto": {
             "type": "object",
             "properties": {
                 "body": {
@@ -1980,7 +1980,7 @@ var doc = `{
                 }
             }
         },
-        "dto.ArticleParam": {
+        "viewmodels.ArticleParam": {
             "type": "object",
             "properties": {
                 "body": {
@@ -2015,7 +2015,7 @@ var doc = `{
                 }
             }
         },
-        "dto.ArticleTopicDto": {
+        "viewmodels.ArticleTopicDto": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -2038,7 +2038,7 @@ var doc = `{
                 }
             }
         },
-        "dto.ArticleTopicParam": {
+        "viewmodels.ArticleTopicParam": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -2061,39 +2061,7 @@ var doc = `{
                 }
             }
         },
-        "dto.DepartmentDto": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "createdBy": {
-                    "type": "integer"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "integer"
-                },
-                "updatedAt": {
-                    "type": "string"
-                },
-                "updatedBy": {
-                    "type": "integer"
-                },
-                "userFullname": {
-                    "type": "string"
-                },
-                "userId": {
-                    "type": "integer"
-                }
-            }
-        },
-        "dto.DepartmentParam": {
+        "viewmodels.DepartmentDto": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -2125,7 +2093,39 @@ var doc = `{
                 }
             }
         },
-        "dto.EventDto": {
+        "viewmodels.DepartmentParam": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                },
+                "userFullname": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "viewmodels.EventDto": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -2157,7 +2157,7 @@ var doc = `{
                 },
                 "registration": {
                     "type": "object",
-                    "$ref": "#/definitions/dto.UserEventDto"
+                    "$ref": "#/definitions/viewmodels.UserEventDto"
                 },
                 "start": {
                     "type": "string"
@@ -2176,7 +2176,7 @@ var doc = `{
                 }
             }
         },
-        "dto.EventParam": {
+        "viewmodels.EventParam": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -2211,7 +2211,7 @@ var doc = `{
                 },
                 "registration": {
                     "type": "object",
-                    "$ref": "#/definitions/dto.UserEventDto"
+                    "$ref": "#/definitions/viewmodels.UserEventDto"
                 },
                 "start": {
                     "type": "string"
@@ -2233,12 +2233,12 @@ var doc = `{
                 }
             }
         },
-        "dto.LoginDto": {
+        "viewmodels.LoginDto": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "object",
-                    "$ref": "#/definitions/dto.UserDto"
+                    "$ref": "#/definitions/viewmodels.UserDto"
                 },
                 "password": {
                     "type": "string"
@@ -2248,7 +2248,7 @@ var doc = `{
                 }
             }
         },
-        "dto.UserAddressDto": {
+        "viewmodels.UserAddressDto": {
             "type": "object",
             "properties": {
                 "city": {
@@ -2268,12 +2268,12 @@ var doc = `{
                 }
             }
         },
-        "dto.UserDto": {
+        "viewmodels.UserDto": {
             "type": "object",
             "properties": {
                 "address": {
                     "type": "object",
-                    "$ref": "#/definitions/dto.UserAddressDto"
+                    "$ref": "#/definitions/viewmodels.UserAddressDto"
                 },
                 "createdAt": {
                     "type": "string"
@@ -2310,7 +2310,7 @@ var doc = `{
                 }
             }
         },
-        "dto.UserEventDto": {
+        "viewmodels.UserEventDto": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -2330,12 +2330,12 @@ var doc = `{
                 }
             }
         },
-        "dto.UserParam": {
+        "viewmodels.UserParam": {
             "type": "object",
             "properties": {
                 "address": {
                     "type": "object",
-                    "$ref": "#/definitions/dto.UserAddressDto"
+                    "$ref": "#/definitions/viewmodels.UserAddressDto"
                 },
                 "createdAt": {
                     "type": "string"

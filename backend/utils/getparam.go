@@ -6,24 +6,7 @@ import (
 	"strings"
 )
 
-type ISearchModel interface {
-	Filter(db *gorm.DB, searchFields []string)
-	GetModel() interface{}
-}
-
-type EmbeddedSearchModel struct {
-	Model       interface{}
-	SearchModel ISearchModel
-}
-
-func (p *EmbeddedSearchModel) Filter(db *gorm.DB, searchFields []string) {
-	p.SearchModel.Filter(db, searchFields)
-}
-
-func (p *EmbeddedSearchModel) GetModel() interface{} {
-	return p.Model
-}
-
+// @author Mufid Jamaluddin
 type GetParams struct {
 	Ids    []uint `query:"id,omitempty" json:"-" xml:"-" form:"-"`
 	Sort   string `query:"_sort,omitempty" json:"-" xml:"-" form:"-"`
@@ -52,8 +35,4 @@ func (p *GetParams) Filter(db *gorm.DB, searchFields []string) {
 			db.Where(fmt.Sprintf("%s LIKE ?", field), fmt.Sprintf("%s%", p.Search))
 		}
 	}
-}
-
-func (p *GetParams) GetModel() interface{} {
-	return p
 }

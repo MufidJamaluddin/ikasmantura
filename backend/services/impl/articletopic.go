@@ -1,10 +1,10 @@
 package impl
 
 import (
-	"backend/dto"
 	"backend/models"
 	"backend/repository"
 	"backend/utils"
+	"backend/viewmodels"
 	"database/sql"
 	"gorm.io/gorm"
 )
@@ -21,7 +21,7 @@ type ArticleTopicServiceImpl struct {
 	DB *gorm.DB
 }
 
-func (p *ArticleTopicServiceImpl) toModel(data *dto.ArticleTopicDto, out *models.ArticleTopic) {
+func (p *ArticleTopicServiceImpl) toModel(data *viewmodels.ArticleTopicDto, out *models.ArticleTopic) {
 	out.ID = data.Id
 	out.Name = data.Name
 
@@ -29,7 +29,7 @@ func (p *ArticleTopicServiceImpl) toModel(data *dto.ArticleTopicDto, out *models
 	utils.FillUpdated(data, out)
 }
 
-func (p *ArticleTopicServiceImpl) toData(in *models.ArticleTopic, out *dto.ArticleTopicDto) {
+func (p *ArticleTopicServiceImpl) toData(in *models.ArticleTopic, out *viewmodels.ArticleTopicDto) {
 	out.Id = in.ID
 	out.Name = in.Name
 
@@ -37,7 +37,7 @@ func (p *ArticleTopicServiceImpl) toData(in *models.ArticleTopic, out *dto.Artic
 	utils.FillUpdated(in, out)
 }
 
-func (p *ArticleTopicServiceImpl) GetTotal(search *dto.ArticleTopicParam) (uint, error) {
+func (p *ArticleTopicServiceImpl) GetTotal(search *viewmodels.ArticleTopicParam) (uint, error) {
 	var (
 		err   error
 		model models.ArticleTopic
@@ -56,7 +56,7 @@ func (p *ArticleTopicServiceImpl) GetTotal(search *dto.ArticleTopicParam) (uint,
 	return uint(total), err
 }
 
-func (p *ArticleTopicServiceImpl) Find(search *dto.ArticleTopicParam, callback func(*dto.ArticleTopicDto)) error {
+func (p *ArticleTopicServiceImpl) Find(search *viewmodels.ArticleTopicParam, callback func(*viewmodels.ArticleTopicDto)) error {
 	var (
 		err   error
 		model models.ArticleTopic
@@ -85,7 +85,7 @@ func (p *ArticleTopicServiceImpl) Find(search *dto.ArticleTopicParam, callback f
 	return err
 }
 
-func (p *ArticleTopicServiceImpl) FindById(id uint, out *dto.ArticleTopicDto) error {
+func (p *ArticleTopicServiceImpl) FindById(id uint, out *viewmodels.ArticleTopicDto) error {
 	var (
 		err   error
 		model models.ArticleTopic
@@ -97,7 +97,7 @@ func (p *ArticleTopicServiceImpl) FindById(id uint, out *dto.ArticleTopicDto) er
 	return err
 }
 
-func (p *ArticleTopicServiceImpl) Update(id uint, out *dto.ArticleTopicDto) error {
+func (p *ArticleTopicServiceImpl) Update(id uint, out *viewmodels.ArticleTopicDto) error {
 	var (
 		err   error
 		model models.ArticleTopic
@@ -110,7 +110,7 @@ func (p *ArticleTopicServiceImpl) Update(id uint, out *dto.ArticleTopicDto) erro
 	return err
 }
 
-func (p *ArticleTopicServiceImpl) Save(out *dto.ArticleTopicDto) error {
+func (p *ArticleTopicServiceImpl) Save(out *viewmodels.ArticleTopicDto) error {
 	var (
 		err   error
 		model models.ArticleTopic
@@ -123,7 +123,7 @@ func (p *ArticleTopicServiceImpl) Save(out *dto.ArticleTopicDto) error {
 	return err
 }
 
-func (p *ArticleTopicServiceImpl) Delete(id uint, out *dto.ArticleTopicDto) error {
+func (p *ArticleTopicServiceImpl) Delete(id uint, out *viewmodels.ArticleTopicDto) error {
 	var (
 		err   error
 		model models.ArticleTopic

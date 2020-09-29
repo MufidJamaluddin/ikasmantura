@@ -1,10 +1,10 @@
 package impl
 
 import (
-	"backend/dto"
 	"backend/models"
 	"backend/repository"
 	"backend/utils"
+	"backend/viewmodels"
 	"database/sql"
 	"gorm.io/gorm"
 )
@@ -21,7 +21,7 @@ type ArticleServiceImpl struct {
 	DB *gorm.DB
 }
 
-func (p *ArticleServiceImpl) toModel(data *dto.ArticleDto, out *models.Article) {
+func (p *ArticleServiceImpl) toModel(data *viewmodels.ArticleDto, out *models.Article) {
 	out.ID = data.Id
 	out.Title = data.Title
 	out.Body = data.Body
@@ -34,7 +34,7 @@ func (p *ArticleServiceImpl) toModel(data *dto.ArticleDto, out *models.Article) 
 	utils.FillUpdated(data, out)
 }
 
-func (p *ArticleServiceImpl) toData(in *models.Article, out *dto.ArticleDto) {
+func (p *ArticleServiceImpl) toData(in *models.Article, out *viewmodels.ArticleDto) {
 	out.Id = in.ID
 	out.Title = in.Title
 	out.Body = in.Body
@@ -47,7 +47,7 @@ func (p *ArticleServiceImpl) toData(in *models.Article, out *dto.ArticleDto) {
 	utils.FillUpdated(in, out)
 }
 
-func (p *ArticleServiceImpl) GetTotal(search *dto.ArticleParam) (uint, error) {
+func (p *ArticleServiceImpl) GetTotal(search *viewmodels.ArticleParam) (uint, error) {
 	var (
 		err   error
 		model models.Article
@@ -66,7 +66,7 @@ func (p *ArticleServiceImpl) GetTotal(search *dto.ArticleParam) (uint, error) {
 	return uint(total), err
 }
 
-func (p *ArticleServiceImpl) searchFilter(tx *gorm.DB, search *dto.ArticleParam) {
+func (p *ArticleServiceImpl) searchFilter(tx *gorm.DB, search *viewmodels.ArticleParam) {
 	search.Filter(tx, articleSearchFields)
 
 	if search.StartFrom != nil {
@@ -78,7 +78,7 @@ func (p *ArticleServiceImpl) searchFilter(tx *gorm.DB, search *dto.ArticleParam)
 	}
 }
 
-func (p *ArticleServiceImpl) Find(search *dto.ArticleParam, callback func(*dto.ArticleDto)) error {
+func (p *ArticleServiceImpl) Find(search *viewmodels.ArticleParam, callback func(*viewmodels.ArticleDto)) error {
 	var (
 		err   error
 		model models.Article
@@ -107,11 +107,11 @@ func (p *ArticleServiceImpl) Find(search *dto.ArticleParam, callback func(*dto.A
 	return err
 }
 
-func (p *ArticleServiceImpl) FindById(id uint, out *dto.ArticleDto) error {
+func (p *ArticleServiceImpl) FindById(id uint, out *viewmodels.ArticleDto) error {
 	var (
 		err   error
 		model models.Article
-		user models.User
+		user  models.User
 	)
 
 	if err = repository.FindById(p.DB, id, &model); err == nil {
@@ -123,7 +123,7 @@ func (p *ArticleServiceImpl) FindById(id uint, out *dto.ArticleDto) error {
 	return err
 }
 
-func (p *ArticleServiceImpl) Update(id uint, out *dto.ArticleDto) error {
+func (p *ArticleServiceImpl) Update(id uint, out *viewmodels.ArticleDto) error {
 	var (
 		err   error
 		model models.Article
@@ -136,7 +136,7 @@ func (p *ArticleServiceImpl) Update(id uint, out *dto.ArticleDto) error {
 	return err
 }
 
-func (p *ArticleServiceImpl) Save(out *dto.ArticleDto) error {
+func (p *ArticleServiceImpl) Save(out *viewmodels.ArticleDto) error {
 	var (
 		err   error
 		model models.Article
@@ -149,7 +149,7 @@ func (p *ArticleServiceImpl) Save(out *dto.ArticleDto) error {
 	return err
 }
 
-func (p *ArticleServiceImpl) Delete(id uint, out *dto.ArticleDto) error {
+func (p *ArticleServiceImpl) Delete(id uint, out *viewmodels.ArticleDto) error {
 	var (
 		err   error
 		model models.Article

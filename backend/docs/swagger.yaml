@@ -233,7 +233,7 @@ definitions:
       organizer:
         type: string
       registration:
-        $ref: '#/definitions/dto.UserEventDto'
+        $ref: '#/definitions/viewmodels.UserEventDto'
         type: object
       start:
         type: string
@@ -269,7 +269,7 @@ definitions:
       organizer:
         type: string
       registration:
-        $ref: '#/definitions/dto.UserEventDto'
+        $ref: '#/definitions/viewmodels.UserEventDto'
         type: object
       start:
         type: string
@@ -287,7 +287,7 @@ definitions:
   dto.LoginDto:
     properties:
       data:
-        $ref: '#/definitions/dto.UserDto'
+        $ref: '#/definitions/viewmodels.UserDto'
         type: object
       password:
         type: string
@@ -310,7 +310,7 @@ definitions:
   dto.UserDto:
     properties:
       address:
-        $ref: '#/definitions/dto.UserAddressDto'
+        $ref: '#/definitions/viewmodels.UserAddressDto'
         type: object
       createdAt:
         type: string
@@ -351,7 +351,7 @@ definitions:
   dto.UserParam:
     properties:
       address:
-        $ref: '#/definitions/dto.UserAddressDto'
+        $ref: '#/definitions/viewmodels.UserAddressDto'
         type: object
       createdAt:
         type: string
@@ -377,27 +377,27 @@ definitions:
         type: string
     type: object
 info:
-  contact: {}
-  license: {}
+  contact: { }
+  license: { }
 paths:
   /api/v1/about/{id}:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Update About of IKA SMAN Situraja Website
       parameters:
-      - description: About ID (default 1)
-        in: path
-        name: id
-        required: true
-        type: integer
+        - description: About ID (default 1)
+          in: path
+          name: id
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.AboutDto'
+            $ref: '#/definitions/viewmodels.AboutDto'
         "400":
           description: Bad Request
           schema:
@@ -407,29 +407,29 @@ paths:
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Update Web About
       tags:
-      - Web Info
+        - Web Info
   /api/v1/album/{id}:
     delete:
       consumes:
-      - application/json
+        - application/json
       description: Delete one album by id
       parameters:
-      - description: Album ID
-        in: path
-        name: id
-        required: true
-        type: integer
+        - description: Album ID
+          in: path
+          name: id
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "202":
           description: Accepted
           schema:
-            $ref: '#/definitions/dto.AlbumDto'
+            $ref: '#/definitions/viewmodels.AlbumDto'
         "400":
           description: Bad Request
           schema:
@@ -439,46 +439,46 @@ paths:
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Delete one album by id
       tags:
-      - Album
+        - Album
   /api/v1/albums:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get album data with pagination
       parameters:
-      - in: query
-        name: createdAt
-        type: string
-      - in: query
-        name: createdBy
-        type: integer
-      - in: query
-        name: id
-        type: integer
-      - in: query
-        name: title
-        type: string
-      - in: query
-        name: updatedAt
-        type: string
-      - in: query
-        name: updatedBy
-        type: integer
-      - in: query
-        name: userId
-        type: integer
+        - in: query
+          name: createdAt
+          type: string
+        - in: query
+          name: createdBy
+          type: integer
+        - in: query
+          name: id
+          type: integer
+        - in: query
+          name: title
+          type: string
+        - in: query
+          name: updatedAt
+          type: string
+        - in: query
+          name: updatedBy
+          type: integer
+        - in: query
+          name: userId
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             items:
-              $ref: '#/definitions/dto.AlbumDto'
+              $ref: '#/definitions/viewmodels.AlbumDto'
             type: array
         "400":
           description: Bad Request
@@ -486,111 +486,111 @@ paths:
             type: string
       summary: Search album data
       tags:
-      - Album
+        - Album
     post:
       consumes:
-      - application/json
+        - application/json
       description: Save album
       parameters:
-      - description: New Album Data
-        in: body
-        name: q
-        required: true
-        schema:
-          $ref: '#/definitions/dto.AlbumDto'
+        - description: New Album Data
+          in: body
+          name: q
+          required: true
+          schema:
+            $ref: '#/definitions/viewmodels.AlbumDto'
       produces:
-      - application/json
+        - application/json
       responses:
         "202":
           description: Accepted
           schema:
-            $ref: '#/definitions/dto.AlbumDto'
+            $ref: '#/definitions/viewmodels.AlbumDto'
         "400":
           description: Bad Request
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Save album
       tags:
-      - Album
+        - Album
   /api/v1/albums/{id}:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get album data by id
       parameters:
-      - description: Album ID
-        in: path
-        name: id
-        required: true
-        type: integer
+        - description: Album ID
+          in: path
+          name: id
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.AlbumDto'
+            $ref: '#/definitions/viewmodels.AlbumDto'
         "400":
           description: Bad Request
           schema:
             type: string
       summary: Get one album data by id
       tags:
-      - Album
+        - Album
     put:
       consumes:
-      - application/json
+        - application/json
       description: Update album
       parameters:
-      - description: Album ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: New Album Data
-        in: body
-        name: q
-        required: true
-        schema:
-          $ref: '#/definitions/dto.AlbumDto'
+        - description: Album ID
+          in: path
+          name: id
+          required: true
+          type: integer
+        - description: New Album Data
+          in: body
+          name: q
+          required: true
+          schema:
+            $ref: '#/definitions/viewmodels.AlbumDto'
       produces:
-      - application/json
+        - application/json
       responses:
         "202":
           description: Accepted
           schema:
-            $ref: '#/definitions/dto.AlbumDto'
+            $ref: '#/definitions/viewmodels.AlbumDto'
         "400":
           description: Bad Request
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Update album
       tags:
-      - Album
+        - Album
   /api/v1/article/{id}:
     delete:
       consumes:
-      - application/json
+        - application/json
       description: Delete one article by id
       parameters:
-      - description: Article ID
-        in: path
-        name: id
-        required: true
-        type: integer
+        - description: Article ID
+          in: path
+          name: id
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.ArticleDto'
+            $ref: '#/definitions/viewmodels.ArticleDto'
         "400":
           description: Bad Request
           schema:
@@ -600,55 +600,55 @@ paths:
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Delete one article by id
       tags:
-      - Article
+        - Article
   /api/v1/articles:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get article data with pagination
       parameters:
-      - in: query
-        name: body
-        type: string
-      - in: query
-        name: createdAt
-        type: string
-      - in: query
-        name: createdBy
-        type: integer
-      - in: query
-        name: id
-        type: integer
-      - in: query
-        name: image
-        type: string
-      - in: query
-        name: title
-        type: string
-      - in: query
-        name: topicId
-        type: integer
-      - in: query
-        name: updatedAt
-        type: string
-      - in: query
-        name: updatedBy
-        type: integer
-      - in: query
-        name: userId
-        type: integer
+        - in: query
+          name: body
+          type: string
+        - in: query
+          name: createdAt
+          type: string
+        - in: query
+          name: createdBy
+          type: integer
+        - in: query
+          name: id
+          type: integer
+        - in: query
+          name: image
+          type: string
+        - in: query
+          name: title
+          type: string
+        - in: query
+          name: topicId
+          type: integer
+        - in: query
+          name: updatedAt
+          type: string
+        - in: query
+          name: updatedBy
+          type: integer
+        - in: query
+          name: userId
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             items:
-              $ref: '#/definitions/dto.ArticleDto'
+              $ref: '#/definitions/viewmodels.ArticleDto'
             type: array
         "400":
           description: Bad Request
@@ -656,72 +656,72 @@ paths:
             type: string
       summary: Search article data
       tags:
-      - Article
+        - Article
   /api/v1/articles/{id}:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get data by id
       parameters:
-      - description: Article ID
-        in: path
-        name: id
-        required: true
-        type: integer
+        - description: Article ID
+          in: path
+          name: id
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.ArticleDto'
+            $ref: '#/definitions/viewmodels.ArticleDto'
         "400":
           description: Bad Request
           schema:
             type: string
       summary: Get one data by id
       tags:
-      - Article
+        - Article
     put:
       consumes:
-      - application/json
+        - application/json
       description: Save article
       parameters:
-      - description: Article ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: New Article Data
-        in: body
-        name: q
-        required: true
-        schema:
-          $ref: '#/definitions/dto.ArticleDto'
+        - description: Article ID
+          in: path
+          name: id
+          required: true
+          type: integer
+        - description: New Article Data
+          in: body
+          name: q
+          required: true
+          schema:
+            $ref: '#/definitions/viewmodels.ArticleDto'
       produces:
-      - application/json
+        - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/dto.ArticleDto'
+            $ref: '#/definitions/viewmodels.ArticleDto'
         "400":
           description: Bad Request
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Save article
       tags:
-      - Article
+        - Article
   /api/v1/auth:
     delete:
       consumes:
-      - application/json
+        - application/json
       description: Logout to IKA SMAN Situraja
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
@@ -732,54 +732,54 @@ paths:
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Logout
       tags:
-      - Authentication & Authorization
+        - Authentication & Authorization
     post:
       consumes:
-      - application/json
+        - application/json
       description: Login to IKA SMAN Situraja
       parameters:
-      - description: Pagination Options
-        in: body
-        name: q
-        required: true
-        schema:
-          $ref: '#/definitions/dto.LoginDto'
+        - description: Pagination Options
+          in: body
+          name: q
+          required: true
+          schema:
+            $ref: '#/definitions/viewmodels.LoginDto'
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.LoginDto'
+            $ref: '#/definitions/viewmodels.LoginDto'
         "400":
           description: Bad Request
           schema:
             type: string
       summary: Login
       tags:
-      - Authentication & Authorization
+        - Authentication & Authorization
   /api/v1/department/{id}:
     delete:
       consumes:
-      - application/json
+        - application/json
       description: Delete one department  by id
       parameters:
-      - description: Department ID
-        in: path
-        name: id
-        required: true
-        type: integer
+        - description: Department ID
+          in: path
+          name: id
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "202":
           description: Accepted
           schema:
-            $ref: '#/definitions/dto.DepartmentDto'
+            $ref: '#/definitions/viewmodels.DepartmentDto'
         "400":
           description: Bad Request
           schema:
@@ -789,52 +789,52 @@ paths:
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Delete one department  by id
       tags:
-      - User Management
+        - User Management
   /api/v1/departments:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Search Department
       parameters:
-      - in: query
-        name: createdAt
-        type: string
-      - in: query
-        name: createdBy
-        type: integer
-      - in: query
-        name: id
-        type: integer
-      - in: query
-        name: name
-        type: string
-      - in: query
-        name: type
-        type: integer
-      - in: query
-        name: updatedAt
-        type: string
-      - in: query
-        name: updatedBy
-        type: integer
-      - in: query
-        name: userFullname
-        type: string
-      - in: query
-        name: userId
-        type: integer
+        - in: query
+          name: createdAt
+          type: string
+        - in: query
+          name: createdBy
+          type: integer
+        - in: query
+          name: id
+          type: integer
+        - in: query
+          name: name
+          type: string
+        - in: query
+          name: type
+          type: integer
+        - in: query
+          name: updatedAt
+          type: string
+        - in: query
+          name: updatedBy
+          type: integer
+        - in: query
+          name: userFullname
+          type: string
+        - in: query
+          name: userId
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             items:
-              $ref: '#/definitions/dto.DepartmentDto'
+              $ref: '#/definitions/viewmodels.DepartmentDto'
             type: array
         "400":
           description: Bad Request
@@ -842,111 +842,111 @@ paths:
             type: string
       summary: Search Department
       tags:
-      - User Management
+        - User Management
     post:
       consumes:
-      - application/json
+        - application/json
       description: Update department
       parameters:
-      - description: New Department Data
-        in: body
-        name: q
-        required: true
-        schema:
-          $ref: '#/definitions/dto.DepartmentDto'
+        - description: New Department Data
+          in: body
+          name: q
+          required: true
+          schema:
+            $ref: '#/definitions/viewmodels.DepartmentDto'
       produces:
-      - application/json
+        - application/json
       responses:
         "202":
           description: Accepted
           schema:
-            $ref: '#/definitions/dto.DepartmentDto'
+            $ref: '#/definitions/viewmodels.DepartmentDto'
         "400":
           description: Bad Request
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Save department
       tags:
-      - User Management
+        - User Management
   /api/v1/departments/{id}:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get data by id
       parameters:
-      - description: Department ID
-        in: path
-        name: id
-        required: true
-        type: integer
+        - description: Department ID
+          in: path
+          name: id
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.DepartmentDto'
+            $ref: '#/definitions/viewmodels.DepartmentDto'
         "400":
           description: Bad Request
           schema:
             type: string
       summary: Get one data by id
       tags:
-      - User Management
+        - User Management
     put:
       consumes:
-      - application/json
+        - application/json
       description: Update department
       parameters:
-      - description: Department ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: New Department Data
-        in: body
-        name: q
-        required: true
-        schema:
-          $ref: '#/definitions/dto.DepartmentDto'
+        - description: Department ID
+          in: path
+          name: id
+          required: true
+          type: integer
+        - description: New Department Data
+          in: body
+          name: q
+          required: true
+          schema:
+            $ref: '#/definitions/viewmodels.DepartmentDto'
       produces:
-      - application/json
+        - application/json
       responses:
         "202":
           description: Accepted
           schema:
-            $ref: '#/definitions/dto.DepartmentDto'
+            $ref: '#/definitions/viewmodels.DepartmentDto'
         "400":
           description: Bad Request
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Update department
       tags:
-      - User Management
+        - User Management
   /api/v1/event/{id}:
     delete:
       consumes:
-      - application/json
+        - application/json
       description: Delete one event  by id
       parameters:
-      - description: Event ID
-        in: path
-        name: id
-        required: true
-        type: integer
+        - description: Event ID
+          in: path
+          name: id
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "202":
           description: Accepted
           schema:
-            $ref: '#/definitions/dto.EventDto'
+            $ref: '#/definitions/viewmodels.EventDto'
         "400":
           description: Bad Request
           schema:
@@ -956,24 +956,24 @@ paths:
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Delete one event  by id
       tags:
-      - Event Management
+        - Event Management
   /api/v1/event_register/{id}:
     post:
       consumes:
-      - application/json
+        - application/json
       description: Register event
       parameters:
-      - description: Event ID
-        in: path
-        name: id
-        required: true
-        type: integer
+        - description: Event ID
+          in: path
+          name: id
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "202":
           description: Accepted
@@ -984,73 +984,73 @@ paths:
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Register event
       tags:
-      - Event Management
+        - Event Management
   /api/v1/events:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Search Event
       parameters:
-      - in: query
-        name: createdAt
-        type: string
-      - in: query
-        name: createdBy
-        type: integer
-      - in: query
-        name: createdByName
-        type: string
-      - in: query
-        name: description
-        type: string
-      - in: query
-        name: end
-        type: string
-      - in: query
-        name: end_lte
-        type: string
-      - in: query
-        name: id
-        type: integer
-      - in: query
-        name: image
-        type: string
-      - in: query
-        name: myEvent
-        type: boolean
-      - in: query
-        name: organizer
-        type: string
-      - in: query
-        name: start
-        type: string
-      - in: query
-        name: start_gte
-        type: string
-      - in: query
-        name: title
-        type: string
-      - in: query
-        name: updatedAt
-        type: string
-      - in: query
-        name: updatedBy
-        type: integer
-      - in: query
-        name: userId
-        type: integer
+        - in: query
+          name: createdAt
+          type: string
+        - in: query
+          name: createdBy
+          type: integer
+        - in: query
+          name: createdByName
+          type: string
+        - in: query
+          name: description
+          type: string
+        - in: query
+          name: end
+          type: string
+        - in: query
+          name: end_lte
+          type: string
+        - in: query
+          name: id
+          type: integer
+        - in: query
+          name: image
+          type: string
+        - in: query
+          name: myEvent
+          type: boolean
+        - in: query
+          name: organizer
+          type: string
+        - in: query
+          name: start
+          type: string
+        - in: query
+          name: start_gte
+          type: string
+        - in: query
+          name: title
+          type: string
+        - in: query
+          name: updatedAt
+          type: string
+        - in: query
+          name: updatedBy
+          type: integer
+        - in: query
+          name: userId
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             items:
-              $ref: '#/definitions/dto.EventDto'
+              $ref: '#/definitions/viewmodels.EventDto'
             type: array
         "400":
           description: Bad Request
@@ -1058,134 +1058,134 @@ paths:
             type: string
       summary: Search Event
       tags:
-      - Event Management
+        - Event Management
     post:
       consumes:
-      - application/json
+        - application/json
       description: Save event
       parameters:
-      - description: New Event Data
-        in: body
-        name: q
-        required: true
-        schema:
-          $ref: '#/definitions/dto.EventDto'
+        - description: New Event Data
+          in: body
+          name: q
+          required: true
+          schema:
+            $ref: '#/definitions/viewmodels.EventDto'
       produces:
-      - application/json
+        - application/json
       responses:
         "202":
           description: Accepted
           schema:
-            $ref: '#/definitions/dto.EventDto'
+            $ref: '#/definitions/viewmodels.EventDto'
         "400":
           description: Bad Request
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Save event
       tags:
-      - Event Management
+        - Event Management
   /api/v1/events/{id}:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get data by id
       parameters:
-      - description: Event ID
-        in: path
-        name: id
-        required: true
-        type: integer
+        - description: Event ID
+          in: path
+          name: id
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.EventDto'
+            $ref: '#/definitions/viewmodels.EventDto'
         "400":
           description: Bad Request
           schema:
             type: string
       summary: Get one data by id
       tags:
-      - Event Management
+        - Event Management
     put:
       consumes:
-      - application/json
+        - application/json
       description: Update event
       parameters:
-      - description: Event ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: New Event Data
-        in: body
-        name: q
-        required: true
-        schema:
-          $ref: '#/definitions/dto.EventDto'
+        - description: Event ID
+          in: path
+          name: id
+          required: true
+          type: integer
+        - description: New Event Data
+          in: body
+          name: q
+          required: true
+          schema:
+            $ref: '#/definitions/viewmodels.EventDto'
       produces:
-      - application/json
+        - application/json
       responses:
         "202":
           description: Accepted
           schema:
-            $ref: '#/definitions/dto.EventDto'
+            $ref: '#/definitions/viewmodels.EventDto'
         "400":
           description: Bad Request
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Update event
       tags:
-      - Event Management
+        - Event Management
   /api/v1/photos:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get photo data with pagination
       parameters:
-      - in: query
-        name: albumId
-        type: integer
-      - in: query
-        name: createdAt
-        type: string
-      - in: query
-        name: createdBy
-        type: integer
-      - in: query
-        name: id
-        type: integer
-      - in: query
-        name: image
-        type: string
-      - in: query
-        name: thumbnail
-        type: string
-      - in: query
-        name: title
-        type: string
-      - in: query
-        name: updatedAt
-        type: string
-      - in: query
-        name: updatedBy
-        type: integer
+        - in: query
+          name: albumId
+          type: integer
+        - in: query
+          name: createdAt
+          type: string
+        - in: query
+          name: createdBy
+          type: integer
+        - in: query
+          name: id
+          type: integer
+        - in: query
+          name: image
+          type: string
+        - in: query
+          name: thumbnail
+          type: string
+        - in: query
+          name: title
+          type: string
+        - in: query
+          name: updatedAt
+          type: string
+        - in: query
+          name: updatedBy
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             items:
-              $ref: '#/definitions/dto.AlbumPhotoDto'
+              $ref: '#/definitions/viewmodels.AlbumPhotoDto'
             type: array
         "400":
           description: Bad Request
@@ -1193,53 +1193,53 @@ paths:
             type: string
       summary: Search photo data
       tags:
-      - Album
+        - Album
     put:
       consumes:
-      - application/json
+        - application/json
       description: Save photo
       parameters:
-      - description: New AlbumPhoto Data
-        in: body
-        name: q
-        required: true
-        schema:
-          $ref: '#/definitions/dto.AlbumPhotoDto'
+        - description: New AlbumPhoto Data
+          in: body
+          name: q
+          required: true
+          schema:
+            $ref: '#/definitions/viewmodels.AlbumPhotoDto'
       produces:
-      - application/json
+        - application/json
       responses:
         "202":
           description: Accepted
           schema:
-            $ref: '#/definitions/dto.AlbumPhotoDto'
+            $ref: '#/definitions/viewmodels.AlbumPhotoDto'
         "400":
           description: Bad Request
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Save photo
       tags:
-      - Album
+        - Album
   /api/v1/photos/{id}:
     delete:
       consumes:
-      - application/json
+        - application/json
       description: Delete one album photo by id
       parameters:
-      - description: Album Photo ID
-        in: path
-        name: id
-        required: true
-        type: integer
+        - description: Album Photo ID
+          in: path
+          name: id
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "202":
           description: Accepted
           schema:
-            $ref: '#/definitions/dto.AlbumPhotoDto'
+            $ref: '#/definitions/viewmodels.AlbumPhotoDto'
         "400":
           description: Bad Request
           schema:
@@ -1249,86 +1249,86 @@ paths:
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Delete one album photo by id
       tags:
-      - Album
+        - Album
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get album photo data by id
       parameters:
-      - description: Album Photo ID
-        in: path
-        name: id
-        required: true
-        type: integer
+        - description: Album Photo ID
+          in: path
+          name: id
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.AlbumPhotoDto'
+            $ref: '#/definitions/viewmodels.AlbumPhotoDto'
         "400":
           description: Bad Request
           schema:
             type: string
       summary: Get one album photo data by id
       tags:
-      - Album
+        - Album
     put:
       consumes:
-      - application/json
+        - application/json
       description: Update photo
       parameters:
-      - description: AlbumPhoto ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: New AlbumPhoto Data
-        in: body
-        name: q
-        required: true
-        schema:
-          $ref: '#/definitions/dto.AlbumPhotoDto'
+        - description: AlbumPhoto ID
+          in: path
+          name: id
+          required: true
+          type: integer
+        - description: New AlbumPhoto Data
+          in: body
+          name: q
+          required: true
+          schema:
+            $ref: '#/definitions/viewmodels.AlbumPhotoDto'
       produces:
-      - application/json
+        - application/json
       responses:
         "202":
           description: Accepted
           schema:
-            $ref: '#/definitions/dto.AlbumPhotoDto'
+            $ref: '#/definitions/viewmodels.AlbumPhotoDto'
         "400":
           description: Bad Request
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Update photo
       tags:
-      - Album
+        - Album
   /api/v1/user/{id}:
     delete:
       consumes:
-      - application/json
+        - application/json
       description: Delete one user by id
       parameters:
-      - description: User ID
-        in: path
-        name: id
-        required: true
-        type: integer
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "202":
           description: Accepted
           schema:
-            $ref: '#/definitions/dto.UserDto'
+            $ref: '#/definitions/viewmodels.UserDto'
         "400":
           description: Bad Request
           schema:
@@ -1338,58 +1338,58 @@ paths:
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Delete one user by id
       tags:
-      - User Management
+        - User Management
   /api/v1/users:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Search Department
       parameters:
-      - in: query
-        name: createdAt
-        type: string
-      - in: query
-        name: createdBy
-        type: integer
-      - in: query
-        name: email
-        type: string
-      - in: query
-        name: id
-        type: integer
-      - in: query
-        name: isAdmin
-        type: boolean
-      - in: query
-        name: name
-        type: string
-      - in: query
-        name: password
-        type: string
-      - in: query
-        name: phone
-        type: string
-      - in: query
-        name: updatedAt
-        type: string
-      - in: query
-        name: updatedBy
-        type: integer
-      - in: query
-        name: username
-        type: string
+        - in: query
+          name: createdAt
+          type: string
+        - in: query
+          name: createdBy
+          type: integer
+        - in: query
+          name: email
+          type: string
+        - in: query
+          name: id
+          type: integer
+        - in: query
+          name: isAdmin
+          type: boolean
+        - in: query
+          name: name
+          type: string
+        - in: query
+          name: password
+          type: string
+        - in: query
+          name: phone
+          type: string
+        - in: query
+          name: updatedAt
+          type: string
+        - in: query
+          name: updatedBy
+          type: integer
+        - in: query
+          name: username
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             items:
-              $ref: '#/definitions/dto.UserDto'
+              $ref: '#/definitions/viewmodels.UserDto'
             type: array
         "400":
           description: Bad Request
@@ -1397,91 +1397,91 @@ paths:
             type: string
       summary: Search Department
       tags:
-      - User Management
+        - User Management
     post:
       consumes:
-      - application/json
+        - application/json
       description: Add new user
       parameters:
-      - description: New User Data
-        in: body
-        name: q
-        required: true
-        schema:
-          $ref: '#/definitions/dto.UserDto'
+        - description: New User Data
+          in: body
+          name: q
+          required: true
+          schema:
+            $ref: '#/definitions/viewmodels.UserDto'
       produces:
-      - application/json
+        - application/json
       responses:
         "202":
           description: Accepted
           schema:
-            $ref: '#/definitions/dto.UserDto'
+            $ref: '#/definitions/viewmodels.UserDto'
         "400":
           description: Bad Request
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Add new user
       tags:
-      - User
+        - User
   /api/v1/users/{id}:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get data by id
       parameters:
-      - description: User ID
-        in: path
-        name: id
-        required: true
-        type: integer
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.UserDto'
+            $ref: '#/definitions/viewmodels.UserDto'
         "400":
           description: Bad Request
           schema:
             type: string
       summary: Get one data by id
       tags:
-      - User Management
+        - User Management
     put:
       consumes:
-      - application/json
+        - application/json
       description: Update user
       parameters:
-      - description: User ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: New User Data
-        in: body
-        name: q
-        required: true
-        schema:
-          $ref: '#/definitions/dto.UserDto'
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: integer
+        - description: New User Data
+          in: body
+          name: q
+          required: true
+          schema:
+            $ref: '#/definitions/viewmodels.UserDto'
       produces:
-      - application/json
+        - application/json
       responses:
         "202":
           description: Accepted
           schema:
-            $ref: '#/definitions/dto.UserDto'
+            $ref: '#/definitions/viewmodels.UserDto'
         "400":
           description: Bad Request
           schema:
             type: string
       security:
-      - BasicAuth: []
-      - ApiKeyAuth: []
+        - BasicAuth: [ ]
+        - ApiKeyAuth: [ ]
       summary: Update user
       tags:
-      - User
+        - User
 swagger: "2.0"

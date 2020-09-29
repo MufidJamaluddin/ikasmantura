@@ -1,10 +1,10 @@
 package impl
 
 import (
-	"backend/dto"
 	"backend/models"
 	"backend/repository"
 	"backend/utils"
+	"backend/viewmodels"
 	"database/sql"
 	"gorm.io/gorm"
 )
@@ -21,7 +21,7 @@ type EventServiceImpl struct {
 	DB *gorm.DB
 }
 
-func (p *EventServiceImpl) toModel(data *dto.EventDto, out *models.Event) {
+func (p *EventServiceImpl) toModel(data *viewmodels.EventDto, out *models.Event) {
 	out.ID = data.Id
 	out.Title = data.Title
 	out.Description = data.Description
@@ -33,7 +33,7 @@ func (p *EventServiceImpl) toModel(data *dto.EventDto, out *models.Event) {
 	utils.FillUpdated(data, out)
 }
 
-func (p *EventServiceImpl) toData(in *models.Event, out *dto.EventDto, isCurrentUserSearch bool) {
+func (p *EventServiceImpl) toData(in *models.Event, out *viewmodels.EventDto, isCurrentUserSearch bool) {
 	out.Id = in.ID
 	out.Title = in.Title
 	out.Description = in.Description
@@ -57,7 +57,7 @@ func (p *EventServiceImpl) toData(in *models.Event, out *dto.EventDto, isCurrent
 	utils.FillUpdated(in, out)
 }
 
-func (p *EventServiceImpl) searchFilter(tx *gorm.DB, search *dto.EventParam) {
+func (p *EventServiceImpl) searchFilter(tx *gorm.DB, search *viewmodels.EventParam) {
 	search.Filter(tx, eventSearchFields)
 
 	if search.StartFrom != nil {
@@ -69,7 +69,7 @@ func (p *EventServiceImpl) searchFilter(tx *gorm.DB, search *dto.EventParam) {
 	}
 }
 
-func (p *EventServiceImpl) GetTotal(search *dto.EventParam) (uint, error) {
+func (p *EventServiceImpl) GetTotal(search *viewmodels.EventParam) (uint, error) {
 	var (
 		err   error
 		total int64
@@ -89,7 +89,7 @@ func (p *EventServiceImpl) GetTotal(search *dto.EventParam) (uint, error) {
 	return uint(total), err
 }
 
-func (p *EventServiceImpl) Find(search *dto.EventParam, callback func(*dto.EventDto)) error {
+func (p *EventServiceImpl) Find(search *viewmodels.EventParam, callback func(*viewmodels.EventDto)) error {
 	var (
 		err                 error
 		model               models.Event
@@ -128,11 +128,11 @@ func (p *EventServiceImpl) Find(search *dto.EventParam, callback func(*dto.Event
 	return err
 }
 
-func (p *EventServiceImpl) FindById(id uint, out *dto.EventDto) error {
+func (p *EventServiceImpl) FindById(id uint, out *viewmodels.EventDto) error {
 	var (
-		err   error
-		err2  error
-		model models.Event
+		err     error
+		err2    error
+		model   models.Event
 		creator models.User
 	)
 
@@ -147,7 +147,7 @@ func (p *EventServiceImpl) FindById(id uint, out *dto.EventDto) error {
 	return err
 }
 
-func (p *EventServiceImpl) Update(id uint, out *dto.EventDto) error {
+func (p *EventServiceImpl) Update(id uint, out *viewmodels.EventDto) error {
 	var (
 		err   error
 		model models.Event
@@ -160,7 +160,7 @@ func (p *EventServiceImpl) Update(id uint, out *dto.EventDto) error {
 	return err
 }
 
-func (p *EventServiceImpl) Save(out *dto.EventDto) error {
+func (p *EventServiceImpl) Save(out *viewmodels.EventDto) error {
 	var (
 		err   error
 		model models.Event
@@ -173,7 +173,7 @@ func (p *EventServiceImpl) Save(out *dto.EventDto) error {
 	return err
 }
 
-func (p *EventServiceImpl) Delete(id uint, out *dto.EventDto) error {
+func (p *EventServiceImpl) Delete(id uint, out *viewmodels.EventDto) error {
 	var (
 		err   error
 		model models.Event
@@ -220,10 +220,10 @@ func (p *EventServiceImpl) RegisterEvent(eventId uint, userId uint) error {
 	return err
 }
 
-func (p *EventServiceImpl) GetUserEvent(data *dto.UserEventDetailDto) error  {
+func (p *EventServiceImpl) GetUserEvent(data *viewmodels.UserEventDetailDto) error {
 	var (
-		err        error
-		userEvent  models.UserEvent
+		err       error
+		userEvent models.UserEvent
 	)
 
 	p.DB.Where("user_id = ? AND event_id = ?", data.UserId, data.EventId).

@@ -1,80 +1,80 @@
 package services
 
 import (
-	"backend/dto"
+	"backend/viewmodels"
 )
 
 type AboutService interface {
-	FindById(id uint, out *dto.AboutDto) error
-	Update(id uint, data *dto.AboutDto) error
+	FindById(id uint, out *viewmodels.AboutDto) error
+	Update(id uint, data *viewmodels.AboutDto) error
 }
 
 type AlbumService interface {
-	GetTotal(params *dto.AlbumParam) (uint, error)
-	Find(params *dto.AlbumParam, callback func(albumDto *dto.AlbumDto)) error
-	FindById(id uint, out *dto.AlbumDto) error
-	Save(data *dto.AlbumDto) error
-	Update(id uint, data *dto.AlbumDto) error
-	Delete(id uint, out *dto.AlbumDto) error
+	GetTotal(params *viewmodels.AlbumParam) (uint, error)
+	Find(params *viewmodels.AlbumParam, callback func(albumDto *viewmodels.AlbumDto)) error
+	FindById(id uint, out *viewmodels.AlbumDto) error
+	Save(data *viewmodels.AlbumDto) error
+	Update(id uint, data *viewmodels.AlbumDto) error
+	Delete(id uint, out *viewmodels.AlbumDto) error
 }
 
 type AlbumPhotoService interface {
-	GetTotal(model *dto.AlbumPhotoParam) (uint, error)
-	Find(model *dto.AlbumPhotoParam, callback func(photoDto *dto.AlbumPhotoDto)) error
-	FindById(id uint, out *dto.AlbumPhotoDto) error
-	Save(data *dto.AlbumPhotoDto) error
-	Update(id uint, data *dto.AlbumPhotoDto) error
-	Delete(id uint, out *dto.AlbumPhotoDto) error
+	GetTotal(model *viewmodels.AlbumPhotoParam) (uint, error)
+	Find(model *viewmodels.AlbumPhotoParam, callback func(photoDto *viewmodels.AlbumPhotoDto)) error
+	FindById(id uint, out *viewmodels.AlbumPhotoDto) error
+	Save(data *viewmodels.AlbumPhotoDto) error
+	Update(id uint, data *viewmodels.AlbumPhotoDto) error
+	Delete(id uint, out *viewmodels.AlbumPhotoDto) error
 }
 
 type ArticleService interface {
-	GetTotal(model *dto.ArticleParam) (uint, error)
-	Find(model *dto.ArticleParam, callback func(articleDto *dto.ArticleDto)) error
-	FindById(id uint, out *dto.ArticleDto) error
-	Save(data *dto.ArticleDto) error
-	Update(id uint, data *dto.ArticleDto) error
-	Delete(id uint, out *dto.ArticleDto) error
+	GetTotal(model *viewmodels.ArticleParam) (uint, error)
+	Find(model *viewmodels.ArticleParam, callback func(articleDto *viewmodels.ArticleDto)) error
+	FindById(id uint, out *viewmodels.ArticleDto) error
+	Save(data *viewmodels.ArticleDto) error
+	Update(id uint, data *viewmodels.ArticleDto) error
+	Delete(id uint, out *viewmodels.ArticleDto) error
 }
 
 type ArticleTopicService interface {
-	GetTotal(model *dto.ArticleTopicParam) (uint, error)
-	Find(model *dto.ArticleTopicParam, callback func(topicDto *dto.ArticleTopicDto)) error
-	FindById(id uint, out *dto.ArticleTopicDto) error
-	Save(data *dto.ArticleTopicDto) error
-	Update(id uint, data *dto.ArticleTopicDto) error
-	Delete(id uint, out *dto.ArticleTopicDto) error
+	GetTotal(model *viewmodels.ArticleTopicParam) (uint, error)
+	Find(model *viewmodels.ArticleTopicParam, callback func(topicDto *viewmodels.ArticleTopicDto)) error
+	FindById(id uint, out *viewmodels.ArticleTopicDto) error
+	Save(data *viewmodels.ArticleTopicDto) error
+	Update(id uint, data *viewmodels.ArticleTopicDto) error
+	Delete(id uint, out *viewmodels.ArticleTopicDto) error
 }
 
 type AuthService interface {
-	Login(data *dto.LoginDto) error
+	Login(data *viewmodels.LoginDto) error
 }
 
 type DepartmentService interface {
-	GetTotal(search *dto.DepartmentParam) (uint, error)
-	Find(search *dto.DepartmentParam, callback func(departmentDto *dto.DepartmentDto)) error
-	FindById(id uint, out *dto.DepartmentDto) error
-	Save(data *dto.DepartmentDto) error
-	Update(id uint, data *dto.DepartmentDto) error
-	Delete(id uint, out *dto.DepartmentDto) error
+	GetTotal(search *viewmodels.DepartmentParam) (uint, error)
+	Find(search *viewmodels.DepartmentParam, callback func(departmentDto *viewmodels.DepartmentDto)) error
+	FindById(id uint, out *viewmodels.DepartmentDto) error
+	Save(data *viewmodels.DepartmentDto) error
+	Update(id uint, data *viewmodels.DepartmentDto) error
+	Delete(id uint, out *viewmodels.DepartmentDto) error
 }
 
 type EventService interface {
-	GetTotal(model *dto.EventParam) (uint, error)
-	Find(model *dto.EventParam, callback func(eventDto *dto.EventDto)) error
-	FindById(id uint, out *dto.EventDto) error
-	Save(model *dto.EventDto) error
-	Update(id uint, model *dto.EventDto) error
-	Delete(id uint, out *dto.EventDto) error
+	GetTotal(model *viewmodels.EventParam) (uint, error)
+	Find(model *viewmodels.EventParam, callback func(eventDto *viewmodels.EventDto)) error
+	FindById(id uint, out *viewmodels.EventDto) error
+	Save(model *viewmodels.EventDto) error
+	Update(id uint, model *viewmodels.EventDto) error
+	Delete(id uint, out *viewmodels.EventDto) error
 
 	RegisterEvent(eventId uint, userId uint) error
-	GetUserEvent(data *dto.UserEventDetailDto) error
+	GetUserEvent(data *viewmodels.UserEventDetailDto) error
 }
 
 type UserService interface {
-	GetTotal(model *dto.UserParam) (uint, error)
-	Find(model *dto.UserParam, callback func(userDto *dto.UserDto)) error
-	FindById(id uint, out *dto.UserDto) error
-	Save(model *dto.UserDto) error
-	Update(id uint, model *dto.UserDto) error
-	Delete(id uint, out *dto.UserDto) error
+	GetTotal(model *viewmodels.UserParam) (uint, error)
+	Find(model *viewmodels.UserParam, callback func(userDto *viewmodels.UserDto)) error
+	FindById(id uint, out *viewmodels.UserDto) error
+	Save(model *viewmodels.UserDto) error
+	Update(id uint, model *viewmodels.UserDto) error
+	Delete(id uint, out *viewmodels.UserDto) error
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	error2 "backend/error"
 	"backend/utils"
 	"database/sql"
 	"fmt"
@@ -49,7 +50,10 @@ func main() {
 	Migrate(db)
 
 	app := fiber.New(fiber.Config{
-		Prefork: true,
+		Prefork:       true,
+		IdleTimeout:   30 * time.Second,
+		CaseSensitive: false,
+		ErrorHandler:  error2.CustomErrorHandler,
 	})
 
 	Route(app, db)

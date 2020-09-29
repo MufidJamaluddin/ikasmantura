@@ -1,8 +1,8 @@
 package main
 
 import (
+	"backend/controllers"
 	_ "backend/docs"
-	"backend/handlers"
 	"backend/services/impl"
 	swagger "github.com/arsmn/fiber-swagger/v2"
 	"github.com/gofiber/fiber/v2"
@@ -16,29 +16,29 @@ import (
 )
 
 var (
-	AboutHandler        handlers.AboutHandler
-	AlbumHandler        handlers.AlbumHandler
-	AlbumPhotoHandler   handlers.AlbumPhotoHandler
-	ArticleHandler      handlers.ArticleHandler
-	ArticleTopicHandler handlers.ArticleTopicHandler
-	AuthHandler         handlers.AuthHandler
-	DepartmentHandler   handlers.DepartmentHandler
-	EventHandler        handlers.EventHandler
-	UserHandler         handlers.UserHandler
+	AboutController        controllers.AboutController
+	AlbumController        controllers.AlbumController
+	AlbumPhotoController   controllers.AlbumPhotoController
+	ArticleController      controllers.ArticleController
+	ArticleTopicController controllers.ArticleTopicController
+	AuthController         controllers.AuthController
+	DepartmentController   controllers.DepartmentController
+	EventController        controllers.EventController
+	UserController         controllers.UserController
 )
 
 func InitService(db *gorm.DB) {
-	AboutHandler.Service = &impl.AboutServiceImpl{DB: db}
-	AlbumHandler.Service = &impl.AlbumServiceImpl{DB: db}
-	AlbumPhotoHandler.Service = &impl.AlbumPhotoServiceImpl{DB: db}
-	ArticleHandler.Service = &impl.ArticleServiceImpl{DB: db}
-	ArticleTopicHandler.Service = &impl.ArticleTopicServiceImpl{DB: db}
-	AuthHandler.Service = &impl.AuthServiceImpl{DB: db}
-	DepartmentHandler.Service = &impl.DepartmentServiceImpl{DB: db}
-	EventHandler.Service = &impl.EventServiceImpl{DB: db}
-	UserHandler.Service = &impl.UserServiceImpl{DB: db}
+	AboutController.Service = &impl.AboutServiceImpl{DB: db}
+	AlbumController.Service = &impl.AlbumServiceImpl{DB: db}
+	AlbumPhotoController.Service = &impl.AlbumPhotoServiceImpl{DB: db}
+	ArticleController.Service = &impl.ArticleServiceImpl{DB: db}
+	ArticleTopicController.Service = &impl.ArticleTopicServiceImpl{DB: db}
+	AuthController.Service = &impl.AuthServiceImpl{DB: db}
+	DepartmentController.Service = &impl.DepartmentServiceImpl{DB: db}
+	EventController.Service = &impl.EventServiceImpl{DB: db}
+	UserController.Service = &impl.UserServiceImpl{DB: db}
 
-	AuthHandler.SecretKey = []byte(os.Getenv("SECRET_KEY"))
+	AuthController.SecretKey = []byte(os.Getenv("SECRET_KEY"))
 }
 
 // @title IKA SMANTURA
@@ -58,15 +58,13 @@ func Route(app *fiber.App, db *gorm.DB) {
 		TokenLookup: "header:Authorization,cookie:web_ika_id",
 	})
 
-	/*
-	secretOrPublicHandler  := jwtware.New(jwtware.Config{
+	secretOrPublicHandler := jwtware.New(jwtware.Config{
 		SigningKey:  []byte(os.Getenv("SECRET_KEY")),
 		TokenLookup: "header:Authorization,cookie:web_ika_id",
 		ErrorHandler: func(ctx *fiber.Ctx, err error) error {
 			return ctx.Next()
 		},
 	})
-	 */
 
 	InitService(db)
 
@@ -86,66 +84,66 @@ func Route(app *fiber.App, db *gorm.DB) {
 	apiV1 := api.Group("/v1")
 
 	about := apiV1.Group("/about")
-	about.Get("/:id", AboutHandler.GetAbout)
-	about.Put("/:id", secretHandler, AboutHandler.UpdateAbout)
+	about.Get("/:id", AboutController.GetAbout)
+	about.Put("/:id", secretHandler, AboutController.UpdateAbout)
 
 	album := apiV1.Group("/albums")
-	album.Get("", AlbumHandler.SearchAlbum)
-	album.Get("/:id", AlbumHandler.GetOneAlbum)
-	album.Post("", secretHandler, AlbumHandler.SaveAlbum)
-	album.Put("/:id", secretHandler, AlbumHandler.UpdateAlbum)
-	album.Delete("/:id", secretHandler, AlbumHandler.DeleteAlbum)
+	album.Get("", AlbumController.SearchAlbum)
+	album.Get("/:id", AlbumController.GetOneAlbum)
+	album.Post("", secretHandler, AlbumController.SaveAlbum)
+	album.Put("/:id", secretHandler, AlbumController.UpdateAlbum)
+	album.Delete("/:id", secretHandler, AlbumController.DeleteAlbum)
 
 	albumPhoto := apiV1.Group("/photos")
-	albumPhoto.Get("", AlbumPhotoHandler.SearchAlbumPhoto)
-	albumPhoto.Get("/:id", AlbumPhotoHandler.GetOneAlbumPhoto)
-	albumPhoto.Post("", secretHandler, AlbumPhotoHandler.SaveAlbumPhoto)
-	albumPhoto.Put("/:id", secretHandler, AlbumPhotoHandler.UpdateAlbumPhoto)
-	albumPhoto.Delete("/:id", secretHandler, AlbumPhotoHandler.DeleteAlbumPhoto)
+	albumPhoto.Get("", AlbumPhotoController.SearchAlbumPhoto)
+	albumPhoto.Get("/:id", AlbumPhotoController.GetOneAlbumPhoto)
+	albumPhoto.Post("", secretHandler, AlbumPhotoController.SaveAlbumPhoto)
+	albumPhoto.Put("/:id", secretHandler, AlbumPhotoController.UpdateAlbumPhoto)
+	albumPhoto.Delete("/:id", secretHandler, AlbumPhotoController.DeleteAlbumPhoto)
 
 	article := apiV1.Group("/articles")
-	article.Get("", ArticleHandler.SearchArticle)
-	article.Get("/:id", ArticleHandler.GetOneArticle)
-	article.Post("", secretHandler, ArticleHandler.SaveArticle)
-	article.Put("/:id", secretHandler, ArticleHandler.UpdateArticle)
-	article.Delete("/:id", secretHandler, ArticleHandler.DeleteArticle)
+	article.Get("", secretOrPublicHandler, ArticleController.SearchArticle)
+	article.Get("/:id", ArticleController.GetOneArticle)
+	article.Post("", secretHandler, ArticleController.SaveArticle)
+	article.Put("/:id", secretHandler, ArticleController.UpdateArticle)
+	article.Delete("/:id", secretHandler, ArticleController.DeleteArticle)
 
 	topics := apiV1.Group("/article_topics")
-	topics.Get("", ArticleTopicHandler.SearchArticle)
-	topics.Get("/:id", ArticleTopicHandler.GetOneArticle)
-	topics.Post("", secretHandler, ArticleTopicHandler.SaveArticle)
-	topics.Put("/:id", secretHandler, ArticleTopicHandler.UpdateArticle)
-	topics.Delete("/:id", secretHandler, ArticleTopicHandler.DeleteArticle)
+	topics.Get("", ArticleTopicController.SearchArticle)
+	topics.Get("/:id", ArticleTopicController.GetOneArticle)
+	topics.Post("", secretHandler, ArticleTopicController.SaveArticle)
+	topics.Put("/:id", secretHandler, ArticleTopicController.UpdateArticle)
+	topics.Delete("/:id", secretHandler, ArticleTopicController.DeleteArticle)
 
 	auth := apiV1.Group("/auth")
-	auth.Post("", AuthHandler.Login)
-	auth.Delete("", AuthHandler.Logout)
+	auth.Post("", AuthController.Login)
+	auth.Delete("", AuthController.Logout)
 
 	department := apiV1.Group("/departments")
-	department.Get("", DepartmentHandler.SearchDepartment)
-	department.Get("/:id", DepartmentHandler.GetOneDepartment)
-	department.Post("", secretHandler, DepartmentHandler.SaveDepartment)
-	department.Put("/:id", secretHandler, DepartmentHandler.UpdateDepartment)
-	department.Delete("/:id", secretHandler, DepartmentHandler.DeleteDepartment)
+	department.Get("", DepartmentController.SearchDepartment)
+	department.Get("/:id", DepartmentController.GetOneDepartment)
+	department.Post("", secretHandler, DepartmentController.SaveDepartment)
+	department.Put("/:id", secretHandler, DepartmentController.UpdateDepartment)
+	department.Delete("/:id", secretHandler, DepartmentController.DeleteDepartment)
 
 	event := apiV1.Group("/events")
-	event.Get("", EventHandler.SearchEvent)
-	event.Get("/:id", EventHandler.GetOneEvent)
-	event.Post("", secretHandler, EventHandler.SaveEvent)
-	event.Put("/:id", secretHandler, EventHandler.UpdateEvent)
-	event.Delete("/:id", secretHandler, EventHandler.DeleteEvent)
+	event.Get("", EventController.SearchEvent)
+	event.Get("/:id", EventController.GetOneEvent)
+	event.Post("", secretHandler, EventController.SaveEvent)
+	event.Put("/:id", secretHandler, EventController.UpdateEvent)
+	event.Delete("/:id", secretHandler, EventController.DeleteEvent)
 
 	eventReg := apiV1.Group("/eventregister")
-	eventReg.Post("/:id", secretHandler, EventHandler.RegisterEvent)
+	eventReg.Post("/:id", secretHandler, EventController.RegisterEvent)
 
 	eventDownload := apiV1.Group("/eventsdownload")
 	eventDownload.Post("/:id",
-		secretHandler, timeout.New(EventHandler.DownloadEventTicket, 10 * time.Second))
+		secretHandler, timeout.New(EventController.DownloadEventTicket, 10*time.Second))
 
 	user := apiV1.Group("/users")
-	user.Get("", UserHandler.SearchUser)
-	user.Get("/:id", UserHandler.GetOneUser)
-	user.Post("", secretHandler, UserHandler.SaveUser)
-	user.Put("/:id", secretHandler, UserHandler.UpdateUser)
-	user.Delete("/:id", secretHandler, UserHandler.DeleteUser)
+	user.Get("", UserController.SearchUser)
+	user.Get("/:id", UserController.GetOneUser)
+	user.Post("", secretHandler, UserController.SaveUser)
+	user.Put("/:id", secretHandler, UserController.UpdateUser)
+	user.Delete("/:id", secretHandler, UserController.DeleteUser)
 }

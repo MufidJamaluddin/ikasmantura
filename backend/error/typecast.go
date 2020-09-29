@@ -2,8 +2,9 @@ package error
 
 import "fmt"
 
+// @author Mufid Jamaluddin
 type TypeCastError struct {
-	error
+	CustomError
 	Type string
 }
 

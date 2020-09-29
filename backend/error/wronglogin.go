@@ -2,8 +2,9 @@ package error
 
 import "fmt"
 
+// @author Mufid Jamaluddin
 type WrongLoginError struct {
-	error
+	CustomError
 	Username string
 }
 

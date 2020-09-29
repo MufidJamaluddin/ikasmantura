@@ -1,10 +1,10 @@
 package impl
 
 import (
-	"backend/dto"
 	"backend/models"
 	"backend/repository"
 	"backend/utils"
+	"backend/viewmodels"
 	"database/sql"
 	"gorm.io/gorm"
 )
@@ -21,7 +21,7 @@ type AlbumPhotoServiceImpl struct {
 	DB *gorm.DB
 }
 
-func (p *AlbumPhotoServiceImpl) toModel(data *dto.AlbumPhotoDto, out *models.AlbumPhoto) {
+func (p *AlbumPhotoServiceImpl) toModel(data *viewmodels.AlbumPhotoDto, out *models.AlbumPhoto) {
 	out.ID = data.Id
 	out.Title = data.Title
 	out.Image = data.Image
@@ -31,7 +31,7 @@ func (p *AlbumPhotoServiceImpl) toModel(data *dto.AlbumPhotoDto, out *models.Alb
 	utils.FillUpdated(data, out)
 }
 
-func (p *AlbumPhotoServiceImpl) toData(in *models.AlbumPhoto, out *dto.AlbumPhotoDto) {
+func (p *AlbumPhotoServiceImpl) toData(in *models.AlbumPhoto, out *viewmodels.AlbumPhotoDto) {
 	out.Id = in.ID
 	out.Title = in.Title
 	out.Image = in.Image
@@ -41,7 +41,7 @@ func (p *AlbumPhotoServiceImpl) toData(in *models.AlbumPhoto, out *dto.AlbumPhot
 	utils.FillUpdated(in, out)
 }
 
-func (p *AlbumPhotoServiceImpl) GetTotal(search *dto.AlbumPhotoParam) (uint, error) {
+func (p *AlbumPhotoServiceImpl) GetTotal(search *viewmodels.AlbumPhotoParam) (uint, error) {
 	var (
 		err   error
 		model models.AlbumPhoto
@@ -60,7 +60,7 @@ func (p *AlbumPhotoServiceImpl) GetTotal(search *dto.AlbumPhotoParam) (uint, err
 	return uint(total), err
 }
 
-func (p *AlbumPhotoServiceImpl) Find(search *dto.AlbumPhotoParam, callback func(*dto.AlbumPhotoDto)) error {
+func (p *AlbumPhotoServiceImpl) Find(search *viewmodels.AlbumPhotoParam, callback func(*viewmodels.AlbumPhotoDto)) error {
 	var (
 		err   error
 		model models.AlbumPhoto
@@ -85,7 +85,7 @@ func (p *AlbumPhotoServiceImpl) Find(search *dto.AlbumPhotoParam, callback func(
 	return err
 }
 
-func (p *AlbumPhotoServiceImpl) FindById(id uint, out *dto.AlbumPhotoDto) error {
+func (p *AlbumPhotoServiceImpl) FindById(id uint, out *viewmodels.AlbumPhotoDto) error {
 	var (
 		err   error
 		model models.AlbumPhoto
@@ -97,7 +97,7 @@ func (p *AlbumPhotoServiceImpl) FindById(id uint, out *dto.AlbumPhotoDto) error 
 	return err
 }
 
-func (p *AlbumPhotoServiceImpl) Update(id uint, out *dto.AlbumPhotoDto) error {
+func (p *AlbumPhotoServiceImpl) Update(id uint, out *viewmodels.AlbumPhotoDto) error {
 	var (
 		err   error
 		model models.AlbumPhoto
@@ -110,7 +110,7 @@ func (p *AlbumPhotoServiceImpl) Update(id uint, out *dto.AlbumPhotoDto) error {
 	return err
 }
 
-func (p *AlbumPhotoServiceImpl) Save(out *dto.AlbumPhotoDto) error {
+func (p *AlbumPhotoServiceImpl) Save(out *viewmodels.AlbumPhotoDto) error {
 	var (
 		err   error
 		model models.AlbumPhoto
@@ -123,7 +123,7 @@ func (p *AlbumPhotoServiceImpl) Save(out *dto.AlbumPhotoDto) error {
 	return err
 }
 
-func (p *AlbumPhotoServiceImpl) Delete(id uint, out *dto.AlbumPhotoDto) error {
+func (p *AlbumPhotoServiceImpl) Delete(id uint, out *viewmodels.AlbumPhotoDto) error {
 	var (
 		err   error
 		model models.AlbumPhoto

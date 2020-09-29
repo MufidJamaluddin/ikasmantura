@@ -1,10 +1,10 @@
 package impl
 
 import (
-	"backend/dto"
 	"backend/models"
 	"backend/repository"
 	"backend/utils"
+	"backend/viewmodels"
 	"gorm.io/gorm"
 )
 
@@ -12,7 +12,7 @@ type AboutServiceImpl struct {
 	DB *gorm.DB
 }
 
-func (p *AboutServiceImpl) toModel(data *dto.AboutDto, out *models.About) {
+func (p *AboutServiceImpl) toModel(data *viewmodels.AboutDto, out *models.About) {
 	out.ID = data.Id
 	out.Description = data.Description
 	out.Mission = data.Mission
@@ -22,7 +22,7 @@ func (p *AboutServiceImpl) toModel(data *dto.AboutDto, out *models.About) {
 	utils.FillUpdated(data, out)
 }
 
-func (p *AboutServiceImpl) toData(in *models.About, out *dto.AboutDto) {
+func (p *AboutServiceImpl) toData(in *models.About, out *viewmodels.AboutDto) {
 	out.Id = in.ID
 	out.Description = in.Description
 	out.Mission = in.Mission
@@ -32,7 +32,7 @@ func (p *AboutServiceImpl) toData(in *models.About, out *dto.AboutDto) {
 	utils.FillUpdated(in, out)
 }
 
-func (p *AboutServiceImpl) FindById(id uint, out *dto.AboutDto) error {
+func (p *AboutServiceImpl) FindById(id uint, out *viewmodels.AboutDto) error {
 	var (
 		err   error
 		model models.About
@@ -45,7 +45,7 @@ func (p *AboutServiceImpl) FindById(id uint, out *dto.AboutDto) error {
 	return err
 }
 
-func (p *AboutServiceImpl) Update(id uint, out *dto.AboutDto) error {
+func (p *AboutServiceImpl) Update(id uint, out *viewmodels.AboutDto) error {
 	var (
 		err   error
 		model models.About
