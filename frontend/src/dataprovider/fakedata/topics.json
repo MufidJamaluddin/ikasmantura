@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Pekerjaan",
+    "total": 5
+  },
+
+  {
+    "id": 2,
+    "name": "Tips",
+    "total": 10
+  },
+  {
+    "id": 3,
+    "name": "Teknologi",
+    "total": 16
+  },
+  {
+    "id": 4,
+    "name": "Fashion",
+    "total": 19
+  }
+]

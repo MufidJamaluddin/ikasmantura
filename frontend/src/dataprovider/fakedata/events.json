@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "userId": 1,
+    "organizer": "IKA Smantura",
+    "title": "Reuni Akbar",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
+    "image": "http://localhost:3010/static/img/jakarta.jpg",
+    "start": "2020-09-16T08:30:00",
+    "end": "2020-09-16T14:30:00",
+    "myEvent": false
+  },
+  {
+    "id": 2,
+    "userId": 1,
+    "organizer": "IKA Smantura",
+    "title": "Perpisahan",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
+    "image": "http://localhost:3010/static/img/jakarta.jpg",
+    "start": "2020-09-17T08:30:00",
+    "end": "2020-09-18T14:30:00",
+    "myEvent": true
+  },
+  {
+    "id": 3,
+    "userId": 2,
+    "organizer": "IKA Smantura",
+    "title": "Pelantikan Jabatan",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
+    "image": "http://localhost:3010/static/img/jakarta.jpg",
+    "start": "2020-09-19T08:30:00",
+    "end": "2020-09-19T14:30:00",
+    "myEvent": false
+  },
+  {
+    "id": 4,
+    "userId": 2,
+    "organizer": "IKA Smantura",
+    "title": "Bakti Sosial",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
+    "image": "http://localhost:3010/static/img/jakarta.jpg",
+    "start": "2020-09-20T08:30:00",
+    "end": "2020-09-20T14:30:00",
+    "myEvent": true
+  },
+  {
+    "id": 5,
+    "userId": 3,
+    "organizer": "IKA Smantura",
+    "title": "Seminar Antisipasi COVID-19",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
+    "image": "http://localhost:3010/static/img/jakarta.jpg",
+    "start": "2020-09-20T08:30:00",
+    "end": "2020-09-20T14:30:00",
+    "myEvent": false
+  }
+]

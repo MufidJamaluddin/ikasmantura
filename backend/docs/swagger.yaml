@@ -1,0 +1,1487 @@
+definitions:
+  dto.AboutDto:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: integer
+      description:
+        type: string
+      id:
+        type: integer
+      mission:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: integer
+      vision:
+        type: string
+    type: object
+  dto.AlbumDto:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: integer
+      id:
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: integer
+      userId:
+        type: integer
+    type: object
+  dto.AlbumParam:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: integer
+      id:
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: integer
+      userId:
+        type: integer
+    type: object
+  dto.AlbumPhotoDto:
+    properties:
+      albumId:
+        type: integer
+      createdAt:
+        type: string
+      createdBy:
+        type: integer
+      id:
+        type: integer
+      image:
+        type: string
+      thumbnail:
+        type: string
+      title:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: integer
+    type: object
+  dto.AlbumPhotoParam:
+    properties:
+      albumId:
+        type: integer
+      createdAt:
+        type: string
+      createdBy:
+        type: integer
+      id:
+        type: integer
+      image:
+        type: string
+      thumbnail:
+        type: string
+      title:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: integer
+    type: object
+  dto.ArticleDto:
+    properties:
+      body:
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: integer
+      id:
+        type: integer
+      image:
+        type: string
+      title:
+        type: string
+      topicId:
+        type: integer
+      updatedAt:
+        type: string
+      updatedBy:
+        type: integer
+      userId:
+        type: integer
+    type: object
+  dto.ArticleParam:
+    properties:
+      body:
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: integer
+      id:
+        type: integer
+      image:
+        type: string
+      title:
+        type: string
+      topicId:
+        type: integer
+      updatedAt:
+        type: string
+      updatedBy:
+        type: integer
+      userId:
+        type: integer
+    type: object
+  dto.ArticleTopicDto:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: integer
+    type: object
+  dto.ArticleTopicParam:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: integer
+    type: object
+  dto.DepartmentDto:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+      type:
+        type: integer
+      updatedAt:
+        type: string
+      updatedBy:
+        type: integer
+      userFullname:
+        type: string
+      userId:
+        type: integer
+    type: object
+  dto.DepartmentParam:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+      type:
+        type: integer
+      updatedAt:
+        type: string
+      updatedBy:
+        type: integer
+      userFullname:
+        type: string
+      userId:
+        type: integer
+    type: object
+  dto.EventDto:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: integer
+      createdByName:
+        type: string
+      description:
+        type: string
+      end:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      myEvent:
+        type: boolean
+      organizer:
+        type: string
+      registration:
+        $ref: '#/definitions/dto.UserEventDto'
+        type: object
+      start:
+        type: string
+      title:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: integer
+      userId:
+        type: integer
+    type: object
+  dto.EventParam:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: integer
+      createdByName:
+        type: string
+      description:
+        type: string
+      end:
+        type: string
+      end_lte:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      myEvent:
+        type: boolean
+      organizer:
+        type: string
+      registration:
+        $ref: '#/definitions/dto.UserEventDto'
+        type: object
+      start:
+        type: string
+      start_gte:
+        type: string
+      title:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: integer
+      userId:
+        type: integer
+    type: object
+  dto.LoginDto:
+    properties:
+      data:
+        $ref: '#/definitions/dto.UserDto'
+        type: object
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  dto.UserAddressDto:
+    properties:
+      city:
+        type: string
+      id:
+        type: integer
+      street:
+        type: string
+      suite:
+        type: string
+      zipcode:
+        type: string
+    type: object
+  dto.UserDto:
+    properties:
+      address:
+        $ref: '#/definitions/dto.UserAddressDto'
+        type: object
+      createdAt:
+        type: string
+      createdBy:
+        type: integer
+      email:
+        type: string
+      id:
+        type: integer
+      isAdmin:
+        type: boolean
+      name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: integer
+      username:
+        type: string
+    type: object
+  dto.UserEventDto:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: integer
+      eventId:
+        type: integer
+      id:
+        type: integer
+      userId:
+        type: integer
+    type: object
+  dto.UserParam:
+    properties:
+      address:
+        $ref: '#/definitions/dto.UserAddressDto'
+        type: object
+      createdAt:
+        type: string
+      createdBy:
+        type: integer
+      email:
+        type: string
+      id:
+        type: integer
+      isAdmin:
+        type: boolean
+      name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: integer
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+  license: {}
+paths:
+  /api/v1/about/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Update About of IKA SMAN Situraja Website
+      parameters:
+      - description: About ID (default 1)
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.AboutDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Update Web About
+      tags:
+      - Web Info
+  /api/v1/album/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete one album by id
+      parameters:
+      - description: Album ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/dto.AlbumDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Delete one album by id
+      tags:
+      - Album
+  /api/v1/albums:
+    get:
+      consumes:
+      - application/json
+      description: Get album data with pagination
+      parameters:
+      - in: query
+        name: createdAt
+        type: string
+      - in: query
+        name: createdBy
+        type: integer
+      - in: query
+        name: id
+        type: integer
+      - in: query
+        name: title
+        type: string
+      - in: query
+        name: updatedAt
+        type: string
+      - in: query
+        name: updatedBy
+        type: integer
+      - in: query
+        name: userId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.AlbumDto'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Search album data
+      tags:
+      - Album
+    post:
+      consumes:
+      - application/json
+      description: Save album
+      parameters:
+      - description: New Album Data
+        in: body
+        name: q
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AlbumDto'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/dto.AlbumDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Save album
+      tags:
+      - Album
+  /api/v1/albums/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get album data by id
+      parameters:
+      - description: Album ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.AlbumDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Get one album data by id
+      tags:
+      - Album
+    put:
+      consumes:
+      - application/json
+      description: Update album
+      parameters:
+      - description: Album ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: New Album Data
+        in: body
+        name: q
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AlbumDto'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/dto.AlbumDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Update album
+      tags:
+      - Album
+  /api/v1/article/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete one article by id
+      parameters:
+      - description: Article ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ArticleDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Delete one article by id
+      tags:
+      - Article
+  /api/v1/articles:
+    get:
+      consumes:
+      - application/json
+      description: Get article data with pagination
+      parameters:
+      - in: query
+        name: body
+        type: string
+      - in: query
+        name: createdAt
+        type: string
+      - in: query
+        name: createdBy
+        type: integer
+      - in: query
+        name: id
+        type: integer
+      - in: query
+        name: image
+        type: string
+      - in: query
+        name: title
+        type: string
+      - in: query
+        name: topicId
+        type: integer
+      - in: query
+        name: updatedAt
+        type: string
+      - in: query
+        name: updatedBy
+        type: integer
+      - in: query
+        name: userId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ArticleDto'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Search article data
+      tags:
+      - Article
+  /api/v1/articles/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get data by id
+      parameters:
+      - description: Article ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ArticleDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Get one data by id
+      tags:
+      - Article
+    put:
+      consumes:
+      - application/json
+      description: Save article
+      parameters:
+      - description: Article ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: New Article Data
+        in: body
+        name: q
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ArticleDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.ArticleDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Save article
+      tags:
+      - Article
+  /api/v1/auth:
+    delete:
+      consumes:
+      - application/json
+      description: Logout to IKA SMAN Situraja
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Logout
+      tags:
+      - Authentication & Authorization
+    post:
+      consumes:
+      - application/json
+      description: Login to IKA SMAN Situraja
+      parameters:
+      - description: Pagination Options
+        in: body
+        name: q
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LoginDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.LoginDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Login
+      tags:
+      - Authentication & Authorization
+  /api/v1/department/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete one department  by id
+      parameters:
+      - description: Department ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/dto.DepartmentDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Delete one department  by id
+      tags:
+      - User Management
+  /api/v1/departments:
+    get:
+      consumes:
+      - application/json
+      description: Search Department
+      parameters:
+      - in: query
+        name: createdAt
+        type: string
+      - in: query
+        name: createdBy
+        type: integer
+      - in: query
+        name: id
+        type: integer
+      - in: query
+        name: name
+        type: string
+      - in: query
+        name: type
+        type: integer
+      - in: query
+        name: updatedAt
+        type: string
+      - in: query
+        name: updatedBy
+        type: integer
+      - in: query
+        name: userFullname
+        type: string
+      - in: query
+        name: userId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.DepartmentDto'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Search Department
+      tags:
+      - User Management
+    post:
+      consumes:
+      - application/json
+      description: Update department
+      parameters:
+      - description: New Department Data
+        in: body
+        name: q
+        required: true
+        schema:
+          $ref: '#/definitions/dto.DepartmentDto'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/dto.DepartmentDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Save department
+      tags:
+      - User Management
+  /api/v1/departments/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get data by id
+      parameters:
+      - description: Department ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.DepartmentDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Get one data by id
+      tags:
+      - User Management
+    put:
+      consumes:
+      - application/json
+      description: Update department
+      parameters:
+      - description: Department ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: New Department Data
+        in: body
+        name: q
+        required: true
+        schema:
+          $ref: '#/definitions/dto.DepartmentDto'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/dto.DepartmentDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Update department
+      tags:
+      - User Management
+  /api/v1/event/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete one event  by id
+      parameters:
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/dto.EventDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Delete one event  by id
+      tags:
+      - Event Management
+  /api/v1/event_register/{id}:
+    post:
+      consumes:
+      - application/json
+      description: Register event
+      parameters:
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Register event
+      tags:
+      - Event Management
+  /api/v1/events:
+    get:
+      consumes:
+      - application/json
+      description: Search Event
+      parameters:
+      - in: query
+        name: createdAt
+        type: string
+      - in: query
+        name: createdBy
+        type: integer
+      - in: query
+        name: createdByName
+        type: string
+      - in: query
+        name: description
+        type: string
+      - in: query
+        name: end
+        type: string
+      - in: query
+        name: end_lte
+        type: string
+      - in: query
+        name: id
+        type: integer
+      - in: query
+        name: image
+        type: string
+      - in: query
+        name: myEvent
+        type: boolean
+      - in: query
+        name: organizer
+        type: string
+      - in: query
+        name: start
+        type: string
+      - in: query
+        name: start_gte
+        type: string
+      - in: query
+        name: title
+        type: string
+      - in: query
+        name: updatedAt
+        type: string
+      - in: query
+        name: updatedBy
+        type: integer
+      - in: query
+        name: userId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.EventDto'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Search Event
+      tags:
+      - Event Management
+    post:
+      consumes:
+      - application/json
+      description: Save event
+      parameters:
+      - description: New Event Data
+        in: body
+        name: q
+        required: true
+        schema:
+          $ref: '#/definitions/dto.EventDto'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/dto.EventDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Save event
+      tags:
+      - Event Management
+  /api/v1/events/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get data by id
+      parameters:
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.EventDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Get one data by id
+      tags:
+      - Event Management
+    put:
+      consumes:
+      - application/json
+      description: Update event
+      parameters:
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: New Event Data
+        in: body
+        name: q
+        required: true
+        schema:
+          $ref: '#/definitions/dto.EventDto'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/dto.EventDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Update event
+      tags:
+      - Event Management
+  /api/v1/photos:
+    get:
+      consumes:
+      - application/json
+      description: Get photo data with pagination
+      parameters:
+      - in: query
+        name: albumId
+        type: integer
+      - in: query
+        name: createdAt
+        type: string
+      - in: query
+        name: createdBy
+        type: integer
+      - in: query
+        name: id
+        type: integer
+      - in: query
+        name: image
+        type: string
+      - in: query
+        name: thumbnail
+        type: string
+      - in: query
+        name: title
+        type: string
+      - in: query
+        name: updatedAt
+        type: string
+      - in: query
+        name: updatedBy
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.AlbumPhotoDto'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Search photo data
+      tags:
+      - Album
+    put:
+      consumes:
+      - application/json
+      description: Save photo
+      parameters:
+      - description: New AlbumPhoto Data
+        in: body
+        name: q
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AlbumPhotoDto'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/dto.AlbumPhotoDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Save photo
+      tags:
+      - Album
+  /api/v1/photos/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete one album photo by id
+      parameters:
+      - description: Album Photo ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/dto.AlbumPhotoDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Delete one album photo by id
+      tags:
+      - Album
+    get:
+      consumes:
+      - application/json
+      description: Get album photo data by id
+      parameters:
+      - description: Album Photo ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.AlbumPhotoDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Get one album photo data by id
+      tags:
+      - Album
+    put:
+      consumes:
+      - application/json
+      description: Update photo
+      parameters:
+      - description: AlbumPhoto ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: New AlbumPhoto Data
+        in: body
+        name: q
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AlbumPhotoDto'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/dto.AlbumPhotoDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Update photo
+      tags:
+      - Album
+  /api/v1/user/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete one user by id
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/dto.UserDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Delete one user by id
+      tags:
+      - User Management
+  /api/v1/users:
+    get:
+      consumes:
+      - application/json
+      description: Search Department
+      parameters:
+      - in: query
+        name: createdAt
+        type: string
+      - in: query
+        name: createdBy
+        type: integer
+      - in: query
+        name: email
+        type: string
+      - in: query
+        name: id
+        type: integer
+      - in: query
+        name: isAdmin
+        type: boolean
+      - in: query
+        name: name
+        type: string
+      - in: query
+        name: password
+        type: string
+      - in: query
+        name: phone
+        type: string
+      - in: query
+        name: updatedAt
+        type: string
+      - in: query
+        name: updatedBy
+        type: integer
+      - in: query
+        name: username
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.UserDto'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Search Department
+      tags:
+      - User Management
+    post:
+      consumes:
+      - application/json
+      description: Add new user
+      parameters:
+      - description: New User Data
+        in: body
+        name: q
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserDto'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/dto.UserDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Add new user
+      tags:
+      - User
+  /api/v1/users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get data by id
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UserDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Get one data by id
+      tags:
+      - User Management
+    put:
+      consumes:
+      - application/json
+      description: Update user
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: New User Data
+        in: body
+        name: q
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserDto'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/dto.UserDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Update user
+      tags:
+      - User
+swagger: "2.0"

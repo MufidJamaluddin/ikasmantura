@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Ticket {{.EventId}}</title>
+</head>
+<body>
+<div id="top" class="page" role="document">
+    <header role="banner">
+        <h1>Ticket Agenda {{.EventName}}</h1>
+    </header>
+
+    <main role="main">
+        <section id="text">
+            <header><h1>Text</h1></header>
+
+            <article id="text__headings">
+                <header>
+                    <h1>Diselenggarakan Oleh {{.Organizer}}</h1>
+                </header>
+
+                <div>
+                    <h2>Mulai Acara : {{.StartStr}}</h2>
+                    <h2>Akhir Acara : {{.EndStr}}</h2>
+                </div>
+
+                <footer><p><a href="#top">[Top]</a></p></footer>
+            </article>
+
+            <article id="text__paragraphs">
+                <header><h1>Deskripsi Acara</h1></header>
+
+                <div>
+                    <p>{{.Description}}</p>
+                </div>
+
+                <footer><p><a href="#top">[Top]</a></p></footer>
+            </article>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <p>Ikatan ALumni SMA Negeri Situraja | <a href="http://ikadev.guidecita.com/">IKA</a></p>
+    </footer>
+</div>
+</body>
+</html>

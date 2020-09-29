@@ -1,0 +1,123 @@
+[
+  {
+    "id": 1,
+    "name": "Ketua",
+    "type": 1,
+    "userId": 1,
+    "userFullname": "Leanne Graham"
+  },
+  {
+    "id": 2,
+    "name": "Wakil Ketua",
+    "type": 1,
+    "userId": 2
+  },
+  {
+    "id": 3,
+    "name": "Sekretaris Umum",
+    "type": 1,
+    "userId": 3
+  },
+  {
+    "id": 4,
+    "name": "Wakil Sekretaris 1",
+    "type": 1,
+    "userId": 4
+  },
+  {
+    "id": 5,
+    "name": "Wakil Sekretaris 2",
+    "type": 1,
+    "userId": 5
+  },
+  {
+    "id": 6,
+    "name": "Bendahara",
+    "type": 1,
+    "userId": 6
+  },
+  {
+    "id": 7,
+    "name": "Wakil Bendahara 1",
+    "type": 1,
+    "userId": 7
+  },
+  {
+    "id": 8,
+    "name": "Wakil Bendahara 2",
+    "type": 1,
+    "userId": 8
+  },
+  {
+    "id": 9,
+    "name": "Bidang Pengembangan SDM",
+    "type": 1,
+    "userId": 9
+  },
+  {
+    "id": 10,
+    "name": "Bidang Pelayanan Alumni",
+    "type": 1,
+    "userId": 10
+  },
+  {
+    "id": 11,
+    "name": "Bidang Kemitraan",
+    "type": 1,
+    "userId": 10
+  },
+  {
+    "id": 12,
+    "name": "Bidang Hubungan Almamater",
+    "type": 1,
+    "userId": 9
+  },
+  {
+    "id": 13,
+    "name": "Ketua Angkatan 2013",
+    "type": 1,
+    "userId": 8
+  },
+  {
+    "id": 14,
+    "name": "Ketua Angkatan 2014",
+    "type": 1,
+    "userId": 7
+  },
+  {
+    "id": 15,
+    "name": "Ketua Angkatan 2015",
+    "type": 1,
+    "userId": 6
+  },
+  {
+    "id": 16,
+    "name": "Ketua Angkatan 2016",
+    "type": 1,
+    "userId": 5
+  },
+  {
+    "id": 17,
+    "name": "Ketua Angkatan 2017",
+    "type": 1,
+    "userId": 4
+  },
+  {
+    "id": 18,
+    "name": "Ketua Angkatan 2018",
+    "type": 1,
+    "userId": 3
+  },
+  {
+    "id": 19,
+    "name": "Ketua Angkatan 2019",
+    "type": 1,
+    "userId": 2
+  },
+  {
+    "id": 20,
+    "name": "Ketua Angkatan 2020",
+    "type": 1,
+    "userId": 1
+  }
+]

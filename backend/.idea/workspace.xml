@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="C:\Go" />
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+  </component>
+  <component name="ProjectId" id="1ho8gMlEIdgyRcv0W1D35I8hyEs" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/handlers" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\SMANTURA\webika\backend\views\template" />
+      <recent name="D:\SMANTURA\webika\backend" />
+      <recent name="D:\SMANTURA\webika\backend\app" />
+      <recent name="D:\SMANTURA\webika\backend\services" />
+      <recent name="D:\SMANTURA\webika\backend\repository" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\SMANTURA\webika\backend\handlers" />
+      <recent name="D:\SMANTURA\webika\backend\error" />
+      <recent name="D:\SMANTURA\webika\backend\common" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="go build backend" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <package value="backend" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build backend" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="441" y="217" key="#Go_Modules" timestamp="1600666951415">
+      <screen x="0" y="0" width="1299" height="768" />
+    </state>
+    <state x="441" y="217" key="#Go_Modules/0.0.1299.768@0.0.1299.768" timestamp="1600666951415" />
+    <state x="542" y="244" key="EnvironmentVariablesDialog" timestamp="1600666945282">
+      <screen x="0" y="0" width="1299" height="768" />
+    </state>
+    <state x="542" y="244" key="EnvironmentVariablesDialog/0.0.1299.768@0.0.1299.768" timestamp="1600666945282" />
+    <state x="429" y="139" key="FileChooserDialogImpl" timestamp="1600958206171">
+      <screen x="0" y="0" width="1299" height="768" />
+    </state>
+    <state x="429" y="139" key="FileChooserDialogImpl/0.0.1299.768@0.0.1299.768" timestamp="1600958206171" />
+    <state width="1255" height="272" key="GridCell.Tab.0.bottom" timestamp="1601052635959">
+      <screen x="0" y="0" width="1298" height="768" />
+    </state>
+    <state width="1255" height="272" key="GridCell.Tab.0.bottom/0.0.1298.768@0.0.1298.768" timestamp="1601052635959" />
+    <state width="1255" height="272" key="GridCell.Tab.0.center" timestamp="1601052635959">
+      <screen x="0" y="0" width="1298" height="768" />
+    </state>
+    <state width="1255" height="272" key="GridCell.Tab.0.center/0.0.1298.768@0.0.1298.768" timestamp="1601052635959" />
+    <state width="1255" height="272" key="GridCell.Tab.0.left" timestamp="1601052635959">
+      <screen x="0" y="0" width="1298" height="768" />
+    </state>
+    <state width="1255" height="272" key="GridCell.Tab.0.left/0.0.1298.768@0.0.1298.768" timestamp="1601052635959" />
+    <state width="1255" height="272" key="GridCell.Tab.0.right" timestamp="1601052635959">
+      <screen x="0" y="0" width="1298" height="768" />
+    </state>
+    <state width="1255" height="272" key="GridCell.Tab.0.right/0.0.1298.768@0.0.1298.768" timestamp="1601052635959" />
+    <state x="149" y="29" key="SettingsEditor" timestamp="1601044222694">
+      <screen x="0" y="0" width="1296" height="768" />
+    </state>
+    <state x="149" y="29" key="SettingsEditor/0.0.1296.768@0.0.1296.768" timestamp="1601044222694" />
+    <state x="312" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1601126189971">
+      <screen x="0" y="0" width="1298" height="768" />
+    </state>
+    <state x="312" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1298.768@0.0.1298.768" timestamp="1601126189971" />
+    <state x="312" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1299.768@0.0.1299.768" timestamp="1600905904444" />
+  </component>
+</project>
