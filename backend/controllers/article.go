@@ -54,6 +54,7 @@ func (p *ArticleController) SearchArticle(c *fiber.Ctx) error {
 		)
 		if dt == nil {
 			response = []byte("{}")
+			_, _ = c.Write(response)
 		} else if response, e = json.Marshal(dt); e == nil {
 			_, _ = c.Write(response)
 		}

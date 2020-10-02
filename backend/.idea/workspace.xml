@@ -89,7 +89,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactoring" />
+    <MESSAGE value="Add Comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Comments" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -99,14 +100,16 @@
       <screen x="0" y="0" width="1299" height="768" />
     </state>
     <state x="441" y="217" key="#Go_Modules/0.0.1299.768@0.0.1299.768" timestamp="1600666951415" />
-    <state x="274" y="0" key="CommitChangelistDialog2" timestamp="1601400251914">
-      <screen x="0" y="0" width="1298" height="768" />
+    <state x="275" y="0" key="CommitChangelistDialog2" timestamp="1601656250028">
+      <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="274" y="0" key="CommitChangelistDialog2/0.0.1298.768@0.0.1298.768" timestamp="1601400251914" />
-    <state x="122" y="59" key="DiffContextDialog" timestamp="1601400168939">
-      <screen x="0" y="0" width="1298" height="768" />
+    <state x="275" y="0" key="CommitChangelistDialog2/0.0.1301.768@0.0.1301.768" timestamp="1601656250028" />
+    <state x="122" y="59" key="DiffContextDialog" timestamp="1601656243665">
+      <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="122" y="59" key="DiffContextDialog/0.0.1298.768@0.0.1298.768" timestamp="1601400168939" />
+    <state x="122" y="59" key="DiffContextDialog/0.0.1301.768@0.0.1301.768" timestamp="1601656243665" />
     <state x="542" y="244" key="EnvironmentVariablesDialog" timestamp="1600666945282">
       <screen x="0" y="0" width="1299" height="768" />
     </state>
@@ -135,11 +138,11 @@
       <screen x="0" y="0" width="1296" height="768" />
     </state>
     <state x="149" y="29" key="SettingsEditor/0.0.1296.768@0.0.1296.768" timestamp="1601044222694" />
-    <state x="242" y="117" key="Vcs.Push.Dialog.v2" timestamp="1601655421605">
+    <state x="242" y="117" key="Vcs.Push.Dialog.v2" timestamp="1601656257361">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="241" y="117" key="Vcs.Push.Dialog.v2/0.0.1298.768@0.0.1298.768" timestamp="1601400264504" />
-    <state x="242" y="117" key="Vcs.Push.Dialog.v2/0.0.1301.768@0.0.1301.768" timestamp="1601655421605" />
+    <state x="242" y="117" key="Vcs.Push.Dialog.v2/0.0.1301.768@0.0.1301.768" timestamp="1601656257361" />
     <state x="312" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1601126189971">
       <screen x="0" y="0" width="1298" height="768" />
     </state>
