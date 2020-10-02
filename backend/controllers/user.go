@@ -44,6 +44,8 @@ func (p *UserController) SearchUser(c *fiber.Ctx) error {
 
 	c.Response().Header.Add("X-Total-Count", fmt.Sprintf("%v", total))
 
+	// RESPONSE ARRAY JSON DATA
+	// HEMAT MEMORY, NGGAK PERLU ALOKASI ARRAY, KIRIM AJA KE CLIENT SECARA MENGALIR
 	counter = 0
 	callback = func(dt *viewmodels.UserDto) {
 		var (
@@ -67,6 +69,7 @@ func (p *UserController) SearchUser(c *fiber.Ctx) error {
 		_, _ = c.Write([]byte("{}"))
 	}
 	_, err = c.Write(utils.ToBytes("]"))
+	// END RESPONSE ARRAY JSON DATA
 
 	return err
 }

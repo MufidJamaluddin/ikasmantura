@@ -44,6 +44,8 @@ func (p *ArticleTopicController) SearchArticle(c *fiber.Ctx) error {
 
 	c.Response().Header.Add("X-Total-Count", fmt.Sprintf("%v", total))
 
+	// RESPONSE ARRAY JSON DATA
+	// HEMAT MEMORY, NGGAK PERLU ALOKASI ARRAY, KIRIM AJA KE CLIENT SECARA MENGALIR
 	counter = 0
 	callback = func(dt *viewmodels.ArticleTopicDto) {
 		var (
@@ -63,10 +65,11 @@ func (p *ArticleTopicController) SearchArticle(c *fiber.Ctx) error {
 
 	_, err = c.Write(utils.ToBytes("["))
 	err = p.Service.Find(&data, callback)
-	if counter < total {
+	if counter < total { // HANDLE SERVICE ERROR, KEBANYAKAN KOMA
 		_, _ = c.Write([]byte("{}"))
 	}
 	_, err = c.Write(utils.ToBytes("]"))
+	// END RESPONSE ARRAY JSON DATA
 
 	return err
 }

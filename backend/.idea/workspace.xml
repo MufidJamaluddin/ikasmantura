@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="" />
+    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/album.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/album.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/albumphoto.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/albumphoto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/article.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/articletopic.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/articletopic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/department.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/department.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/user.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -126,10 +135,11 @@
       <screen x="0" y="0" width="1296" height="768" />
     </state>
     <state x="149" y="29" key="SettingsEditor/0.0.1296.768@0.0.1296.768" timestamp="1601044222694" />
-    <state x="241" y="117" key="Vcs.Push.Dialog.v2" timestamp="1601400264504">
-      <screen x="0" y="0" width="1298" height="768" />
+    <state x="242" y="117" key="Vcs.Push.Dialog.v2" timestamp="1601655421605">
+      <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="241" y="117" key="Vcs.Push.Dialog.v2/0.0.1298.768@0.0.1298.768" timestamp="1601400264504" />
+    <state x="242" y="117" key="Vcs.Push.Dialog.v2/0.0.1301.768@0.0.1301.768" timestamp="1601655421605" />
     <state x="312" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1601126189971">
       <screen x="0" y="0" width="1298" height="768" />
     </state>
