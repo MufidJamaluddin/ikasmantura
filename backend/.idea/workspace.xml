@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="" />
+    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="Handle Response Nil">
+      <change afterPath="$PROJECT_DIR$/env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,6 +49,12 @@
     <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\SMANTURA\ikasmantura\backend" />
+      <recent name="D:\SMANTURA\webika\backend\handlers" />
+      <recent name="D:\SMANTURA\webika\backend\error" />
+      <recent name="D:\SMANTURA\webika\backend\common" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\SMANTURA\webika\backend\views\template" />
       <recent name="D:\SMANTURA\webika\backend" />
@@ -52,13 +62,17 @@
       <recent name="D:\SMANTURA\webika\backend\services" />
       <recent name="D:\SMANTURA\webika\backend\repository" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\SMANTURA\webika\backend\handlers" />
-      <recent name="D:\SMANTURA\webika\backend\error" />
-      <recent name="D:\SMANTURA\webika\backend\common" />
-    </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="backend" />
+      <working_directory value="$PROJECT_DIR$" />
+      <go_parameters value="-i" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
     <configuration name="go build backend" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <working_directory value="$PROJECT_DIR$" />
@@ -92,11 +106,15 @@
       <screen x="0" y="0" width="1299" height="768" />
     </state>
     <state x="441" y="217" key="#Go_Modules/0.0.1299.768@0.0.1299.768" timestamp="1600666951415" />
-    <state x="263" y="-15" key="CommitChangelistDialog2" timestamp="1601656469050">
+    <state x="425" y="186" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1601657439735">
+      <screen x="0" y="0" width="1301" height="768" />
+    </state>
+    <state x="425" y="186" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1301.768@0.0.1301.768" timestamp="1601657439735" />
+    <state x="276" y="0" key="CommitChangelistDialog2" timestamp="1601657360087">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="274" y="0" key="CommitChangelistDialog2/0.0.1298.768@0.0.1298.768" timestamp="1601400251914" />
-    <state x="263" y="-15" key="CommitChangelistDialog2/0.0.1301.768@0.0.1301.768" timestamp="1601656469050" />
+    <state x="276" y="0" key="CommitChangelistDialog2/0.0.1301.768@0.0.1301.768" timestamp="1601657360087" />
     <state x="122" y="59" key="DiffContextDialog" timestamp="1601656243665">
       <screen x="0" y="0" width="1301" height="768" />
     </state>

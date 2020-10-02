@@ -24,7 +24,7 @@ func main() {
 	)
 
 	if err = godotenv.Load(); err != nil {
-		log.Fatal("Error loading .env file")
+		log.Println("Error loading .env file")
 	}
 
 	if sqlDb, err = sql.Open("mysql", os.Getenv("DB_URI")); err != nil {

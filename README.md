@@ -23,7 +23,7 @@ Selain itu, mendukung Hot Reload (kompilasi otomatis saat file diubah) saat deve
 
 ### Cara Jalankan BackEnd
 
-1. Masuk direktori proyek BackEnd
+1. Masuk direktori proyek BackEnd. Ubah file ```env``` menjadi ```.env``` serta sesuaikan isinya. Pastikan anda telah buat database kosongan, dan nama database nya udah dimasukkan kedalam konfigurasi tersebut.
 
 2. Buat Database Kosongan pakai MySQL
 
