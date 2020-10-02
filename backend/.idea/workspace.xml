@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/album.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/album.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/albumphoto.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/albumphoto.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/article.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/articletopic.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/articletopic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/department.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/department.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/event.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/user.go" afterDir="false" />
-    </list>
+    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -90,7 +81,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refactoring" />
     <MESSAGE value="Add Comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Comments" />
+    <MESSAGE value="Handle Response Nil" />
+    <option name="LAST_COMMIT_MESSAGE" value="Handle Response Nil" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -100,11 +92,11 @@
       <screen x="0" y="0" width="1299" height="768" />
     </state>
     <state x="441" y="217" key="#Go_Modules/0.0.1299.768@0.0.1299.768" timestamp="1600666951415" />
-    <state x="275" y="0" key="CommitChangelistDialog2" timestamp="1601656250028">
+    <state x="263" y="-15" key="CommitChangelistDialog2" timestamp="1601656469050">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="274" y="0" key="CommitChangelistDialog2/0.0.1298.768@0.0.1298.768" timestamp="1601400251914" />
-    <state x="275" y="0" key="CommitChangelistDialog2/0.0.1301.768@0.0.1301.768" timestamp="1601656250028" />
+    <state x="263" y="-15" key="CommitChangelistDialog2/0.0.1301.768@0.0.1301.768" timestamp="1601656469050" />
     <state x="122" y="59" key="DiffContextDialog" timestamp="1601656243665">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
@@ -138,11 +130,11 @@
       <screen x="0" y="0" width="1296" height="768" />
     </state>
     <state x="149" y="29" key="SettingsEditor/0.0.1296.768@0.0.1296.768" timestamp="1601044222694" />
-    <state x="242" y="117" key="Vcs.Push.Dialog.v2" timestamp="1601656257361">
+    <state x="242" y="117" key="Vcs.Push.Dialog.v2" timestamp="1601656474412">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="241" y="117" key="Vcs.Push.Dialog.v2/0.0.1298.768@0.0.1298.768" timestamp="1601400264504" />
-    <state x="242" y="117" key="Vcs.Push.Dialog.v2/0.0.1301.768@0.0.1301.768" timestamp="1601656257361" />
+    <state x="242" y="117" key="Vcs.Push.Dialog.v2/0.0.1301.768@0.0.1301.768" timestamp="1601656474412" />
     <state x="312" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1601126189971">
       <screen x="0" y="0" width="1298" height="768" />
     </state>
