@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import React from "react";
 

@@ -5,18 +5,23 @@ import ArticlesItemView from "./views/ArticlesItemView";
 import EventsItemView from "./views/EventsItemView";
 import OrganizationView from "./views/OrganizationView";
 import AboutView from "./views/AboutView";
+import GalleryView from "./views/GalleryView";
+import EventsListView from "./views/EventsListView";
 
 const ROUTES = [
     { title: 'IKA', path: '', exact: true, menu: true, component: HomeView },
 
-    { title: 'About', path: 'about', exact: true, menu: true, component: AboutView },
-    { title: 'Organization', path: 'organization', exact: true, menu: true, component: OrganizationView },
+    { title: 'Tentang Kami', path: 'about', exact: true, menu: true, component: AboutView },
+    { title: 'Organisasi', path: 'organization', exact: true, menu: true, component: OrganizationView },
 
-    { title: 'Articles Item', path: 'news/:id', exact: true, menu: false, component: ArticlesItemView },
-    { title: 'Articles', path: 'news', exact: true, menu: true, component: ArticlesView },
+    { title: 'Articles Item', path: 'articles/:id', exact: true, menu: false, component: ArticlesItemView },
+    { title: 'Articles', path: 'articles', exact: true, menu: true, component: ArticlesView },
 
     { title: 'Event Item', path: 'events/:id', exact: true, menu: false, component: EventsItemView },
     { title: 'Events', path: 'events', exact: true, menu: true, component: EventsView },
+    { title: 'Events List', path: 'events_list', exact: true, menu: true, component: EventsListView },
+
+    { title: 'Galleries', path: 'gallery', exact: true, menu: true, component: GalleryView },
 ]
 
 export default ROUTES

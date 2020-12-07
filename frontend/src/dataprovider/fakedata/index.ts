@@ -3,6 +3,7 @@
  */
 import users from './users.json'
 import departments from './departments.json'
+import topics from './topics.json'
 import articles from './articles.json'
 import events from './events.json'
 import albums from './albums.json'
@@ -17,14 +18,7 @@ function getFakeData()
         "departments": departments,
         "articles": articles,
         "events_download": [],
-        "article_topics": [{
-                id: 1,
-                name: "Topic 1"
-            },
-            {
-                id: 2,
-                name: "Topic 2"
-            }],
+        "article_topics": topics,
         "events": events,
         "albums": albums,
         "photos": photos,

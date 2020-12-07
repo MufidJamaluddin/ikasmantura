@@ -6,14 +6,13 @@ import moment from "moment";
 import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from '@fullcalendar/daygrid'
 import listGridPlugin from '@fullcalendar/list'
-import { EventClickArg } from '@fullcalendar/core'
+import {EventClickArg} from '@fullcalendar/core'
 
 import idLocale from '@fullcalendar/core/locales/id'
 
-import {NotificationManager} from 'react-notifications';
 import DataProviderFactory from "../../../dataprovider/DataProviderFactory";
 
-import { showNotification } from 'react-admin';
+import {showNotification} from 'react-admin';
 
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';

@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { FC } from 'react';
+import {FC} from 'react';
 import MuiGridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import { makeStyles } from '@material-ui/core/styles';
-import withWidth, { WithWidth } from '@material-ui/core/withWidth';
-import { linkToRecord, NumberField, useListContext } from 'react-admin';
-import { Link } from 'react-router-dom';
-import { DatagridProps } from '../types';
-import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
+import {makeStyles} from '@material-ui/core/styles';
+import withWidth, {WithWidth} from '@material-ui/core/withWidth';
+import {linkToRecord, useListContext} from 'react-admin';
+import {Link} from 'react-router-dom';
+import {DatagridProps} from '../types';
+import {Breakpoint} from '@material-ui/core/styles/createBreakpoints';
 
 const useStyles = makeStyles(theme => ({
     gridList: {

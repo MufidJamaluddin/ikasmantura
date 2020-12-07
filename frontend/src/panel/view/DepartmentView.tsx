@@ -1,12 +1,24 @@
 import * as React from "react";
 import {
-    List, Datagrid, TextField,  EditButton, ShowButton,
-    Filter, TextInput, SimpleList,
-    SimpleShowLayout, Show, Create,
-    Edit, SimpleForm, ReferenceField, ReferenceInput, AutocompleteInput
+    AutocompleteInput,
+    Create,
+    Datagrid,
+    Edit,
+    EditButton,
+    Filter,
+    List,
+    ReferenceField,
+    ReferenceInput,
+    Show,
+    ShowButton,
+    SimpleForm,
+    SimpleList,
+    SimpleShowLayout,
+    TextField,
+    TextInput
 } from 'react-admin';
 
-import { useMediaQuery } from '@material-ui/core';
+import {useMediaQuery} from '@material-ui/core';
 
 const DepartmentTitle = ({ record }) => {
     return <span>{record.name ?? 'Create Department'}</span>;

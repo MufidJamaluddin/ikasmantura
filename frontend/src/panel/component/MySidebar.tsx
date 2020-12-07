@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Sidebar } from 'react-admin';
-import { makeStyles } from '@material-ui/core/styles';
+import {Sidebar} from 'react-admin';
+import {makeStyles} from '@material-ui/core/styles';
 
 const useSidebarStyles = makeStyles({
     drawerPaper: {

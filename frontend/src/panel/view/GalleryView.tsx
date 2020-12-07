@@ -1,25 +1,27 @@
 import React, {FC} from 'react';
 import {
-    Filter,
-    TextInput,
-    ReferenceInput,
-    AutocompleteArrayInput, AutocompleteInput,
-    TextField,
-    ImageField,
-    ReferenceField,
-    Title,
-    ListBase,
-    Show,
-    SimpleShowLayout,
-    Create, SimpleForm, ImageInput,
-    Edit,
-    TopToolbar,
+    AutocompleteArrayInput,
+    AutocompleteInput,
+    Create,
     CreateButton,
+    Edit,
     ExportButton,
-    SortButton,
+    Filter,
+    ImageField,
+    ImageInput,
+    ListBase,
     Pagination,
+    ReferenceField,
+    ReferenceInput,
+    Show,
+    SimpleForm,
+    SimpleShowLayout,
+    TextField,
+    TextInput,
+    Title,
+    TopToolbar,
 } from 'react-admin';
-import { Box, Chip, useMediaQuery, Theme } from '@material-ui/core';
+import {Box, Theme, useMediaQuery} from '@material-ui/core';
 import GridList from "./GalleryGridList";
 
 const GalleryTitle = ({ record }) => {

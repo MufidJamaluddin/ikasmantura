@@ -1,16 +1,30 @@
 import * as React from "react";
 import {
-    List, Datagrid, TextField, EditButton, ShowButton,
-    Filter, TextInput, DateInput, SimpleList, DateField, RichTextField,
-    SimpleShowLayout, Show, ImageField, ImageInput,
-    Edit, SimpleForm, ReferenceField,
     Create,
-    ReferenceInput
+    Datagrid,
+    DateField,
+    DateInput,
+    Edit,
+    EditButton,
+    Filter,
+    ImageField,
+    ImageInput,
+    List,
+    ReferenceField,
+    ReferenceInput,
+    RichTextField,
+    Show,
+    ShowButton,
+    SimpleForm,
+    SimpleList,
+    SimpleShowLayout,
+    TextField,
+    TextInput
 } from 'react-admin';
 
 import RichTextInput from 'ra-input-rich-text';
 
-import { useMediaQuery } from '@material-ui/core';
+import {useMediaQuery} from '@material-ui/core';
 import moment from "moment";
 import {dateParser} from "../../utils/DateUtil";
 

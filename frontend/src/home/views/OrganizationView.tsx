@@ -4,6 +4,9 @@ import {Pagination, Sort} from "ra-core/src/types";
 import {GetListParams} from 'ra-core'
 
 import {NotificationManager} from 'react-notifications';
+import RegeTitle from "../component/RegeTitle";
+import {Card, Container} from "react-bootstrap";
+import Image from "../component/Image";
 
 interface OrganizationViewState {
     total: number;
@@ -40,7 +43,7 @@ export default class OrganizationView
         let dataProvider = DataProviderFactory.getDataProvider()
 
         dataProvider.getList("departments", this.state as GetListParams).then(resp => {
-            if(resp.total == 0) {
+            if(resp.total === 0) {
                 NotificationManager.warning('Tidak ada data');
             }
             this.setState(state => {
@@ -70,25 +73,34 @@ export default class OrganizationView
         ]
 
         return (
-            <div className={"c-g-banner c-p-full-height c-text-center"}>
-                <h1 className={"lead"}>Struktur Organisasi</h1>
-                <div className={'c-center-wrapper'}>
-                    {
-                        data.map((item, key) => {
-                            return <div key={item.id} className="c-card c-card-large">
-                                <img className={"c-img-full"}
-                                     src={item.image ??
-                                        process.env.PUBLIC_URL + images[key % 3]}
-                                     alt="Avatar"/>
-                                <div className="c-container">
-                                    <p className={"lead"}>{item.userFullname ?? '-'}</p>
-                                    <b>{item.name}</b>
+            <section className="features-icons bg-light">
+                <RegeTitle>
+                    <h1 className="text-center display-4">
+                        Struktur Organisasi
+                    </h1>
+                </RegeTitle>
+                <Container>
+                    <div className="row justify-content-center mb-3">
+                        {
+                            data.map((item, key) => {
+                                return <div className="col-auto mb-2" key={item.id}>
+                                    <Card style={{'width':'12rem'}} className="h-100">
+                                        <Image
+                                            className="card-img-top"
+                                            src={item.image ?? process.env.PUBLIC_URL + images[key % 3]}
+                                            fallbackSrc={process.env.PUBLIC_URL + images[0]}
+                                            alt={item.name}/>
+                                        <Card.Body>
+                                            <p className={"lead"}>{item.userFullname ?? '<Kak IKA>'}</p>
+                                            <b>{item.name}</b>
+                                        </Card.Body>
+                                    </Card>
                                 </div>
-                            </div>
-                        })
-                    }
-                </div>
-            </div>
+                            })
+                        }
+                    </div>
+                </Container>
+            </section>
         )
     }
 }

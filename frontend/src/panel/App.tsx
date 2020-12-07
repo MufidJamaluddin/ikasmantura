@@ -1,11 +1,11 @@
 import * as React from "react";
-import { Admin, Resource } from 'react-admin';
+import {Admin, Resource} from 'react-admin';
 
 import DashboardView from "./view/DashboardView";
 import authProvider from "./authProvider";
 import LoginView from "./view/LoginView";
 
-import { createMuiTheme } from '@material-ui/core/styles';
+import {createMuiTheme} from '@material-ui/core/styles';
 import MyLayout from "./component/MyLayout";
 
 import DataProviderFactory from "../dataprovider/DataProviderFactory";

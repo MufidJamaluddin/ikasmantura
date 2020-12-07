@@ -1,0 +1,29 @@
+.rege-title {
+    background-color: #3498db;
+    width: 100%;
+    height: auto;
+    padding: 0;
+    border: 0;
+}
+
+.rege-title-color {
+    color: #f8f9fa;
+}
+
+@media only screen and (max-width: 567px)
+{
+    .rege-title .rege-image {
+        display: none;
+    }
+
+    .rege-title {
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .display-4 {
+        font-size: 2rem !important;
+        font-weight: 10;
+        line-height: 1.2;
+    }
+}

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Card, CardContent, CardHeader } from '@material-ui/core';
+import {Card, CardContent, CardHeader} from '@material-ui/core';
 import MyEventsView from "./dashboard/MyEventsView";
 import authProvider from "../authProvider";
 

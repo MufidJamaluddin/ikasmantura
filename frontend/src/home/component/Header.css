@@ -1,0 +1,76 @@
+.logo-brand{
+    height: 50px;
+    width: 50px;
+    border: 2px solid #dce6e8;
+    border-radius: 50px;
+    margin-right: 10px;
+    margin-top: -15px;
+}
+
+.navbar {
+    background-color: #3498db !important;
+}
+
+.navbar-brand{
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: 24px;
+    margin-top: 15px;
+}
+
+.navbar-brand img {
+    background-color: white !important;
+}
+
+.navbar-light .navbar-nav {
+    margin-top: 15px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #d8e9f0;
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.navbar-light .navbar-nav .nav-item {
+    margin: 0 5px;
+}
+
+.navbar-light .navbar-nav .dropdown:hover>.dropdown-menu {
+    display: block;
+    animation-duration: 0.5s;
+    transition: 0.4s ease-in-out;
+}
+
+.navbar-light .navbar-nav .nav-item .dropdown-menu{
+    background-color: #3498db;
+}
+
+.navbar-light .navbar-nav .nav-item .dropdown-menu .dropdown-item{
+    color: #d8e9f0;
+}
+
+.navbar-light .navbar-nav .nav-item .dropdown-menu .dropdown-item:hover{
+    background-color: #343a40;
+    padding-left: 30px;
+}
+
+.navbar-light .navbar-nav .btn-group .btn-account{
+    color: #d8e9f0;
+    border: 2px solid #d8e9f0;
+    border-radius: 20px;
+    max-height: 50px;
+}
+
+.navbar-light .navbar-nav .btn-group .dropdown-account{
+    border-radius: 10px;
+    margin-left: 5px;
+    margin-top: 5px;
+    position: absolute;
+    width: 100%;
+}
+
+.navbar-light .navbar-nav .btn-group .dropdown-account .dropdown-item:hover{
+    padding-left: 20px;
+}

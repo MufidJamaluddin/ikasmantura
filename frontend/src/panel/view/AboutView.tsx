@@ -1,11 +1,6 @@
 import * as React from "react";
 
-import {
-    Edit, SimpleForm, TextInput,
-    RichTextField, Show, SimpleShowLayout,
-    List, SimpleList
-    // @ts-ignore
-} from 'react-admin';
+import {Edit, RichTextField, Show, SimpleForm, SimpleShowLayout, TextInput} from 'react-admin';
 
 import RichTextInput from 'ra-input-rich-text';
 

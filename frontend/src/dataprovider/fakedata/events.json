@@ -6,6 +6,7 @@
     "title": "Reuni Akbar",
     "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
     "image": "http://localhost:3010/static/img/jakarta.jpg",
+    "thumbnail": "http://localhost:3010/static/img/jakarta.jpg",
     "start": "2020-09-16T08:30:00",
     "end": "2020-09-16T14:30:00",
     "myEvent": false
@@ -17,6 +18,7 @@
     "title": "Perpisahan",
     "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
     "image": "http://localhost:3010/static/img/jakarta.jpg",
+    "thumbnail": "http://localhost:3010/static/img/jakarta.jpg",
     "start": "2020-09-17T08:30:00",
     "end": "2020-09-18T14:30:00",
     "myEvent": true
@@ -28,6 +30,7 @@
     "title": "Pelantikan Jabatan",
     "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
     "image": "http://localhost:3010/static/img/jakarta.jpg",
+    "thumbnail": "http://localhost:3010/static/img/jakarta.jpg",
     "start": "2020-09-19T08:30:00",
     "end": "2020-09-19T14:30:00",
     "myEvent": false
@@ -39,6 +42,7 @@
     "title": "Bakti Sosial",
     "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
     "image": "http://localhost:3010/static/img/jakarta.jpg",
+    "thumbnail": "http://localhost:3010/static/img/jakarta.jpg",
     "start": "2020-09-20T08:30:00",
     "end": "2020-09-20T14:30:00",
     "myEvent": true
@@ -50,6 +54,7 @@
     "title": "Seminar Antisipasi COVID-19",
     "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
     "image": "http://localhost:3010/static/img/jakarta.jpg",
+    "thumbnail": "http://localhost:3010/static/img/jakarta.jpg",
     "start": "2020-09-20T08:30:00",
     "end": "2020-09-20T14:30:00",
     "myEvent": false

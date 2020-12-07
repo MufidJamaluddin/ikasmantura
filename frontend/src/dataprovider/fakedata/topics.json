@@ -1,23 +1,30 @@
 [
   {
     "id": 1,
-    "name": "Pekerjaan",
+    "name": "Beasiswa",
+    "icon": "fas fa-user-graduate text-success",
+    "description": "Artikel dengan topik terkait beasiswa",
     "total": 5
   },
-
   {
     "id": 2,
-    "name": "Tips",
+    "name": "Expo Campuss",
+    "icon": "fas fa-university text-danger",
+    "description": "Artikel berkaitan kampus keren",
     "total": 10
   },
   {
     "id": 3,
-    "name": "Teknologi",
+    "name": "Kisah Inspiratif",
+    "icon": "fas fa-users m-auto text-primary",
+    "description": "Kisah inspiratif dari alumni",
     "total": 16
   },
   {
     "id": 4,
-    "name": "Fashion",
+    "name": "Info Loker",
+    "icon": "fas fa-city m-auto text-warning",
+    "description": "Informasi lowongan kerja dari alumni",
     "total": 19
   }
 ]

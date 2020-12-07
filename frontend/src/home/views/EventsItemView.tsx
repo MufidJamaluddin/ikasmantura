@@ -1,11 +1,15 @@
-import React, { PureComponent } from "react";
+import React, {PureComponent} from "react";
 import {RouteComponentProps} from "react-router";
+
 import moment from "moment";
+import 'moment/locale/id';
+
 import DataProviderFactory from "../../dataprovider/DataProviderFactory";
-
-
 import {NotificationManager} from 'react-notifications';
 import authProvider from "../../panel/authProvider";
+import RegeTitle from "../component/RegeTitle";
+import {Button, Card, Col, Container, Row} from "react-bootstrap";
+import Image from "../component/Image";
 
 interface EventItemState {
     data: any
@@ -20,6 +24,7 @@ export default class EventItemView
         this.state = {
             data: null
         }
+        moment.locale('id');
     }
 
     componentDidMount()
@@ -80,33 +85,54 @@ export default class EventItemView
 
         return (
             <>
-                <img className={"c-img-full"}
-                     src={data.image ?? "/static/img/jakarta.jpg"}
-                     alt="Avatar"/>
-                <div className="c-container-pad c-container-centered">
-                    <h4><b>{data.title}</b></h4>
-                    <p><b>{data.organizer} | {data.createdByName} </b></p>
-                    <p>
-                        <small>
-                            {moment(data.start).format('DD MMMM YYYY HH:MM')}
-                            &nbsp;s.d.&nbsp;
-                            {moment(data.end).format('DD MMMM YYYY HH:MM')}
-                        </small>
-                    </p>
-                    &nbsp;
-                    {
-                        data.myEvent ?
-                        (<span
-                            className={"c-button info"}>Anda Telah Terdaftar</span>)
-                            :
-                        (<button type={"button"}
-                                 className={"c-button info"}
-                                 onClick={() => this.onDaftarClick(data.id)}>Daftar</button>)
-                    }
-                    <p>
-                        {data.description}
-                    </p>
-                </div>
+                <RegeTitle/>
+                <Container>
+                    <Row>
+                        <Col md={{span:10, offset:1}}>
+                            <Card>
+                                <Image
+                                    className="card-img-top"
+                                    src={data.image ?? "/static/img/jakarta.jpg"}
+                                    fallbackSrc={"/static/img/jakarta.jpg"}
+                                    alt={data.name}/>
+                                <Card.Text>
+                                    {
+                                        data.myEvent ?
+                                            (<span
+                                                className={"c-button info"}>Anda Telah Terdaftar</span>)
+                                            :
+                                            (
+                                                <Button className={"c-button info"}
+                                                        onClick={() => this.onDaftarClick(data.id)}>
+                                                    Daftar Jadi Peserta
+                                                </Button>
+                                            )
+                                    }
+                                </Card.Text>
+                                <Card.Title>
+                                    <h1 className="text-center">{data.title}</h1>
+                                </Card.Title>
+                                <Card.Text>
+                                    <p className="lead text-center">
+                                        Diselenggarakan Oleh: {data.organizer}
+                                        - {data.createdByName ?? 'Kakak Anonim'}
+                                    </p>
+                                </Card.Text>
+                                <Card.Text>
+                                    <p className="lead text-center">
+                                        Mulai Acara: {moment(data.start).format('LLLL')}
+                                    </p>
+                                    <p className="lead text-center">
+                                        Akhir Acara: {moment(data.end).format('LLLL')}
+                                    </p>
+                                </Card.Text>
+                                <Card.Body>
+                                    {data.description}
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
             </>
         )
     }

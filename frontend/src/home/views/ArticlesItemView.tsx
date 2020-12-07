@@ -1,10 +1,15 @@
-import React, { PureComponent } from "react";
+import React, {PureComponent} from "react";
 import {RouteComponentProps} from "react-router";
 import DataProviderFactory from "../../dataprovider/DataProviderFactory";
 
 import {NotificationManager} from 'react-notifications';
 
 import moment from "moment";
+import 'moment/locale/id';
+
+import RegeTitle from "../component/RegeTitle";
+import {Card, Col, Container, Row} from "react-bootstrap";
+import Image from "../component/Image";
 
 interface ArticlesItemState {
     data: any
@@ -19,8 +24,7 @@ export default class ArticlesItemView
         this.state = {
             data: null
         }
-
-        console.log(this.props.match.params.id)
+        moment.locale('id');
     }
 
     updateData()
@@ -50,18 +54,36 @@ export default class ArticlesItemView
 
         if(item === null) return <div className="c-center-box c-loader"/>;
 
-        let createdAt = moment(item.createdAt).format('DD MMMM YYYY');
+        let createdAt = moment(item.createdAt).format('LLLL');
 
         return (
             <>
-                <img className={"c-img-full"}
-                     src={item.image ?? "/static/img/jakarta.jpg"}
-                     alt="Avatar"/>
-                <div className="c-container-pad c-container-centered">
-                    <h4><b>{item.title}</b></h4>
-                    <b>{item.createdByName}</b> &nbsp; <small>{item.createdAt}</small>
-                    <p>{item.body}</p>
-                </div>
+                <RegeTitle/>
+                <Container>
+                    <Row>
+                        <Col md={{span:10, offset:1}}>
+                            <Card>
+                                <Image
+                                    className="card-img-top"
+                                    src={item.image ?? "/static/img/jakarta.jpg"}
+                                    fallbackSrc={"/static/img/jakarta.jpg"}
+                                    alt={item.name}/>
+                                <Card.Title>
+                                    <h1 className="text-center">{item.title}</h1>
+                                </Card.Title>
+                                <Card.Text>
+                                    <p className="lead text-center">
+                                        <b>Oleh: {item.createdByName ?? 'Kakak Anonim'}</b> &nbsp;
+                                        <small>Pada: {createdAt}</small>
+                                    </p>
+                                </Card.Text>
+                                <Card.Body>
+                                    {item.body}
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
             </>
         )
     }

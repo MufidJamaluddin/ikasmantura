@@ -1,14 +1,27 @@
 import * as React from "react";
 import {
-    List, Datagrid, TextField, EmailField, EditButton, ShowButton,
-    Filter, TextInput, SelectInput, SimpleList,
-    SimpleShowLayout, Show,
-    Edit, SimpleForm,
-    PasswordInput, Create,
-    ReferenceManyField, ReferenceArrayInput, AutocompleteArrayInput
+    AutocompleteArrayInput,
+    Create,
+    Datagrid,
+    Edit,
+    EditButton,
+    EmailField,
+    Filter,
+    List,
+    PasswordInput,
+    ReferenceArrayInput,
+    ReferenceManyField,
+    SelectInput,
+    Show,
+    ShowButton,
+    SimpleForm,
+    SimpleList,
+    SimpleShowLayout,
+    TextField,
+    TextInput
 } from 'react-admin';
 
-import { useMediaQuery } from '@material-ui/core';
+import {useMediaQuery} from '@material-ui/core';
 
 const UserTitle = ({ record }) => {
     return <span>{record.name ?? 'Create User'}</span>;

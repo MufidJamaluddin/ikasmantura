@@ -1,12 +1,12 @@
 import * as React from "react";
-import AppBar from  './AppBar'
+import AppBar from './AppBar'
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import MyUserMenu from "./MyUserMenu";
 
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
-import { useMediaQuery } from '@material-ui/core';
+import {useMediaQuery} from '@material-ui/core';
 
 import clsx from 'clsx';
 

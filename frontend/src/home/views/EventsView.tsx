@@ -11,10 +11,12 @@ import idLocale from '@fullcalendar/core/locales/id'
 import DataProviderFactory from "../../dataprovider/DataProviderFactory";
 
 import {NotificationManager} from 'react-notifications';
+import {Col, Container, Row} from "react-bootstrap";
 
-const queryString = require('querystring')
+import RegeTitle from "../component/RegeTitle";
 
-export default class EventsView extends React.PureComponent<RouteComponentProps<any>>
+export default class EventsView extends React.PureComponent<
+    RouteComponentProps<unknown, unknown, {view?: string|number, date: Date|string}>>
 {
     onDateRangeChanged(
         fetchInfo: any,
@@ -49,6 +51,7 @@ export default class EventsView extends React.PureComponent<RouteComponentProps<
             successCallback(value.data);
         }, error => {
             NotificationManager.error(error, 'Get Data Error')
+            failureCallback(error);
         })
 
     }
@@ -56,111 +59,143 @@ export default class EventsView extends React.PureComponent<RouteComponentProps<
     private titleRef: RefObject<HTMLSpanElement> = React.createRef();
     private calendarRef: RefObject<FullCalendar> = React.createRef();
 
-    render() {
+    render()
+    {
         const props = this.props;
         const titleRef = this.titleRef;
         const calendarRef = this.calendarRef;
 
-        let query = queryString.parse(props.location.search);
-
-        let initialViewCode = query?.view ?? 0
+        let initialViewCode = this.props.location?.state?.view ?? 0
         let initialView = initialViewCode === 0 ? 'dayGridMonth' : 'listWeek';
         let initialDate: Date;
 
-        if(query?.date) {
-            initialDate = moment(query?.date).toDate();
+        if(this.props.location?.state?.date)
+        {
+            initialDate = moment(this.props.location?.state?.date).toDate();
         }
-        else {
+        else
+        {
             initialDate = new Date();
         }
 
         return (
-            <>
-                <div className="c-g-banner c-text-center">
-                    <h1 className={"lead"}>Kegiatan <span ref={this.titleRef}>IKA</span></h1>
-                </div>
-                <div className={"container"}>
-                    <FullCalendar
-                        ref={this.calendarRef}
-                        height={"auto"}
-                        plugins={[ dayGridPlugin, listGridPlugin ]}
-                        locale={idLocale}
-                        initialView={initialView}
-                        initialDate={initialDate}
-                        weekends={true}
-                        themeSystem={"standard"}
-                        customButtons={{
-                            ForwardButton: {
-                                icon: 'chevron-right',
-                                click: function (params) {
-                                    let date = moment(initialDate)
-                                        .add(1, 'month')
-                                        .format('YYYY-MM-DD')
+            <section className="event-section bg-light">
+                <RegeTitle>
+                    <h1 className="text-center display-4"> Kegiatan <span ref={this.titleRef}>IKA</span></h1>
+                </RegeTitle>
+                <Container>
+                    <Row className="padding-cont">
+                        <Col md={{ span: 8, offset: 2 }}>
 
-                                    props.history
-                                        .push(`events?view=${initialViewCode}&date=${date}`)
+                            <div className={"container"}>
+                                <FullCalendar
+                                    ref={this.calendarRef}
+                                    height={"auto"}
+                                    plugins={[ dayGridPlugin, listGridPlugin ]}
+                                    locale={idLocale}
+                                    initialView={initialView}
+                                    initialDate={initialDate}
+                                    weekends={true}
+                                    themeSystem={"standard"}
+                                    customButtons={{
+                                        ForwardButton: {
+                                            icon: 'chevron-right',
+                                            click: function (params) {
+                                                let date = moment(initialDate)
+                                                    .add(1, 'month')
+                                                    .format('YYYY-MM-DD')
 
-                                    try {
-                                        let api = calendarRef.current.getApi();
-                                        api.next()
+                                                props.history.push('events', {
+                                                    view: initialViewCode,
+                                                    date: date
+                                                });
 
-                                        titleRef.current.innerText = api.view.title
-                                    }
-                                    catch (e){
+                                                try
+                                                {
+                                                    let api = calendarRef.current.getApi();
+                                                    api.next()
 
-                                    }
-                                }
-                            },
-                            BackwardButton: {
-                                icon: 'chevron-left',
-                                click: function () {
-                                    let date = moment(initialDate)
-                                        .subtract(1, 'month')
-                                        .format('YYYY-MM-DD')
+                                                    titleRef.current.innerText = api.view.title
+                                                }
+                                                catch (e)
+                                                {
 
-                                    props.history
-                                        .push(`events?view=${initialViewCode}&date=${date}`)
+                                                }
+                                            }
+                                        },
+                                        BackwardButton: {
+                                            icon: 'chevron-left',
+                                            click: function () {
+                                                let date = moment(initialDate)
+                                                    .subtract(1, 'month')
+                                                    .format('YYYY-MM-DD')
 
-                                    try {
-                                        let api = calendarRef.current.getApi()
-                                        api.prev()
+                                                props.history.push('events', {
+                                                    view: initialViewCode,
+                                                    date: date
+                                                });
 
-                                        titleRef.current.innerText = api.view.title
-                                    }
-                                    catch (e){
+                                                try
+                                                {
+                                                    let api = calendarRef.current.getApi()
+                                                    api.prev()
 
-                                    }
-                                }
-                            }
-                        }}
-                        headerToolbar={{
-                            left: 'BackwardButton,ForwardButton today',
-                            right: 'dayGridMonth,listWeek'
-                        }}
-                        events={this.onDateRangeChanged}
-                        editable={false}
-                        eventClick={function (info:any){
-                            let id = info.event.id;
-                            props.history.push(`events/${id}`)
-                        }}
-                        eventDidMount={function (params) {
-                            let isMonth = params.view.type === 'dayGridMonth' ? 0 : 1
-                            let date = moment(params.view.currentStart).format('YYYY-MM-DD')
+                                                    titleRef.current.innerText = api.view.title
+                                                }
+                                                catch (e)
+                                                {
 
-                            try
-                            {
-                                titleRef.current.innerText = params.view.title
-                            }
-                            catch (e)
-                            {
+                                                }
+                                            }
+                                        },
+                                        ListButton: {
+                                            text: 'Daftar',
+                                            click: function (){
+                                                let date = moment(initialDate)
+                                                    .subtract(1, 'month')
+                                                    .format('YYYY-MM-DD')
 
-                            }
+                                                props.history.push('events_list', {
+                                                    date: date
+                                                });
+                                            }
+                                        }
+                                    }}
+                                    headerToolbar={{
+                                        left: 'BackwardButton,ForwardButton today',
+                                        right: 'dayGridMonth,listWeek,ListButton'
+                                    }}
+                                    events={this.onDateRangeChanged}
+                                    editable={false}
+                                    eventClick={function (info:any){
+                                        let id = info.event.id;
+                                        props.history.push(`events/${id}`)
+                                    }}
+                                    eventDidMount={function (params) {
+                                        let isMonth = params.view.type === 'dayGridMonth' ? 0 : 1
+                                        let date = moment(params.view.currentStart).format('YYYY-MM-DD')
 
-                            props.history.replace(`events?view=${isMonth}&date=${date}`)
-                        }}
-                    />
-                </div>
-            </>
+                                        try
+                                        {
+                                            titleRef.current.innerText = params.view.title
+                                        }
+                                        catch (e)
+                                        {
+
+                                        }
+
+                                        props.history.replace('events', {
+                                            view: isMonth,
+                                            date: date
+                                        });
+                                    }}
+                                />
+                            </div>
+
+                        </Col>
+                    </Row>
+                </Container>
+            </section>
         )
     }
 

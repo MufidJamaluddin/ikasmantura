@@ -7,6 +7,11 @@ import {NotificationManager} from 'react-notifications';
 
 import ReactPaginate from 'react-paginate';
 
+import RegeTitle from "../component/RegeTitle";
+import {Button, Card, Col, Container, Form, Row} from "react-bootstrap";
+import {RouteComponentProps} from "react-router";
+import Image from "../component/Image";
+
 interface ArticleItem {
     title?: string
     createdAt_gte?: string|Date,
@@ -22,10 +27,11 @@ interface ArticlesViewState
     data: Array<any>;
     topics: Array<any>;
     loading: boolean;
+    selectedTopic?: string|number;
 }
 
 export default class ArticlesView
-    extends React.PureComponent<{}, ArticlesViewState>
+    extends React.PureComponent<RouteComponentProps<unknown, unknown, {topicId?: string|number}>, ArticlesViewState>
 {
     constructor(props:any)
     {
@@ -34,7 +40,7 @@ export default class ArticlesView
         this.state = {
             pagination: {
                 page: 1,
-                perPage: 3,
+                perPage: 4,
             },
             sort: {
                 field: 'id',
@@ -104,9 +110,8 @@ export default class ArticlesView
 
     componentDidMount()
     {
+        this.updateTopics()
         this.updateData()
-
-
     }
 
     componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<ArticlesViewState>, snapshot?: any)
@@ -171,37 +176,89 @@ export default class ArticlesView
 
     render()
     {
+        let topicId = this.props.location?.state?.topicId ?? 1
+        const history = this.props.history
+
         return (
             <>
-                <div className={"c-g-banner c-text-center"}>
-                    <h1 className={"lead"}>Artikel</h1>
-                </div>
-                <div className={"c-container c-row"}>
-                    <div className={"c-right-column"}>
-                        <p className={"lead"}>Kategori</p>
-                        <ul className={"c-list-unstyled"}>
-                            {
-                                this.state.topics.map((item, key) => (
-                                    <li key={key}>
-                                        <button className={"c-button primary c-margin-bs"}>
-                                            {item.name}
-                                        </button>
-                                    </li>
-                                ))
-                            }
-                        </ul>
-                    </div>
-                    <div className={"c-left-column"}>
-                        <div className={"c-row"}>
-                            <form onSubmit={this.handleSearchForm} className={"c-filter"}>
-                                <input type="text"
-                                       name="title"
-                                       placeholder="Judul Berita yang Anda Cari" />
+                <RegeTitle>
+                    <h1 className="text-center display-4">Artikel</h1>
+                </RegeTitle>
+                <Container>
+                    <Row>
+                        <Col md={12}>
+                            <Form inline onSubmit={this.handleSearchForm} className={"c-filter justify-content-center"}>
 
-                                <button type="submit" className="c-button primary">
+                                <Form.Group>
+                                    <Form.Label htmlFor="topicSearch" srOnly>Topik</Form.Label>
+                                    <Form.Control
+                                        as="select"
+                                        id="topicSearch"
+                                        required={true}
+                                        value={topicId}
+                                        onChange={(e) => {
+                                            let state = {
+                                                topicId: e.target.value
+                                            };
+
+                                            history.replace({ ...history.location, state});
+                                        }}
+                                        name="topicId">
+                                        {
+                                            this.state.topics.map(item => <option key={item.id} value={item.id}>
+                                                {item.name}
+                                            </option>)
+                                        }
+                                    </Form.Control>
+                                </Form.Group>
+
+                                <Form.Group controlId="formTitle">
+                                    <Form.Label htmlFor="titleSearch" srOnly>Judul</Form.Label>
+                                    <Form.Control
+                                        id="titleSearch"
+                                        type="text"
+                                        name="title"
+                                        maxLength={100}
+                                        minLength={3}
+                                        required={false}
+                                        autoComplete="off"
+                                        placeholder="Judul Berita yang Anda Cari" />
+                                </Form.Group>
+
+                                <Button type="submit" variant="info" size="sm">
                                     Cari
-                                </button>
-                            </form>
+                                </Button>
+                            </Form>
+
+                        </Col>
+                        <Col md={12}>
+
+                            <div className="row justify-content-center mb-3">
+                            {
+                                this.state.data.map(item => {
+                                    return <div className="col-auto" key={item.id}>
+                                        <Card className="h-100" style={{'width':'15rem'}}>
+                                            <Image
+                                                className="card-img-top"
+                                                src={item.thumbnail ?? "/static/img/jakarta.jpg"}
+                                                fallbackSrc={"/static/img/jakarta.jpg"}
+                                                alt={item.name}/>
+                                            <Card.Body>
+                                                <Card.Title><h4>{item.title}</h4></Card.Title>
+                                                <p>{item.description} &nbsp;
+                                                    <Link to={`articles/${item.id}`}>
+                                                        <small><b>Read More...</b></small>
+                                                    </Link>
+                                                </p>
+                                            </Card.Body>
+                                        </Card>
+                                    </div>
+                                })
+                            }
+                            </div>
+
+                        </Col>
+                        <Col md={12}>
 
                             <ReactPaginate
                                 previousLabel={'previous'}
@@ -212,28 +269,14 @@ export default class ArticlesView
                                 marginPagesDisplayed={2}
                                 pageRangeDisplayed={5}
                                 onPageChange={this.handlePageChange}
-                                containerClassName={'pagination'}
+                                containerClassName={'pagination justify-content-center'}
                                 subContainerClassName={'pages pagination'}
                                 activeClassName={'active'}
                             />
-                        </div>
-                        {
-                            this.state.data.map(item => {
-                                return <div key={item.id} className="c-card c-card-large">
-                                    <img className={"c-img-full"}
-                                         src={item.image ?? "/static/img/jakarta.jpg"}
-                                         alt="Avatar"/>
-                                    <div className="c-container">
-                                        <h4><b>{item.title}</b></h4>
-                                        <p>{item.description} &nbsp;
-                                            <Link to={`news/${item.id}`}><small><b>Read More...</b></small></Link>
-                                        </p>
-                                    </div>
-                                </div>
-                            })
-                        }
-                    </div>
-                </div>
+
+                        </Col>
+                    </Row>
+                </Container>
             </>
         )
     }

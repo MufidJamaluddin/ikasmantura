@@ -1,0 +1,27 @@
+@media only screen and (min-width: 310px) and (max-width: 760px)
+{
+    .rege-image {
+        margin-top: -5px;
+        margin-bottom: -5px;
+    }
+}
+
+@media only screen and (max-width: 309px)
+{
+    .rege-image {
+        display: none;
+    }
+}
+
+.rege-image svg .a {
+    fill: none;
+}
+
+.rege-image svg .b {
+    clip-path: url(#a);
+}
+
+.rege-image svg .d {
+    opacity: 0.5;
+    isolation: isolate;
+}

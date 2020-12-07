@@ -1,6 +1,6 @@
 import React from "react";
 
-import { UserMenu } from "react-admin"
+import {UserMenu} from "react-admin"
 import MyAvatar from "./MyAvatar";
 
 

@@ -1,7 +1,7 @@
 import React from "react";
 
-import { useLogin, useNotify, Notification } from 'react-admin'
-import { ThemeProvider } from '@material-ui/styles'
+import {Notification, useLogin, useNotify} from 'react-admin'
+import {ThemeProvider} from '@material-ui/styles'
 
 const LoginView = ({ parenthistory, theme }) => {
 

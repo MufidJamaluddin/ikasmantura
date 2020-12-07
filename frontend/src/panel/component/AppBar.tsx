@@ -1,25 +1,16 @@
 import * as React from 'react';
-import { Children, cloneElement } from 'react';
+import {Children, cloneElement} from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import classNames from 'classnames';
-import {
-    AppBar as MuiAppBar,
-    IconButton,
-    Toolbar,
-    Tooltip,
-    Typography,
-    useMediaQuery,
-    Theme,
-} from '@material-ui/core';
-import { AppBarProps as MuiAppBarProps } from '@material-ui/core/AppBar';
+import {AppBar as MuiAppBar, IconButton, Theme, Toolbar, Tooltip, Typography, useMediaQuery,} from '@material-ui/core';
+import {AppBarProps as MuiAppBarProps} from '@material-ui/core/AppBar';
 
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import { toggleSidebar } from 'ra-core';
+import {toggleSidebar} from 'ra-core';
 
-import { LoadingIndicator, UserMenu as DefaultUserMenu,
-    HideOnScroll, ClassesOverride } from 'react-admin';
+import {ClassesOverride, HideOnScroll, LoadingIndicator, UserMenu as DefaultUserMenu} from 'react-admin';
 
 const useStyles = makeStyles(
     theme => ({

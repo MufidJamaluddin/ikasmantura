@@ -1,13 +1,26 @@
 import * as React from "react";
 import {
-    List, Datagrid, TextField, ReferenceField, EditButton, ShowButton,
-    Filter, TextInput, SimpleList, ReferenceInput, ReferenceManyField,
-    SimpleShowLayout, Show, ImageField,
-    Edit, SimpleForm,
-    Create, AutocompleteArrayInput
+    AutocompleteArrayInput,
+    Create,
+    Datagrid,
+    Edit,
+    EditButton,
+    Filter,
+    ImageField,
+    List,
+    ReferenceField,
+    ReferenceInput,
+    ReferenceManyField,
+    Show,
+    ShowButton,
+    SimpleForm,
+    SimpleList,
+    SimpleShowLayout,
+    TextField,
+    TextInput
 } from 'react-admin';
 
-import { useMediaQuery } from '@material-ui/core';
+import {useMediaQuery} from '@material-ui/core';
 
 const AlbumTitle = ({ record }) => {
     return <span>{record.name ?? 'Create Album'}</span>;

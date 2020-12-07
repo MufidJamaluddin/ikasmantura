@@ -4,25 +4,28 @@
     "name": "Ketua",
     "type": 1,
     "userId": 1,
-    "userFullname": "Leanne Graham"
+    "userFullname": "Ringga Wijaya Kusuma"
   },
   {
     "id": 2,
     "name": "Wakil Ketua",
     "type": 1,
-    "userId": 2
+    "userId": 2,
+    "userFullname": "Ari Jabbar Ramdani"
   },
   {
     "id": 3,
     "name": "Sekretaris Umum",
     "type": 1,
-    "userId": 3
+    "userId": 3,
+    "userFullname": "Devyan Meisnnehr"
   },
   {
     "id": 4,
     "name": "Wakil Sekretaris 1",
     "type": 1,
-    "userId": 4
+    "userId": 4,
+    "userFullname": "Natakusumah"
   },
   {
     "id": 5,
