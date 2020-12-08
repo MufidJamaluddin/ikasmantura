@@ -19,7 +19,8 @@ import {
     SimpleList,
     SimpleShowLayout,
     TextField,
-    TextInput
+    TextInput,
+    required
 } from 'react-admin';
 
 import RichTextInput from 'ra-input-rich-text';
@@ -48,8 +49,7 @@ export const EventList = props => {
     return (
         <List title={props.options?.label} filters={<EventFilter {...props} />} {...props}>
             {isSmall ? (
-                <SimpleList rowClick={"show"}
-                            primaryText={ record => record.title }
+                <SimpleList primaryText={ record => record.title }
                             secondaryText={ record => record.organizer }
                             tertiaryText={ record => `${record.start} - ${record.end}` }
                 />
@@ -63,6 +63,7 @@ export const EventList = props => {
                     </ReferenceField>
                     <DateField source="start"/>
                     <DateField source="end"/>
+                    <ImageField source="thumbnail"/>
                     <ShowButton/>
                     <EditButton/>
                 </Datagrid>
@@ -75,7 +76,7 @@ export const EventList = props => {
 export const EventView = props => (
     <Show title={<EventTitle {...props} />} {...props}>
         <SimpleShowLayout className={"d-inline"}>
-            <TextField disabled source="id" />
+            <TextField source="id" />
             <TextField source="title"/>
             <TextField source="organizer"/>
             <ReferenceField label="User" source="userId" reference="users">
@@ -89,29 +90,39 @@ export const EventView = props => (
     </Show>
 )
 
+const EventValidation = (data) => {
+    const errors:any = {}
+    if(moment(data.start) > moment(data.end))
+    {
+        errors.start = 'start times must before end times!'
+        errors.end = 'end times must after start times!'
+    }
+    return errors
+}
+
 export const EventEdit = props => {
 
     const transform = data => ({
         ...data,
         start:  moment(data.start).format("YYYY-MM-DDTHH:mm:ssZ"),
-        end:  moment(data.start).format("YYYY-MM-DDTHH:mm:ssZ"),
+        end:  moment(data.end).format("YYYY-MM-DDTHH:mm:ssZ"),
     })
 
     return (
         <Edit transform={transform} title={<EventTitle {...props} />} {...props}>
-            <SimpleForm redirect="show">
+            <SimpleForm validate={EventValidation} redirect="show" encType="multipart/form-data">
                 <TextInput disabled source="id"/>
-                <TextInput source="title"/>
-                <TextInput source="organizer"/>
-                <ReferenceInput disabled label="User" source="userId" reference="users">
+                <TextInput source="title" validate={[required()]}/>
+                <TextInput source="organizer" validate={[required()]}/>
+                <ReferenceInput disabled label="User" source="userId" reference="users" >
                     <TextField source="name"/>
                 </ReferenceInput>
-                <RichTextInput source="description"/>
-                <ImageInput source="image" label="Image" accept="image/*" maxSize={500000}>
+                <RichTextInput source="description" validate={[required()]}/>
+                <ImageInput source="image" label="Image (JPG)" accept="image/jpeg" maxSize={500000}>
                     <ImageField source="src" title="title"/>
                 </ImageInput>
-                <DateInput source="start"/>
-                <DateInput source="end"/>
+                <DateInput source="start" validate={[required()]}/>
+                <DateInput source="end" validate={[required()]}/>
             </SimpleForm>
         </Edit>
     )
@@ -122,21 +133,22 @@ export const EventCreate = props => {
     const transform = data => ({
         ...data,
         start:  moment(data.start).format("YYYY-MM-DDTHH:mm:ssZ"),
-        end:  moment(data.start).format("YYYY-MM-DDTHH:mm:ssZ"),
+        end:  moment(data.end).format("YYYY-MM-DDTHH:mm:ssZ"),
     })
 
     return (
-        <Create transform={transform} title={<EventTitle {...props} />} {...props}>
-            <SimpleForm>
+        <Create transform={transform}
+                title={<EventTitle {...props} />} {...props}>
+            <SimpleForm validate={EventValidation} encType="multipart/form-data">
                 <TextInput disabled source="id"/>
-                <TextInput source="title"/>
-                <TextInput source="organizer"/>
-                <RichTextInput source="description"/>
-                <ImageInput source="image" label="Image" accept="image/*" maxSize={500000}>
+                <TextInput source="title" validate={[required()]} />
+                <TextInput source="organizer" validate={[required()]} />
+                <RichTextInput source="description" validate={[required()]} />
+                <ImageInput source="image" label="Image (JPG)" accept="image/jpeg" maxSize={500000}>
                     <ImageField source="src" title="title"/>
                 </ImageInput>
-                <DateInput source="start"/>
-                <DateInput source="end"/>
+                <DateInput source="start" validate={[required()]}/>
+                <DateInput source="end" validate={[required()]}/>
             </SimpleForm>
         </Create>
     )

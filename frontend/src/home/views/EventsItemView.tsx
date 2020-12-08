@@ -10,6 +10,7 @@ import authProvider from "../../panel/authProvider";
 import RegeTitle from "../component/RegeTitle";
 import {Button, Card, Col, Container, Row} from "react-bootstrap";
 import Image from "../component/Image";
+import DOMPurify from "../../utils/Sanitizer";
 
 interface EventItemState {
     data: any
@@ -95,7 +96,7 @@ export default class EventItemView
                                     src={data.image ?? "/static/img/jakarta.jpg"}
                                     fallbackSrc={"/static/img/jakarta.jpg"}
                                     alt={data.name}/>
-                                <Card.Text>
+                                <Card.Body>
                                     {
                                         data.myEvent ?
                                             (<span
@@ -108,26 +109,21 @@ export default class EventItemView
                                                 </Button>
                                             )
                                     }
-                                </Card.Text>
+                                </Card.Body>
                                 <Card.Title>
                                     <h1 className="text-center">{data.title}</h1>
                                 </Card.Title>
-                                <Card.Text>
-                                    <p className="lead text-center">
-                                        Diselenggarakan Oleh: {data.organizer}
-                                        - {data.createdByName ?? 'Kakak Anonim'}
-                                    </p>
+                                <Card.Text className="lead text-center">
+                                    Diselenggarakan Oleh: {data.organizer}
+                                    - {data.createdByName ?? 'Kakak Anonim'}
                                 </Card.Text>
-                                <Card.Text>
-                                    <p className="lead text-center">
-                                        Mulai Acara: {moment(data.start).format('LLLL')}
-                                    </p>
-                                    <p className="lead text-center">
-                                        Akhir Acara: {moment(data.end).format('LLLL')}
-                                    </p>
+                                <Card.Text className="lead text-center">
+                                    Mulai Acara: {moment(data.start).format('LLLL')}
+                                    <br/>
+                                    Akhir Acara: {moment(data.end).format('LLLL')}
                                 </Card.Text>
                                 <Card.Body>
-                                    {data.description}
+                                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.description) }} />
                                 </Card.Body>
                             </Card>
                         </Col>

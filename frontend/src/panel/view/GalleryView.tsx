@@ -20,6 +20,7 @@ import {
     TextInput,
     Title,
     TopToolbar,
+    required
 } from 'react-admin';
 import {Box, Theme, useMediaQuery} from '@material-ui/core';
 import GridList from "./GalleryGridList";
@@ -30,19 +31,23 @@ const GalleryTitle = ({ record }) => {
 
 const GalleryFilter = (props) => (
     <Filter {...props}>
-        <TextInput label="Search" source="q" alwaysOn />
         <ReferenceInput label="Album" source="albumId" reference="albums" alwaysOn>
-            <AutocompleteArrayInput optionText="name" />
+            <AutocompleteArrayInput optionText="title" />
         </ReferenceInput>
+        <TextInput label="Search" source="q" alwaysOn />
     </Filter>
 );
 
-const ListActions: FC<any> = ({ isSmall }) => (
-    <TopToolbar>
-        {isSmall && <GalleryFilter context="button" />}
-        <CreateButton basePath="/photos" />
-        <ExportButton />
-    </TopToolbar>
+const ListActions: FC<any> = () => (
+    <>
+        <Box justifyContent="flex-start">
+            <GalleryFilter context="form" />
+        </Box>
+        <Box justifyContent="flex-end">
+            <CreateButton basePath="/photos" />
+            <ExportButton />
+        </Box>
+    </>
 );
 
 const GalleryListItem: FC<{ isSmall: boolean, customTitle: string }>
@@ -51,12 +56,17 @@ const GalleryListItem: FC<{ isSmall: boolean, customTitle: string }>
     return (
         <>
             <Title defaultTitle={customTitle} />
-            <ListActions isSmall={isSmall} />
-            {isSmall && (
-                <Box m={1}>
-                    <GalleryFilter context="form" />
-                </Box>
-            )}
+            <TopToolbar>
+            {
+                isSmall ? (
+                    <Box m={1}>
+                        <GalleryFilter context="form" />
+                    </Box>
+                ) : (
+                    <ListActions/>
+                )
+            }
+            </TopToolbar>
             <Box display="flex">
                 <Box width={isSmall ? 'auto' : '100%'}>
                     <GridList />
@@ -85,7 +95,7 @@ export const GalleryView = props => (
         <SimpleShowLayout className={"d-inline"}>
             <TextField source="id"/>
             <TextField source="title"/>
-            <ReferenceField label="Album" source="albumId" reference="albums" target={'id'}>
+            <ReferenceField label="Album" source="albumId" reference="albums">
                 <TextField source="name" />
             </ReferenceField>
             <ImageField source="image" />
@@ -95,13 +105,13 @@ export const GalleryView = props => (
 
 export const GalleryEdit = props => (
     <Edit title={<GalleryTitle {...props} />} {...props}>
-        <SimpleForm redirect="show">
+        <SimpleForm redirect="show" encType="multipart/form-data">
             <TextInput disabled source="id" />
-            <TextField source="title"/>
-            <ReferenceInput label="Album" source="albumId" reference="albums" target={'id'} alwaysOn>
-                <AutocompleteInput optionText="name" />
+            <TextInput label="Title" source="title" validate={[required()]}/>
+            <ReferenceInput label="Album" source="albumId" reference="albums" validate={[required()]}>
+                <AutocompleteInput optionText="title" />
             </ReferenceInput>
-            <ImageInput source="image" label="Image" accept="image/*" maxSize={500000}>
+            <ImageInput source="image" label="Image (JPG)" accept="image/jpeg" maxSize={500000} validate={[required()]}>
                 <ImageField source="src" title="title" />
             </ImageInput>
         </SimpleForm>
@@ -110,12 +120,12 @@ export const GalleryEdit = props => (
 
 export const GalleryCreate = props => (
     <Create title={<GalleryTitle {...props} />} {...props}>
-        <SimpleForm>
-            <TextInput source="title" label="Title" className="d-inline" />
-            <ReferenceInput label="Album" source="albumId" reference="albums" target={'id'} alwaysOn>
-                <AutocompleteInput optionText="name" />
+        <SimpleForm encType="multipart/form-data">
+            <TextInput source="title" label="Title" validate={[required()]}/>
+            <ReferenceInput label="Album" source="albumId" reference="albums" validate={[required()]}>
+                <AutocompleteInput optionText="title" />
             </ReferenceInput>
-            <ImageInput source="image" label="Image" accept="image/*" maxSize={500000}>
+            <ImageInput source="image" label="Image (JPG)" accept="image/jpeg" maxSize={500000} validate={[required()]}>
                 <ImageField source="src" title="title" />
             </ImageInput>
         </SimpleForm>

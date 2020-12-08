@@ -10,6 +10,7 @@ import 'moment/locale/id';
 import RegeTitle from "../component/RegeTitle";
 import {Card, Col, Container, Row} from "react-bootstrap";
 import Image from "../component/Image";
+import DOMPurify from "../../utils/Sanitizer";
 
 interface ArticlesItemState {
     data: any
@@ -18,7 +19,6 @@ interface ArticlesItemState {
 export default class ArticlesItemView
     extends PureComponent<RouteComponentProps<{id: string}>, ArticlesItemState>
 {
-
     constructor(props:any) {
         super(props);
         this.state = {
@@ -71,14 +71,12 @@ export default class ArticlesItemView
                                 <Card.Title>
                                     <h1 className="text-center">{item.title}</h1>
                                 </Card.Title>
-                                <Card.Text>
-                                    <p className="lead text-center">
-                                        <b>Oleh: {item.createdByName ?? 'Kakak Anonim'}</b> &nbsp;
-                                        <small>Pada: {createdAt}</small>
-                                    </p>
+                                <Card.Text className="lead text-center">
+                                    <b>Oleh: {item.createdByName ?? 'Kakak Anonim'}</b> &nbsp;
+                                    <small>Pada: {createdAt}</small>
                                 </Card.Text>
                                 <Card.Body>
-                                    {item.body}
+                                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.body) }} />
                                 </Card.Body>
                             </Card>
                         </Col>

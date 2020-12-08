@@ -17,7 +17,8 @@ import {
     SimpleList,
     SimpleShowLayout,
     TextField,
-    TextInput
+    TextInput,
+    required
 } from 'react-admin';
 
 import {useMediaQuery} from '@material-ui/core';
@@ -29,7 +30,7 @@ const AlbumTitle = ({ record }) => {
 const AlbumFilter = (props) => (
     <Filter {...props}>
         <TextInput label="Search" source="q" alwaysOn />
-        <ReferenceInput label="User" source="userId" reference="users" allowEmpty>
+        <ReferenceInput label="Author" source="userId" reference="users" allowEmpty>
             <AutocompleteArrayInput optionText="name" />
         </ReferenceInput>
     </Filter>
@@ -40,10 +41,10 @@ export const AlbumList = props => {
     return (
         <List title={props.options?.label} filters={<AlbumFilter {...props} />} {...props}>
             {isSmall ? (
-                <SimpleList rowClick={"show"}
+                <SimpleList
                     primaryText={ record => record.title }
                     secondaryText={record =>  <ReferenceField
-                        label="User" source="userId" basePath="userId" reference="users" record={record}>
+                        label="Author" source="userId" basePath="userId" reference="users" record={record}>
                         <TextField source="name" />
                     </ReferenceField>}
                 />
@@ -51,7 +52,7 @@ export const AlbumList = props => {
                 <Datagrid>
                     <TextField source="id"/>
                     <TextField source="title"/>
-                    <ReferenceField label="User" source="userId" reference="users">
+                    <ReferenceField label="Author" source="userId" reference="users">
                         <TextField source="name" />
                     </ReferenceField>
                     <ShowButton/>
@@ -66,10 +67,10 @@ export const AlbumList = props => {
 export const AlbumView = props => (
     <Show title={<AlbumTitle {...props} />} {...props}>
         <SimpleShowLayout className={"d-inline"}>
-            <TextField disabled source="id" />
+            <TextField source="id" />
             <TextField source="title"/>
-            <ReferenceField source="userId" reference="users">
-                <TextField optionText="name" />
+            <ReferenceField label="Author" source="userId" reference="users">
+                <TextField source="name" />
             </ReferenceField>
             <ReferenceManyField label={"Gallery"} source="id" reference="photos" target="albumId">
                 <Datagrid>
@@ -85,9 +86,9 @@ export const AlbumEdit = props => (
     <Edit title={<AlbumTitle {...props} />} {...props}>
         <SimpleForm redirect="show">
             <TextInput disabled source="id" />
-            <TextInput source="title"/>
-            <ReferenceField source="userId" reference="users">
-                <TextField optionText="name"/>
+            <TextInput source="title" validate={[required()]} />
+            <ReferenceField label="Author" source="userId" reference="users">
+                <TextField source="name"/>
             </ReferenceField>
         </SimpleForm>
     </Edit>
@@ -96,7 +97,7 @@ export const AlbumEdit = props => (
 export const AlbumCreate = props => (
     <Create title={<AlbumTitle {...props} />} {...props}>
         <SimpleForm>
-            <TextInput label={'Title'} source="title"/>
+            <TextInput label={'Title'} source="title" validate={[required()]} />
         </SimpleForm>
     </Create>
 )

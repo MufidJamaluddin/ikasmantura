@@ -64,6 +64,7 @@
   },
   {
     "userId": 3,
+    "topicId": 1,
     "id": 21,
     "title": "Aspirasi Mahasiswa",
     "body": "repellat aliquid praesentium dolorem quo\nsed totam minus non itaque\nnihil labore molestiae sunt dolor eveniet hic recusandae veniam\ntempora et tenetur expedita sunt",
@@ -73,6 +74,7 @@
   },
   {
     "userId": 3,
+    "topicId": 2,
     "id": 28,
     "title": "Neneng, Kami Rindu",
     "body": "non et quaerat ex quae ad maiores\nmaiores recusandae totam aut blanditiis mollitia quas illo\nut voluptatibus voluptatem\nsimilique nostrum eum",
@@ -82,6 +84,7 @@
   },
   {
     "userId": 3,
+    "topicId": 3,
     "id": 29,
     "title": "Jangan Lupakan Aku",
     "body": "odit magnam ut saepe sed non qui\ntempora atque nihil\naccusamus illum doloribus illo dolor\neligendi repudiandae odit magni similique sed cum maiores",
@@ -91,6 +94,7 @@
   },
   {
     "userId": 3,
+    "topicId": 4,
     "id": 30,
     "title": "Dialah Sang Surya",
     "body": "alias dolor cumque\nimpedit blanditiis non eveniet odio maxime\nblanditiis amet eius quis tempora quia autem rem\na provident perspiciatis quia",
@@ -100,6 +104,7 @@
   },
   {
     "userId": 4,
+    "topicId": 1,
     "id": 31,
     "title": "Indonesia Jaya",
     "body": "debitis eius sed quibusdam non quis consectetur vitae\nimpedit ut qui consequatur sed aut in\nquidem sit nostrum et maiores adipisci atque\nquaerat voluptatem adipisci repudiandae",
@@ -109,6 +114,7 @@
   },
   {
     "userId": 4,
+    "topicId": 2,
     "id": 37,
     "title": "Jokowi, Presiden Tersohor",
     "body": "debitis et eaque non officia sed nesciunt pariatur vel\nvoluptatem iste vero et ea\nnumquam aut expedita ipsum nulla in\nvoluptates omnis consequatur aut enim officiis in quam qui",
@@ -118,6 +124,7 @@
   },
   {
     "userId": 5,
+    "topicId": 3,
     "id": 41,
     "title": "Judul Skripsi",
     "body": "molestias id nostrum\nexcepturi molestiae dolore omnis repellendus quaerat saepe\nconsectetur iste quaerat tenetur asperiores accusamus ex ut\nnam quidem est ducimus sunt debitis saepe",
@@ -127,6 +134,7 @@
   },
   {
     "userId": 6,
+    "topicId": 4,
     "id": 55,
     "title": "Review Kerja Pertama",
     "body": "debitis excepturi ea perferendis harum libero optio\neos accusamus cum fuga ut sapiente repudiandae\net ut incidunt omnis molestiae\nnihil ut eum odit",
@@ -136,6 +144,7 @@
   },
   {
     "userId": 7,
+    "topicId": 1,
     "id": 62,
     "title": "Kisah Sukses Saya",
     "body": "enim aspernatur illo distinctio quae praesentium\nbeatae alias amet delectus qui voluptate distinctio\nodit sint accusantium autem omnis\nquo molestiae omnis ea eveniet optio",
@@ -145,6 +154,7 @@
   },
   {
     "userId": 7,
+    "topicId": 2,
     "id": 68,
     "title": "Riang Gembira",
     "body": "magnam molestiae perferendis quisquam\nqui cum reiciendis\nquaerat animi amet hic inventore\nea quia deleniti quidem saepe porro velit",
@@ -154,6 +164,7 @@
   },
   {
     "userId": 8,
+    "topicId": 3,
     "id": 78,
     "title": "Ingin Mengulangi Waktu",
     "body": "nobis facilis odit tempore cupiditate quia\nassumenda doloribus rerum qui ea\nillum et qui totam\naut veniam repellendus",
@@ -161,6 +172,7 @@
   },
   {
     "userId": 10,
+    "topicId": 4,
     "id": 94,
     "title": "Tips Memanfaatkan Masa Muda",
     "body": "aspernatur expedita soluta quo ab ut similique\nexpedita dolores amet\nsed temporibus distinctio magnam saepe deleniti\nomnis facilis nam ipsum natus sint similique omnis",

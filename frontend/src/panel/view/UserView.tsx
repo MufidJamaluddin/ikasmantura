@@ -42,7 +42,7 @@ export const UserList = props => {
     return (
         <List title={props.options?.label} filters={<UserFilter {...props} />} {...props}>
             {isSmall ? (
-                <SimpleList rowClick={"show"}
+                <SimpleList
                     primaryText={ record => record.name }
                     secondaryText={ record => record.username }
                     tertiaryText={ record => record.phone }
@@ -66,7 +66,7 @@ export const UserList = props => {
 export const UserView = props => (
     <Show title={<UserTitle {...props} />} {...props}>
         <SimpleShowLayout className={"d-inline"}>
-            <TextField disabled source="id" className={"d-inline"} />
+            <TextField source="id" className={"d-inline"} />
             <TextField source="username" className={"d-inline"} />
             <TextField source="name" className={"d-inline"} />
             <TextField source="email" className={"d-inline"} />
@@ -94,10 +94,10 @@ export const UserEdit = props => (
             <TextInput source="username"/>
             <TextInput source="email"/>
             <TextInput source="phone"/>
-            <TextInput source="address.street" className={"d-inline"}/>
-            <TextInput source="address.suite" className={"d-inline"}/>
-            <TextInput source="address.city" className={"d-inline"}/>
-            <TextInput source="address.zipcode" className={"d-inline"}/>
+            <TextInput source="address.street" />
+            <TextInput source="address.suite" />
+            <TextInput source="address.city" />
+            <TextInput source="address.zipcode" />
             <ReferenceArrayInput label="Roles" source="roles" reference="departments" target={"id"}>
                 <AutocompleteArrayInput optionText={"name"} />
             </ReferenceArrayInput>
@@ -123,10 +123,10 @@ export const UserCreate = props => (
             <PasswordInput label={'Verify Password'} source="password_verify"/>
             <TextInput source="name"/>
             <TextInput source="phone"/>
-            <TextInput source="address.street" className={"d-inline"}/>
-            <TextInput source="address.suite" className={"d-inline"}/>
-            <TextInput source="address.city" className={"d-inline"}/>
-            <TextInput source="address.zipcode" className={"d-inline"}/>
+            <TextInput source="address.street" />
+            <TextInput source="address.suite" />
+            <TextInput source="address.city" />
+            <TextInput source="address.zipcode" />
             <ReferenceArrayInput label="Roles" source="roles" reference="departments" target={"id"}>
                 <AutocompleteArrayInput optionText={"name"} />
             </ReferenceArrayInput>

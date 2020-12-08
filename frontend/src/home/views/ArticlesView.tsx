@@ -1,6 +1,7 @@
 import * as React from "react";
 import {Link} from "react-router-dom";
-import {Pagination, Sort} from "ra-core/src/types";
+
+import {PaginationPayload, SortPayload} from "ra-core/src/types";
 import DataProviderFactory from "../../dataprovider/DataProviderFactory";
 
 import {NotificationManager} from 'react-notifications';
@@ -21,8 +22,8 @@ interface ArticleItem {
 interface ArticlesViewState
 {
     total: number;
-    pagination: Pagination;
-    sort: Sort;
+    pagination: PaginationPayload;
+    sort: SortPayload;
     filter: ArticleItem|any;
     data: Array<any>;
     topics: Array<any>;
@@ -212,7 +213,7 @@ export default class ArticlesView
                                     </Form.Control>
                                 </Form.Group>
 
-                                <Form.Group controlId="formTitle">
+                                <Form.Group>
                                     <Form.Label htmlFor="titleSearch" srOnly>Judul</Form.Label>
                                     <Form.Control
                                         id="titleSearch"

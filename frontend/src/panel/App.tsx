@@ -14,6 +14,7 @@ import * as AboutView from "./view/AboutView";
 import * as DepartmentView from "./view/DepartmentView";
 import * as UserView from "./view/UserView";
 import * as ArticleView from "./view/ArticleView";
+import * as ArticleTopicView from "./view/ArticleTopicView";
 import * as EventView from "./view/EventView";
 import * as AlbumView from "./view/AlbumView";
 import * as GalleryView from "./view/GalleryView";
@@ -22,6 +23,7 @@ import AboutIcon from '@material-ui/icons/Info';
 import DepartmentIcon from '@material-ui/icons/Work'
 import UserIcon from '@material-ui/icons/Group'
 import ArticleIcon from '@material-ui/icons/Book'
+import ArticleTopicIcon from '@material-ui/icons/LibraryBooks';
 import EventViewIcon from '@material-ui/icons/EventNote';
 import AlbumViewIcon from '@material-ui/icons/PhotoLibrary';
 import GalleryIcon from '@material-ui/icons/Panorama';
@@ -33,10 +35,10 @@ const dataProvider = DataProviderFactory.getDataProvider()
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#4400ff'
+            main: 'rgb(128, 100, 161)'
         },
         secondary: {
-            main: '#4400ff'
+            main: '#3498db'
         },
         error: {
             main: '#f44336'
@@ -68,7 +70,9 @@ const AdminApp = (props: any) => (
     <Admin theme={theme}
            layout={(ip) => <MyLayout parenthistory={props.history} {...ip}/>}
            dashboard={DashboardView}
-           loginPage={(ip) => <LoginView parenthistory={props.history} {...ip}/>}
+           loginPage={(ip) => <LoginView
+               parenthistory={props.history} theme={theme} {...ip}/>
+           }
            authProvider={authProvider}
            history={history}
            dataProvider={dataProvider}>
@@ -98,8 +102,16 @@ const AdminApp = (props: any) => (
               icon={UserIcon}
         />
 
+        <Resource name="article_topics"
+                  options={{ "label": "Topik Artikel", "divider": true }}
+                  list={ArticleTopicView.TopicList}
+                  edit={ArticleTopicView.TopicEdit}
+                  create={ArticleTopicView.TopicCreate}
+                  icon={ArticleTopicIcon}
+        />
+
         <Resource name="articles"
-                  options={{ "label": "Artikel", "divider": true }}
+                  options={{ "label": "Artikel", "divider": false }}
               list={ArticleView.PostList}
               edit={ArticleView.PostEdit}
               create={ArticleView.PostCreate}
@@ -108,7 +120,7 @@ const AdminApp = (props: any) => (
         />
 
         <Resource name="events"
-                  options={{ "label": "Agenda" }}
+                  options={{ "label": "Agenda", "divider": true }}
               list={EventView.EventList}
               edit={EventView.EventEdit}
               create={EventView.EventCreate}
@@ -117,7 +129,7 @@ const AdminApp = (props: any) => (
         />
 
         <Resource name="albums"
-                  options={{ "label": "Album", "divider": "true"}}
+                  options={{ "label": "Album", "divider": true}}
               list={AlbumView.AlbumList}
               edit={AlbumView.AlbumEdit}
               create={AlbumView.AlbumCreate}

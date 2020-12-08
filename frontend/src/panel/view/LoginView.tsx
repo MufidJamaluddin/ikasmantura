@@ -33,11 +33,11 @@ const LoginView = ({ parenthistory, theme }) => {
 
                         <label htmlFor="username" className="lead-sm"><b>Username</b></label>
                         <input type="text" className="c-input-box"
-                               placeholder="Enter Username" name="username" required/>
+                               placeholder="Enter Username" name="username" required minLength={3} maxLength={100}/>
 
                         <label htmlFor="password" className="lead-sm"><b>Password</b></label>
                         <input type="password" className="c-input-box"
-                               placeholder="Enter Password" name="password" required/>
+                               placeholder="Enter Password" name="password" required minLength={3} maxLength={100}/>
 
                         <button type="button" className="c-button info" onClick={onHomeClick}>Back to Home</button>
                         &nbsp;

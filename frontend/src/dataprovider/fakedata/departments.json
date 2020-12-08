@@ -1,9 +1,9 @@
 [
   {
+    "userId": 1,
     "id": 1,
     "name": "Ketua",
     "type": 1,
-    "userId": 1,
     "userFullname": "Ringga Wijaya Kusuma"
   },
   {

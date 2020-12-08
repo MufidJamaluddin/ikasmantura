@@ -10,7 +10,10 @@ const MyLayout = props => <Layout
     {...props}
     appBar={MyAppBar}
     sidebar={MySidebar}
-    menu={(ip) => <MyMenu parenthistory={props.parenthistory} {...ip}/>}
+    menu={(ip) => <MyMenu
+        parenthistory={props.parenthistory}
+        {...ip}/>
+    }
     notification={MyNotification}
 />;
 

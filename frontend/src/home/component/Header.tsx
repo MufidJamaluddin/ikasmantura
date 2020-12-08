@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import DataProviderFactory from "../../dataprovider/DataProviderFactory";
 
 import {NotificationManager} from 'react-notifications';
+import WEB_INFO from "../config";
 
 export default class Header extends PureComponent<{}, {topics: Array<any>}>
 {
@@ -51,20 +52,20 @@ export default class Header extends PureComponent<{}, {topics: Array<any>}>
             <Navbar expand="lg" sticky="top">
                 <Container>
                     <Navbar.Brand href="#home" as={Link} to={"/"}>
-                        <Image src={process.env.PUBLIC_URL + "/static/img/logo_ika2.png"}
-                               roundedCircle={true}
+                        <Image src={process.env.PUBLIC_URL + "/static/img/logo.svg"}
+                               rounded={true}
                                className="logo-brand"/>
-                        IKA SMAN Situraja
+                        {WEB_INFO.name}
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ml-auto">
                             <NavDropdown title="Profil" id="basic-nav-dropdown">
                                 <NavDropdown.Item as={Link} to={"/about"}>
-                                    Tentang IKA SMAN Situraja
+                                    Tentang {WEB_INFO.name}
                                 </NavDropdown.Item>
                                 <NavDropdown.Item as={Link} to={"/organization"}>
-                                    Struktur Organisasi IKA SMAN Situraja
+                                    Struktur Organisasi {WEB_INFO.name}
                                 </NavDropdown.Item>
                             </NavDropdown>
                             <NavDropdown title="Agenda" id="basic-nav-dropdown">

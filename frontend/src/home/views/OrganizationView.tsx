@@ -1,6 +1,6 @@
 import React, {PureComponent} from "react";
 import DataProviderFactory from "../../dataprovider/DataProviderFactory";
-import {Pagination, Sort} from "ra-core/src/types";
+import {PaginationPayload, SortPayload} from "ra-core/src/types";
 import {GetListParams} from 'ra-core'
 
 import {NotificationManager} from 'react-notifications';
@@ -10,8 +10,8 @@ import Image from "../component/Image";
 
 interface OrganizationViewState {
     total: number;
-    pagination: Pagination;
-    sort: Sort;
+    pagination: PaginationPayload;
+    sort: SortPayload;
     filter: any;
     data: Array<any>;
 }

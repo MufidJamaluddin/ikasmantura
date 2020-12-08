@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Fragment} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {Drawer, useMediaQuery} from '@material-ui/core';
+import {Drawer} from '@material-ui/core';
 import {getResources, MenuItemLink} from 'react-admin';
 import DefaultIcon from '@material-ui/icons/ViewList';
 import {toSentenceCase} from "../../utils/toSentenceCase";
@@ -55,9 +55,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const MyMenu = ({ parenthistory, onMenuClick, logout }) =>
+const MyMenu = ({ parenthistory }) =>
 {
-    const isXSmall = useMediaQuery((theme:any) => theme.breakpoints.down('xs'));
     const open = useSelector(state => state.admin.ui.sidebarOpen);
     const resources = useSelector(getResources);
     const classes = useStyles()
@@ -82,7 +81,7 @@ const MyMenu = ({ parenthistory, onMenuClick, logout }) =>
                     { open ? <ChevronLeftIcon /> : <ChevronRightIcon /> }
                 </IconButton>
             </div>
-            <img src={process.env.PUBLIC_URL + "/static/img/logo_ika2.png"}
+            <img src={process.env.PUBLIC_URL + "/static/img/logo.svg"}
                  className={'d-centered-img'} alt={"Logo IKA Smantura"}
             />
             <br/>
@@ -90,7 +89,6 @@ const MyMenu = ({ parenthistory, onMenuClick, logout }) =>
                 to="/about/1/show"
                 primaryText={'About'}
                 leftIcon={<AboutIcon />}
-                onClick={onMenuClick}
                 sidebarIsOpen={open}
             />
             <Divider variant={'middle'}/>
@@ -98,7 +96,6 @@ const MyMenu = ({ parenthistory, onMenuClick, logout }) =>
                 to="/"
                 primaryText={'Dashboard'}
                 leftIcon={<AppsIcon />}
-                onClick={onMenuClick}
                 sidebarIsOpen={open}
             />
             {resources.map((resource, key) => {
@@ -116,7 +113,6 @@ const MyMenu = ({ parenthistory, onMenuClick, logout }) =>
                                 leftIcon={
                                     resource.icon ? <resource.icon/> : <DefaultIcon/>
                                 }
-                                onClick={onMenuClick}
                                 sidebarIsOpen={open}
                             />
                         </Fragment>
@@ -138,7 +134,6 @@ const MyMenu = ({ parenthistory, onMenuClick, logout }) =>
                 sidebarIsOpen={open}
             />
             <Divider variant={'middle'}/>
-            {isXSmall && logout}
         </Drawer>
     );
 };

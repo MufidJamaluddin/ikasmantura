@@ -4,7 +4,7 @@ import RegeTitle from "../component/RegeTitle";
 import {NotificationManager} from 'react-notifications';
 import moment from "moment";
 import DataProviderFactory from "../../dataprovider/DataProviderFactory";
-import {Pagination, Sort} from "ra-core/src/types";
+import {PaginationPayload, SortPayload} from "ra-core/src/types";
 import {Button, Card, Col, Container, Form, Row} from "react-bootstrap";
 import Image from "../component/Image";
 import {Link} from "react-router-dom";
@@ -17,8 +17,8 @@ interface EventsListViewState {
     currentDate: string
     data: Array<EventData>
     total: number;
-    pagination: Pagination;
-    sort: Sort;
+    pagination: PaginationPayload;
+    sort: SortPayload;
     filter: { start_gte?: string, end_lte?: string, title?: string };
     loading: boolean
 }
