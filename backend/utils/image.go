@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"errors"
 	"fmt"
+	"github.com/go-errors/errors"
 	"github.com/gofiber/fiber/v2"
 	"github.com/liujiawm/graphics-go/graphics"
 	"image"

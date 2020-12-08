@@ -1,4 +1,5 @@
 PORT=8000
+ASSET_PATH=assets
 CORS_URI=http://localhost:8000/, http://localhost:80/, http://ikasmantura.org/
 DB_URI=user:password@tcp(127.0.0.1:3306)/webika?charset=utf8mb4&parseTime=True&loc=Local
 SECRET_KEY=rahasia

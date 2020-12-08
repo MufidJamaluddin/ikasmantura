@@ -24,7 +24,9 @@ func CustomErrorHandler(c *fiber.Ctx, err error) error {
 			return c.SendStatus(code)
 		}
 	} else {
-		log.Println(err.(*errors.Error).ErrorStack())
+		if stack, ok := err.(*errors.Error); ok {
+			log.Println(stack.ErrorStack())
+		}
 	}
 
 	return c.Status(code).SendString(err.Error())

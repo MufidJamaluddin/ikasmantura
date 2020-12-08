@@ -68,10 +68,7 @@ func (p *ArticleTopicServiceImpl) Find(search *viewmodels.ArticleTopicParam, cal
 		rows  *sql.Rows
 	)
 
-	tx = p.DB.Model(&model).Select([]string{
-		"id", "userId", "title", "SUBSTRING(body, 1, 20) as body", "image",
-		"createdBy", "createdAt", "updatedBy", "updatedAt",
-	})
+	tx = p.DB.Model(&model)
 
 	search.Filter(tx, articleSearchFields)
 

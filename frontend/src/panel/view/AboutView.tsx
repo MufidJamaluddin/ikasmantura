@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Edit, RichTextField, Show, SimpleForm, SimpleShowLayout, TextInput} from 'react-admin';
+import {Edit, RichTextField, Show, SimpleForm, SimpleShowLayout, TextInput, required} from 'react-admin';
 
 import RichTextInput from 'ra-input-rich-text';
 
@@ -22,9 +22,9 @@ export const AboutEdit = props => (
     <Edit title={<AboutTitle {...props} />} {...props}>
         <SimpleForm redirect="show">
             <TextInput disabled source="id" />
-            <RichTextInput source="description" />
-            <RichTextInput source="vision" />
-            <RichTextInput source="mission" />
+            <RichTextInput source="description" validate={[required()]} />
+            <RichTextInput source="vision" validate={[required()]} />
+            <RichTextInput source="mission" validate={[required()]} />
         </SimpleForm>
     </Edit>
 );

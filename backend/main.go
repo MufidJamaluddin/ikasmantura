@@ -82,7 +82,7 @@ func dirSetup() {
 
 	for _, path := range paths {
 		if _, err := os.Stat(path); os.IsNotExist(err) {
-			_ = os.Mkdir(path, 0666)
+			_ = os.Mkdir(path, 0755)
 		}
 	}
 }

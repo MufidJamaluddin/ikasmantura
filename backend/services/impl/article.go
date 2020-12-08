@@ -89,7 +89,7 @@ func (p *ArticleServiceImpl) Find(search *viewmodels.ArticleParam, callback func
 	)
 
 	tx = p.DB.Model(&model).Select([]string{
-		"id", "title", "SUBSTRING(body, 1, 20) as body", "image",
+		"id", "title", "SUBSTRING(body, 1, 20) as body", "thumbnail", "image",
 		"created_by", "created_at", "updated_by", "updated_at",
 	})
 
