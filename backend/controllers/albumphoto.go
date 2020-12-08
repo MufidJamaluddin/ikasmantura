@@ -8,6 +8,9 @@ import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
+	"mime/multipart"
+	"os"
+	"strings"
 )
 
 // @author Mufid Jamaluddin
@@ -66,7 +69,7 @@ func (p *AlbumPhotoController) SearchAlbumPhoto(c *fiber.Ctx) error {
 
 	_, err = c.Write(utils.ToBytes("["))
 	err = p.Service.Find(&data, callback)
-	if counter < total {
+	if counter < data.End {
 		_, _ = c.Write([]byte("{}"))
 	}
 	_, err = c.Write(utils.ToBytes("]"))
@@ -121,9 +124,11 @@ func (p *AlbumPhotoController) GetOneAlbumPhoto(c *fiber.Ctx) error {
 // @Router /api/v1/photos/{id} [put]
 func (p *AlbumPhotoController) UpdateAlbumPhoto(c *fiber.Ctx) error {
 	var (
-		data viewmodels.AlbumPhotoDto
-		err  error
-		id   uint
+		data      viewmodels.AlbumPhotoDto
+		imageFile *multipart.FileHeader
+		image     string
+		err       error
+		id        uint
 
 		currentUserId uint
 	)
@@ -141,6 +146,19 @@ func (p *AlbumPhotoController) UpdateAlbumPhoto(c *fiber.Ctx) error {
 
 	if err = c.BodyParser(&data); err != nil {
 		return err
+	}
+
+	data.CreatedBy = currentUserId
+	data.UpdatedBy = currentUserId
+
+	imageFile, err = c.FormFile("image")
+	if err == nil {
+		if image, err = utils.UploadImageJPG(c, imageFile); err == nil {
+			data.Image = image
+			if image, err = utils.UploadImageThumbJPG(imageFile); err == nil {
+				data.Thumbnail = image
+			}
+		}
 	}
 
 	data.UpdatedBy = currentUserId
@@ -169,8 +187,10 @@ func (p *AlbumPhotoController) UpdateAlbumPhoto(c *fiber.Ctx) error {
 // @Router /api/v1/photos [put]
 func (p *AlbumPhotoController) SaveAlbumPhoto(c *fiber.Ctx) error {
 	var (
-		data viewmodels.AlbumPhotoDto
-		err  error
+		data      viewmodels.AlbumPhotoDto
+		imageFile *multipart.FileHeader
+		image     string
+		err       error
 
 		currentUserId uint
 	)
@@ -184,6 +204,19 @@ func (p *AlbumPhotoController) SaveAlbumPhoto(c *fiber.Ctx) error {
 
 	if err = c.BodyParser(&data); err != nil {
 		return err
+	}
+
+	data.CreatedBy = currentUserId
+	data.UpdatedBy = currentUserId
+
+	imageFile, err = c.FormFile("image")
+	if err == nil {
+		if image, err = utils.UploadImageJPG(c, imageFile); err == nil {
+			data.Image = image
+			if image, err = utils.UploadImageThumbJPG(imageFile); err == nil {
+				data.Thumbnail = image
+			}
+		}
 	}
 
 	data.UpdatedBy = currentUserId
@@ -214,9 +247,10 @@ func (p *AlbumPhotoController) SaveAlbumPhoto(c *fiber.Ctx) error {
 // @Router /api/v1/photos/{id} [delete]
 func (p *AlbumPhotoController) DeleteAlbumPhoto(c *fiber.Ctx) error {
 	var (
-		data viewmodels.AlbumPhotoDto
-		err  error
-		id   uint
+		data  viewmodels.AlbumPhotoDto
+		image string
+		err   error
+		id    uint
 
 		currentUserId uint
 	)
@@ -235,6 +269,14 @@ func (p *AlbumPhotoController) DeleteAlbumPhoto(c *fiber.Ctx) error {
 	data.UpdatedBy = currentUserId
 	if err = p.Service.Delete(id, &data); err != nil {
 		return err
+	}
+
+	if image = strings.Trim(data.Image, " "); image != "" {
+		_ = os.Remove(fmt.Sprintf("/%s", image))
+	}
+
+	if image = strings.Trim(data.Thumbnail, " "); image != "" {
+		_ = os.Remove(fmt.Sprintf("/%s", image))
 	}
 
 	c.Status(fiber.StatusAccepted)

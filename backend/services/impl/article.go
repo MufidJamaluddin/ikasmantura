@@ -13,7 +13,7 @@ var articleSearchFields []string
 
 func init() {
 	articleSearchFields = []string{
-		"title",
+		"title", "article_topic_id",
 	}
 }
 
@@ -26,6 +26,7 @@ func (p *ArticleServiceImpl) toModel(data *viewmodels.ArticleDto, out *models.Ar
 	out.Title = data.Title
 	out.Body = data.Body
 	out.Image = data.Image
+	out.Thumbnail = data.Thumbnail
 	out.CreatedBy = data.UserId
 	out.UpdatedBy = data.UserId
 	out.ArticleTopicId = data.TopicId
@@ -39,6 +40,7 @@ func (p *ArticleServiceImpl) toData(in *models.Article, out *viewmodels.ArticleD
 	out.Title = in.Title
 	out.Body = in.Body
 	out.Image = in.Image
+	out.Thumbnail = in.Thumbnail
 	out.UserId = in.CreatedBy
 	out.CreatedAt = in.CreatedAt
 	out.TopicId = in.ArticleTopicId

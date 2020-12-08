@@ -28,6 +28,7 @@ func (p *EventServiceImpl) toModel(data *viewmodels.EventDto, out *models.Event)
 	out.Start = data.Start
 	out.End = data.End
 	out.Image = data.Image
+	out.Thumbnail = data.Thumbnail
 
 	utils.FillCreated(data, out)
 	utils.FillUpdated(data, out)
@@ -40,6 +41,7 @@ func (p *EventServiceImpl) toData(in *models.Event, out *viewmodels.EventDto, is
 	out.Start = in.Start
 	out.End = in.End
 	out.Image = in.Image
+	out.Thumbnail = in.Thumbnail
 
 	if isCurrentUserSearch {
 		total := len(in.Participants)

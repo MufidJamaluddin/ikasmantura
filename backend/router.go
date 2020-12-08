@@ -4,6 +4,7 @@ import (
 	"backend/controllers"
 	_ "backend/docs"
 	"backend/services/impl"
+	"fmt"
 	swagger "github.com/arsmn/fiber-swagger/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -53,6 +54,8 @@ func InitService(db *gorm.DB) {
 // @BasePath /
 func Route(app *fiber.App, db *gorm.DB) {
 
+	assetUri := fmt.Sprintf("/%s", os.Getenv("ASSET_PATH"))
+
 	secretHandler := jwtware.New(jwtware.Config{
 		SigningKey:  []byte(os.Getenv("SECRET_KEY")),
 		TokenLookup: "header:Authorization,cookie:web_ika_id",
@@ -71,6 +74,8 @@ func Route(app *fiber.App, db *gorm.DB) {
 	app.Use(recover.New())
 
 	app.Use("/swagger", swagger.Handler)
+
+	app.Static(assetUri, assetUri)
 
 	api := app.Group("/api", func(c *fiber.Ctx) error {
 		c.Accepts("application/json")

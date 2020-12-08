@@ -7,6 +7,7 @@ type Article struct {
 	Title          string `gorm:"size:35"`
 	Body           string
 	Image          string `gorm:"size:100"`
+	Thumbnail      string `gorm:"size:100"`
 	ArticleTopicId uint
 	ArticleTopic   ArticleTopic `gorm:"foreignKey:ArticleTopicId"`
 	utils.Created
@@ -14,9 +15,11 @@ type Article struct {
 }
 
 type ArticleTopic struct {
-	ID       uint      `gorm:"primarykey"`
-	Name     string    `gorm:"size:35"`
-	Articles []Article `gorm:"foreignKey:ArticleTopicId"`
+	ID          uint      `gorm:"primarykey"`
+	Name        string    `gorm:"size:35"`
+	Icon        string    `gorm:"size:35"`
+	Description string    `gorm:"size:35"`
+	Articles    []Article `gorm:"foreignKey:ArticleTopicId"`
 	utils.Created
 	utils.Updated
 }

@@ -13,7 +13,7 @@ var userSearchFields []string
 
 func init() {
 	userSearchFields = []string{
-		"name",
+		"name", "username", "email", "phone", "is_admin",
 	}
 }
 
@@ -63,7 +63,7 @@ func (p *UserServiceImpl) GetTotal(search *viewmodels.UserParam) (uint, error) {
 
 	tx = p.DB.Model(&model)
 
-	search.Filter(tx, articleSearchFields)
+	search.Filter(tx, userSearchFields)
 
 	if err = tx.Count(&total).Error; err != nil {
 		return 0, err

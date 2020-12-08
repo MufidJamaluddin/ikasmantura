@@ -47,7 +47,7 @@ func (p *AlbumServiceImpl) GetTotal(search *viewmodels.AlbumParam) (uint, error)
 
 	tx = p.DB.Model(&model)
 
-	search.Filter(tx, articleSearchFields)
+	search.Filter(tx, albumSearchFields)
 
 	if err = tx.Count(&total).Error; err != nil {
 		return 0, err

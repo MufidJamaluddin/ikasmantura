@@ -13,7 +13,7 @@ var albumPhotoSearchFields []string
 
 func init() {
 	albumPhotoSearchFields = []string{
-		"title",
+		"title", "album_id",
 	}
 }
 
@@ -51,7 +51,7 @@ func (p *AlbumPhotoServiceImpl) GetTotal(search *viewmodels.AlbumPhotoParam) (ui
 
 	tx = p.DB.Model(&model)
 
-	search.Filter(tx, articleSearchFields)
+	search.Filter(tx, albumPhotoSearchFields)
 
 	if err = tx.Count(&total).Error; err != nil {
 		return 0, err

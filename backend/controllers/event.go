@@ -10,6 +10,9 @@ import (
 	"github.com/SebastiaanKlippert/go-wkhtmltopdf"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
+	"mime/multipart"
+	"os"
+	"strings"
 )
 
 // @author Mufid Jamaluddin
@@ -55,7 +58,7 @@ func (p *EventController) SearchEvent(c *fiber.Ctx) error {
 
 	// RESPONSE ARRAY JSON DATA
 	// HEMAT MEMORY, NGGAK PERLU ALOKASI ARRAY, KIRIM AJA KE CLIENT SECARA MENGALIR
-	counter = 0
+	counter = data.GetParams.Start
 	callback = func(dt *viewmodels.EventDto) {
 		var (
 			response []byte
@@ -68,14 +71,14 @@ func (p *EventController) SearchEvent(c *fiber.Ctx) error {
 			_, _ = c.Write(response)
 		}
 		counter++
-		if counter < total {
+		if counter < data.GetParams.End {
 			_, _ = c.Write([]byte(","))
 		}
 	}
 
 	_, err = c.Write(utils.ToBytes("["))
 	err = p.Service.Find(&data, callback)
-	if counter < total {
+	if counter < data.GetParams.End {
 		_, _ = c.Write([]byte("{}"))
 	}
 	_, err = c.Write(utils.ToBytes("]"))
@@ -133,9 +136,11 @@ func (p *EventController) GetOneEvent(c *fiber.Ctx) error {
 // @Router /api/v1/events/{id} [put]
 func (p *EventController) UpdateEvent(c *fiber.Ctx) error {
 	var (
-		data viewmodels.EventDto
-		err  error
-		id   uint
+		data      viewmodels.EventDto
+		image     string
+		imageFile *multipart.FileHeader
+		err       error
+		id        uint
 
 		currentUserId uint
 	)
@@ -153,6 +158,16 @@ func (p *EventController) UpdateEvent(c *fiber.Ctx) error {
 
 	if err = c.BodyParser(&data); err != nil {
 		return err
+	}
+
+	imageFile, err = c.FormFile("image")
+	if err == nil {
+		if image, err = utils.UploadImageJPG(c, imageFile); err == nil {
+			data.Image = image
+			if image, err = utils.UploadImageThumbJPG(imageFile); err == nil {
+				data.Thumbnail = image
+			}
+		}
 	}
 
 	data.UpdatedBy = currentUserId
@@ -180,8 +195,10 @@ func (p *EventController) UpdateEvent(c *fiber.Ctx) error {
 // @Router /api/v1/events [post]
 func (p *EventController) SaveEvent(c *fiber.Ctx) error {
 	var (
-		data viewmodels.EventDto
-		err  error
+		data      viewmodels.EventDto
+		image     string
+		imageFile *multipart.FileHeader
+		err       error
 
 		currentUserId uint
 	)
@@ -195,6 +212,16 @@ func (p *EventController) SaveEvent(c *fiber.Ctx) error {
 
 	if err = c.BodyParser(&data); err != nil {
 		return err
+	}
+
+	imageFile, err = c.FormFile("image")
+	if err == nil {
+		if image, err = utils.UploadImageJPG(c, imageFile); err == nil {
+			data.Image = image
+			if image, err = utils.UploadImageThumbJPG(imageFile); err == nil {
+				data.Thumbnail = image
+			}
+		}
 	}
 
 	data.UpdatedBy = currentUserId
@@ -224,9 +251,10 @@ func (p *EventController) SaveEvent(c *fiber.Ctx) error {
 // @Router /api/v1/event/{id} [delete]
 func (p *EventController) DeleteEvent(c *fiber.Ctx) error {
 	var (
-		data viewmodels.EventDto
-		err  error
-		id   uint
+		data  viewmodels.EventDto
+		image string
+		err   error
+		id    uint
 
 		currentUserId uint
 	)
@@ -245,6 +273,14 @@ func (p *EventController) DeleteEvent(c *fiber.Ctx) error {
 	data.UpdatedBy = currentUserId
 	if err = p.Service.Delete(id, &data); err != nil {
 		return err
+	}
+
+	if image = strings.Trim(data.Image, " "); image != "" {
+		_ = os.Remove(fmt.Sprintf("/%s", image))
+	}
+
+	if image = strings.Trim(data.Thumbnail, " "); image != "" {
+		_ = os.Remove(fmt.Sprintf("/%s", image))
 	}
 
 	c.Status(fiber.StatusAccepted)

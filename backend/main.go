@@ -45,6 +45,8 @@ func main() {
 		Logger: logger.Default.LogMode(logger.Error),
 	})
 
+	dirSetup()
+
 	//history.Register(db)
 
 	Migrate(db)
@@ -69,4 +71,18 @@ func sqlSetup(sqlDb *sql.DB) {
 		time.Minute * utils.TryParseDuration(os.Getenv("MAX_LIFETIME"), 5))
 	sqlDb.SetMaxIdleConns(utils.TryParseInt(os.Getenv("MAX_IDLE_CONNECTIONS"), 2))
 	sqlDb.SetMaxOpenConns(utils.TryParseInt(os.Getenv("MAX_OPEN_CONNECTIONS"), 10))
+}
+
+func dirSetup() {
+	assetPath := os.Getenv("ASSET_PATH")
+	imgPath := assetPath + "/img"
+	thumbImgPath := assetPath + "/thumb"
+
+	paths := []string{assetPath, imgPath, thumbImgPath}
+
+	for _, path := range paths {
+		if _, err := os.Stat(path); os.IsNotExist(err) {
+			_ = os.Mkdir(path, 0666)
+		}
+	}
 }

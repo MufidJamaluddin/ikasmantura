@@ -13,6 +13,7 @@ type EventDto struct {
 	Id                   uint         `query:"-" json:"id,omitempty" xml:"id,omitempty" form:"id,omitempty"`
 	Description          string       `query:"-" json:"description,omitempty" xml:"description,omitempty" form:"description,omitempty"`
 	Image                string       `query:"-" json:"image,omitempty" xml:"image,omitempty" form:"image,omitempty"`
+	Thumbnail            string       `query:"-" json:"thumbnail,omitempty" xml:"thumbnail,omitempty" form:"thumbnail,omitempty"`
 	Start                time.Time    `query:"-" json:"start,omitempty" xml:"start,omitempty" form:"start,omitempty"`
 	End                  time.Time    `query:"-" json:"end,omitempty" xml:"end,omitempty" form:"end,omitempty"`
 	CurrentUserId        uint         `query:"-" json:"-" xml:"-" form:"-"`

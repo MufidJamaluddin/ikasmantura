@@ -2,7 +2,64 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="Handle Response Nil">
+      <change afterPath="$PROJECT_DIR$/utils/image.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/home/config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/panel/view/ArticleTopicView.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/utils/Sanitizer.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/album.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/album.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/albumphoto.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/albumphoto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/article.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/articletopic.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/articletopic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/department.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/department.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/article.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/impl/album.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/impl/album.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/impl/albumphoto.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/impl/albumphoto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/impl/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/impl/article.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/impl/articletopic.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/impl/articletopic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/impl/department.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/impl/department.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/impl/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/impl/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/impl/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/impl/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/album.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/album.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/article.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/public/static/img/logo_ika2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/dataprovider/fakedata/articles.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/fakedata/articles.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/dataprovider/fakedata/departments.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/fakedata/departments.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/component/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/component/Footer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/component/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/component/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/ArticlesItemView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/ArticlesItemView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/ArticlesView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/ArticlesView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/EventsItemView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/EventsItemView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/EventsListView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/EventsListView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/OrganizationView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/OrganizationView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/logo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/logo.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/component/MyLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/component/MyLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/component/MyMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/component/MyMenu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/AboutView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/AboutView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/AlbumView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/AlbumView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/ArticleView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/ArticleView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/DashboardView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/DashboardView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/DepartmentView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/DepartmentView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/EventView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/EventView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/GalleryView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/GalleryView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/LoginView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/LoginView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/UserView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/UserView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

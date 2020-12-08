@@ -8,6 +8,9 @@ import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
+	"mime/multipart"
+	"os"
+	"strings"
 )
 
 // @author Mufid Jamaluddin
@@ -66,7 +69,7 @@ func (p *ArticleController) SearchArticle(c *fiber.Ctx) error {
 
 	_, err = c.Write(utils.ToBytes("["))
 	err = p.Service.Find(&data, callback)
-	if counter < total {
+	if counter < data.End {
 		_, _ = c.Write([]byte("{}"))
 	}
 	_, err = c.Write(utils.ToBytes("]"))
@@ -121,9 +124,11 @@ func (p *ArticleController) GetOneArticle(c *fiber.Ctx) error {
 // @Router /api/v1/articles/{id} [put]
 func (p *ArticleController) UpdateArticle(c *fiber.Ctx) error {
 	var (
-		data viewmodels.ArticleDto
-		err  error
-		id   uint
+		data      viewmodels.ArticleDto
+		image     string
+		imageFile *multipart.FileHeader
+		err       error
+		id        uint
 
 		currentUserId uint
 	)
@@ -141,6 +146,16 @@ func (p *ArticleController) UpdateArticle(c *fiber.Ctx) error {
 
 	if err = c.BodyParser(&data); err != nil {
 		return err
+	}
+
+	imageFile, err = c.FormFile("image")
+	if err == nil {
+		if image, err = utils.UploadImageJPG(c, imageFile); err == nil {
+			data.Image = image
+			if image, err = utils.UploadImageThumbJPG(imageFile); err == nil {
+				data.Thumbnail = image
+			}
+		}
 	}
 
 	data.UpdatedBy = currentUserId
@@ -169,8 +184,10 @@ func (p *ArticleController) UpdateArticle(c *fiber.Ctx) error {
 // @Router /api/v1/articles/{id} [put]
 func (p *ArticleController) SaveArticle(c *fiber.Ctx) error {
 	var (
-		data viewmodels.ArticleDto
-		err  error
+		data      viewmodels.ArticleDto
+		imageFile *multipart.FileHeader
+		image     string
+		err       error
 
 		currentUserId uint
 	)
@@ -188,6 +205,17 @@ func (p *ArticleController) SaveArticle(c *fiber.Ctx) error {
 
 	data.CreatedBy = currentUserId
 	data.UpdatedBy = currentUserId
+
+	imageFile, err = c.FormFile("image")
+	if err == nil {
+		if image, err = utils.UploadImageJPG(c, imageFile); err == nil {
+			data.Image = image
+			if image, err = utils.UploadImageThumbJPG(imageFile); err == nil {
+				data.Thumbnail = image
+			}
+		}
+	}
+
 	if err = p.Service.Save(&data); err != nil {
 		return err
 	}
@@ -212,9 +240,10 @@ func (p *ArticleController) SaveArticle(c *fiber.Ctx) error {
 // @Router /api/v1/article/{id} [delete]
 func (p *ArticleController) DeleteArticle(c *fiber.Ctx) error {
 	var (
-		data viewmodels.ArticleDto
-		err  error
-		id   uint
+		data  viewmodels.ArticleDto
+		image string
+		err   error
+		id    uint
 
 		currentUserId uint
 	)
@@ -233,6 +262,14 @@ func (p *ArticleController) DeleteArticle(c *fiber.Ctx) error {
 	data.UpdatedBy = currentUserId
 	if err = p.Service.Delete(id, &data); err != nil {
 		return err
+	}
+
+	if image = strings.Trim(data.Image, " "); image != "" {
+		_ = os.Remove(fmt.Sprintf("/%s", image))
+	}
+
+	if image = strings.Trim(data.Thumbnail, " "); image != "" {
+		_ = os.Remove(fmt.Sprintf("/%s", image))
 	}
 
 	c.Status(fiber.StatusAccepted)

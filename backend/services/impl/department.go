@@ -13,7 +13,7 @@ var departmentSearchFields []string
 
 func init() {
 	departmentSearchFields = []string{
-		"name",
+		"name", "user_id", "type",
 	}
 }
 
@@ -53,7 +53,7 @@ func (p *DepartmentServiceImpl) GetTotal(search *viewmodels.DepartmentParam) (ui
 	)
 
 	tx = p.DB.Model(&model)
-	search.Filter(tx, articleSearchFields)
+	search.Filter(tx, departmentSearchFields)
 
 	if err = tx.Count(&total).Error; err != nil {
 		return 0, err

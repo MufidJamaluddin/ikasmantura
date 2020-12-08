@@ -11,6 +11,7 @@ type Event struct {
 	Title        string `gorm:"size:35"`
 	Description  string `gorm:"size:256"`
 	Image        string `gorm:"size:100"`
+	Thumbnail    string `gorm:"size:100"`
 	Start        time.Time
 	End          time.Time
 	Participants []UserEvent `gorm:"foreignKey:EventId"`
