@@ -18,7 +18,6 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/recover"
-	"github.com/gofiber/fiber/v2/middleware/timeout"
 	jwtWare "github.com/gofiber/jwt/v2"
 	"gorm.io/gorm"
 	"log"
@@ -144,8 +143,10 @@ func Route(app *fiber.App, db *gorm.DB) {
 	eventReg.Post("/:id", secretHandler, eventHandler.RegisterEvent)
 
 	eventDownload := apiV1.Group("/eventsdownload")
-	eventDownload.Post("/:id",
-		secretHandler, timeout.New(eventHandler.DownloadEventTicket, 2*time.Minute))
+	eventDownload.Post("/:id", secretHandler, eventHandler.DownloadEventTicket)
+
+	// secretHandler, timeout.New(eventHandler.DownloadEventTicket, 2*time.Minute))
+	// timeout framework bisa race condition
 
 	user := apiV1.Group("/users")
 	user.Get("", publicHandler, userHandler.SearchUser)
