@@ -1,7 +1,7 @@
 package utils
 
 import (
-	history "github.com/vcraescu/gorm-history"
+	history "github.com/vcraescu/gorm-history/v2"
 	"time"
 )
 

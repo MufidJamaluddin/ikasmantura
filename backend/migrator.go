@@ -13,6 +13,9 @@ func Migrate(db *gorm.DB) {
 		&models.UserAddress{},
 		&models.UserAddressHistory{},
 
+		&models.TempUser{},
+		&models.TempUserAddress{},
+
 		&models.About{},
 		&models.AboutHistory{},
 
@@ -25,7 +28,10 @@ func Migrate(db *gorm.DB) {
 
 		&models.Classroom{},
 		&models.ClassroomHistory{},
+
 		&models.UserClassroom{},
+
+		&models.TempUserClassroom{},
 
 		&models.Department{},
 		&models.DepartmentHistory{},

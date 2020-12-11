@@ -9,6 +9,7 @@ import (
 	"image/jpeg"
 	"mime/multipart"
 	"os"
+	"path/filepath"
 	"unicode/utf8"
 )
 
@@ -17,7 +18,7 @@ func trimFirstRune(s string) string {
 	return s[i:]
 }
 
-func UploadImageJPG(c *fiber.Ctx, imageFile *multipart.FileHeader) (string, error) {
+func UploadImageJPG(c *fiber.Ctx, imageFile *multipart.FileHeader, fileName string) (string, error) {
 	var (
 		err       error
 		imagePath string
@@ -27,8 +28,10 @@ func UploadImageJPG(c *fiber.Ctx, imageFile *multipart.FileHeader) (string, erro
 		return "", errors.New("image isn't valid")
 	}
 
+	fileName = fmt.Sprintf("%s%s", fileName, filepath.Ext(imageFile.Filename))
+
 	imagePath = fmt.Sprintf(
-		"./%s/%s/%s", os.Getenv("ASSET_PATH"), "img", imageFile.Filename)
+		"./%s/%s/%s", os.Getenv("ASSET_PATH"), "img", fileName)
 
 	if err = c.SaveFile(imageFile, imagePath); err != nil {
 		return trimFirstRune(imagePath), err
@@ -37,7 +40,7 @@ func UploadImageJPG(c *fiber.Ctx, imageFile *multipart.FileHeader) (string, erro
 	return "", nil
 }
 
-func UploadImageThumbJPG(imageFile *multipart.FileHeader) (string, error) {
+func UploadImageThumbJPG(imageFile *multipart.FileHeader, fileName string) (string, error) {
 	var (
 		err                 error
 		thumbPathStr        string
@@ -50,8 +53,10 @@ func UploadImageThumbJPG(imageFile *multipart.FileHeader) (string, error) {
 		return "", errors.New("image isn't valid")
 	}
 
+	fileName = fmt.Sprintf("%s%s", fileName, filepath.Ext(imageFile.Filename))
+
 	thumbPathStr = fmt.Sprintf(
-		"./%s/%s/%s", os.Getenv("ASSET_PATH"), "thumb", imageFile.Filename)
+		"./%s/%s/%s", os.Getenv("ASSET_PATH"), "thumb", fileName)
 
 	if imagePath, err = imageFile.Open(); imagePath == nil {
 		return "", errors.New("no file")

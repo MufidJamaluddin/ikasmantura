@@ -8,6 +8,7 @@ import (
 	"github.com/SebastiaanKlippert/go-wkhtmltopdf"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
+	history "github.com/vcraescu/gorm-history/v2"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -42,14 +43,21 @@ func main() {
 	db, err = gorm.Open(mysql.New(mysql.Config{
 		Conn: sqlDb,
 	}), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Error),
+		Logger:                 logger.Default.LogMode(logger.Error),
+		SkipDefaultTransaction: true,
 	})
+
+	if db == nil {
+		log.Fatal("Database can't be initialized!")
+	}
 
 	dirSetup()
 
-	//history.Register(db)
-
 	Migrate(db)
+
+	if err = db.Use(history.New()); err != nil {
+		log.Println(err.Error())
+	}
 
 	app := fiber.New(fiber.Config{
 		Prefork:       true,

@@ -11,6 +11,7 @@ type User struct {
 	Email      string `gorm:"size:286"`
 	Password   string `gorm:"size:40"`
 	Phone      string `gorm:"size:13"`
+	ForceYear  string `gorm:"size:4"`
 	IsAdmin    bool
 	Address    UserAddress     `gorm:"foreignKey:UserId"`
 	MyEvents   []UserEvent     `gorm:"foreignKey:UserId"`

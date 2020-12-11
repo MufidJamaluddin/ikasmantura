@@ -3,14 +3,15 @@ package viewmodels
 import "backend/utils"
 
 type UserDto struct {
-	Id       uint           `query:"-" json:"id,omitempty" xml:"id,omitempty" form:"id,omitempty"`
-	Name     string         `query:"name,omitempty" json:"name,omitempty" xml:"name,omitempty" form:"name,omitempty"`
-	Username string         `query:"username,omitempty" json:"username,omitempty" xml:"username,omitempty" form:"username,omitempty"`
-	IsAdmin  bool           `query:"isAdmin" json:"isAdmin" xml:"isAdmin" form:"isAdmin"`
-	Email    string         `query:"email,omitempty" json:"email,omitempty" xml:"email,omitempty" form:"email,omitempty"`
-	Phone    string         `query:"phone,omitempty" json:"phone,omitempty" xml:"phone,omitempty" form:"phone,omitempty"`
-	Password string         `query:"-" json:"password,omitempty" xml:"password,omitempty" form:"password,omitempty"`
-	Address  UserAddressDto `query:"-" json:"address,omitempty" xml:"address,omitempty" form:"address,omitempty"`
+	Id        uint           `query:"-" json:"id,omitempty" xml:"id,omitempty" form:"id,omitempty"`
+	Name      string         `query:"name,omitempty" json:"name,omitempty" xml:"name,omitempty" form:"name,omitempty"`
+	Username  string         `query:"username,omitempty" json:"username,omitempty" xml:"username,omitempty" form:"username,omitempty"`
+	IsAdmin   bool           `query:"isAdmin" json:"isAdmin" xml:"isAdmin" form:"isAdmin"`
+	Email     string         `query:"email,omitempty" json:"email,omitempty" xml:"email,omitempty" form:"email,omitempty"`
+	Phone     string         `query:"phone,omitempty" json:"phone,omitempty" xml:"phone,omitempty" form:"phone,omitempty"`
+	ForceYear string         `query:"forceYear,omitempty" json:"forceYear,omitempty" xml:"forceYear,omitempty" form:"forceYear,omitempty"`
+	Password  string         `query:"-" json:"password,omitempty" xml:"password,omitempty" form:"password,omitempty"`
+	Address   UserAddressDto `query:"-" json:"address,omitempty" xml:"address,omitempty" form:"address,omitempty"`
 	utils.Created
 	utils.Updated
 }

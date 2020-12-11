@@ -1,25 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="">
+    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="Change Front UI">
+      <change afterPath="$PROJECT_DIR$/handlers/auth/authmiddle.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handlers/temp_user/user.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/user_temp.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/about/mapper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/album/command.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/album/mapper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/album/query.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/albumphoto/command.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/albumphoto/mapper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/albumphoto/query.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/article/command.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/article/mapper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/article/query.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/articletopic/command.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/articletopic/mapper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/articletopic/query.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/auth/command.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/auth/login.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/department/command.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/department/mapper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/department/query.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/event/mapper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/event/query.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/temp_user/command.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/temp_user/mapper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/temp_user/query.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/user/command.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/user/mapper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/user/query.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/config-overrides.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/LoginProvider.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/utils/Jwt.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/album.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/album.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/albumphoto.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/albumphoto.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/article.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/articletopic.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/articletopic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/department.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/department.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/event.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/env" beforeDir="false" afterPath="$PROJECT_DIR$/env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/error/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/error/handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/about.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/about/about.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/album.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/album/album.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/albumphoto.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/albumphoto/albumphoto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/article/article.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/articletopic.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/articletopic/articletopic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/auth/login.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/department.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/department/department.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/event/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/user/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/impl/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/impl/article.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/impl/articletopic.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/impl/articletopic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrator.go" beforeDir="false" afterPath="$PROJECT_DIR$/migrator.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/impl/about.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/about/about.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/impl/album.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/impl/albumphoto.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/impl/article.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/impl/articletopic.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/impl/auth.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/impl/department.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/impl/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/event/command.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/impl/user.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/iservices.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/image.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/image.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/viewmodels/album.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/album.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/viewmodels/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/article.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/viewmodels/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/event.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/AboutView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/AboutView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/model.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/auth.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/template/event_ticket.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/template/event_ticket.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/AboutView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/AboutView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/HomeView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/HomeView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/authProvider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/authProvider.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +85,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="C:\Go" />
+  <component name="GOROOT" path="C:\Users\MufidPC\go\go1.15.6" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
@@ -54,28 +105,29 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/handlers" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="settings.editor.selected.configurable" value="go.sdk" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\SMANTURA\ikasmantura\backend\viewmodels" />
+      <recent name="D:\SMANTURA\ikasmantura\backend\handlers\user" />
+      <recent name="D:\SMANTURA\ikasmantura\backend\handlers\event" />
+      <recent name="D:\SMANTURA\ikasmantura\backend\handlers\department" />
+      <recent name="D:\SMANTURA\ikasmantura\backend\handlers\auth" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\SMANTURA\ikasmantura\backend\handlers" />
       <recent name="D:\SMANTURA\ikasmantura\backend" />
       <recent name="D:\SMANTURA\webika\backend\handlers" />
       <recent name="D:\SMANTURA\webika\backend\error" />
       <recent name="D:\SMANTURA\webika\backend\common" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\SMANTURA\webika\backend\views\template" />
-      <recent name="D:\SMANTURA\webika\backend" />
-      <recent name="D:\SMANTURA\webika\backend\app" />
-      <recent name="D:\SMANTURA\webika\backend\services" />
-      <recent name="D:\SMANTURA\webika\backend\repository" />
     </key>
   </component>
   <component name="RunManager">
@@ -104,7 +156,8 @@
     <MESSAGE value="Handle Response Nil" />
     <MESSAGE value="Change Model Scheme" />
     <MESSAGE value="Change Front UI" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change Front UI" />
+    <MESSAGE value="Bug Fixing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug Fixing" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -118,11 +171,11 @@
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="425" y="186" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1301.768@0.0.1301.768" timestamp="1607455092898" />
-    <state x="276" y="0" key="CommitChangelistDialog2" timestamp="1607455248055">
+    <state x="276" y="0" key="CommitChangelistDialog2" timestamp="1607463036563">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="274" y="0" key="CommitChangelistDialog2/0.0.1298.768@0.0.1298.768" timestamp="1601400251914" />
-    <state x="276" y="0" key="CommitChangelistDialog2/0.0.1301.768@0.0.1301.768" timestamp="1607455248055" />
+    <state x="276" y="0" key="CommitChangelistDialog2/0.0.1301.768@0.0.1301.768" timestamp="1607463036563" />
     <state x="122" y="59" key="DiffContextDialog" timestamp="1601656243665">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
@@ -152,19 +205,25 @@
       <screen x="0" y="0" width="1298" height="768" />
     </state>
     <state width="1255" height="272" key="GridCell.Tab.0.right/0.0.1298.768@0.0.1298.768" timestamp="1601052635959" />
-    <state x="149" y="29" key="SettingsEditor" timestamp="1601044222694">
-      <screen x="0" y="0" width="1296" height="768" />
+    <state x="150" y="29" key="SettingsEditor" timestamp="1607605038324">
+      <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="149" y="29" key="SettingsEditor/0.0.1296.768@0.0.1296.768" timestamp="1601044222694" />
+    <state x="150" y="29" key="SettingsEditor/0.0.1301.768@0.0.1301.768" timestamp="1607605038324" />
     <state x="242" y="117" key="Vcs.Push.Dialog.v2" timestamp="1607455256156">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="241" y="117" key="Vcs.Push.Dialog.v2/0.0.1298.768@0.0.1298.768" timestamp="1601400264504" />
     <state x="242" y="117" key="Vcs.Push.Dialog.v2/0.0.1301.768@0.0.1301.768" timestamp="1607455256156" />
-    <state x="312" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1601126189971">
-      <screen x="0" y="0" width="1298" height="768" />
+    <state x="468" y="298" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1607611686939">
+      <screen x="0" y="0" width="1301" height="768" />
+    </state>
+    <state x="468" y="298" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1301.768@0.0.1301.768" timestamp="1607611686939" />
+    <state x="313" y="89" width="674" height="678" key="search.everywhere.popup" timestamp="1607606839368">
+      <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="312" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1298.768@0.0.1298.768" timestamp="1601126189971" />
     <state x="312" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1299.768@0.0.1299.768" timestamp="1600905904444" />
+    <state x="313" y="89" width="674" height="678" key="search.everywhere.popup/0.0.1301.768@0.0.1301.768" timestamp="1607606839368" />
   </component>
 </project>

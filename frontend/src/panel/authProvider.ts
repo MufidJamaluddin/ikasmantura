@@ -1,24 +1,8 @@
+import LoginProvider from "../dataprovider/LoginProvider";
+
 const authProvider = {
     // called when the user attempts to log in
-    login: ({ username, password }) => {
-        const request = new Request('/api/v1/auth', {
-            method: 'POST',
-            body: JSON.stringify({ username: username.trim(), password: password.trim() }),
-            headers: new Headers({ 'Content-Type': 'application/json' }),
-        })
-        return fetch(request)
-            .then(response => {
-                if (response.status < 200 || response.status >= 300) {
-                    throw new Error(response.statusText);
-                }
-                return response.json();
-            })
-            .then(({ data, token }) => {
-                console.log(data)
-                localStorage.setItem('data', JSON.stringify(data));
-                localStorage.setItem('token', token);
-            });
-    },
+    login: LoginProvider,
     // called when the user clicks on the logout button
     logout: () => {
         localStorage.removeItem('data');
@@ -36,9 +20,17 @@ const authProvider = {
     },
     // called when the user navigates to a new location, to check for authentication
     checkAuth: () => {
-        return localStorage.getItem('token')
-            ? Promise.resolve()
-            : Promise.reject();
+        let dataStr = localStorage.getItem('data')
+        if(dataStr)
+        {
+            let data = JSON.parse(dataStr)
+            if(Date.now() >= data.exp * 1000)
+            {
+                return Promise.reject()
+            }
+            return Promise.resolve()
+        }
+        return Promise.reject()
     },
     // called when the user navigates to a new location, to check for permissions / roles
     getPermissions: () => Promise.resolve(),

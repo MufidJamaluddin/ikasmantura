@@ -5,6 +5,7 @@ import {Button, Col, Container, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import DataProviderFactory from "../../dataprovider/DataProviderFactory";
 import {NotificationManager} from 'react-notifications';
+import DOMPurify from "../../utils/Sanitizer";
 
 export default class HomeView extends React.PureComponent<RouteComponentProps, {topics: Array<any>}>
 {
@@ -97,7 +98,10 @@ export default class HomeView extends React.PureComponent<RouteComponentProps, {
                                                 <i className={`${item.icon} m-auto`}/>
                                             </div>
                                             <h3 className="text-success">{item.name}</h3>
-                                            <p className="lead mb-0">{item.description}</p>
+                                            <div
+                                                className="lead mb-0"
+                                                dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(item.description)}}
+                                            />
                                         </div>
                                         <Link to={{
                                             pathname: '/articles',
