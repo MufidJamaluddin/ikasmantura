@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="">
+    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="remove old code">
+      <change afterPath="$PROJECT_DIR$/utils/convention.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/getparam.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/getparam.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +92,9 @@
     <MESSAGE value="Change Front UI" />
     <MESSAGE value="Bug Fixing" />
     <MESSAGE value="Refactoring &amp; Add User Registration API (temp user)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactoring &amp; Add User Registration API (temp user)" />
+    <MESSAGE value="Fix timeout race condition" />
+    <MESSAGE value="remove old code" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove old code" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -105,16 +108,16 @@
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="425" y="186" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1301.768@0.0.1301.768" timestamp="1607455092898" />
-    <state x="276" y="0" key="CommitChangelistDialog2" timestamp="1607728816057">
+    <state x="276" y="0" key="CommitChangelistDialog2" timestamp="1607730017372">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="274" y="0" key="CommitChangelistDialog2/0.0.1298.768@0.0.1298.768" timestamp="1601400251914" />
-    <state x="276" y="0" key="CommitChangelistDialog2/0.0.1301.768@0.0.1301.768" timestamp="1607728816057" />
-    <state x="122" y="59" key="DiffContextDialog" timestamp="1601656243665">
+    <state x="276" y="0" key="CommitChangelistDialog2/0.0.1301.768@0.0.1301.768" timestamp="1607730017372" />
+    <state x="122" y="59" key="DiffContextDialog" timestamp="1607730016611">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="122" y="59" key="DiffContextDialog/0.0.1298.768@0.0.1298.768" timestamp="1601400168939" />
-    <state x="122" y="59" key="DiffContextDialog/0.0.1301.768@0.0.1301.768" timestamp="1601656243665" />
+    <state x="122" y="59" key="DiffContextDialog/0.0.1301.768@0.0.1301.768" timestamp="1607730016611" />
     <state x="542" y="244" key="EnvironmentVariablesDialog" timestamp="1600666945282">
       <screen x="0" y="0" width="1299" height="768" />
     </state>
@@ -144,11 +147,11 @@
     </state>
     <state x="149" y="29" key="SettingsEditor/0.0.1296.768@0.0.1296.768" timestamp="1601044222694" />
     <state x="150" y="29" key="SettingsEditor/0.0.1301.768@0.0.1301.768" timestamp="1607605038324" />
-    <state x="242" y="117" key="Vcs.Push.Dialog.v2" timestamp="1607728828592">
+    <state x="242" y="117" key="Vcs.Push.Dialog.v2" timestamp="1607729394420">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="241" y="117" key="Vcs.Push.Dialog.v2/0.0.1298.768@0.0.1298.768" timestamp="1601400264504" />
-    <state x="242" y="117" key="Vcs.Push.Dialog.v2/0.0.1301.768@0.0.1301.768" timestamp="1607728828592" />
+    <state x="242" y="117" key="Vcs.Push.Dialog.v2/0.0.1301.768@0.0.1301.768" timestamp="1607729394420" />
     <state x="468" y="298" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1607611686939">
       <screen x="0" y="0" width="1301" height="768" />
     </state>

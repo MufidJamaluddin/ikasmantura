@@ -24,7 +24,7 @@ func (p *GetParams) Filter(db *gorm.DB, searchFields []string) {
 	}
 	if p.Sort != "" {
 		if strings.EqualFold(p.Order, "asc") || strings.EqualFold(p.Order, "desc") {
-			db.Order(fmt.Sprintf("%s %s", p.Sort, p.Order))
+			db.Order(fmt.Sprintf("%s %s", ToSneakyCase(p.Sort), p.Order))
 		}
 	}
 	if p.Start < p.End {
@@ -32,7 +32,9 @@ func (p *GetParams) Filter(db *gorm.DB, searchFields []string) {
 	}
 	if p.Search != "" && searchFields != nil {
 		for _, field := range searchFields {
-			db.Where(fmt.Sprintf("%s LIKE ?", field), fmt.Sprintf("%s%", p.Search))
+			db.Where(
+				fmt.Sprintf("%s LIKE ?", ToSneakyCase(field)),
+				fmt.Sprintf("%s%", p.Search))
 		}
 	}
 }
