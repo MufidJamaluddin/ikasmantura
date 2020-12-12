@@ -9,8 +9,6 @@
 }
 
 .c-g-banner {
-    padding: 1rem;
-    color: white;
     background-size: contain, cover;
     background-image: url("./resource/smantura.jpg");
     background-image: -moz-linear-gradient(350deg, rgba(183,110,200,0.3) 0%, rgba(5, 105, 255,1) 100%), url("./resource/smantura.jpg");

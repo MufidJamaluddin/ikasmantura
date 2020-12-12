@@ -15,6 +15,7 @@ import (
 	"fmt"
 	swagger "github.com/arsmn/fiber-swagger/v2"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/recover"
@@ -22,6 +23,7 @@ import (
 	"gorm.io/gorm"
 	"log"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -64,6 +66,15 @@ func Route(app *fiber.App, db *gorm.DB) {
 		},
 	})
 
+	cacheDuration, _ := strconv.Atoi(os.Getenv("CACHE_DURATION"))
+	cacheHandler := cache.New(cache.Config{
+		Next: func(c *fiber.Ctx) bool {
+			return c.Query("refresh") == "true"
+		},
+		Expiration: time.Duration(cacheDuration) * time.Minute,
+		CacheControl: true,
+	})
+
 	app.Use(recover.New())
 
 	app.Use("/swagger", swagger.Handler)
@@ -90,7 +101,7 @@ func Route(app *fiber.App, db *gorm.DB) {
 	apiV1 := api.Group("/v1")
 
 	about := apiV1.Group("/about")
-	about.Get("/:id", publicHandler, aboutHandler.GetAbout)
+	about.Get("/:id", cacheHandler, publicHandler, aboutHandler.GetAbout)
 	about.Put("/:id", secretHandler, aboutHandler.UpdateAbout)
 
 	album := apiV1.Group("/albums")

@@ -130,3 +130,26 @@ header.masthead h1 {
     left: 0;
     opacity: 0.3;
 }
+
+@media only screen and (min-width: 760px)
+{
+    .c-63vh-height {
+        height: 63vh;
+    }
+}
+
+.text-unavailable {
+    color: darkred;
+}
+
+.text-error {
+    color: yellowgreen;
+}
+
+.text-success {
+    color: darkgreen;
+}
+
+.text-white {
+    color: darkgreen;
+}

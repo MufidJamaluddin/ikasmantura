@@ -16,8 +16,12 @@ func GetAuthorizationData(ctx *fiber.Ctx) (*AuthorizationModel, bool) {
 	var (
 		authData *AuthorizationModel
 		ok       bool
+		user     interface{}
 	)
-	authData, ok = ctx.Locals("user").(*AuthorizationModel)
+	if user = ctx.Locals("user"); user == nil {
+		return nil, false
+	}
+	authData, ok = user.(*AuthorizationModel)
 	return authData, ok
 }
 

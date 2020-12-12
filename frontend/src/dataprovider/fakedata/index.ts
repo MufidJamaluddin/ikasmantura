@@ -2,6 +2,7 @@
  * @author Mufid Jamaluddin
  */
 import users from './users.json'
+import tempUsers from './temp_users.json'
 import departments from './departments.json'
 import topics from './topics.json'
 import articles from './articles.json'
@@ -15,6 +16,7 @@ function getFakeData()
     return {
         "about": about,
         "users": users,
+        "temp_user": tempUsers,
         "departments": departments,
         "articles": articles,
         "events_download": [],

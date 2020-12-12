@@ -5,10 +5,14 @@ import (
 )
 
 type AboutDto struct {
-	Id          uint   `query:"-" json:"id,omitempty" xml:"id,omitempty" form:"id,omitempty"`
-	Description string `query:"description,omitempty" json:"description,omitempty" xml:"description,omitempty" form:"description,omitempty"`
-	Vision      string `query:"vision,omitempty" json:"vision,omitempty" xml:"vision,omitempty" form:"vision,omitempty"`
-	Mission     string `query:"mission,omitempty" json:"mission,omitempty" xml:"mission,omitempty" form:"mission,omitempty"`
+	Id          uint   `json:"id,omitempty" xml:"id,omitempty" form:"id,omitempty"`
+	Title       string `json:"title,omitempty" xml:"title,omitempty" form:"title,omitempty"`
+	Description string `json:"description,omitempty" xml:"description,omitempty" form:"description,omitempty"`
+	Vision      string `json:"vision,omitempty" xml:"vision,omitempty" form:"vision,omitempty"`
+	Mission     string `json:"mission,omitempty" xml:"mission,omitempty" form:"mission,omitempty"`
+	Facebook    string `json:"facebook,omitempty" xml:"facebook,omitempty" form:"facebook,omitempty"`
+	Twitter     string `json:"twitter,omitempty" xml:"twitter,omitempty" form:"twitter,omitempty"`
+	Instagram   string `json:"instagram,omitempty" xml:"instagram,omitempty" form:"instagram,omitempty"`
 	utils.Created
 	utils.Updated
 }

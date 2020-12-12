@@ -95,7 +95,7 @@ export default class Header extends PureComponent<{}, {topics: Array<any>}>
                                 }
                             </NavDropdown>
                             <Nav.Link as={Link} to={"/gallery"}>Galeri</Nav.Link>
-                            <Nav.Link as={Link} to={"/panel"}>
+                            <Nav.Link as={Link} to={"/login"}>
                                 <span><i className="fas fa-user"/></span>
                             </Nav.Link>
                         </Nav>

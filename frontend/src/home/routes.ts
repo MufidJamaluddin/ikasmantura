@@ -7,6 +7,8 @@ import OrganizationView from "./views/OrganizationView";
 import AboutView from "./views/AboutView";
 import GalleryView from "./views/GalleryView";
 import EventsListView from "./views/EventsListView";
+import RegisterView from "./views/RegisterView";
+import LoginView from "./views/LoginView";
 
 const ROUTES = [
     { title: 'IKA', path: '', exact: true, menu: true, component: HomeView },
@@ -22,6 +24,9 @@ const ROUTES = [
     { title: 'Events List', path: 'events_list', exact: true, menu: true, component: EventsListView },
 
     { title: 'Galleries', path: 'gallery', exact: true, menu: true, component: GalleryView },
+
+    { title: 'Login', path: 'login', exact: true, menu: true, component: LoginView },
+    { title: 'Register', path: 'register', exact: true, menu: true, component: RegisterView },
 ]
 
 export default ROUTES

@@ -1,12 +1,29 @@
 import React from "react";
 
-import {Notification, useLogin, useNotify} from 'react-admin'
+import {useLogin} from 'react-admin'
 import {ThemeProvider} from '@material-ui/styles'
 
-const LoginView = ({ parenthistory, theme }) => {
+import {NotificationManager} from 'react-notifications';
+import { NotificationContainer } from 'react-notifications';
+
+const LoginView = ({ parenthistory, theme, location }) => {
 
     const login = useLogin();
-    const notify = useNotify();
+
+    let {username = false, password = false} = location?.state
+
+    if(username)
+    {
+        if(password)
+        {
+            login({
+                username: username,
+                password: password
+            }).catch(_ => {
+                NotificationManager.error('Username/Password salah atau Koneksi Bermasalah!', 'Login Gagal')
+            });
+        }
+    }
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>|any) => {
         e.preventDefault();
@@ -16,8 +33,9 @@ const LoginView = ({ parenthistory, theme }) => {
         login({
             username: formData.get('username'),
             password: formData.get('password')
-        })
-        .catch(() => notify('Invalid email or password'));
+        }).catch(_ => {
+            NotificationManager.error('Username/Password salah atau Koneksi Bermasalah!', 'Login Gagal')
+        });
     };
 
     const onHomeClick = (e: any) => {
@@ -39,19 +57,21 @@ const LoginView = ({ parenthistory, theme }) => {
                         <input type="password" className="c-input-box"
                                placeholder="Enter Password" name="password" required minLength={3} maxLength={100}/>
 
-                        <button type="button" className="c-button info" onClick={onHomeClick}>Back to Home</button>
+                        <button type="button" className="c-button info" onClick={onHomeClick}>Kembali</button>
                         &nbsp;
                         <button type="submit" className="c-button info">Login</button>
 
                         <br/>
 
-                        <label>
-                            <input type="checkbox" name="remember"/> Remember me
-                        </label>
+                        <p>
+                            Belum mempunyai akun?
+                        </p>
+                        <button type="button" className="c-button info">Daftar Akun</button>
+
                     </div>
                 </form>
             </div>
-            <Notification />
+            <NotificationContainer/>
         </ThemeProvider>
     )
 }
