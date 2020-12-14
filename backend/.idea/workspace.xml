@@ -2,20 +2,40 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="Add To Sneaky Case Converter">
-      <change afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/fakedata/temp_users.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/home/views/LoginView.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/home/views/RegisterView.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/classroom/command.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/classroom/mapper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/classroom/query.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/fakedata/classrooms.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/panel/view/ClassroomView.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/panel/view/TempUserView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/about.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/about.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/albumphoto/albumphoto.go.421898555" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/article/article.go.296891863" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/articletopic/articletopic.go.746704583" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/classroom/classroom.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/department/department.go.477899943" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/temp_user/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/temp_user/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/temp_user/user.go.807330727" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/classroom.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/classroom.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_temp.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user_temp.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/about/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/about/mapper.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/viewmodels/about.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/about.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/viewmodels/auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/auth.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/albumphoto/command.go.193268455" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/temp_user/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/temp_user/mapper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/temp_user/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/temp_user/query.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/temp_user/query.go.972664807" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/user/mapper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/user/query.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/classroom.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/classroom.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/user.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/dataprovider/fakedata/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/fakedata/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/home/component/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/component/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/home/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/LoginView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/LoginView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/dataprovider/fakedata/temp_users.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/fakedata/temp_users.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/EventsItemView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/EventsItemView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/LoginView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/LoginView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/RegisterView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/RegisterView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/authProvider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/authProvider.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/DashboardView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/DashboardView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,7 +71,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/handlers" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/services/classroom" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -61,6 +81,13 @@
     <property name="settings.editor.selected.configurable" value="go.sdk" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\SMANTURA\ikasmantura\backend\services\classroom" />
+      <recent name="D:\SMANTURA\ikasmantura\backend\handlers\classroom" />
+      <recent name="D:\SMANTURA\ikasmantura\backend\handlers" />
+      <recent name="D:\SMANTURA\ikasmantura\backend" />
+      <recent name="D:\SMANTURA\webika\backend\handlers" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\SMANTURA\ikasmantura\backend\viewmodels" />
       <recent name="D:\SMANTURA\ikasmantura\backend\handlers\user" />
@@ -68,15 +95,8 @@
       <recent name="D:\SMANTURA\ikasmantura\backend\handlers\department" />
       <recent name="D:\SMANTURA\ikasmantura\backend\handlers\auth" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\SMANTURA\ikasmantura\backend\handlers" />
-      <recent name="D:\SMANTURA\ikasmantura\backend" />
-      <recent name="D:\SMANTURA\webika\backend\handlers" />
-      <recent name="D:\SMANTURA\webika\backend\error" />
-      <recent name="D:\SMANTURA\webika\backend\common" />
-    </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Go Build.go build mapper.go">
     <configuration name="go build backend" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <working_directory value="$PROJECT_DIR$" />
@@ -86,8 +106,18 @@
       <directory value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
+    <configuration name="go build mapper.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true">
+      <module name="backend" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/services/user/mapper.go" />
+      <package value="backend" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build mapper.go" />
         <item itemvalue="Go Build.go build backend" />
       </list>
     </recent_temporary>
@@ -121,11 +151,11 @@
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="425" y="186" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1301.768@0.0.1301.768" timestamp="1607455092898" />
-    <state x="276" y="0" key="CommitChangelistDialog2" timestamp="1607761824871">
+    <state x="276" y="0" key="CommitChangelistDialog2" timestamp="1607907745085">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="274" y="0" key="CommitChangelistDialog2/0.0.1298.768@0.0.1298.768" timestamp="1601400251914" />
-    <state x="276" y="0" key="CommitChangelistDialog2/0.0.1301.768@0.0.1301.768" timestamp="1607761824871" />
+    <state x="276" y="0" key="CommitChangelistDialog2/0.0.1301.768@0.0.1301.768" timestamp="1607907745085" />
     <state x="122" y="59" key="DiffContextDialog" timestamp="1607731408627">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
@@ -169,11 +199,11 @@
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="468" y="298" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1301.768@0.0.1301.768" timestamp="1607611686939" />
-    <state x="313" y="89" width="674" height="678" key="search.everywhere.popup" timestamp="1607606839368">
+    <state x="313" y="89" width="674" height="678" key="search.everywhere.popup" timestamp="1607910557094">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="312" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1298.768@0.0.1298.768" timestamp="1601126189971" />
     <state x="312" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1299.768@0.0.1299.768" timestamp="1600905904444" />
-    <state x="313" y="89" width="674" height="678" key="search.everywhere.popup/0.0.1301.768@0.0.1301.768" timestamp="1607606839368" />
+    <state x="313" y="89" width="674" height="678" key="search.everywhere.popup/0.0.1301.768@0.0.1301.768" timestamp="1607910557094" />
   </component>
 </project>

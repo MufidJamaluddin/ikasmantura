@@ -1,7 +1,7 @@
-package department
+package classroom
 
 import (
-	departmentService "backend/services/department"
+	classroomService "backend/services/classroom"
 	"backend/utils"
 	"backend/viewmodels"
 	"encoding/json"
@@ -12,25 +12,25 @@ import (
 
 // @author Mufid Jamaluddin
 
-// SearchDepartment godoc
-// @Tags User Management
-// @Summary Search Department
-// @Description Search Department
+// SearchClassroom godoc
+// @Tags Classroom
+// @Summary Search classroom data
+// @Description Get classroom data with pagination
 // @Accept  json
 // @Produce  json
-// @Param q query viewmodels.DepartmentParam true "Pagination Options"
-// @Success 200 {object} []viewmodels.DepartmentDto
+// @Param q query viewmodels.ClassroomParam true "Pagination Options"
+// @Success 200 {object} []viewmodels.ClassroomDto
 // @Failure 400 {object} string
-// @Router /api/v1/departments [get]
-func SearchDepartment(c *fiber.Ctx) error {
+// @Router /api/v1/classrooms [get]
+func SearchClassroom(c *fiber.Ctx) error {
 	var (
-		data     viewmodels.DepartmentParam
-		err      error
-		total    uint
-		callback func(departmentDto *viewmodels.DepartmentDto)
-		isStarted  bool
-		db		*gorm.DB
-		ok		bool
+		data      viewmodels.ClassroomParam
+		err       error
+		total     uint
+		callback  func(classroomDto *viewmodels.ClassroomDto)
+		isStarted bool
+		db        *gorm.DB
+		ok        bool
 	)
 
 	if db, ok = c.Locals("db").(*gorm.DB); !ok {
@@ -41,7 +41,7 @@ func SearchDepartment(c *fiber.Ctx) error {
 		return err
 	}
 
-	if total, err = departmentService.GetTotal(db, &data); err != nil {
+	if total, err = classroomService.GetTotal(db, &data); err != nil {
 		return err
 	}
 
@@ -50,7 +50,7 @@ func SearchDepartment(c *fiber.Ctx) error {
 	// RESPONSE ARRAY JSON DATA
 	// HEMAT MEMORY, NGGAK PERLU ALOKASI ARRAY, KIRIM AJA KE CLIENT SECARA MENGALIR
 	isStarted = false
-	callback = func(dt *viewmodels.DepartmentDto) {
+	callback = func(dt *viewmodels.ClassroomDto) {
 		var (
 			response []byte
 			e        error
@@ -68,30 +68,30 @@ func SearchDepartment(c *fiber.Ctx) error {
 	}
 
 	_, err = c.Write(utils.ToBytes("["))
-	err = departmentService.Find(db, &data, callback)
+	err = classroomService.Find(db, &data, callback)
 	_, err = c.Write(utils.ToBytes("]"))
 	// END RESPONSE ARRAY JSON DATA
 
 	return err
 }
 
-// GetOneDepartment godoc
-// @Tags User Management
-// @Summary Get one data by id
-// @Description Get data by id
-// @Param id path int true "Department ID"
+// GetOneClassroom godoc
+// @Tags Classroom
+// @Summary Get one classroom data by id
+// @Description Get classroom data by id
+// @Param id path int true "Classroom ID"
 // @Accept  json
 // @Produce  json
-// @Success 200 {object} viewmodels.DepartmentDto
+// @Success 200 {object} viewmodels.ClassroomDto
 // @Failure 400 {object} string
-// @Router /api/v1/departments/{id} [get]
-func GetOneDepartment(c *fiber.Ctx) error {
+// @Router /api/v1/classrooms/{id} [get]
+func GetOneClassroom(c *fiber.Ctx) error {
 	var (
-		data viewmodels.DepartmentDto
-		err  error
+		data viewmodels.ClassroomDto
 		id   uint
-		db		*gorm.DB
-		ok		bool
+		err  error
+		db   *gorm.DB
+		ok   bool
 	)
 
 	if db, ok = c.Locals("db").(*gorm.DB); !ok {
@@ -102,36 +102,36 @@ func GetOneDepartment(c *fiber.Ctx) error {
 		return err
 	}
 
-	if err = departmentService.FindById(db, id, &data); err != nil {
+	if err = classroomService.FindById(db, id, &data); err != nil {
 		return err
 	}
 
-	c.Status(fiber.StatusAccepted)
-	err = c.JSON(&data)
+	c.Status(fiber.StatusOK)
 
+	err = c.JSON(&data)
 	return err
 }
 
-// UpdateDepartment godoc
+// UpdateClassroom godoc
 // @Security BasicAuth
 // @Security ApiKeyAuth
-// @Tags User Management
-// @Summary Update department
-// @Description Update department
+// @Tags Classroom
+// @Summary Update classroom
+// @Description Update classroom
 // @Accept  json
 // @Produce  json
-// @Param id path int true "Department ID"
-// @Param q body viewmodels.DepartmentDto true "New Department Data"
-// @Success 202 {object} viewmodels.DepartmentDto
+// @Param id path int true "Classroom ID"
+// @Param q body viewmodels.ClassroomDto true "New Classroom Data"
+// @Success 202 {object} viewmodels.ClassroomDto
 // @Failure 400 {object} string
-// @Router /api/v1/departments/{id} [put]
-func UpdateDepartment(c *fiber.Ctx) error {
+// @Router /api/v1/classrooms/{id} [put]
+func UpdateClassroom(c *fiber.Ctx) error {
 	var (
-		data viewmodels.DepartmentDto
-		err  error
+		data viewmodels.ClassroomDto
 		id   uint
-		db		*gorm.DB
-		ok		bool
+		err  error
+		db   *gorm.DB
+		ok   bool
 
 		authData *viewmodels.AuthorizationModel
 	)
@@ -153,34 +153,35 @@ func UpdateDepartment(c *fiber.Ctx) error {
 	}
 
 	data.UpdatedBy = authData.ID
-	if err = departmentService.Update(db, id, &data); err != nil {
+
+	if err = classroomService.Update(db, id, &data); err != nil {
 		return err
 	}
 
 	c.Status(fiber.StatusAccepted)
-	err = c.JSON(&data)
 
+	err = c.JSON(&data)
 	return err
 }
 
-// SaveDepartment godoc
+// SaveClassroom godoc
 // @Security BasicAuth
 // @Security ApiKeyAuth
-// @Tags User Management
-// @Summary Save department
-// @Description Update department
+// @Tags Classroom
+// @Summary Save classroom
+// @Description Save classroom
 // @Accept  json
 // @Produce  json
-// @Param q body viewmodels.DepartmentDto true "New Department Data"
-// @Success 202 {object} viewmodels.DepartmentDto
+// @Param q body viewmodels.ClassroomDto true "New Classroom Data"
+// @Success 202 {object} viewmodels.ClassroomDto
 // @Failure 400 {object} string
-// @Router /api/v1/departments [post]
-func SaveDepartment(c *fiber.Ctx) error {
+// @Router /api/v1/classrooms [post]
+func SaveClassroom(c *fiber.Ctx) error {
 	var (
-		data viewmodels.DepartmentDto
+		data viewmodels.ClassroomDto
 		err  error
-		db		*gorm.DB
-		ok		bool
+		db   *gorm.DB
+		ok   bool
 
 		authData *viewmodels.AuthorizationModel
 	)
@@ -197,9 +198,10 @@ func SaveDepartment(c *fiber.Ctx) error {
 		return err
 	}
 
+	data.UpdatedBy = authData.ID
 	data.CreatedBy = authData.ID
-	data.UpdatedBy = authData.ID
-	if err = departmentService.Save(db, &data); err != nil {
+
+	if err = classroomService.Save(db, &data); err != nil {
 		return err
 	}
 
@@ -209,28 +211,27 @@ func SaveDepartment(c *fiber.Ctx) error {
 	return err
 }
 
-// DeleteDepartment godoc
+// DeleteClassroom godoc
 // @Security BasicAuth
 // @Security ApiKeyAuth
-// @Tags User Management
-// @Summary Delete one department  by id
-// @Description Delete one department  by id
-// @Param id path int true "Department ID"
+// @Tags Classroom
+// @Summary Delete one classroom by id
+// @Description Delete one classroom by id
+// @Param id path int true "Classroom ID"
 // @Accept  json
 // @Produce  json
-// @Success 202 {object} viewmodels.DepartmentDto
+// @Success 202 {object} viewmodels.ClassroomDto
 // @Failure 400 {object} string
 // @Failure 404 {object} string
-// @Router /api/v1/department/{id} [delete]
-func DeleteDepartment(c *fiber.Ctx) error {
+// @Router /api/v1/classroom/{id} [delete]
+func DeleteClassroom(c *fiber.Ctx) error {
 	var (
-		data viewmodels.DepartmentDto
-		err  error
-		id   uint
-		db		*gorm.DB
-		ok		bool
-
+		data     viewmodels.ClassroomDto
 		authData *viewmodels.AuthorizationModel
+		err      error
+		id       uint
+		db       *gorm.DB
+		ok       bool
 	)
 
 	if db, ok = c.Locals("db").(*gorm.DB); !ok {
@@ -246,12 +247,12 @@ func DeleteDepartment(c *fiber.Ctx) error {
 	}
 
 	data.UpdatedBy = authData.ID
-	if err = departmentService.Delete(db, id, &data); err != nil {
+	if err = classroomService.Delete(db, id, &data); err != nil {
 		return err
 	}
 
 	c.Status(fiber.StatusAccepted)
-	err = c.JSON(&data)
 
+	err = c.JSON(&data)
 	return err
 }

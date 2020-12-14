@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "major": "IPA/MIA",
+    "level": "X",
+    "seq": 1
+  },
+  {
+    "id": 2,
+    "major": "IPA/MIA",
+    "level": "X",
+    "seq": 2
+  },
+  {
+    "id": 3,
+    "major": "IPA/MIA",
+    "level": "X",
+    "seq": 3
+  },
+  {
+    "id": 4,
+    "major": "IPA/MIA",
+    "level": "X",
+    "seq": 4
+  },
+  {
+    "id": 5,
+    "major": "IPS/IIS",
+    "level": "XI",
+    "seq": 1
+  },
+  {
+    "id": 6,
+    "major": "IPS/IIS",
+    "level": "XI",
+    "seq": 2
+  },
+  {
+    "id": 7,
+    "major": "IPS/IIS",
+    "level": "XI",
+    "seq": 3
+  }
+]

@@ -1,4 +1,4 @@
-import LoginProvider from "../dataprovider/LoginProvider";
+import LoginProvider from "./LoginProvider";
 
 const authProvider = {
     // called when the user attempts to log in

@@ -2,7 +2,7 @@ import * as React from "react";
 import {Admin, Resource} from 'react-admin';
 
 import DashboardView from "./view/DashboardView";
-import authProvider from "./authProvider";
+import authProvider from "../dataprovider/authProvider";
 import LoginView from "./view/LoginView";
 
 import {createMuiTheme} from '@material-ui/core/styles';
@@ -11,8 +11,10 @@ import MyLayout from "./component/MyLayout";
 import DataProviderFactory from "../dataprovider/DataProviderFactory";
 
 import * as AboutView from "./view/AboutView";
+import * as ClassroomView from "./view/ClassroomView";
 import * as DepartmentView from "./view/DepartmentView";
 import * as UserView from "./view/UserView";
+import * as TempUserView from "./view/TempUserView";
 import * as ArticleView from "./view/ArticleView";
 import * as ArticleTopicView from "./view/ArticleTopicView";
 import * as EventView from "./view/EventView";
@@ -78,10 +80,18 @@ const AdminApp = (props: any) => (
            dataProvider={dataProvider}>
 
         <Resource name="about"
-              options={{ "label": "Tentang Kami", "hidden": true }}
+              options={{ "label": "Tentang Kami" }}
               edit={AboutView.AboutEdit}
               show={AboutView.AboutShow}
               icon={AboutIcon}
+        />
+
+        <Resource name="classrooms"
+                  options={{ "label": "Kelas" }}
+                  list={ClassroomView.ClassroomList}
+                  edit={ClassroomView.ClassroomEdit}
+                  create={ClassroomView.ClassroomCreate}
+                  icon={AboutIcon}
         />
 
         <Resource name="departments"
@@ -100,6 +110,15 @@ const AdminApp = (props: any) => (
               create={UserView.UserCreate}
               show={UserView.UserView}
               icon={UserIcon}
+        />
+
+        <Resource name="temp_users"
+                  options={{ "label": "Registrasi Anggota", }}
+                  list={TempUserView.TempUserList}
+                  edit={TempUserView.TempUserEdit}
+                  create={TempUserView.TempUserCreate}
+                  show={TempUserView.TempUserView}
+                  icon={UserIcon}
         />
 
         <Resource name="article_topics"

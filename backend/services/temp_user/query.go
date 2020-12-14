@@ -6,6 +6,7 @@ import (
 	"backend/viewmodels"
 	"database/sql"
 	"gorm.io/gorm"
+	"strings"
 )
 
 var userSearchFields []string
@@ -72,14 +73,20 @@ func FindById(db *gorm.DB, id uint, out *viewmodels.UserDto) error {
 	return err
 }
 
-func IsUsernameAndEmailAvailable(db *gorm.DB, userName string, email string) bool {
-	var (
-		totalPermanent int64
-		totalTemp      int64
-	)
+func IsUsernameOrEmailAvailable(
+	db *gorm.DB,
+	user *viewmodels.UserAvailabilityDto,
+	response *viewmodels.UserAvailabilityResponseDto) error {
 
-	db.Where("username = ? OR email = ?", userName, email).Count(&totalPermanent)
-	db.Where("username = ? OR email = ?", userName, email).First(&totalTemp)
+	var err error
 
-	return (totalTemp + totalPermanent) == 0
+	err = db.Raw(
+		"SELECT EXISTS(SELECT 1 FROM user WHERE username = @username OR email = @email) "+
+			"OR EXISTS(SELECT 1 FROM temp_user WHERE username = @username OR email = @email)"+
+			"AS exist",
+		sql.Named("username", strings.Trim(user.Username, " ")),
+		sql.Named("email", strings.Trim(user.Email, " ")),
+	).Scan(response).Error
+
+	return err
 }

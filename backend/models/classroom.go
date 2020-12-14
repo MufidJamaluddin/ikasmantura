@@ -3,7 +3,7 @@ package models
 import "backend/utils"
 
 type Classroom struct {
-	ID      uint8  `gorm:"primarykey"`
+	ID      uint   `gorm:"primarykey"`
 	Major   string `gorm:"size:20"` // IPA-MIA/IPS_IIS/BHS
 	Level   string `gorm:"type:ENUM('X', 'XI', 'XII')"`
 	Seq     uint8
@@ -18,7 +18,7 @@ func (Classroom) CreateHistory() interface{} {
 
 type ClassroomHistory struct {
 	utils.History
-	ID    uint8  `gorm:"primarykey"`
+	ID    uint   `gorm:"primarykey"`
 	Major string `gorm:"size:20"` // IPA-MIA/IPS_IIS/BHS
 	Level string `gorm:"type:ENUM('X', 'XI', 'XII')"`
 	Seq   uint8

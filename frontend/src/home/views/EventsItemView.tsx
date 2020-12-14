@@ -6,7 +6,7 @@ import 'moment/locale/id';
 
 import DataProviderFactory from "../../dataprovider/DataProviderFactory";
 import {NotificationManager} from 'react-notifications';
-import authProvider from "../../panel/authProvider";
+import authProvider from "../../dataprovider/authProvider";
 import RegeTitle from "../component/RegeTitle";
 import {Button, Card, Col, Container, Row} from "react-bootstrap";
 import Image from "../component/Image";

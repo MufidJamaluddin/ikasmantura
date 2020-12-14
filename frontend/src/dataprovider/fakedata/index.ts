@@ -2,6 +2,7 @@
  * @author Mufid Jamaluddin
  */
 import users from './users.json'
+import classrooms from './classrooms.json'
 import tempUsers from './temp_users.json'
 import departments from './departments.json'
 import topics from './topics.json'
@@ -16,6 +17,7 @@ function getFakeData()
     return {
         "about": about,
         "users": users,
+        "classrooms": classrooms,
         "temp_user": tempUsers,
         "departments": departments,
         "articles": articles,

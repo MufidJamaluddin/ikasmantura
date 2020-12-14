@@ -12,7 +12,7 @@ function sleep(ms: number)
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export default class RegisterView extends PureComponent<RouteComponentProps<any>>
+export default class RegisterView extends PureComponent<RouteComponentProps<any>, {classrooms: Array<any>}>
 {
     private readonly formElement: React.RefObject<FormWithConstraints>
 
@@ -20,10 +20,17 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
     {
         super(props);
 
+        this.state = {
+            classrooms: [],
+        }
+
         this.formElement = React.createRef()
 
         this.handleChange = this.handleChange.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
+
+        this.checkEmailAvailability = this.checkEmailAvailability.bind(this)
+        this.checkUsernameAvailability = this.checkUsernameAvailability.bind(this)
     }
 
     async onSubmit(e: React.FormEvent<HTMLFormElement>|any)
@@ -43,6 +50,10 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
         let data = serialize(e.currentTarget, { hash: true });
 
         let dataProvider = DataProviderFactory.getDataProvider()
+
+        data.classrooms = data.classrooms.map(item => {
+            return { id: item }
+        })
 
         dataProvider.create("temp_users", data).then(_ => {
 
@@ -65,15 +76,43 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
         await form.validateFields(target);
     }
 
+    async checkAvailability({ username = '', email = '' })
+    {
+        if(
+            process.env.NODE_ENV === "development"
+            || process.env.NODE_ENV === "test"
+        )
+        {
+            await sleep(1000);
+            return true;
+        }
+
+        let dataProvider = DataProviderFactory.getDataProvider()
+        let result:boolean
+
+        result = await dataProvider.create('register/availability', {
+            data: {
+                username: username,
+                email: email,
+            }
+        }).
+        then((resp:any) => {
+            return resp.exist
+        }, error => {
+            NotificationManager.error(error, 'Pendaftaran Gagal');
+            return false
+        });
+
+        return result
+    }
+
     async checkUsernameAvailability(value: string)
     {
         if(value) {
             if(value.length < 3) return false
         } else return false
 
-        console.log('checkUsernameAvailability');
-        await sleep(1000);
-        return !['john', 'paul', 'george', 'ringo'].includes(value.toLowerCase());
+        return await this.checkAvailability({ username: value })
     }
 
     async checkEmailAvailability(value: string)
@@ -82,9 +121,35 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
             if(value.length < 5) return false
         } else return false
 
-        console.log('checkEmailAvailability');
-        await sleep(1000);
-        return !['mufidjamaluddin@outlook.com', 'dyah.pitaloka@gmail.com'].includes(value.toLowerCase());
+        return await this.checkAvailability({ email: value })
+    }
+
+    updateClassrooms()
+    {
+        let dataProvider = DataProviderFactory.getDataProvider()
+        dataProvider.getList("classrooms", {
+            pagination: {
+                page: 1,
+                perPage: 100,
+            },
+            sort: {
+                field: 'id',
+                order: 'ASC'
+            },
+            filter: {
+            },
+        }).then(resp => {
+            this.setState(state => {
+                return {...state, classrooms: resp.data }
+            })
+        }, error => {
+            NotificationManager.error(error, 'Error Ambil Data Kelas');
+        })
+    }
+
+    componentDidMount()
+    {
+        this.updateClassrooms()
     }
 
     renderAccount()
@@ -254,7 +319,30 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                     </FieldFeedbacks>
                 </Form.Group>
 
-                { /* dropdown kelas */ }
+                <Form.Group controlId="formKelas">
+                    <Form.Label>Kelas SMAN Situraja yang Pernah Dijalani</Form.Label>
+                    <Form.Control type="text"
+                                  placeholder="Kelas"
+                                  name="classrooms"
+                                  multiple
+                                  required={true}
+                                  onChange={this.handleChange}
+                    >
+                        {
+                            this.state.classrooms.map((item:any) => {
+                                return <option key={item.id} value={item.id}>
+                                    {`${item.level} - ${item.major} - ${item.seq}`}
+                                </option>
+                            })
+                        }
+                    </Form.Control>
+                    <FieldFeedbacks for="classroom">
+                        <FieldFeedback when="valueMissing" error>
+                            Wajib diisi
+                        </FieldFeedback>
+                        <FieldFeedback when="*" className="text-error" />
+                    </FieldFeedbacks>
+                </Form.Group>
 
             </Tab>
         )

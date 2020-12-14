@@ -163,6 +163,43 @@ func UpdateTempUser(c *fiber.Ctx) error {
 	return err
 }
 
+// CheckAvailabilityUser godoc
+// @Tags User
+// @Summary Add new user
+// @Description Add new user
+// @Accept  json
+// @Produce  json
+// @Param q body viewmodels.UserAvailabilityDto true "New User Data"
+// @Success 202 {object} viewmodels.UserAvailabilityResponseDto
+// @Failure 400 {object} string
+// @Router /api/v1/register/availability [post]
+func CheckAvailabilityUser(c *fiber.Ctx) error {
+	var (
+		availabilityReq viewmodels.UserAvailabilityDto
+		availabilityRes viewmodels.UserAvailabilityResponseDto
+		err             error
+		db              *gorm.DB
+		ok              bool
+	)
+
+	if db, ok = c.Locals("db").(*gorm.DB); !ok {
+		return c.SendStatus(fiber.StatusInternalServerError)
+	}
+
+	if err = c.BodyParser(&availabilityReq); err != nil {
+		return err
+	}
+
+	if err = userService.IsUsernameOrEmailAvailable(db, &availabilityReq, &availabilityRes); err != nil {
+		return err
+	}
+
+	c.Status(fiber.StatusAccepted)
+	err = c.JSON(&availabilityRes)
+
+	return err
+}
+
 // VerifyUser godoc
 // @Security BasicAuth
 // @Security ApiKeyAuth
@@ -220,10 +257,12 @@ func VerifyUser(c *fiber.Ctx) error {
 // @Router /api/v1/temp_users [post]
 func SaveTempUser(c *fiber.Ctx) error {
 	var (
-		data viewmodels.UserDto
-		err  error
-		db   *gorm.DB
-		ok   bool
+		data            viewmodels.UserDto
+		availabilityReq viewmodels.UserAvailabilityDto
+		availabilityRes viewmodels.UserAvailabilityResponseDto
+		err             error
+		db              *gorm.DB
+		ok              bool
 	)
 
 	if db, ok = c.Locals("db").(*gorm.DB); !ok {
@@ -234,7 +273,14 @@ func SaveTempUser(c *fiber.Ctx) error {
 		return err
 	}
 
-	if !userService.IsUsernameAndEmailAvailable(db, data.Username, data.Email) {
+	availabilityReq.Username = data.Username
+	availabilityReq.Email = data.Email
+
+	if err = userService.IsUsernameOrEmailAvailable(db, &availabilityReq, &availabilityRes); err != nil {
+		return err
+	}
+
+	if !availabilityRes.Exist {
 		return c.Status(fiber.StatusConflict).
 			SendString("Username atau Email telah terdaftar!")
 	}

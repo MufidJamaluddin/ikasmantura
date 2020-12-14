@@ -20,11 +20,12 @@ type TempUserAddress struct {
 	Suite   string `gorm:"size:35"`
 	City    string `gorm:"size:35"`
 	Zipcode string `gorm:"size:4"`
+	State   string `gorm:"size:35"`
 }
 
 type TempUserClassroom struct {
 	UserId      uint
-	ClassroomId uint8
+	ClassroomId uint
 	Classroom   Classroom `gorm:"foreignKey:ClassroomId"`
 	User        TempUser  `gorm:"foreignKey:UserId"`
 }

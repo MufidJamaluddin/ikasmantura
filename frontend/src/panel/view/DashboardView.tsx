@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Card, CardContent, CardHeader} from '@material-ui/core';
 import MyEventsView from "./dashboard/MyEventsView";
-import authProvider from "../authProvider";
+import authProvider from "../../dataprovider/authProvider";
 
 export default function DashboardView(props:any) {
     const userData = authProvider.getData()

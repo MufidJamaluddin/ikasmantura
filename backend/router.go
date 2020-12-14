@@ -71,7 +71,7 @@ func Route(app *fiber.App, db *gorm.DB) {
 		Next: func(c *fiber.Ctx) bool {
 			return c.Query("refresh") == "true"
 		},
-		Expiration: time.Duration(cacheDuration) * time.Minute,
+		Expiration:   time.Duration(cacheDuration) * time.Minute,
 		CacheControl: true,
 	})
 
@@ -174,5 +174,8 @@ func Route(app *fiber.App, db *gorm.DB) {
 	tempUser.Delete("/:id", secretHandler, tempUserHandler.DeleteTempUser)
 
 	verifyUser := apiV1.Group("/verify_user")
-	verifyUser.Post("/:id", publicHandler, tempUserHandler.VerifyUser)
+	verifyUser.Post("/:id", secretHandler, tempUserHandler.VerifyUser)
+
+	register := apiV1.Get("/register")
+	register.Post("/availability", publicHandler, tempUserHandler.CheckAvailabilityUser)
 }
