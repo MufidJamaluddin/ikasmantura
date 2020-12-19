@@ -29,18 +29,25 @@ export default class AboutView extends PureComponent<{}, AboutViewState>
 
     componentDidMount()
     {
-        let dataProvider = DataProviderFactory.getDataProvider()
+        try
+        {
+            let dataProvider = DataProviderFactory.getDataProvider()
 
-        dataProvider.getOne("about", { id: 1 }).then(resp => {
-            this.setState({ data: resp.data as AboutItem })
-        }, error => {
-            NotificationManager.error(error, 'Get Data Error');
+            dataProvider.getOne("about", {id: 1}).then(resp => {
+                this.setState({data: resp.data as AboutItem})
+            }, error => {
+                NotificationManager.error(error, 'Get Data Error');
 
-            this.setState(state => {
-                let newState = {loading: false}
-                return {...state, ...newState}
+                this.setState(state => {
+                    let newState = {loading: false}
+                    return {...state, ...newState}
+                })
             })
-        })
+        }
+        catch (e)
+        {
+            NotificationManager.error('Koneksi Internet Tidak Ada!', 'Error Koneksi');
+        }
     }
 
     render()

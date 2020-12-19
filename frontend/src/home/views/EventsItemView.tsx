@@ -55,7 +55,7 @@ export default class EventItemView
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Authentication': 'Bearer ' + localStorage.getItem('token')
+                   // 'Authentication': 'Bearer ' + localStorage.getItem('token')
                 },
             })
             .then(item => {

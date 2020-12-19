@@ -10,18 +10,21 @@ const LoginView = ({ parenthistory, theme, location }) => {
 
     const login = useLogin();
 
-    let {username = false, password = false} = location?.state
+    let {username = '', password = ''} = location?.state
 
     if(username)
     {
         if(password)
         {
-            login({
-                username: username,
-                password: password
-            }).catch(_ => {
-                NotificationManager.error('Username/Password salah atau Koneksi Bermasalah!', 'Login Gagal')
-            });
+            if(username.length > 3 && password.length > 3)
+            {
+                login({
+                    username: username,
+                    password: password
+                }).catch(_ => {
+                    NotificationManager.error('Username/Password salah atau Koneksi Bermasalah!', 'Login Gagal')
+                });
+            }
         }
     }
 

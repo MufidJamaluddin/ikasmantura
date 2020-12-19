@@ -11,7 +11,7 @@ type ArticleDto struct {
 	Id            uint   `query:"-" json:"id,omitempty" xml:"id,omitempty" form:"id,omitempty"`
 	Body          string `query:"-" json:"body,omitempty" xml:"body,omitempty" form:"body,omitempty"`
 	Image         string `query:"-" json:"image,omitempty" xml:"image,omitempty" form:"-"`
-	Thumbnail     string `query:"-" json:"thumbnail,omitempty" xml:"thumbnail,omitempty" form:"thumbnail,omitempty"`
+	Thumbnail     string `query:"-" json:"thumbnail,omitempty" xml:"thumbnail,omitempty" form:"-"`
 	TopicId       uint   `query:"-" json:"topicId,omitempty" xml:"topicId,omitempty" form:"topicId,omitempty"`
 	CurrentUserId uint   `query:"-" json:"-" xml:"-" form:"-"`
 	CreatedByName string `query:"-" json:"createdByName" xml:"createdByName" form:"-"`

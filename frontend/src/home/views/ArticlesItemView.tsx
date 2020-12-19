@@ -45,7 +45,14 @@ export default class ArticlesItemView
 
     componentDidMount()
     {
-        this.updateData()
+        try
+        {
+            this.updateData()
+        }
+        catch (e)
+        {
+            NotificationManager.error('Koneksi Internet Tidak Ada!', 'Error Koneksi');
+        }
     }
 
     render()

@@ -31,6 +31,7 @@ func SearchTempUser(c *fiber.Ctx) error {
 		isStarted bool
 		db        *gorm.DB
 		ok        bool
+		counter   uint
 	)
 
 	if db, ok = c.Locals("db").(*gorm.DB); !ok {
@@ -50,6 +51,7 @@ func SearchTempUser(c *fiber.Ctx) error {
 	// RESPONSE ARRAY JSON DATA
 	// HEMAT MEMORY, NGGAK PERLU ALOKASI ARRAY, KIRIM AJA KE CLIENT SECARA MENGALIR
 	isStarted = false
+	counter = data.Start
 	callback = func(dt *viewmodels.UserDto) {
 		var (
 			response []byte
@@ -65,12 +67,24 @@ func SearchTempUser(c *fiber.Ctx) error {
 			_, _ = c.Write(response)
 		}
 		isStarted = true
+		counter++
 	}
 
 	_, err = c.Write(utils.ToBytes("["))
 	err = userService.Find(db, &data, callback)
 	_, err = c.Write(utils.ToBytes("]"))
 	// END RESPONSE ARRAY JSON DATA
+
+	if data.Start < counter {
+		c.Response().Header.Add("Content-Range",
+			fmt.Sprintf("items %v-%v/%v", data.Start, counter, total))
+
+		if total == counter {
+			c.Response().Header.SetStatusCode(fiber.StatusOK)
+		} else {
+			c.Response().Header.SetStatusCode(fiber.StatusPartialContent)
+		}
+	}
 
 	return err
 }

@@ -1,5 +1,3 @@
-import {ParseJwt} from "../utils/Jwt";
-
 export default function LoginProvider({ username, password }) {
     const request = new Request('/api/v1/auth', {
         method: 'POST',
@@ -13,14 +11,12 @@ export default function LoginProvider({ username, password }) {
             }
             return response.json();
         })
-        .then(({ token }) => {
-            let data = ParseJwt(token)
+        .then(({ token, data }) => {
             if(
                 process.env.NODE_ENV === "development"
                 || process.env.NODE_ENV === "test"
             )
             {
-                console.log(data)
                 localStorage.setItem('token', token);
             }
             localStorage.setItem('data', JSON.stringify(data));

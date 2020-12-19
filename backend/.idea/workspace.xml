@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="Add To Sneaky Case Converter">
-      <change afterPath="$PROJECT_DIR$/services/classroom/command.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/classroom/mapper.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/classroom/query.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/fakedata/classrooms.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/panel/view/ClassroomView.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/panel/view/TempUserView.tsx" afterDir="false" />
+    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/albumphoto/albumphoto.go.421898555" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/article/article.go.296891863" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/articletopic/articletopic.go.746704583" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/classroom/classroom.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/department/department.go.477899943" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/album/album.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/album/album.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/albumphoto/albumphoto.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/albumphoto/albumphoto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/article/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/article/article.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/articletopic/articletopic.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/articletopic/articletopic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/auth/authmiddle.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/auth/authmiddle.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/auth/login.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/auth/login.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/classroom/classroom.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/classroom/classroom.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/department/department.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/department/department.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/event/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/event/event.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handlers/temp_user/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/temp_user/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/temp_user/user.go.807330727" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/classroom.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/classroom.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user_temp.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user_temp.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/user/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/user/user.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/albumphoto/command.go.193268455" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/temp_user/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/temp_user/mapper.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/temp_user/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/temp_user/query.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/temp_user/query.go.972664807" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/user/mapper.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/user/query.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/viewmodels/classroom.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/classroom.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/viewmodels/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/event/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/event/query.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/album.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/album.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/article.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/config-overrides.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/config-overrides.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/dataprovider/fakedata/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/fakedata/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/dataprovider/fakedata/temp_users.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/fakedata/temp_users.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/dataprovider/LoginProvider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/LoginProvider.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/Landing.css" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/Landing.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/component/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/component/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/AboutView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/AboutView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/ArticlesItemView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/ArticlesItemView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/ArticlesView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/ArticlesView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/EventsItemView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/EventsItemView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/LoginView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/LoginView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/EventsListView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/EventsListView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/EventsView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/EventsView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/GalleryView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/GalleryView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/HomeView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/HomeView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/OrganizationView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/OrganizationView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/RegisterView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/RegisterView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/panel/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/authProvider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/authProvider.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/DashboardView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/DashboardView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/LoginView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/LoginView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -127,6 +129,8 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="Refactoring" />
     <MESSAGE value="Add Comments" />
     <MESSAGE value="Handle Response Nil" />
@@ -137,7 +141,8 @@
     <MESSAGE value="Fix timeout race condition" />
     <MESSAGE value="remove old code" />
     <MESSAGE value="Add To Sneaky Case Converter" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add To Sneaky Case Converter" />
+    <MESSAGE value="feat: Add Classroom API &amp; Register User Availability" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Add Classroom API &amp; Register User Availability" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -151,11 +156,11 @@
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="425" y="186" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1301.768@0.0.1301.768" timestamp="1607455092898" />
-    <state x="276" y="0" key="CommitChangelistDialog2" timestamp="1607907745085">
+    <state x="276" y="0" key="CommitChangelistDialog2" timestamp="1607911330254">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="274" y="0" key="CommitChangelistDialog2/0.0.1298.768@0.0.1298.768" timestamp="1601400251914" />
-    <state x="276" y="0" key="CommitChangelistDialog2/0.0.1301.768@0.0.1301.768" timestamp="1607907745085" />
+    <state x="276" y="0" key="CommitChangelistDialog2/0.0.1301.768@0.0.1301.768" timestamp="1607911330254" />
     <state x="122" y="59" key="DiffContextDialog" timestamp="1607731408627">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
@@ -190,11 +195,11 @@
     </state>
     <state x="149" y="29" key="SettingsEditor/0.0.1296.768@0.0.1296.768" timestamp="1601044222694" />
     <state x="150" y="29" key="SettingsEditor/0.0.1301.768@0.0.1301.768" timestamp="1607605038324" />
-    <state x="242" y="117" key="Vcs.Push.Dialog.v2" timestamp="1607731430136">
+    <state x="242" y="117" key="Vcs.Push.Dialog.v2" timestamp="1607911367806">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="241" y="117" key="Vcs.Push.Dialog.v2/0.0.1298.768@0.0.1298.768" timestamp="1601400264504" />
-    <state x="242" y="117" key="Vcs.Push.Dialog.v2/0.0.1301.768@0.0.1301.768" timestamp="1607731430136" />
+    <state x="242" y="117" key="Vcs.Push.Dialog.v2/0.0.1301.768@0.0.1301.768" timestamp="1607911367806" />
     <state x="468" y="298" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1607611686939">
       <screen x="0" y="0" width="1301" height="768" />
     </state>

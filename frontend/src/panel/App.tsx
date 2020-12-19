@@ -77,10 +77,12 @@ const AdminApp = (props: any) => (
            }
            authProvider={authProvider}
            history={history}
-           dataProvider={dataProvider}>
+           dataProvider={dataProvider}
+           disableTelemetry
+    >
 
         <Resource name="about"
-              options={{ "label": "Tentang Kami" }}
+              options={{ "label": "Tentang Kami", "hidden": true }}
               edit={AboutView.AboutEdit}
               show={AboutView.AboutShow}
               icon={AboutIcon}

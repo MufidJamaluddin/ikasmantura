@@ -72,7 +72,7 @@ func Find(db *gorm.DB, search *viewmodels.EventParam, callback func(*viewmodels.
 	if isCurrentUserSearch {
 		if search.IsMyEvent {
 			tx = db.Model(&model).
-				Joins("JOIN user_events ON userId = ?", search.CurrentUserId)
+				Joins("JOIN user_events ON user_id = ?", search.CurrentUserId)
 		} else {
 			tx = db.Model(&model).
 				Preload("user_events", "user_id = ?", search.CurrentUserId)

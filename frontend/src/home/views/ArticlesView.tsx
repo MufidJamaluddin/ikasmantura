@@ -111,8 +111,15 @@ export default class ArticlesView
 
     componentDidMount()
     {
-        this.updateTopics()
-        this.updateData()
+        try
+        {
+            this.updateTopics()
+            this.updateData()
+        }
+        catch (e)
+        {
+            NotificationManager.error('Koneksi Internet Tidak Ada!', 'Error Koneksi');
+        }
     }
 
     componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<ArticlesViewState>, snapshot?: any)
@@ -122,7 +129,14 @@ export default class ArticlesView
             || prevState.pagination !== this.state.pagination
         )
         {
-            this.updateData()
+            try
+            {
+                this.updateData()
+            }
+            catch (e)
+            {
+                NotificationManager.error('Koneksi Internet Tidak Ada!', 'Error Koneksi');
+            }
         }
     }
 

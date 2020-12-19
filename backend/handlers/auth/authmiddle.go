@@ -2,7 +2,7 @@ package auth
 
 import (
 	"backend/viewmodels"
-	"github.com/dgrijalva/jwt-go"
+	"github.com/form3tech-oss/jwt-go"
 	"github.com/gofiber/fiber/v2"
 	history "github.com/vcraescu/gorm-history/v2"
 	"gorm.io/gorm"

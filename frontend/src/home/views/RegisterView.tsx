@@ -7,9 +7,51 @@ import DataProviderFactory from "../../dataprovider/DataProviderFactory";
 import {NotificationManager} from 'react-notifications';
 import {Async, FieldFeedback, FieldFeedbacks, FormWithConstraints} from "react-form-with-constraints";
 
+import Select from "react-select";
+import makeAnimated from 'react-select/animated';
+
+const selectAnimatedComponents = makeAnimated();
+
 function sleep(ms: number)
 {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function checkAvailability({ username = '', email = '' })
+{
+    if(
+        process.env.NODE_ENV === "development"
+        || process.env.NODE_ENV === "test"
+    )
+    {
+        await sleep(1000);
+        return true;
+    }
+
+    let dataProvider = DataProviderFactory.getDataProvider()
+    let result:boolean
+
+    try
+    {
+        result = await dataProvider.create('register/availability', {
+            data: {
+                username: username,
+                email: email,
+            }
+        }).then((resp: any) => {
+            return resp.exist
+        }, error => {
+            NotificationManager.error(error, 'Pendaftaran Gagal');
+            return false
+        });
+    }
+    catch (e)
+    {
+        NotificationManager.error('Koneksi Internet Terputus!', 'Error Koneksi');
+        result = false
+    }
+
+    return result
 }
 
 export default class RegisterView extends PureComponent<RouteComponentProps<any>, {classrooms: Array<any>}>
@@ -28,9 +70,6 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
 
         this.handleChange = this.handleChange.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
-
-        this.checkEmailAvailability = this.checkEmailAvailability.bind(this)
-        this.checkUsernameAvailability = this.checkUsernameAvailability.bind(this)
     }
 
     async onSubmit(e: React.FormEvent<HTMLFormElement>|any)
@@ -55,55 +94,40 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
             return { id: item }
         })
 
-        dataProvider.create("temp_users", data).then(_ => {
+        try
+        {
+            dataProvider.create("temp_users", data).then(_ => {
 
-            NotificationManager.success(
-                'Pendaftaran Sukses, Mohon Tunggu Konfirmasi Admin!', 'Pendaftaran Sukses');
+                NotificationManager.success(
+                    'Pendaftaran Sukses, Mohon Tunggu Konfirmasi Admin!', 'Pendaftaran Sukses');
 
-            this.props.history.push('/login')
+                this.props.history.push('/login')
 
-        }, error => {
-            NotificationManager.error(error, 'Pendaftaran Gagal');
-        })
+            }, error => {
+                NotificationManager.error(error, 'Pendaftaran Gagal');
+            })
+        }
+        catch (e)
+        {
+            NotificationManager.error('Koneksi Internet Terputus!', 'Error Koneksi');
+        }
     }
 
-    async handleChange({ target })
+    async handleChange(e)
     {
         let form = this.formElement.current
-
         if(!form) return;
 
-        await form.validateFields(target);
-    }
-
-    async checkAvailability({ username = '', email = '' })
-    {
-        if(
-            process.env.NODE_ENV === "development"
-            || process.env.NODE_ENV === "test"
-        )
+        try
         {
-            await sleep(1000);
-            return true;
+            e.preventDefault()
+
+            await form.validateFields(e.target);
         }
-
-        let dataProvider = DataProviderFactory.getDataProvider()
-        let result:boolean
-
-        result = await dataProvider.create('register/availability', {
-            data: {
-                username: username,
-                email: email,
-            }
-        }).
-        then((resp:any) => {
-            return resp.exist
-        }, error => {
-            NotificationManager.error(error, 'Pendaftaran Gagal');
-            return false
-        });
-
-        return result
+        catch (err)
+        {
+            console.log(err)
+        }
     }
 
     async checkUsernameAvailability(value: string)
@@ -112,7 +136,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
             if(value.length < 3) return false
         } else return false
 
-        return await this.checkAvailability({ username: value })
+        return await checkAvailability({ username: value })
     }
 
     async checkEmailAvailability(value: string)
@@ -121,30 +145,49 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
             if(value.length < 5) return false
         } else return false
 
-        return await this.checkAvailability({ email: value })
+        return await checkAvailability({ email: value })
     }
 
     updateClassrooms()
     {
-        let dataProvider = DataProviderFactory.getDataProvider()
-        dataProvider.getList("classrooms", {
-            pagination: {
-                page: 1,
-                perPage: 100,
-            },
-            sort: {
-                field: 'id',
-                order: 'ASC'
-            },
-            filter: {
-            },
-        }).then(resp => {
-            this.setState(state => {
-                return {...state, classrooms: resp.data }
+        try
+        {
+            let dataProvider = DataProviderFactory.getDataProvider()
+            dataProvider.getList("classrooms", {
+                pagination: {
+                    page: 1,
+                    perPage: 100,
+                },
+                sort: {
+                    field: 'id',
+                    order: 'ASC'
+                },
+                filter: {
+                },
+            }).then(resp => {
+                this.setState(state => {
+
+                    let optionsData = resp.data.map(item => {
+                        let label = `${item.level} - ${item.major} - ${item.seq}`
+                        return {
+                            value: item.id,
+                            label: label,
+                        }
+                    })
+
+                    return {...state, classrooms: optionsData }
+                })
+            }, error => {
+                NotificationManager.error(error, 'Error Ambil Data Kelas');
             })
-        }, error => {
-            NotificationManager.error(error, 'Error Ambil Data Kelas');
-        })
+        }
+        catch(e)
+        {
+            NotificationManager.error('Koneksi Internet Terputus!', 'Error Koneksi');
+            this.setState(state => {
+                return {...state, classrooms: [] }
+            })
+        }
     }
 
     componentDidMount()
@@ -321,21 +364,20 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
 
                 <Form.Group controlId="formKelas">
                     <Form.Label>Kelas SMAN Situraja yang Pernah Dijalani</Form.Label>
-                    <Form.Control type="text"
-                                  placeholder="Kelas"
-                                  name="classrooms"
-                                  multiple
-                                  required={true}
-                                  onChange={this.handleChange}
-                    >
-                        {
-                            this.state.classrooms.map((item:any) => {
-                                return <option key={item.id} value={item.id}>
-                                    {`${item.level} - ${item.major} - ${item.seq}`}
-                                </option>
-                            })
-                        }
-                    </Form.Control>
+                    <Form.Control
+                        as={Select}
+                        closeMenuOnSelect={false}
+                        components={selectAnimatedComponents}
+                        className="no-padding no-border"
+                        options={this.state.classrooms}
+                        isClearable={true}
+                        isMulti={true}
+                        isLoading={this.state.classrooms.length == 0}
+                        placeholder="Kelas"
+                        name="classrooms"
+                        onChange={this.handleChange}
+                        required={true}
+                    />
                     <FieldFeedbacks for="classroom">
                         <FieldFeedback when="valueMissing" error>
                             Wajib diisi

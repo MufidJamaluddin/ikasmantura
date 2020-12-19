@@ -44,7 +44,14 @@ export default class Header extends PureComponent<{}, {topics: Array<any>}>
 
     componentDidMount()
     {
-        this.updateTopics()
+        try
+        {
+            this.updateTopics()
+        }
+        catch (e)
+        {
+            NotificationManager.error('Koneksi Internet Terputus!', 'Error Koneksi');
+        }
     }
 
     render() {

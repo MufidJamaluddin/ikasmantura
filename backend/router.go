@@ -8,6 +8,7 @@ import (
 	articleHandler "backend/handlers/article"
 	articleTopicHandler "backend/handlers/articletopic"
 	authHandler "backend/handlers/auth"
+	classroomHandler "backend/handlers/classroom"
 	departmentHandler "backend/handlers/department"
 	eventHandler "backend/handlers/event"
 	tempUserHandler "backend/handlers/temp_user"
@@ -166,6 +167,13 @@ func Route(app *fiber.App, db *gorm.DB) {
 	user.Put("/:id", secretHandler, userHandler.UpdateUser)
 	user.Delete("/:id", secretHandler, userHandler.DeleteUser)
 
+	classrooms := apiV1.Group("/classrooms")
+	classrooms.Get("", publicHandler, classroomHandler.SearchClassroom)
+	classrooms.Get("/:id", publicHandler, classroomHandler.GetOneClassroom)
+	classrooms.Post("", secretHandler, classroomHandler.SaveClassroom)
+	classrooms.Put("/:id", secretHandler, classroomHandler.UpdateClassroom)
+	classrooms.Delete("/:id", secretHandler, classroomHandler.DeleteClassroom)
+
 	tempUser := apiV1.Group("/temp_users")
 	tempUser.Get("", publicHandler, tempUserHandler.SearchTempUser)
 	tempUser.Get("/:id", publicHandler, tempUserHandler.GetOneTempUser)
@@ -176,6 +184,6 @@ func Route(app *fiber.App, db *gorm.DB) {
 	verifyUser := apiV1.Group("/verify_user")
 	verifyUser.Post("/:id", secretHandler, tempUserHandler.VerifyUser)
 
-	register := apiV1.Get("/register")
+	register := apiV1.Group("/register")
 	register.Post("/availability", publicHandler, tempUserHandler.CheckAvailabilityUser)
 }

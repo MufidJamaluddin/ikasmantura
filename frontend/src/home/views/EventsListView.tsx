@@ -131,12 +131,26 @@ export default class EventsListView extends PureComponent<any, EventsListViewSta
 
     componentDidMount()
     {
-        this.updateData()
+        try
+        {
+            this.updateData()
+        }
+        catch (e)
+        {
+            NotificationManager.error('Koneksi Internet Tidak Ada!', 'Error Koneksi');
+        }
     }
 
     componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<EventsListViewState>, snapshot?: any)
     {
-        this.updateData()
+        try
+        {
+            this.updateData()
+        }
+        catch (e)
+        {
+            NotificationManager.error('Koneksi Internet Tidak Ada!', 'Error Koneksi');
+        }
     }
 
     render()

@@ -111,12 +111,26 @@ export default class GalleryView extends PureComponent<any, GalleryViewState>
 
     componentDidMount()
     {
-        this.updateAlbums();
+        try
+        {
+            this.updateAlbums();
+        }
+        catch (e)
+        {
+            NotificationManager.error('Koneksi Internet Terputus!', 'Error Koneksi');
+        }
     }
 
     componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any)
     {
-        this.updatePhotos()
+        try
+        {
+            this.updatePhotos()
+        }
+        catch (e)
+        {
+            NotificationManager.error('Koneksi Internet Terputus!', 'Error Koneksi');
+        }
     }
 
     chooseAlbum(e: any, id: number|string)

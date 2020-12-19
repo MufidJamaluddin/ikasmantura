@@ -38,8 +38,8 @@ export default class OrganizationView
         }
     }
 
-    componentDidMount() {
-
+    updateOrganizationData()
+    {
         let dataProvider = DataProviderFactory.getDataProvider()
 
         dataProvider.getList("departments", this.state as GetListParams).then(resp => {
@@ -61,6 +61,18 @@ export default class OrganizationView
                 return {...state, ...newState}
             })
         })
+    }
+
+    componentDidMount()
+    {
+        try
+        {
+            this.updateOrganizationData()
+        }
+        catch (e)
+        {
+            NotificationManager.error('Koneksi Internet Terputus!', 'Error Koneksi');
+        }
     }
 
     render() {

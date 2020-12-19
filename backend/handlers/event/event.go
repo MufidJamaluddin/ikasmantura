@@ -37,6 +37,7 @@ func SearchEvent(c *fiber.Ctx) error {
 		isStarted bool
 		db        *gorm.DB
 		ok        bool
+		counter   uint
 
 		authData *viewmodels.AuthorizationModel
 	)
@@ -62,6 +63,7 @@ func SearchEvent(c *fiber.Ctx) error {
 	// RESPONSE ARRAY JSON DATA
 	// HEMAT MEMORY, NGGAK PERLU ALOKASI ARRAY, KIRIM AJA KE CLIENT SECARA MENGALIR
 	isStarted = false
+	counter = data.GetParams.Start
 	callback = func(dt *viewmodels.EventDto) {
 		var (
 			response []byte
@@ -77,12 +79,24 @@ func SearchEvent(c *fiber.Ctx) error {
 			_, _ = c.Write(response)
 		}
 		isStarted = true
+		counter++
 	}
 
 	_, err = c.Write(utils.ToBytes("["))
 	err = eventService.Find(db, &data, callback)
 	_, err = c.Write(utils.ToBytes("]"))
 	// END RESPONSE ARRAY JSON DATA
+
+	if data.GetParams.Start < counter {
+		c.Response().Header.Add("Content-Range",
+			fmt.Sprintf("items %v-%v/%v", data.GetParams.Start, counter, total))
+
+		if total == counter {
+			c.Response().Header.SetStatusCode(fiber.StatusOK)
+		} else {
+			c.Response().Header.SetStatusCode(fiber.StatusPartialContent)
+		}
+	}
 
 	return err
 }

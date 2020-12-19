@@ -47,13 +47,19 @@ export default class EventsView extends React.PureComponent<
             },
         }
 
-        dataProvider.getList('events', params).then(value => {
-            successCallback(value.data);
-        }, error => {
-            NotificationManager.error(error, 'Get Data Error')
-            failureCallback(error);
-        })
-
+        try
+        {
+            dataProvider.getList('events', params).then(value => {
+                successCallback(value.data);
+            }, error => {
+                NotificationManager.error(error, 'Get Data Error')
+                failureCallback(error);
+            })
+        }
+        catch (e)
+        {
+            NotificationManager.error('Koneksi Internet Tidak Ada!', 'Error Koneksi');
+        }
     }
 
     private titleRef: RefObject<HTMLSpanElement> = React.createRef();

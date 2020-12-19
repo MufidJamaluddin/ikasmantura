@@ -41,7 +41,14 @@ export default class HomeView extends React.PureComponent<RouteComponentProps, {
 
     componentDidMount()
     {
-        this.updateTopics()
+        try
+        {
+            this.updateTopics()
+        }
+        catch (e)
+        {
+            NotificationManager.error('Koneksi Internet Terputus!', 'Error Koneksi');
+        }
     }
 
     render() {
