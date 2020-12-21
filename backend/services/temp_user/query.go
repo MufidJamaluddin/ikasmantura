@@ -81,8 +81,8 @@ func IsUsernameOrEmailAvailable(
 	var err error
 
 	err = db.Raw(
-		"SELECT EXISTS(SELECT 1 FROM user WHERE username = @username OR email = @email) "+
-			"OR EXISTS(SELECT 1 FROM temp_user WHERE username = @username OR email = @email)"+
+		"SELECT EXISTS(SELECT 1 FROM users WHERE username = @username OR email = @email) "+
+			"OR EXISTS(SELECT 1 FROM temp_users WHERE username = @username OR email = @email)"+
 			"AS exist",
 		sql.Named("username", strings.Trim(user.Username, " ")),
 		sql.Named("email", strings.Trim(user.Email, " ")),

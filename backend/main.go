@@ -2,6 +2,7 @@ package main
 
 import (
 	error2 "backend/error"
+	"backend/services/email"
 	"backend/utils"
 	"database/sql"
 	"fmt"
@@ -45,6 +46,7 @@ func main() {
 	}), &gorm.Config{
 		Logger:                 logger.Default.LogMode(logger.Error),
 		SkipDefaultTransaction: true,
+		FullSaveAssociations: 	true,
 	})
 
 	if db == nil {
@@ -69,6 +71,9 @@ func main() {
 	Route(app, db)
 
 	port := fmt.Sprintf(":%s", os.Getenv("PORT"))
+
+	email.Open()
+	defer email.Exit()
 
 	err = app.Listen(port)
 	log.Fatal(err)

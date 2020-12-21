@@ -1,7 +1,8 @@
 package temp_user
 
 import (
-	userService "backend/services/temp_user"
+	"backend/services/email"
+	tempUserService "backend/services/temp_user"
 	"backend/utils"
 	"backend/viewmodels"
 	"encoding/json"
@@ -42,7 +43,7 @@ func SearchTempUser(c *fiber.Ctx) error {
 		return err
 	}
 
-	if total, err = userService.GetTotal(db, &data); err != nil {
+	if total, err = tempUserService.GetTotal(db, &data); err != nil {
 		return err
 	}
 
@@ -71,7 +72,7 @@ func SearchTempUser(c *fiber.Ctx) error {
 	}
 
 	_, err = c.Write(utils.ToBytes("["))
-	err = userService.Find(db, &data, callback)
+	err = tempUserService.Find(db, &data, callback)
 	_, err = c.Write(utils.ToBytes("]"))
 	// END RESPONSE ARRAY JSON DATA
 
@@ -116,7 +117,7 @@ func GetOneTempUser(c *fiber.Ctx) error {
 		return err
 	}
 
-	if err = userService.FindById(db, id, &data); err != nil {
+	if err = tempUserService.FindById(db, id, &data); err != nil {
 		return err
 	}
 
@@ -167,7 +168,7 @@ func UpdateTempUser(c *fiber.Ctx) error {
 	}
 
 	data.UpdatedBy = authData.ID
-	if err = userService.Update(db, id, &data); err != nil {
+	if err = tempUserService.Update(db, id, &data); err != nil {
 		return err
 	}
 
@@ -204,7 +205,7 @@ func CheckAvailabilityUser(c *fiber.Ctx) error {
 		return err
 	}
 
-	if err = userService.IsUsernameOrEmailAvailable(db, &availabilityReq, &availabilityRes); err != nil {
+	if err = tempUserService.IsUsernameOrEmailAvailable(db, &availabilityReq, &availabilityRes); err != nil {
 		return err
 	}
 
@@ -247,7 +248,7 @@ func VerifyUser(c *fiber.Ctx) error {
 		return err
 	}
 
-	if err = userService.Verify(db, id, &data); err != nil {
+	if err = tempUserService.Verify(db, id, &data); err != nil {
 		return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 	}
 
@@ -277,6 +278,7 @@ func SaveTempUser(c *fiber.Ctx) error {
 		err             error
 		db              *gorm.DB
 		ok              bool
+		emailMsg        viewmodels.EmailMessage
 	)
 
 	if db, ok = c.Locals("db").(*gorm.DB); !ok {
@@ -290,7 +292,7 @@ func SaveTempUser(c *fiber.Ctx) error {
 	availabilityReq.Username = data.Username
 	availabilityReq.Email = data.Email
 
-	if err = userService.IsUsernameOrEmailAvailable(db, &availabilityReq, &availabilityRes); err != nil {
+	if err = tempUserService.IsUsernameOrEmailAvailable(db, &availabilityReq, &availabilityRes); err != nil {
 		return err
 	}
 
@@ -299,9 +301,19 @@ func SaveTempUser(c *fiber.Ctx) error {
 			SendString("Username atau Email telah terdaftar!")
 	}
 
-	if err = userService.Save(db, &data); err != nil {
+	if err = tempUserService.Save(db, &data); err != nil {
 		return err
 	}
+
+	emailMsg.Header = "Registrasi Data Alumni"
+	emailMsg.Title = "Registrasi Anggota Ikatan Alumni SMAN Situraja"
+	emailMsg.To = []string{data.Email}
+	emailMsg.Message = fmt.Sprintf(
+		"Registrasi %v (Username %v - Email %v) Sukses! " +
+			"Mohon Tunggu Kabar Kepengurusan IKA SMAN Situraja Baru! Kontak: info@ikasmansituraja.org",
+		data.Name, data.Username, data.Email)
+
+	email.SendMessage(&emailMsg)
 
 	c.Status(fiber.StatusAccepted)
 	err = c.JSON(&data)
@@ -346,7 +358,7 @@ func DeleteTempUser(c *fiber.Ctx) error {
 	}
 
 	data.UpdatedBy = authData.ID
-	if err = userService.Delete(db, id, &data); err != nil {
+	if err = tempUserService.Delete(db, id, &data); err != nil {
 		return err
 	}
 

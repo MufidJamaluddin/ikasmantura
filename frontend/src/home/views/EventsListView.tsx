@@ -69,7 +69,7 @@ export default class EventsListView extends PureComponent<any, EventsListViewSta
                     return {...oldState, ...newState}
                 })
             }, error => {
-                NotificationManager.error(error, 'Get Data Error')
+                NotificationManager.error(error.message, error.name)
                 this.setState(state => {
                     let newState = {loading: false}
                     return {...state, ...newState}

@@ -54,7 +54,7 @@ export default class OrganizationView
                 return {...state, ...newState}
             })
         }, error => {
-            NotificationManager.error(error, 'Get Data Error');
+            NotificationManager.error(error.message, error.name);
 
             this.setState(state => {
                 let newState = {loading: false}

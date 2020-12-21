@@ -62,7 +62,7 @@ export default class GalleryView extends PureComponent<any, GalleryViewState>
                 return {...oldState, albums: resp.data as Array<Album>, isLoading: false }
             })
         }, error => {
-            NotificationManager.error(error, 'Get Data Error');
+            NotificationManager.error(error.message, error.name);
             this.setState(oldState => {
                 return {...oldState, isLoading: false}
             })
@@ -98,8 +98,7 @@ export default class GalleryView extends PureComponent<any, GalleryViewState>
                     return {...state, ...newState}
                 })
             }, error => {
-                console.log(error)
-                NotificationManager.error(error, 'Get Data Error');
+                NotificationManager.error(error.message, error.name);
 
                 this.setState(state => {
                     let newState = {isLoading: false}

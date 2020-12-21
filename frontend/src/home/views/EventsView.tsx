@@ -52,7 +52,7 @@ export default class EventsView extends React.PureComponent<
             dataProvider.getList('events', params).then(value => {
                 successCallback(value.data);
             }, error => {
-                NotificationManager.error(error, 'Get Data Error')
+                NotificationManager.error(error.message, error.name)
                 failureCallback(error);
             })
         }

@@ -12,7 +12,7 @@ type ClassroomDto struct {
 }
 
 func (p *ClassroomDto) GetId() uint {
-	return uint(p.Id)
+	return p.Id
 }
 
 type ClassroomParam struct {

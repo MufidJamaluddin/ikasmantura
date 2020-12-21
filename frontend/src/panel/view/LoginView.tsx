@@ -10,7 +10,10 @@ const LoginView = ({ parenthistory, theme, location }) => {
 
     const login = useLogin();
 
-    let {username = '', password = ''} = location?.state
+    let {
+        username = '',
+        password = ''
+    } = location?.state ?? {}
 
     if(username)
     {
@@ -22,7 +25,8 @@ const LoginView = ({ parenthistory, theme, location }) => {
                     username: username,
                     password: password
                 }).catch(_ => {
-                    NotificationManager.error('Username/Password salah atau Koneksi Bermasalah!', 'Login Gagal')
+                    NotificationManager.error(
+                        'Username/Password salah atau Koneksi Bermasalah!', 'Login Gagal')
                 });
             }
         }
@@ -37,7 +41,8 @@ const LoginView = ({ parenthistory, theme, location }) => {
             username: formData.get('username'),
             password: formData.get('password')
         }).catch(_ => {
-            NotificationManager.error('Username/Password salah atau Koneksi Bermasalah!', 'Login Gagal')
+            NotificationManager.error(
+                'Username/Password salah atau Koneksi Bermasalah!', 'Login Gagal')
         });
     };
 
@@ -63,13 +68,6 @@ const LoginView = ({ parenthistory, theme, location }) => {
                         <button type="button" className="c-button info" onClick={onHomeClick}>Kembali</button>
                         &nbsp;
                         <button type="submit" className="c-button info">Login</button>
-
-                        <br/>
-
-                        <p>
-                            Belum mempunyai akun?
-                        </p>
-                        <button type="button" className="c-button info">Daftar Akun</button>
 
                     </div>
                 </form>

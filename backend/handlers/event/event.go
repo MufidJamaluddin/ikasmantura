@@ -402,6 +402,8 @@ func DownloadEventTicket(c *fiber.Ctx) error {
 		return err
 	}
 
+	htmlBuf.Reset()
+
 	err = utils.HtmlTemplates.ExecuteTemplate(
 		&htmlBuf, "event_ticket.html", &userEventData)
 

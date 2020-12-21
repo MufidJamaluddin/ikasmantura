@@ -161,3 +161,31 @@ header.masthead h1 {
 .no-border {
     border: 0;
 }
+
+.divider-custom {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.divider-custom-line {
+    width: 100%;
+    max-width: 7rem;
+    height: 0.25rem;
+    background-color: white;
+    border-radius: 1rem;
+}
+
+.divider-custom-line:first-child {
+    margin-right: 1rem;
+}
+
+.divider-custom-line:last-child {
+    margin-left: 1rem;
+}
+
+.divider-custom-icon {
+    color: white;
+    font-size: 3.5rem;
+}

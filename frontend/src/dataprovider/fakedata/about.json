@@ -1,8 +1,12 @@
 [
   {
     "id": 1,
+    "title": "IKA SMAN Situraja",
     "description": "Magnam molestiae perferendis quisquam\nqui cum reiciendis\nquaerat animi amet hic inventore\nea quia deleniti quidem saepe porro velit",
     "vision": "Nobis facilis odit tempore cupiditate quia\nassumenda doloribus rerum qui ea\nillum et qui totam\naut veniam repellendus",
-    "mission": "Non et quaerat ex quae ad maiores\nmaiores recusandae totam aut blanditiis mollitia quas illo\nut voluptatibus voluptatem\nsimilique nostrum eum"
+    "mission": "Non et quaerat ex quae ad maiores\nmaiores recusandae totam aut blanditiis mollitia quas illo\nut voluptatibus voluptatem\nsimilique nostrum eum",
+    "facebook": "ikasmansituraja",
+    "twitter": "ikasmansituraja",
+    "instagram": "ikasmansituraja"
   }
 ]

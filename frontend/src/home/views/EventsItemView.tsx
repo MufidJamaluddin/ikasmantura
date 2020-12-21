@@ -40,7 +40,7 @@ export default class EventItemView
                 data: data
             })
         }, error => {
-            NotificationManager.error(error, 'Get Data Error');
+            NotificationManager.error(error.message, error.name);
         })
     }
 
@@ -59,9 +59,6 @@ export default class EventItemView
                 },
             })
             .then(item => {
-
-                console.log(item.json())
-
                 NotificationManager.success('Anda telah terdaftar', 'Pendaftaran Sukses');
                 this.setState(state => {
                     let newData = { ...state.data, myEvent: true }

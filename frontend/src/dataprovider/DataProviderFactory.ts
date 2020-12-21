@@ -5,7 +5,7 @@ import jsonServerProvider from 'ra-data-json-server';
 
 const httpClient = (url, options: fetchUtils.Options = {}) => {
 
-    let token = localStorage.getItem("token")
+    //let token = localStorage.getItem("token")
 
     if (!options.headers) {
         options.headers = new Headers({
@@ -13,10 +13,11 @@ const httpClient = (url, options: fetchUtils.Options = {}) => {
             "Content-Type": "application/json",
         });
     }
-
+    /*
     if (token !== null) {
         options.headers["Authorization"] = `Basic ${token}`
     }
+     */
 
     // add your own headers here
     //options.headers.set('X-Custom-Header', 'foobar');
@@ -45,7 +46,6 @@ export default class DataProviderFactory
         }
         else
         {
-
             DataProviderFactory.dataProvider =
                 jsonServerProvider(process.env.PUBLIC_URL + '/api/v1', httpClient);
         }

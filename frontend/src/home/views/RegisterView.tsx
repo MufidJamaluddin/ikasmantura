@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import RegeTitle from "../component/RegeTitle";
 import {Button, Card, Col, Container, Form, Row, Tab, Tabs} from "react-bootstrap";
-import {RouteComponentProps} from "react-router-dom";
+import {Link, RouteComponentProps} from "react-router-dom";
 
 import DataProviderFactory from "../../dataprovider/DataProviderFactory";
 import {NotificationManager} from 'react-notifications';
@@ -12,13 +12,16 @@ import makeAnimated from 'react-select/animated';
 
 const selectAnimatedComponents = makeAnimated();
 
+/*
 function sleep(ms: number)
 {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+ */
 
 async function checkAvailability({ username = '', email = '' })
 {
+    /*
     if(
         process.env.NODE_ENV === "development"
         || process.env.NODE_ENV === "test"
@@ -27,6 +30,7 @@ async function checkAvailability({ username = '', email = '' })
         await sleep(1000);
         return true;
     }
+     */
 
     let dataProvider = DataProviderFactory.getDataProvider()
     let result:boolean
@@ -41,7 +45,7 @@ async function checkAvailability({ username = '', email = '' })
         }).then((resp: any) => {
             return resp.exist
         }, error => {
-            NotificationManager.error(error, 'Pendaftaran Gagal');
+            NotificationManager.error(error.message, error.name);
             return false
         });
     }
@@ -104,7 +108,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                 this.props.history.push('/login')
 
             }, error => {
-                NotificationManager.error(error, 'Pendaftaran Gagal');
+                NotificationManager.error(error.message, 'Pendaftaran Gagal');
             })
         }
         catch (e)
@@ -178,7 +182,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                     return {...state, classrooms: optionsData }
                 })
             }, error => {
-                NotificationManager.error(error, 'Error Ambil Data Kelas');
+                NotificationManager.error(error.message, error.name);
             })
         }
         catch(e)
@@ -244,6 +248,9 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                                   onChange={this.handleChange}
                     />
                     <FieldFeedbacks for="email">
+                        <FieldFeedback when={value => !/[^-\s]/.test(value)} error>
+                            Tidak boleh mengandung spasi!
+                        </FieldFeedback>
                         <Async
                             promise={this.checkEmailAvailability}
                             then={available => available ?
@@ -372,7 +379,9 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                         options={this.state.classrooms}
                         isClearable={true}
                         isMulti={true}
-                        isLoading={this.state.classrooms.length == 0}
+                        isLoading={
+                            this.state.classrooms.length === 0
+                        }
                         placeholder="Kelas"
                         name="classrooms"
                         onChange={this.handleChange}
@@ -515,6 +524,16 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                     <Row>
                         <Col md={{span:10, offset:1}}>
                             <Card>
+
+                                <Card.Body>
+                                    Sudah pernah daftar? &nbsp;
+                                    <Link to={"/login"}>
+                                        <Button variant="warning" size="sm" type="button">
+                                            Masuk
+                                        </Button>
+                                    </Link>
+                                </Card.Body>
+
                                 <Card.Title>
                                     <h1 className="text-center">Pendaftaran Alumni</h1>
                                 </Card.Title>

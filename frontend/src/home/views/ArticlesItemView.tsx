@@ -39,7 +39,7 @@ export default class ArticlesItemView
                 data: data
             })
         }, error => {
-            NotificationManager.error(error, 'Get Data Error');
+            NotificationManager.error(error.message, error.name);
         })
     }
 

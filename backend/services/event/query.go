@@ -46,7 +46,7 @@ func GetTotal(db *gorm.DB, search *viewmodels.EventParam) (uint, error) {
 	)
 
 	if search.IsMyEvent && search.CurrentUserId != 0 {
-		tx = db.Model(&model).Joins("JOIN user_events ON userId = ?", search.CurrentUserId)
+		tx = db.Model(&model).Joins("JOIN user_events ON user_id = ?", search.CurrentUserId)
 	} else {
 		tx = db.Model(&model)
 	}

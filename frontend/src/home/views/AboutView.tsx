@@ -36,7 +36,7 @@ export default class AboutView extends PureComponent<{}, AboutViewState>
             dataProvider.getOne("about", {id: 1}).then(resp => {
                 this.setState({data: resp.data as AboutItem})
             }, error => {
-                NotificationManager.error(error, 'Get Data Error');
+                NotificationManager.error(error.message, error.name);
 
                 this.setState(state => {
                     let newState = {loading: false}

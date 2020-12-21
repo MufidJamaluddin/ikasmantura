@@ -9,20 +9,21 @@ import DataProviderFactory from "../../dataprovider/DataProviderFactory";
 
 import {NotificationManager} from 'react-notifications';
 import WEB_INFO from "../config";
+import AuthProvider from "../../dataprovider/authProvider";
 
-export default class Header extends PureComponent<{}, {topics: Array<any>}>
+export default class Header extends PureComponent<{}, {topics: Array<any>, isLogin: boolean}>
 {
     constructor(props) {
         super(props);
         this.state = {
-            topics: []
+            topics: [],
+            isLogin: false,
         }
     }
 
-    updateTopics()
-    {
+    async updateTopics() {
         let dataProvider = DataProviderFactory.getDataProvider()
-        dataProvider.getList("article_topics", {
+        return await dataProvider.getList("article_topics", {
             pagination: {
                 page: 1,
                 perPage: 100,
@@ -31,14 +32,12 @@ export default class Header extends PureComponent<{}, {topics: Array<any>}>
                 field: 'id',
                 order: 'ASC'
             },
-            filter: {
-            },
+            filter: {},
         }).then(resp => {
-            this.setState(state => {
-                return {...state, topics: resp.data }
-            })
+            return {topics: resp.data}
         }, error => {
-            NotificationManager.error(error, 'Get Data Error');
+            NotificationManager.error(error.message, error.name);
+            return {}
         })
     }
 
@@ -46,7 +45,18 @@ export default class Header extends PureComponent<{}, {topics: Array<any>}>
     {
         try
         {
-            this.updateTopics()
+            Promise.all([
+                this.updateTopics(),
+                AuthProvider.checkAuth()
+                    .then(() => ({ isLogin: true }))
+                    .catch(() => ({ isLogin: false })),
+            ]).then(values => {
+                let newState = { ...this.state }
+                values.map(item => {
+                    newState = { ...newState, ...item }
+                })
+                this.setState(newState)
+            })
         }
         catch (e)
         {
@@ -102,9 +112,22 @@ export default class Header extends PureComponent<{}, {topics: Array<any>}>
                                 }
                             </NavDropdown>
                             <Nav.Link as={Link} to={"/gallery"}>Galeri</Nav.Link>
-                            <Nav.Link as={Link} to={"/login"}>
-                                <span><i className="fas fa-user"/></span>
-                            </Nav.Link>
+                            {
+                                this.state.isLogin ? (
+                                    <Nav.Link as={Link} to={"/panel"}>
+                                        <span><i className="fas fa-user"/></span>
+                                    </Nav.Link>
+                                ) : (
+                                    <NavDropdown title="Alumni" id="basic-nav-dropdown">
+                                        <NavDropdown.Item as={Link} to={"/register"}>
+                                            Daftar
+                                        </NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to={"/login"}>
+                                            Masuk
+                                        </NavDropdown.Item>
+                                    </NavDropdown>
+                                )
+                            }
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

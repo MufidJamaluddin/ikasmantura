@@ -48,7 +48,7 @@ export default class ArticlesView
                 order: 'ASC'
             },
             filter: {
-
+                topicId: this.props.location?.state?.topicId ?? 0
             },
             loading: true,
             data: [],
@@ -66,7 +66,18 @@ export default class ArticlesView
         {
             const dataProvider = DataProviderFactory.getDataProvider()
 
-            dataProvider.getList("articles", this.state).then(resp => {
+            let request = {...this.state}
+            let filter:any = {}
+
+            if(request.filter?.topicId > 0)
+                filter.topicId = request.filter?.topicId
+
+            if((request.filter?.title ?? '').trim() !== '')
+                filter.title = request.filter?.title
+
+            request.filter = filter
+
+            dataProvider.getList("articles", request).then(resp => {
                 this.setState(state => {
                     let newState = {
                         data: resp.data,
@@ -76,7 +87,7 @@ export default class ArticlesView
                     return {...state, ...newState}
                 })
             }, error => {
-                NotificationManager.error(error, 'Get Data Error');
+                NotificationManager.error(error.message, error.name);
 
                 this.setState(state => {
                     let newState = {loading: false}
@@ -105,7 +116,7 @@ export default class ArticlesView
                 return {...state, topics: resp.data }
             })
         }, error => {
-            NotificationManager.error(error, 'Get Data Error');
+            NotificationManager.error(error.message, error.name);
         })
     }
 
@@ -165,14 +176,11 @@ export default class ArticlesView
 
         let formData = new FormData(e.target);
         let title = formData.get('title')
+        let topicId = formData.get('topicId')
 
-        let filter = {}
-
-        if(title)
-        {
-            filter = {
-                title: title
-            }
+        let filter = {
+            title: title ?? '',
+            topicId: topicId ?? 0
         }
 
         this.setState(state => {
@@ -191,7 +199,7 @@ export default class ArticlesView
 
     render()
     {
-        let topicId = this.props.location?.state?.topicId ?? 1
+        let topicId = this.props.location?.state?.topicId ?? 0
         const history = this.props.history
 
         return (
@@ -219,11 +227,16 @@ export default class ArticlesView
                                             history.replace({ ...history.location, state});
                                         }}
                                         name="topicId">
-                                        {
-                                            this.state.topics.map(item => <option key={item.id} value={item.id}>
-                                                {item.name}
-                                            </option>)
-                                        }
+                                            <option value={0}>
+                                                Semua
+                                            </option>
+                                            {
+                                                this.state.topics.map(item => (
+                                                    <option key={item.id} value={item.id}>
+                                                        {item.name}
+                                                    </option>
+                                                ))
+                                            }
                                     </Form.Control>
                                 </Form.Group>
 
