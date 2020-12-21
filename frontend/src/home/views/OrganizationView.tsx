@@ -5,7 +5,7 @@ import {GetListParams} from 'ra-core'
 
 import {NotificationManager} from 'react-notifications';
 import RegeTitle from "../component/RegeTitle";
-import {Card, Container} from "react-bootstrap";
+import {Card, Container, Alert} from "react-bootstrap";
 import Image from "../component/Image";
 
 interface OrganizationViewState {
@@ -93,6 +93,13 @@ export default class OrganizationView
                 </RegeTitle>
                 <Container>
                     <div className="row justify-content-center mb-3">
+                        {
+                            data.length === 0 && (
+                                <Alert variant="warning">
+                                    <strong>Belum ada kepengurusan IKA SMAN Situraja</strong>
+                                </Alert>
+                            )
+                        }
                         {
                             data.map((item, key) => {
                                 return <div className="col-auto mb-2" key={item.id}>

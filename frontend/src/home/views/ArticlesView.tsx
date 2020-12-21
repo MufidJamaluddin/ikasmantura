@@ -1,5 +1,6 @@
 import * as React from "react";
 import {Link} from "react-router-dom";
+import { withRouter } from "react-router";
 
 import {PaginationPayload, SortPayload} from "ra-core/src/types";
 import DataProviderFactory from "../../dataprovider/DataProviderFactory";
@@ -31,8 +32,7 @@ interface ArticlesViewState
     selectedTopic?: string|number;
 }
 
-export default class ArticlesView
-    extends React.PureComponent<RouteComponentProps<unknown, unknown, {topicId?: string|number}>, ArticlesViewState>
+class ArticlesView extends React.PureComponent<RouteComponentProps<unknown, unknown, {topicId?: string|number}>, ArticlesViewState>
 {
     constructor(props:any)
     {
@@ -135,19 +135,13 @@ export default class ArticlesView
 
     componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<ArticlesViewState>, snapshot?: any)
     {
-        if(
-            prevState.filter !== this.state.filter
-            || prevState.pagination !== this.state.pagination
-        )
+        try
         {
-            try
-            {
-                this.updateData()
-            }
-            catch (e)
-            {
-                NotificationManager.error('Koneksi Internet Tidak Ada!', 'Error Koneksi');
-            }
+            this.updateData()
+        }
+        catch (e)
+        {
+            NotificationManager.error('Koneksi Internet Tidak Ada!', 'Error Koneksi');
         }
     }
 
@@ -309,3 +303,5 @@ export default class ArticlesView
         )
     }
 }
+
+export default withRouter(ArticlesView)

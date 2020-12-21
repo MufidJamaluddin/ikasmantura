@@ -63,19 +63,19 @@ export default class AboutView extends PureComponent<{}, AboutViewState>
                         <Col sm={12}>
                             <h3 className="text-center">Deskripsi</h3>
                             <div dangerouslySetInnerHTML={
-                                {__html: description ? DOMPurify.sanitize(description) : ''}}/>
+                                {__html: description ? DOMPurify.sanitize(description) : '-'}}/>
                         </Col>
                         <hr/>
                         <Col sm={12}>
                             <h3 className="text-center">Visi</h3>
                             <div dangerouslySetInnerHTML={
-                                {__html: description ? DOMPurify.sanitize(vision) : ''}}/>
+                                {__html: description ? DOMPurify.sanitize(vision) : '-'}}/>
                         </Col>
                         <hr/>
                         <Col sm={12}>
                             <h3 className="text-center">Misi</h3>
                             <div dangerouslySetInnerHTML={
-                                {__html: description ? DOMPurify.sanitize(mission) : ''}}/>
+                                {__html: description ? DOMPurify.sanitize(mission) : '-'}}/>
                         </Col>
                     </Row>
                 </Container>

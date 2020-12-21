@@ -50,9 +50,9 @@ export default class Header extends PureComponent<{}, {topics: Array<any>, isLog
                 AuthProvider.checkAuth()
                     .then(() => ({ isLogin: true }))
                     .catch(() => ({ isLogin: false })),
-            ]).then(values => {
+            ]).then((values: Array<any>) => {
                 let newState = { ...this.state }
-                values.map(item => {
+                values.forEach(item => {
                     newState = { ...newState, ...item }
                 })
                 this.setState(newState)
