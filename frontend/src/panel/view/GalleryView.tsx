@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {
     AutocompleteArrayInput,
     AutocompleteInput,
@@ -24,6 +24,7 @@ import {
 } from 'react-admin';
 import {Box, Theme, useMediaQuery} from '@material-ui/core';
 import GridList from "./GalleryGridList";
+import {ToFormData} from "../../utils/Form";
 
 const GalleryTitle = ({ record }) => {
     return <span>{record.name ?? 'Upload Gallery'}</span>;
@@ -98,36 +99,62 @@ export const GalleryView = props => (
             <ReferenceField label="Album" source="albumId" reference="albums">
                 <TextField source="name" />
             </ReferenceField>
-            <ImageField source="image" />
+            <ImageField source="original" />
         </SimpleShowLayout>
     </Show>
 )
 
-export const GalleryEdit = props => (
-    <Edit title={<GalleryTitle {...props} />} {...props}>
-        <SimpleForm redirect="show" encType="multipart/form-data">
-            <TextInput disabled source="id" />
-            <TextInput label="Title" source="title" validate={[required()]}/>
-            <ReferenceInput label="Album" source="albumId" reference="albums" validate={[required()]}>
-                <AutocompleteInput optionText="title" />
-            </ReferenceInput>
-            <ImageInput source="image" label="Image (JPG)" accept="image/jpeg" maxSize={500000} validate={[required()]}>
-                <ImageField source="src" title="title" />
-            </ImageInput>
-        </SimpleForm>
-    </Edit>
-);
+const transformData = (image, data) => {
+    let formData = ToFormData(data)
 
-export const GalleryCreate = props => (
-    <Create title={<GalleryTitle {...props} />} {...props}>
-        <SimpleForm encType="multipart/form-data">
-            <TextInput source="title" label="Title" validate={[required()]}/>
-            <ReferenceInput label="Album" source="albumId" reference="albums" validate={[required()]}>
-                <AutocompleteInput optionText="title" />
-            </ReferenceInput>
-            <ImageInput source="image" label="Image (JPG)" accept="image/jpeg" maxSize={500000} validate={[required()]}>
-                <ImageField source="src" title="title" />
-            </ImageInput>
-        </SimpleForm>
-    </Create>
-);
+    if(image && image.selectedFile) {
+        formData.append('original', image.selectedFile, image.selectedFile.name)
+    }
+
+    return formData
+}
+
+export const GalleryEdit = props => {
+
+    const [image, setImage] = useState(null)
+    const transform = data => transformData(image, data)
+
+    return (
+        <Edit transform={transform} title={<GalleryTitle {...props} />} {...props}>
+            <SimpleForm redirect="show" encType="multipart/form-data">
+                <TextInput disabled source="id"/>
+                <TextInput label="Title" source="title" validate={[required()]}/>
+                <ReferenceInput label="Album" source="albumId" reference="albums" validate={[required()]}>
+                    <AutocompleteInput optionText="title"/>
+                </ReferenceInput>
+                <ImageInput source="original" label="Image (JPG)"
+                            onChange={e => { e.preventDefault(); setImage(e.target.value); }}
+                            accept="image/jpeg" maxSize={500000} validate={[required()]}>
+                    <ImageField source="src" title="title"/>
+                </ImageInput>
+            </SimpleForm>
+        </Edit>
+    )
+}
+
+export const GalleryCreate = props => {
+
+    const [image, setImage] = useState(null)
+    const transform = data => transformData(image, data)
+
+    return (
+        <Create transform={transform} title={<GalleryTitle {...props} />} {...props}>
+            <SimpleForm encType="multipart/form-data">
+                <TextInput source="title" label="Title" validate={[required()]}/>
+                <ReferenceInput label="Album" source="albumId" reference="albums" validate={[required()]}>
+                    <AutocompleteInput optionText="title"/>
+                </ReferenceInput>
+                <ImageInput source="original" label="Image (JPG)"
+                            onChange={e => { e.preventDefault(); setImage(e.target.value); }}
+                            accept="image/jpeg" maxSize={500000} validate={[required()]}>
+                    <ImageField source="src" title="title"/>
+                </ImageInput>
+            </SimpleForm>
+        </Create>
+    )
+}

@@ -12,26 +12,9 @@ import makeAnimated from 'react-select/animated';
 
 const selectAnimatedComponents = makeAnimated();
 
-/*
-function sleep(ms: number)
-{
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
- */
 
 async function checkAvailability({ username = '', email = '' })
 {
-    /*
-    if(
-        process.env.NODE_ENV === "development"
-        || process.env.NODE_ENV === "test"
-    )
-    {
-        await sleep(1000);
-        return true;
-    }
-     */
-
     let dataProvider = DataProviderFactory.getDataProvider()
     let result:boolean
 
@@ -61,6 +44,7 @@ async function checkAvailability({ username = '', email = '' })
 export default class RegisterView extends PureComponent<RouteComponentProps<any>, {classrooms: Array<any>}>
 {
     private readonly formElement: React.RefObject<FormWithConstraints>
+    private inputPassword: HTMLInputElement | null
 
     constructor(props:any)
     {
@@ -71,6 +55,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
         }
 
         this.formElement = React.createRef()
+        this.inputPassword = null
 
         this.handleChange = this.handleChange.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
@@ -108,7 +93,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                 this.props.history.push('/login')
 
             }, error => {
-                NotificationManager.error(error.message, 'Pendaftaran Gagal');
+                NotificationManager.error(error.message, `Pendaftaran Gagal: ${error.name}`);
             })
         }
         catch (e)
@@ -275,6 +260,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                                   maxLength={35}
                                   required={true}
                                   onChange={this.handleChange}
+                                  ref={(ref) => this.inputPassword = ref}
                     />
                     <FieldFeedbacks for="password">
                         <FieldFeedback when="valueMissing" error>
@@ -294,6 +280,26 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                         </FieldFeedback>
                     </FieldFeedbacks>
                 </Form.Group>
+
+                <Form.Group controlId="formConfirmPassword">
+                    <Form.Label>Konfirmasi Password</Form.Label>
+                    <Form.Control type="password"
+                                  placeholder="Password harus sama"
+                                  name="confirmPassword"
+                                  minLength={5}
+                                  maxLength={35}
+                                  required={true}
+                                  onChange={this.handleChange}
+                    />
+                    <FieldFeedbacks for="confirmPassword">
+                        <FieldFeedback when={
+                            value => value !== this.inputPassword!.value
+                        } className="text-error" error>
+                            Password tidak sama
+                        </FieldFeedback>
+                    </FieldFeedbacks>
+                </Form.Group>
+
             </Tab>
         )
     }

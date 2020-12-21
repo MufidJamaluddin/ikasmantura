@@ -30,6 +30,8 @@ import {useMediaQuery} from '@material-ui/core';
 
 import RichTextInput from 'ra-input-rich-text';
 import {dateParser} from "../../utils/DateUtil";
+import {useState} from "react";
+import {ToFormData} from "../../utils/Form";
 
 const PostTitle = ({ record }) => {
     return <span>Post {record ? `"${record.title}"` : ''}</span>;
@@ -97,33 +99,59 @@ export const PostShow = (props) => (
     </Show>
 );
 
-export const PostEdit = props => (
-    <Edit title={<PostTitle {...props} />} {...props}>
-        <SimpleForm redirect="show" encType="multipart/form-data">
-            <TextInput disabled source="id" />
-            <TextInput source="title" validate={[required()]} />
-            <ReferenceInput label="Topic" source="topicId" reference="article_topics" validate={[required()]}>
-                <AutocompleteInput optionText="name" />
-            </ReferenceInput>
-            <ImageInput source="image" label="Image (JPG)" accept="image/jpeg" maxSize={500000}>
-                <ImageField source="src" title="title" />
-            </ImageInput>
-            <RichTextInput source="body" className="d-inline" validate={[required()]} />
-        </SimpleForm>
-    </Edit>
-);
+const transformData = (image, data) => {
 
-export const PostCreate = props => (
-    <Create {...props}>
-        <SimpleForm encType="multipart/form-data">
-            <TextInput source="title" label="Title" validate={[required()]} />
-            <ReferenceInput label="Topic" source="topicId" reference="article_topics" validate={[required()]}>
-                <AutocompleteInput optionText="name" />
-            </ReferenceInput>
-            <ImageInput source="image" label="Image (JPG)" accept="image/jpeg" maxSize={500000}>
-                <ImageField source="src" title="title" />
-            </ImageInput>
-            <RichTextInput source="body" className="d-inline" validate={[required()]} />
-        </SimpleForm>
-    </Create>
-);
+    if(image && image.selectedFile) {
+        let formData = ToFormData(data)
+        formData.append('image', image.selectedFile, image.selectedFile.name)
+        return formData
+    }
+    return data
+}
+
+export const PostEdit = props => {
+
+    const [image, setImage] = useState(null)
+    const transform = data => transformData(image, data)
+
+    return (
+        <Edit transform={transform} title={<PostTitle {...props} />} {...props}>
+            <SimpleForm redirect="show" encType="multipart/form-data">
+                <TextInput disabled source="id" />
+                <TextInput source="title" validate={[required()]} />
+                <ReferenceInput label="Topic" source="topicId" reference="article_topics" validate={[required()]}>
+                    <AutocompleteInput optionText="name" />
+                </ReferenceInput>
+                <ImageInput source="image" label="Image (JPG)"
+                            onChange={e => { e.preventDefault(); setImage(e.target.value); }}
+                            accept="image/jpeg" maxSize={500000}>
+                    <ImageField source="src" title="title" />
+                </ImageInput>
+                <RichTextInput source="body" className="d-inline" validate={[required()]} />
+            </SimpleForm>
+        </Edit>
+    )
+}
+
+export const PostCreate = props => {
+
+    const [image, setImage] = useState(null)
+    const transform = data => transformData(image, data)
+
+    return (
+        <Create transform={transform} {...props}>
+            <SimpleForm encType="multipart/form-data" transform={null}>
+                <TextInput source="title" label="Title" validate={[required()]}/>
+                <ReferenceInput label="Topic" source="topicId" reference="article_topics" validate={[required()]}>
+                    <AutocompleteInput optionText="name"/>
+                </ReferenceInput>
+                <ImageInput source="image" label="Image (JPG)"
+                            onChange={e => { e.preventDefault(); setImage(e.target.value); }}
+                            accept="image/jpeg" maxSize={500000}>
+                    <ImageField source="src" title="title"/>
+                </ImageInput>
+                <RichTextInput source="body" className="d-inline" validate={[required()]}/>
+            </SimpleForm>
+        </Create>
+    )
+}

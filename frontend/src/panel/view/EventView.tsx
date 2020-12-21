@@ -28,6 +28,8 @@ import RichTextInput from 'ra-input-rich-text';
 import {useMediaQuery} from '@material-ui/core';
 import moment from "moment";
 import {dateParser} from "../../utils/DateUtil";
+import {useState} from "react";
+import {ToFormData} from "../../utils/Form";
 
 const EventTitle = ({ record }) => {
     return <span>{record.name ?? 'Create Event'}</span>;
@@ -100,13 +102,26 @@ const EventValidation = (data) => {
     return errors
 }
 
-export const EventEdit = props => {
-
-    const transform = data => ({
+const transformData = (image, data) => {
+    let transformedData = {
         ...data,
         start:  moment(data.start).format("YYYY-MM-DDTHH:mm:ssZ"),
         end:  moment(data.end).format("YYYY-MM-DDTHH:mm:ssZ"),
-    })
+    }
+
+    if(image && image.selectedFile) {
+        let formData = ToFormData(transformedData)
+        formData.append('image', image.selectedFile, image.selectedFile.name)
+        return formData
+    }
+
+    return transformedData
+}
+
+export const EventEdit = props => {
+
+    const [image, setImage] = useState(null)
+    const transform = data => transformData(image, data)
 
     return (
         <Edit transform={transform} title={<EventTitle {...props} />} {...props}>
@@ -118,7 +133,9 @@ export const EventEdit = props => {
                     <TextField source="name"/>
                 </ReferenceInput>
                 <RichTextInput source="description" validate={[required()]}/>
-                <ImageInput source="image" label="Image (JPG)" accept="image/jpeg" maxSize={500000}>
+                <ImageInput source="image" label="Image (JPG)"
+                            onChange={e => { e.preventDefault(); setImage(e.target.files[0]); }}
+                            accept="image/jpeg" maxSize={500000}>
                     <ImageField source="src" title="title"/>
                 </ImageInput>
                 <DateInput source="start" validate={[required()]}/>
@@ -130,11 +147,8 @@ export const EventEdit = props => {
 
 export const EventCreate = props => {
 
-    const transform = data => ({
-        ...data,
-        start:  moment(data.start).format("YYYY-MM-DDTHH:mm:ssZ"),
-        end:  moment(data.end).format("YYYY-MM-DDTHH:mm:ssZ"),
-    })
+    const [image, setImage] = useState(null)
+    const transform = data => transformData(image, data)
 
     return (
         <Create transform={transform}
@@ -144,7 +158,9 @@ export const EventCreate = props => {
                 <TextInput source="title" validate={[required()]} />
                 <TextInput source="organizer" validate={[required()]} />
                 <RichTextInput source="description" validate={[required()]} />
-                <ImageInput source="image" label="Image (JPG)" accept="image/jpeg" maxSize={500000}>
+                <ImageInput source="image" label="Image (JPG)"
+                            onChange={e => { e.preventDefault(); setImage(e.target.files[0]); }}
+                            accept="image/jpeg" maxSize={500000}>
                     <ImageField source="src" title="title"/>
                 </ImageInput>
                 <DateInput source="start" validate={[required()]}/>

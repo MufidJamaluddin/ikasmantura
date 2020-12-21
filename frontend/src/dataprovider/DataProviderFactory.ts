@@ -1,26 +1,9 @@
 import { DataProvider } from 'ra-core';
-import { fetchUtils } from 'react-admin';
+import {CreateParams, fetchUtils, UpdateParams } from 'react-admin';
 
 import jsonServerProvider from 'ra-data-json-server';
 
 const httpClient = (url, options: fetchUtils.Options = {}) => {
-
-    //let token = localStorage.getItem("token")
-
-    if (!options.headers) {
-        options.headers = new Headers({
-            Accept: 'application/json',
-            "Content-Type": "application/json",
-        });
-    }
-    /*
-    if (token !== null) {
-        options.headers["Authorization"] = `Basic ${token}`
-    }
-     */
-
-    // add your own headers here
-    //options.headers.set('X-Custom-Header', 'foobar');
     return fetchUtils.fetchJson(url, options);
 };
 
@@ -46,8 +29,30 @@ export default class DataProviderFactory
         }
         else
         {
+            const apiUrl = process.env.PUBLIC_URL
+
             DataProviderFactory.dataProvider =
-                jsonServerProvider(process.env.PUBLIC_URL + '/api/v1', httpClient);
+                jsonServerProvider(apiUrl + '/api/v1', httpClient);
+
+            DataProviderFactory.dataProvider.create = (resource: string, params: CreateParams) =>
+                httpClient(`${apiUrl}/${resource}`, {
+                    method: 'POST',
+                    body: (
+                        params.data instanceof FormData ?
+                            params.data : JSON.stringify(params.data)
+                    ),
+                }).then(({ json }) => ({
+                    data: { ...params.data, id: json.id },
+                }))
+
+            DataProviderFactory.dataProvider.update = (resource: string, params: UpdateParams) =>
+                httpClient(`${apiUrl}/${resource}/${params.id}`, {
+                    method: 'PUT',
+                    body: (
+                        params.data instanceof FormData ?
+                            params.data : JSON.stringify(params.data)
+                    ),
+                }).then(({ json }) => ({ data: json }))
         }
 
         return DataProviderFactory.dataProvider
