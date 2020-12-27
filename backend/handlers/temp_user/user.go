@@ -296,7 +296,7 @@ func SaveTempUser(c *fiber.Ctx) error {
 		return err
 	}
 
-	if !availabilityRes.Exist {
+	if !(*availabilityRes.Exist) {
 		return c.Status(fiber.StatusConflict).
 			SendString("Username atau Email telah terdaftar!")
 	}
@@ -309,7 +309,7 @@ func SaveTempUser(c *fiber.Ctx) error {
 	emailMsg.Title = "Registrasi Anggota Ikatan Alumni SMAN Situraja"
 	emailMsg.To = []string{data.Email}
 	emailMsg.Message = fmt.Sprintf(
-		"Registrasi %v (Username %v - Email %v) Sukses! " +
+		"Registrasi %v (Username %v - Email %v) Sukses! "+
 			"Mohon Tunggu Kabar Kepengurusan IKA SMAN Situraja Baru! Kontak: info@ikasmansituraja.org",
 		data.Name, data.Username, data.Email)
 

@@ -61,21 +61,23 @@ export default class AboutView extends PureComponent<{}, AboutViewState>
                 <Container>
                     <Row className="padding-cont">
                         <Col sm={12}>
+                            <hr/>
                             <h3 className="text-center">Deskripsi</h3>
-                            <div dangerouslySetInnerHTML={
+                            <div className="text-justify" dangerouslySetInnerHTML={
                                 {__html: description ? DOMPurify.sanitize(description) : '-'}}/>
                         </Col>
-                        <hr/>
                         <Col sm={12}>
+                            <hr/>
                             <h3 className="text-center">Visi</h3>
-                            <div dangerouslySetInnerHTML={
+                            <div className="text-justify" dangerouslySetInnerHTML={
                                 {__html: description ? DOMPurify.sanitize(vision) : '-'}}/>
                         </Col>
-                        <hr/>
                         <Col sm={12}>
+                            <hr/>
                             <h3 className="text-center">Misi</h3>
-                            <div dangerouslySetInnerHTML={
+                            <div className="text-justify" dangerouslySetInnerHTML={
                                 {__html: description ? DOMPurify.sanitize(mission) : '-'}}/>
+                            <hr/>
                         </Col>
                     </Row>
                 </Container>

@@ -4,9 +4,9 @@
     <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="upgrade compatibility with React-Admin 1.11">
       <change afterPath="$PROJECT_DIR$/../frontend/src/home/component/CForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/event/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/event/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/temp_user/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/temp_user/user.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/user.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/AboutView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/AboutView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/RegisterView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/RegisterView.tsx" afterDir="false" />
     </list>
@@ -53,19 +53,19 @@
     <property name="settings.editor.selected.configurable" value="go.sdk" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\SMANTURA\ikasmantura\backend\services\classroom" />
-      <recent name="D:\SMANTURA\ikasmantura\backend\handlers\classroom" />
-      <recent name="D:\SMANTURA\ikasmantura\backend\handlers" />
-      <recent name="D:\SMANTURA\ikasmantura\backend" />
-      <recent name="D:\SMANTURA\webika\backend\handlers" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\SMANTURA\ikasmantura\backend\viewmodels" />
       <recent name="D:\SMANTURA\ikasmantura\backend\handlers\user" />
       <recent name="D:\SMANTURA\ikasmantura\backend\handlers\event" />
       <recent name="D:\SMANTURA\ikasmantura\backend\handlers\department" />
       <recent name="D:\SMANTURA\ikasmantura\backend\handlers\auth" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\SMANTURA\ikasmantura\backend\services\classroom" />
+      <recent name="D:\SMANTURA\ikasmantura\backend\handlers\classroom" />
+      <recent name="D:\SMANTURA\ikasmantura\backend\handlers" />
+      <recent name="D:\SMANTURA\ikasmantura\backend" />
+      <recent name="D:\SMANTURA\webika\backend\handlers" />
     </key>
   </component>
   <component name="RunManager" selected="Go Build.go build backend">
@@ -113,7 +113,8 @@
     <MESSAGE value="Add To Sneaky Case Converter" />
     <MESSAGE value="feat: Add Classroom API &amp; Register User Availability" />
     <MESSAGE value="upgrade compatibility with React-Admin 1.11" />
-    <option name="LAST_COMMIT_MESSAGE" value="upgrade compatibility with React-Admin 1.11" />
+    <MESSAGE value="Bug fixing PublicAndPrivateHandler" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug fixing PublicAndPrivateHandler" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -127,11 +128,11 @@
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="425" y="186" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1301.768@0.0.1301.768" timestamp="1607455092898" />
-    <state x="276" y="0" key="CommitChangelistDialog2" timestamp="1608595249247">
+    <state x="276" y="0" key="CommitChangelistDialog2" timestamp="1609092199649">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="274" y="0" key="CommitChangelistDialog2/0.0.1298.768@0.0.1298.768" timestamp="1601400251914" />
-    <state x="276" y="0" key="CommitChangelistDialog2/0.0.1301.768@0.0.1301.768" timestamp="1608595249247" />
+    <state x="276" y="0" key="CommitChangelistDialog2/0.0.1301.768@0.0.1301.768" timestamp="1609092199649" />
     <state x="122" y="59" key="DiffContextDialog" timestamp="1607731408627">
       <screen x="0" y="0" width="1301" height="768" />
     </state>

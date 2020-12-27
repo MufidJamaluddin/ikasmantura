@@ -1,6 +1,6 @@
 import React, {PureComponent} from "react";
 import RegeTitle from "../component/RegeTitle";
-import {Button, Card, Col, Container, Form, Row, Tab, Tabs} from "react-bootstrap";
+import {Button, Card, Col, Container, Form, Row, Tabs} from "react-bootstrap";
 import {Link, RouteComponentProps} from "react-router-dom";
 
 import DataProviderFactory from "../../dataprovider/DataProviderFactory";
@@ -9,39 +9,79 @@ import {Async, FieldFeedback, FieldFeedbacks, FormWithConstraints} from "react-f
 
 import Select from "react-select";
 import makeAnimated from 'react-select/animated';
+import {TIForm, TIFormType} from "../component/CForm";
+import {ValidateEmail} from "../../utils/Form";
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 const selectAnimatedComponents = makeAnimated();
-
 
 async function checkAvailability({ username = '', email = '' })
 {
     let dataProvider = DataProviderFactory.getDataProvider()
-    let result:boolean
+    var result:boolean
+    var lastUsername
+    var lastEmail
 
     try
     {
-        result = await dataProvider.create('register/availability', {
-            data: {
+        if(lastUsername === username && lastEmail === email)
+        {
+            return result
+        }
+
+        lastUsername = username
+        lastEmail = email
+
+        result = await fetch('api/v1/register/availability', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
                 username: username,
                 email: email,
-            }
-        }).then((resp: any) => {
-            return resp.exist
-        }, error => {
-            NotificationManager.error(error.message, error.name);
-            return false
-        });
+            })
+        })
+        .then(resp => {
+            if(resp.status < 200 && resp.status > 399)
+                throw new Error('Server sibuk!')
+
+            return resp.json()
+        })
+        .then((resp:any) => {
+            console.log(resp)
+            return !resp?.exist
+        }).catch(error => {
+            NotificationManager.error(error?.toString(), 'Cek Ketersediaan Akun: Error Koneksi');
+            return true
+        })
+
+        if(result)
+        {
+            NotificationManager.info(
+                `Akun "${username} ${email}" tersedia!`,
+                'Akun tersedia');
+        }
+        else
+        {
+            NotificationManager.warning(
+            `Akun "${username} ${email}" tidak tersedia!`,
+            'Akun tidak tersedia');
+        }
     }
     catch (e)
     {
-        NotificationManager.error('Koneksi Internet Terputus!', 'Error Koneksi');
-        result = false
+        result = true
     }
 
     return result
 }
 
-export default class RegisterView extends PureComponent<RouteComponentProps<any>, {classrooms: Array<any>}>
+export default class RegisterView extends PureComponent<RouteComponentProps<any>,
+    {classrooms: Array<any>, formType: TIFormType, formData: any, inputValidateQueue: any, nextValidation: number}>
 {
     private readonly formElement: React.RefObject<FormWithConstraints>
     private inputPassword: HTMLInputElement | null
@@ -52,6 +92,10 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
 
         this.state = {
             classrooms: [],
+            formType: TIFormType.TABBED,
+            formData: {},
+            inputValidateQueue: {},
+            nextValidation: 0
         }
 
         this.formElement = React.createRef()
@@ -73,19 +117,16 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
             return;
         }
 
-        let serialize = require('form-serialize');
-
-        let data = serialize(e.currentTarget, { hash: true });
-
         let dataProvider = DataProviderFactory.getDataProvider()
+        let formData = this.state.formData
 
-        data.classrooms = data.classrooms.map(item => {
+        formData.classrooms = formData.classrooms.map(item => {
             return { id: item }
         })
 
         try
         {
-            dataProvider.create("temp_users", data).then(_ => {
+            dataProvider.create("temp_users", formData).then(_ => {
 
                 NotificationManager.success(
                     'Pendaftaran Sukses, Mohon Tunggu Konfirmasi Admin!', 'Pendaftaran Sukses');
@@ -102,6 +143,27 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
         }
     }
 
+    async handleValidateInput()
+    {
+        await sleep(2000)
+
+        let form = this.formElement.current
+        if(!form) return;
+
+        let validationQueue = this.state.inputValidateQueue
+
+        for (const key of Object.keys(validationQueue)) {
+            let target = validationQueue[key]
+            await form.validateFields(target)
+            delete validationQueue[key]
+        }
+
+        this.setState(state => ({
+            ...state,
+            inputValidateQueue: validationQueue,
+        }))
+    }
+
     async handleChange(e)
     {
         let form = this.formElement.current
@@ -111,7 +173,17 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
         {
             e.preventDefault()
 
-            await form.validateFields(e.target);
+            let inputValidateQueue = this.state.inputValidateQueue
+            inputValidateQueue[e.target.name] = e.target
+
+            this.setState(state => ({
+                ...state,
+                formData: {
+                    ...state.formData,
+                    [e.target.name]: e.target.value,
+                },
+                inputValidateQueue: inputValidateQueue
+            }))
         }
         catch (err)
         {
@@ -133,6 +205,8 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
         if(value) {
             if(value.length < 5) return false
         } else return false
+
+        if(!ValidateEmail(value)) return false
 
         return await checkAvailability({ email: value })
     }
@@ -184,345 +258,397 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
         this.updateClassrooms()
     }
 
-    renderAccount()
+    componentDidUpdate(prevProps: any, prevState: any, snapshot?: any)
     {
+        this.handleValidateInput().then(r => null)
+    }
+
+    renderAccount({ eventKey, title, type })
+    {
+        let formData = this.state.formData
         return (
-            <Tab eventKey="account" title="Data Akun">
+            <TIForm eventKey={eventKey} title={title} type={type}>
 
                 <br/>
 
-                <Form.Group controlId="formUsername">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control type="text"
-                                  placeholder="Username"
-                                  name="username"
-                                  autoComplete="off"
-                                  maxLength={35}
-                                  minLength={3}
-                                  onChange={this.handleChange}
-                                  required={true}
-                    />
-                    <FieldFeedbacks for="username">
-                        <FieldFeedback when="tooShort" error className="text-error">
-                            Username yang anda pilih terlalu pendek!
-                        </FieldFeedback>
-                        <Async
-                            promise={this.checkUsernameAvailability}
-                            then={available => available ?
-                                <FieldFeedback key="1" info className="text-white">
-                                    Username tersedia
-                                </FieldFeedback> :
-                                <FieldFeedback key="2" error className="text-error">
-                                    Username telah dimiliki oleh akun lain, mohon pilih username lain!
-                                </FieldFeedback>
-                            }
+                <Form.Group as={Row} controlId="formUsername">
+                    <Form.Label column sm={4}>Username</Form.Label>
+                    <Col sm={8}>
+                        <Form.Control type="text"
+                                      placeholder="Username"
+                                      name="username"
+                                      value={formData.username}
+                                      autoComplete="off"
+                                      maxLength={35}
+                                      minLength={3}
+                                      onChange={this.handleChange}
+                                      required={true}
                         />
-                        <FieldFeedback when="*" className="text-error" />
-                    </FieldFeedbacks>
+                        <FieldFeedbacks for="username">
+                            <FieldFeedback when="tooShort" error className="text-error">
+                                Username yang anda pilih terlalu pendek!
+                            </FieldFeedback>
+                            <Async
+                                promise={this.checkUsernameAvailability}
+                                then={available => available ?
+                                    <FieldFeedback key="1" info className="text-white">
+                                        Username tersedia
+                                    </FieldFeedback> :
+                                    <FieldFeedback key="2" error className="text-error">
+                                        Username telah dimiliki oleh akun lain, mohon pilih username lain!
+                                    </FieldFeedback>
+                                }
+                            />
+                            <FieldFeedback when="*" className="text-error" />
+                        </FieldFeedbacks>
+                    </Col>
                 </Form.Group>
 
-                <Form.Group controlId="formEmail">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control type="email"
-                                  placeholder="Email"
-                                  name="email"
-                                  autoComplete="off"
-                                  minLength={5}
-                                  maxLength={250}
-                                  required={true}
-                                  onChange={this.handleChange}
-                    />
-                    <FieldFeedbacks for="email">
-                        <FieldFeedback when={value => !/[^-\s]/.test(value)} error>
-                            Tidak boleh mengandung spasi!
-                        </FieldFeedback>
-                        <Async
-                            promise={this.checkEmailAvailability}
-                            then={available => available ?
-                                <FieldFeedback key="1" info className="text-white">
-                                    Email OK
-                                </FieldFeedback> :
-                                <FieldFeedback key="2" className="text-error">
-                                    Email telah dimiliki oleh akun lain, mohon login jika anda mempunyai akun!
-                                </FieldFeedback>
-                            }
+                <Form.Group as={Row} controlId="formEmail">
+                    <Form.Label column sm={4}>Email</Form.Label>
+                    <Col sm={8}>
+                        <Form.Control type="email"
+                                      placeholder="Email"
+                                      name="email"
+                                      value={formData.email}
+                                      autoComplete="off"
+                                      minLength={5}
+                                      maxLength={250}
+                                      required={true}
+                                      onChange={this.handleChange}
                         />
-                        <FieldFeedback when="*" className="text-error" />
-                    </FieldFeedbacks>
+                        <FieldFeedbacks for="email">
+                            <FieldFeedback when={value => !/[^-\s]/.test(value)} error>
+                                Tidak boleh mengandung spasi!
+                            </FieldFeedback>
+                            <Async
+                                promise={this.checkEmailAvailability}
+                                then={available => available ?
+                                    <FieldFeedback key="1" info className="text-white">
+                                        Email OK
+                                    </FieldFeedback> :
+                                    <FieldFeedback key="2" className="text-error">
+                                        Email telah dimiliki oleh akun lain, mohon login jika anda mempunyai akun!
+                                    </FieldFeedback>
+                                }
+                            />
+                            <FieldFeedback when="*" className="text-error" />
+                        </FieldFeedbacks>
+                    </Col>
                 </Form.Group>
 
-                <Form.Group controlId="formPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password"
-                                  placeholder="Password"
-                                  name="password"
-                                  minLength={5}
-                                  maxLength={35}
-                                  required={true}
-                                  onChange={this.handleChange}
-                                  ref={(ref) => this.inputPassword = ref}
-                    />
-                    <FieldFeedbacks for="password">
-                        <FieldFeedback when="valueMissing" error>
-                            Wajib diisi
-                        </FieldFeedback>
-                        <FieldFeedback when="patternMismatch" error>
-                            Minimal lima karakter
-                        </FieldFeedback>
-                        <FieldFeedback when={value => !/\d/.test(value)} warning>
-                            Harus mengandung kombinasi angka
-                        </FieldFeedback>
-                        <FieldFeedback when={value => !/[a-z]/.test(value)} warning>
-                            Harus mengandung kombinasi huruf kecil
-                        </FieldFeedback>
-                        <FieldFeedback when={value => !/[A-Z]/.test(value)} warning>
-                            Harus mengandung kombinasi huruf besar
-                        </FieldFeedback>
-                    </FieldFeedbacks>
+                <Form.Group as={Row} controlId="formPassword">
+                    <Form.Label column sm={4}>Password</Form.Label>
+                    <Col sm={8}>
+                        <Form.Control type="password"
+                                      placeholder="Password"
+                                      name="password"
+                                      value={formData.password}
+                                      minLength={5}
+                                      maxLength={35}
+                                      required={true}
+                                      onChange={this.handleChange}
+                                      ref={(ref) => this.inputPassword = ref}
+                        />
+                        <FieldFeedbacks for="password">
+                            <FieldFeedback when="valueMissing" error>
+                                Wajib diisi
+                            </FieldFeedback>
+                            <FieldFeedback when="patternMismatch" error>
+                                Minimal lima karakter
+                            </FieldFeedback>
+                            <FieldFeedback when={value => !/\d/.test(value)} warning>
+                                Harus mengandung kombinasi angka
+                            </FieldFeedback>
+                            <FieldFeedback when={value => !/[a-z]/.test(value)} warning>
+                                Harus mengandung kombinasi huruf kecil
+                            </FieldFeedback>
+                            <FieldFeedback when={value => !/[A-Z]/.test(value)} warning>
+                                Harus mengandung kombinasi huruf besar
+                            </FieldFeedback>
+                        </FieldFeedbacks>
+                    </Col>
                 </Form.Group>
 
-                <Form.Group controlId="formConfirmPassword">
-                    <Form.Label>Konfirmasi Password</Form.Label>
-                    <Form.Control type="password"
-                                  placeholder="Password harus sama"
-                                  name="confirmPassword"
-                                  minLength={5}
-                                  maxLength={35}
-                                  required={true}
-                                  onChange={this.handleChange}
-                    />
-                    <FieldFeedbacks for="confirmPassword">
-                        <FieldFeedback when={
-                            value => value !== this.inputPassword!.value
-                        } className="text-error" error>
-                            Password tidak sama
-                        </FieldFeedback>
-                    </FieldFeedbacks>
+                <Form.Group as={Row} controlId="formConfirmPassword">
+                    <Form.Label column sm={4}>Konfirmasi Password</Form.Label>
+                    <Col sm={8}>
+                        <Form.Control type="password"
+                                      placeholder="Password harus sama"
+                                      name="confirmPassword"
+                                      value={formData.confirmPassword}
+                                      minLength={5}
+                                      maxLength={35}
+                                      required={true}
+                                      onChange={this.handleChange}
+                        />
+                        <FieldFeedbacks for="confirmPassword">
+                            <FieldFeedback when={
+                                value => value !== this.inputPassword!.value
+                            } className="text-error" error>
+                                Password tidak sama
+                            </FieldFeedback>
+                        </FieldFeedbacks>
+                    </Col>
                 </Form.Group>
 
-            </Tab>
+            </TIForm>
         )
     }
 
-    renderPersonal()
+    renderPersonal({ eventKey, title, type })
     {
+        let formData = this.state.formData
+
         return (
-            <Tab eventKey="profile" title="Data Personal">
+            <TIForm eventKey={eventKey} title={title} type={type}>
 
                 <br/>
 
-                <Form.Group controlId="formName">
-                    <Form.Label>Nama</Form.Label>
-                    <Form.Control type="text"
-                                  placeholder="Nama"
-                                  name="name"
-                                  minLength={3}
-                                  maxLength={35}
-                                  required={true}
-                                  onChange={this.handleChange}
-                    />
-                    <FieldFeedbacks for="name">
-                        <FieldFeedback when="valueMissing" error>
-                            Wajib diisi
-                        </FieldFeedback>
-                        <FieldFeedback when="patternMismatch" error>
-                            Minimal tiga karakter dan maksimal 35 karakter
-                        </FieldFeedback>
-                        <FieldFeedback when="*" className="text-error" />
-                    </FieldFeedbacks>
+                <Form.Group as={Row} controlId="formName">
+                    <Form.Label column sm={4}>Nama</Form.Label>
+                    <Col sm={8}>
+                        <Form.Control type="text"
+                                      placeholder="Nama"
+                                      name="name"
+                                      value={formData.name}
+                                      minLength={3}
+                                      maxLength={35}
+                                      required={true}
+                                      onChange={this.handleChange}
+                        />
+                        <FieldFeedbacks for="name">
+                            <FieldFeedback when="valueMissing" error>
+                                Wajib diisi
+                            </FieldFeedback>
+                            <FieldFeedback when="patternMismatch" error>
+                                Minimal tiga karakter dan maksimal 35 karakter
+                            </FieldFeedback>
+                            <FieldFeedback when="*" className="text-error" />
+                        </FieldFeedbacks>
+                    </Col>
                 </Form.Group>
 
-                <Form.Group controlId="formHP">
-                    <Form.Label>Nomor HP</Form.Label>
-                    <Form.Control type="text"
-                                  placeholder="Nomor HP"
-                                  name="hp"
-                                  minLength={10}
-                                  maxLength={13}
-                                  required={true}
-                                  onChange={this.handleChange}
-                    />
-                    <FieldFeedbacks for="hp">
-                        <FieldFeedback when="valueMissing" error>
-                            Wajib diisi
-                        </FieldFeedback>
-                        <FieldFeedback when="patternMismatch" error>
-                            Minimal 10 karakter dan maksimal 13 karakter
-                        </FieldFeedback>
-                        <FieldFeedback when="*" className="text-error" />
-                    </FieldFeedbacks>
+                <Form.Group as={Row} controlId="formHP">
+                    <Form.Label column sm={4}>Nomor HP</Form.Label>
+                    <Col sm={8}>
+                        <Form.Control type="text"
+                                      placeholder="Nomor HP"
+                                      name="hp"
+                                      value={formData.hp}
+                                      minLength={10}
+                                      maxLength={13}
+                                      required={true}
+                                      onChange={this.handleChange}
+                        />
+                        <FieldFeedbacks for="hp">
+                            <FieldFeedback when="valueMissing" error>
+                                Wajib diisi
+                            </FieldFeedback>
+                            <FieldFeedback when="patternMismatch" error>
+                                Minimal 10 karakter dan maksimal 13 karakter
+                            </FieldFeedback>
+                            <FieldFeedback when="*" className="text-error" />
+                        </FieldFeedbacks>
+                    </Col>
                 </Form.Group>
 
-                <Form.Group controlId="formAngkatan">
-                    <Form.Label>Angkatan</Form.Label>
-                    <Form.Control type="text"
-                                  placeholder="Angkatan"
-                                  name="forceYear"
-                                  minLength={4}
-                                  maxLength={4}
-                                  required={true}
-                                  pattern="^[0-9]{4}$"
-                                  onChange={this.handleChange}
-                    />
-                    <FieldFeedbacks for="forceYear">
-                        <FieldFeedback when="valueMissing" error>
-                            Wajib diisi
-                        </FieldFeedback>
-                        <FieldFeedback when="patternMismatch" error>
-                            Wajib menggunakan format tahun dengan benar!
-                        </FieldFeedback>
-                        <FieldFeedback when="*" className="text-error" />
-                    </FieldFeedbacks>
+                <Form.Group as={Row} controlId="formAngkatan">
+                    <Form.Label column sm={4}>Angkatan</Form.Label>
+                    <Col sm={8}>
+                        <Form.Control type="text"
+                                      placeholder="Angkatan"
+                                      name="forceYear"
+                                      value={formData.forceYear}
+                                      minLength={4}
+                                      maxLength={4}
+                                      required={true}
+                                      pattern="^[0-9]{4}$"
+                                      onChange={this.handleChange}
+                        />
+                        <FieldFeedbacks for="forceYear">
+                            <FieldFeedback when="valueMissing" error>
+                                Wajib diisi
+                            </FieldFeedback>
+                            <FieldFeedback when="patternMismatch" error>
+                                Wajib menggunakan format tahun dengan benar!
+                            </FieldFeedback>
+                            <FieldFeedback when="*" className="text-error" />
+                        </FieldFeedbacks>
+                    </Col>
                 </Form.Group>
 
-                <Form.Group controlId="formKelas">
-                    <Form.Label>Kelas SMAN Situraja yang Pernah Dijalani</Form.Label>
-                    <Form.Control
-                        as={Select}
-                        closeMenuOnSelect={false}
-                        components={selectAnimatedComponents}
-                        className="no-padding no-border"
-                        options={this.state.classrooms}
-                        isClearable={true}
-                        isMulti={true}
-                        isLoading={
-                            this.state.classrooms.length === 0
-                        }
-                        placeholder="Kelas"
-                        name="classrooms"
-                        onChange={this.handleChange}
-                        required={true}
-                    />
-                    <FieldFeedbacks for="classroom">
-                        <FieldFeedback when="valueMissing" error>
-                            Wajib diisi
-                        </FieldFeedback>
-                        <FieldFeedback when="*" className="text-error" />
-                    </FieldFeedbacks>
+                <Form.Group as={Row} controlId="formKelas">
+                    <Form.Label column sm={4}>Kelas SMAN Situraja yang Pernah Dijalani</Form.Label>
+                    <Col sm={8}>
+                        <Form.Control
+                            as={Select}
+                            closeMenuOnSelect={false}
+                            components={selectAnimatedComponents}
+                            className="no-padding no-border"
+                            options={this.state.classrooms}
+                            isClearable={true}
+                            isMulti={true}
+                            isLoading={
+                                this.state.classrooms.length === 0
+                            }
+                            placeholder="Kelas"
+                            name="classrooms"
+                            value={formData.classrooms ?? []}
+                            onChange={this.handleChange}
+                            required={true}
+                        />
+                        <FieldFeedbacks for="classroom">
+                            <FieldFeedback when="valueMissing" error>
+                                Wajib diisi
+                            </FieldFeedback>
+                            <FieldFeedback when="*" className="text-error" />
+                        </FieldFeedbacks>
+                    </Col>
                 </Form.Group>
 
-            </Tab>
+            </TIForm>
         )
     }
 
-    renderAddress()
+    renderAddress({ eventKey, title, type })
     {
+        let formData = this.state.formData
         return (
-            <Tab eventKey="address" title="Data Alamat">
+            <TIForm eventKey={eventKey} title={title} type={type}>
 
                 <br/>
 
-                <Form.Group controlId="formStreet">
-                    <Form.Label>Jalan</Form.Label>
-                    <Form.Control as="textarea" rows={2}
-                                  placeholder="Jalan"
-                                  name="address[street]"
-                                  minLength={5}
-                                  maxLength={75}
-                                  required={true}
-                                  onChange={this.handleChange}
-                    />
-                    <FieldFeedbacks for="address[street]">
-                        <FieldFeedback when="valueMissing" error>
-                            Wajib diisi
-                        </FieldFeedback>
-                        <FieldFeedback when="patternMismatch" error>
-                            Minimal isi lima karakter dan maksimal 75 karakter
-                        </FieldFeedback>
-                        <FieldFeedback when="*" className="text-error" />
-                    </FieldFeedbacks>
+                <Form.Group as={Row} controlId="formStreet">
+                    <Form.Label column sm={4}>Jalan</Form.Label>
+                    <Col sm={8}>
+                        <Form.Control as="textarea" rows={2}
+                                      placeholder="Jalan"
+                                      name="address[street]"
+                                      value={formData.address?.street}
+                                      minLength={5}
+                                      maxLength={75}
+                                      required={true}
+                                      onChange={this.handleChange}
+                        />
+                        <FieldFeedbacks for="address[street]">
+                            <FieldFeedback when="valueMissing" error>
+                                Wajib diisi
+                            </FieldFeedback>
+                            <FieldFeedback when="patternMismatch" error>
+                                Minimal isi lima karakter dan maksimal 75 karakter
+                            </FieldFeedback>
+                            <FieldFeedback when="*" className="text-error" />
+                        </FieldFeedbacks>
+                    </Col>
                 </Form.Group>
 
-                <Form.Group controlId="formSuite">
-                    <Form.Label>Kecamatan</Form.Label>
-                    <Form.Control type="text"
-                                  placeholder="Kecamatan"
-                                  name="address[suite]"
-                                  minLength={5}
-                                  maxLength={53}
-                                  required={true}
-                                  onChange={this.handleChange}
-                    />
-                    <FieldFeedbacks for="address[suite]">
-                        <FieldFeedback when="valueMissing" error>
-                            Wajib diisi
-                        </FieldFeedback>
-                        <FieldFeedback when="patternMismatch" error>
-                            Minimal lima karakter dan maksimal 35 karakter
-                        </FieldFeedback>
-                        <FieldFeedback when="*" className="text-error" />
-                    </FieldFeedbacks>
+                <Form.Group as={Row} controlId="formSuite">
+                    <Form.Label column sm={4}>Kecamatan</Form.Label>
+                    <Col sm={8}>
+                        <Form.Control type="text"
+                                      placeholder="Kecamatan"
+                                      name="address[suite]"
+                                      value={formData.address?.suite}
+                                      minLength={5}
+                                      maxLength={53}
+                                      required={true}
+                                      onChange={this.handleChange}
+                        />
+                        <FieldFeedbacks for="address[suite]">
+                            <FieldFeedback when="valueMissing" error>
+                                Wajib diisi
+                            </FieldFeedback>
+                            <FieldFeedback when="patternMismatch" error>
+                                Minimal lima karakter dan maksimal 35 karakter
+                            </FieldFeedback>
+                            <FieldFeedback when="*" className="text-error" />
+                        </FieldFeedbacks>
+                    </Col>
                 </Form.Group>
 
-                <Form.Group controlId="formCity">
-                    <Form.Label>Kabupaten / Kota</Form.Label>
-                    <Form.Control type="text"
-                                  placeholder="Kota tempat tinggal anda"
-                                  name="address[city]"
-                                  minLength={3}
-                                  maxLength={35}
-                                  required={true}
-                                  onChange={this.handleChange}
-                    />
-                    <FieldFeedbacks for="address[city]">
-                        <FieldFeedback when="valueMissing" error>
-                            Wajib diisi
-                        </FieldFeedback>
-                        <FieldFeedback when="patternMismatch" error>
-                           Minimal tiga karakter dan maksimal 35 karakter
-                        </FieldFeedback>
-                        <FieldFeedback when="*" className="text-error" />
-                    </FieldFeedbacks>
+                <Form.Group as={Row} controlId="formCity">
+                    <Form.Label column sm={4}>Kabupaten / Kota</Form.Label>
+                    <Col sm={8}>
+                        <Form.Control type="text"
+                                      placeholder="Kota tempat tinggal anda"
+                                      name="address[city]"
+                                      value={formData.address?.city}
+                                      minLength={3}
+                                      maxLength={35}
+                                      required={true}
+                                      onChange={this.handleChange}
+                        />
+                        <FieldFeedbacks for="address[city]">
+                            <FieldFeedback when="valueMissing" error>
+                                Wajib diisi
+                            </FieldFeedback>
+                            <FieldFeedback when="patternMismatch" error>
+                               Minimal tiga karakter dan maksimal 35 karakter
+                            </FieldFeedback>
+                            <FieldFeedback when="*" className="text-error" />
+                        </FieldFeedbacks>
+                    </Col>
                 </Form.Group>
 
-                <Form.Group controlId="formZipCode">
-                    <Form.Label>Kode Pos</Form.Label>
-                    <Form.Control type="text"
-                                  placeholder="Kode Pos"
-                                  name="address[zipcode]"
-                                  minLength={3}
-                                  maxLength={11}
-                                  required={true}
-                                  onChange={this.handleChange}
-                    />
-                    <FieldFeedbacks for="address[zipcode]">
-                        <FieldFeedback when="valueMissing" error>
-                            Wajib diisi
-                        </FieldFeedback>
-                        <FieldFeedback when="patternMismatch" error>
-                            Wajib menggunakan format kode pos dengan benar!
-                        </FieldFeedback>
-                        <FieldFeedback when="*" className="text-error" />
-                    </FieldFeedbacks>
+                <Form.Group as={Row} controlId="formZipCode">
+                    <Form.Label column sm={4}>Kode Pos</Form.Label>
+                    <Col sm={8}>
+                        <Form.Control type="text"
+                                      placeholder="Kode Pos"
+                                      name="address[zipcode]"
+                                      value={formData.address?.zipcode}
+                                      minLength={3}
+                                      maxLength={11}
+                                      required={true}
+                                      onChange={this.handleChange}
+                        />
+                        <FieldFeedbacks for="address[zipcode]">
+                            <FieldFeedback when="valueMissing" error>
+                                Wajib diisi
+                            </FieldFeedback>
+                            <FieldFeedback when="patternMismatch" error>
+                                Wajib menggunakan format kode pos dengan benar!
+                            </FieldFeedback>
+                            <FieldFeedback when="*" className="text-error" />
+                        </FieldFeedbacks>
+                    </Col>
                 </Form.Group>
 
-                <Form.Group controlId="formNation">
-                    <Form.Label>Negara</Form.Label>
-                    <Form.Control type="text"
-                                  placeholder="Negara"
-                                  name="address[state]"
-                                  minLength={5}
-                                  maxLength={16}
-                                  required={true}
-                                  onChange={this.handleChange}
-                    />
-                    <FieldFeedbacks for="address[state]">
-                        <FieldFeedback when="valueMissing" error>
-                            Wajib diisi
-                        </FieldFeedback>
-                        <FieldFeedback when="patternMismatch" error>
-                            Nama negara minimal lima karakter dan maksimal 16 karakter
-                        </FieldFeedback>
-                        <FieldFeedback when="*" className="text-error" />
-                    </FieldFeedbacks>
+                <Form.Group as={Row} controlId="formNation">
+                    <Form.Label column sm={4}>Negara</Form.Label>
+                    <Col sm={8}>
+                        <Form.Control type="text"
+                                      placeholder="Negara"
+                                      name="address[state]"
+                                      value={formData.address?.state}
+                                      minLength={5}
+                                      maxLength={16}
+                                      required={true}
+                                      onChange={this.handleChange}
+                        />
+                        <FieldFeedbacks for="address[state]">
+                            <FieldFeedback when="valueMissing" error>
+                                Wajib diisi
+                            </FieldFeedback>
+                            <FieldFeedback when="patternMismatch" error>
+                                Nama negara minimal lima karakter dan maksimal 16 karakter
+                            </FieldFeedback>
+                            <FieldFeedback when="*" className="text-error" />
+                        </FieldFeedbacks>
+                    </Col>
                 </Form.Group>
 
-            </Tab>
+            </TIForm>
         )
     }
 
     render()
     {
+        let formType = this.state.formType
+
+        let FormParent = formType === TIFormType.TABBED ? Tabs : Row;
+
         return (
             <section className="features-icons bg-light">
                 <RegeTitle/>
@@ -532,12 +658,47 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                             <Card>
 
                                 <Card.Body>
-                                    Sudah pernah daftar? &nbsp;
-                                    <Link to={"/login"}>
-                                        <Button variant="warning" size="sm" type="button">
-                                            Masuk
+                                    <div className="fa-pull-left">
+                                        Pilih tampilan &nbsp;
+                                        <Button
+                                            className={
+                                                formType === TIFormType.TABBED ?
+                                                    'btn-kegiatan-active' : 'btn-kegiatan'
+                                            }
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                this.setState(state => ({
+                                                    ...state,
+                                                    formType: TIFormType.TABBED
+                                                }))
+                                            }}
+                                        >
+                                            Isian Tab Ke Samping
                                         </Button>
-                                    </Link>
+                                        <Button
+                                            className={
+                                                formType === TIFormType.INLINE ?
+                                                    'btn-kegiatan-active' : 'btn-kegiatan'
+                                            }
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                this.setState(state => ({
+                                                    ...state,
+                                                    formType: TIFormType.INLINE
+                                                }))
+                                            }}
+                                        >
+                                            Semua Isian Kebawah
+                                        </Button>
+                                    </div>
+                                    <div className="fa-pull-right">
+                                        Sudah pernah daftar? &nbsp;
+                                        <Link to={"/login"}>
+                                            <Button variant="warning" size="sm" type="button">
+                                                Masuk
+                                            </Button>
+                                        </Link>
+                                    </div>
                                 </Card.Body>
 
                                 <Card.Title>
@@ -551,13 +712,31 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
 
                                     <Card.Body>
 
-                                        <Tabs defaultActiveKey="account" id="uncontrolled-tab-example">
-                                            {this.renderAccount()}
+                                        <FormParent defaultActiveKey="account" id="uncontrolled-forms">
+                                            {this.renderAccount(
+                                                {
+                                                    title: 'Data Akun',
+                                                    eventKey: 'account',
+                                                    type: formType
+                                                }
+                                            )}
 
-                                            {this.renderPersonal()}
+                                            {this.renderPersonal(
+                                                {
+                                                    title: 'Data Pribadi',
+                                                    eventKey: 'personal',
+                                                    type: formType
+                                                }
+                                            )}
 
-                                            {this.renderAddress()}
-                                        </Tabs>
+                                            {this.renderAddress(
+                                                {
+                                                    title: 'Data Alamat Saat Ini',
+                                                    eventKey: 'address',
+                                                    type: formType
+                                                }
+                                            )}
+                                        </FormParent>
 
                                     </Card.Body>
                                     <Card.Footer>

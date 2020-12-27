@@ -27,7 +27,7 @@ type UserAddressDto struct {
 }
 
 type UserAvailabilityResponseDto struct {
-	Exist bool `query:"-" json:"exist,omitempty" xml:"exist,omitempty" form:"exist,omitempty"`
+	Exist *bool `query:"-" json:"exist,omitempty" xml:"exist,omitempty" form:"exist,omitempty"`
 }
 
 type UserAvailabilityDto struct {
