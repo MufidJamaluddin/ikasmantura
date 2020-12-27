@@ -203,7 +203,7 @@ export default class EventsListView extends PureComponent<any, EventsListViewSta
                         </Col>
                         <Col md={12}>
                             <Form inline onSubmit={this.handleSearchForm}
-                                  className={"c-filter justify-content-center"}>
+                                  className={"row c-filter justify-content-center"}>
 
                                 <Form.Group>
                                     <Form.Label htmlFor="titleSearch" srOnly>Judul</Form.Label>

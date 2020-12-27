@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="upgrade compatibility with React-Admin 1.11">
-      <change afterPath="$PROJECT_DIR$/../frontend/src/home/component/CForm.tsx" afterDir="false" />
+    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="Fix Bug Save &amp; Update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/temp_user/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/temp_user/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/viewmodels/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/AboutView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/AboutView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/RegisterView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/RegisterView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/common.go" beforeDir="false" afterPath="$PROJECT_DIR$/repository/common.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/event/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/event/command.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/ArticlesView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/ArticlesView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/EventsListView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/EventsListView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/utils/Form.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/utils/Form.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +113,8 @@
     <MESSAGE value="feat: Add Classroom API &amp; Register User Availability" />
     <MESSAGE value="upgrade compatibility with React-Admin 1.11" />
     <MESSAGE value="Bug fixing PublicAndPrivateHandler" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug fixing PublicAndPrivateHandler" />
+    <MESSAGE value="Beautification &amp; Fix Check User Available" />
+    <option name="LAST_COMMIT_MESSAGE" value="Beautification &amp; Fix Check User Available" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -128,16 +128,16 @@
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="425" y="186" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1301.768@0.0.1301.768" timestamp="1607455092898" />
-    <state x="276" y="0" key="CommitChangelistDialog2" timestamp="1609092199649">
+    <state x="276" y="0" key="CommitChangelistDialog2" timestamp="1609110324241">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="274" y="0" key="CommitChangelistDialog2/0.0.1298.768@0.0.1298.768" timestamp="1601400251914" />
-    <state x="276" y="0" key="CommitChangelistDialog2/0.0.1301.768@0.0.1301.768" timestamp="1609092199649" />
-    <state x="122" y="59" key="DiffContextDialog" timestamp="1607731408627">
+    <state x="276" y="0" key="CommitChangelistDialog2/0.0.1301.768@0.0.1301.768" timestamp="1609110324241" />
+    <state x="122" y="59" key="DiffContextDialog" timestamp="1609110322648">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="122" y="59" key="DiffContextDialog/0.0.1298.768@0.0.1298.768" timestamp="1601400168939" />
-    <state x="122" y="59" key="DiffContextDialog/0.0.1301.768@0.0.1301.768" timestamp="1607731408627" />
+    <state x="122" y="59" key="DiffContextDialog/0.0.1301.768@0.0.1301.768" timestamp="1609110322648" />
     <state x="542" y="244" key="EnvironmentVariablesDialog" timestamp="1600666945282">
       <screen x="0" y="0" width="1299" height="768" />
     </state>
@@ -187,11 +187,11 @@
     </state>
     <state x="149" y="29" key="SettingsEditor/0.0.1296.768@0.0.1296.768" timestamp="1601044222694" />
     <state x="150" y="29" key="SettingsEditor/0.0.1301.768@0.0.1301.768" timestamp="1607605038324" />
-    <state x="242" y="117" key="Vcs.Push.Dialog.v2" timestamp="1607911367806">
+    <state x="242" y="117" key="Vcs.Push.Dialog.v2" timestamp="1609106794366">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="241" y="117" key="Vcs.Push.Dialog.v2/0.0.1298.768@0.0.1298.768" timestamp="1601400264504" />
-    <state x="242" y="117" key="Vcs.Push.Dialog.v2/0.0.1301.768@0.0.1301.768" timestamp="1607911367806" />
+    <state x="242" y="117" key="Vcs.Push.Dialog.v2/0.0.1301.768@0.0.1301.768" timestamp="1609106794366" />
     <state x="468" y="298" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1607611686939">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
@@ -206,16 +206,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/handlers/event/event.go</url>
-          <line>55</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/handlers/event/event.go</url>
-          <line>53</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/viewmodels/auth.go</url>
           <line>20</line>

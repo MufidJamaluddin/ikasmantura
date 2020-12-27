@@ -9,14 +9,14 @@ func FindById(db *gorm.DB, id uint, out interface{}) error {
 }
 
 func Save(db *gorm.DB, model interface{}) error {
-	db.Create(model)
+	db.Model(model).Create(model)
 	return db.Save(model).Error
 }
 
 func Update(db *gorm.DB, model interface{}) error {
-	return db.Updates(model).Error
+	return db.Model(model).Updates(model).Error
 }
 
 func Delete(db *gorm.DB, model interface{}) error {
-	return db.Delete(model).Error
+	return db.Model(model).Delete(model).Error
 }

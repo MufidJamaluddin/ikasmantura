@@ -204,7 +204,7 @@ class ArticlesView extends React.PureComponent<RouteComponentProps<unknown, unkn
                 <Container>
                     <Row>
                         <Col md={12}>
-                            <Form inline onSubmit={this.handleSearchForm} className={"c-filter justify-content-center"}>
+                            <Form inline onSubmit={this.handleSearchForm} className={"row c-filter justify-content-center"}>
 
                                 <Form.Group>
                                     <Form.Label htmlFor="topicSearch" srOnly>Topik</Form.Label>

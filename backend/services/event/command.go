@@ -63,7 +63,7 @@ func RegisterEvent(db *gorm.DB, eventId uint, userId uint) error {
 		userEvent.UserId = userId
 		userEvent.EventId = eventId
 
-		err = db.Create(&userEvent).Error
+		err = db.Model(&userEvent).Create(&userEvent).Error
 	}
 
 	return err
