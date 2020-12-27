@@ -59,7 +59,9 @@ func Route(app *fiber.App, db *gorm.DB) {
 		SigningKey:  []byte(os.Getenv("SECRET_KEY")),
 		TokenLookup: "header:Authorization,cookie:web_ika_id",
 		ErrorHandler: func(ctx *fiber.Ctx, err error) error {
-			log.Println(err)
+			log.Println(err.Error())
+			ctx.Locals("user", nil)
+			ctx.Locals("db", db)
 			return ctx.Next()
 		},
 		SuccessHandler: func(ctx *fiber.Ctx) error {

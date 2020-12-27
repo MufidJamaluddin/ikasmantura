@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="upgrade compatibility with React-Admin 1.11">
+      <change afterPath="$PROJECT_DIR$/../frontend/src/home/component/CForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/event/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/event/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/AboutView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/AboutView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/RegisterView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/RegisterView.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +68,7 @@
       <recent name="D:\SMANTURA\ikasmantura\backend\handlers\auth" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build mapper.go">
+  <component name="RunManager" selected="Go Build.go build backend">
     <configuration name="go build backend" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <working_directory value="$PROJECT_DIR$" />
@@ -83,8 +89,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Build.go build mapper.go" />
         <item itemvalue="Go Build.go build backend" />
+        <item itemvalue="Go Build.go build mapper.go" />
       </list>
     </recent_temporary>
   </component>
@@ -139,22 +145,42 @@
       <screen x="0" y="0" width="1299" height="768" />
     </state>
     <state x="429" y="139" key="FileChooserDialogImpl/0.0.1299.768@0.0.1299.768" timestamp="1600958206171" />
-    <state width="1255" height="272" key="GridCell.Tab.0.bottom" timestamp="1601052635959">
-      <screen x="0" y="0" width="1298" height="768" />
+    <state width="1258" height="239" key="GridCell.Tab.0.bottom" timestamp="1609091894146">
+      <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state width="1255" height="272" key="GridCell.Tab.0.bottom/0.0.1298.768@0.0.1298.768" timestamp="1601052635959" />
-    <state width="1255" height="272" key="GridCell.Tab.0.center" timestamp="1601052635959">
-      <screen x="0" y="0" width="1298" height="768" />
+    <state width="1258" height="239" key="GridCell.Tab.0.bottom/0.0.1301.768@0.0.1301.768" timestamp="1609091894146" />
+    <state width="1258" height="239" key="GridCell.Tab.0.center" timestamp="1609091894146">
+      <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state width="1255" height="272" key="GridCell.Tab.0.center/0.0.1298.768@0.0.1298.768" timestamp="1601052635959" />
-    <state width="1255" height="272" key="GridCell.Tab.0.left" timestamp="1601052635959">
-      <screen x="0" y="0" width="1298" height="768" />
+    <state width="1258" height="239" key="GridCell.Tab.0.center/0.0.1301.768@0.0.1301.768" timestamp="1609091894146" />
+    <state width="1258" height="239" key="GridCell.Tab.0.left" timestamp="1609091894146">
+      <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state width="1255" height="272" key="GridCell.Tab.0.left/0.0.1298.768@0.0.1298.768" timestamp="1601052635959" />
-    <state width="1255" height="272" key="GridCell.Tab.0.right" timestamp="1601052635959">
-      <screen x="0" y="0" width="1298" height="768" />
+    <state width="1258" height="239" key="GridCell.Tab.0.left/0.0.1301.768@0.0.1301.768" timestamp="1609091894146" />
+    <state width="1258" height="239" key="GridCell.Tab.0.right" timestamp="1609091894146">
+      <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state width="1255" height="272" key="GridCell.Tab.0.right/0.0.1298.768@0.0.1298.768" timestamp="1601052635959" />
+    <state width="1258" height="239" key="GridCell.Tab.0.right/0.0.1301.768@0.0.1301.768" timestamp="1609091894146" />
+    <state width="1258" height="239" key="GridCell.Tab.1.bottom" timestamp="1609091894146">
+      <screen x="0" y="0" width="1301" height="768" />
+    </state>
+    <state width="1258" height="239" key="GridCell.Tab.1.bottom/0.0.1301.768@0.0.1301.768" timestamp="1609091894146" />
+    <state width="1258" height="239" key="GridCell.Tab.1.center" timestamp="1609091894146">
+      <screen x="0" y="0" width="1301" height="768" />
+    </state>
+    <state width="1258" height="239" key="GridCell.Tab.1.center/0.0.1301.768@0.0.1301.768" timestamp="1609091894146" />
+    <state width="1258" height="239" key="GridCell.Tab.1.left" timestamp="1609091894146">
+      <screen x="0" y="0" width="1301" height="768" />
+    </state>
+    <state width="1258" height="239" key="GridCell.Tab.1.left/0.0.1301.768@0.0.1301.768" timestamp="1609091894146" />
+    <state width="1258" height="239" key="GridCell.Tab.1.right" timestamp="1609091894146">
+      <screen x="0" y="0" width="1301" height="768" />
+    </state>
+    <state width="1258" height="239" key="GridCell.Tab.1.right/0.0.1301.768@0.0.1301.768" timestamp="1609091894146" />
     <state x="150" y="29" key="SettingsEditor" timestamp="1607605038324">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
@@ -175,5 +201,26 @@
     <state x="312" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1298.768@0.0.1298.768" timestamp="1601126189971" />
     <state x="312" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1299.768@0.0.1299.768" timestamp="1600905904444" />
     <state x="313" y="89" width="674" height="678" key="search.everywhere.popup/0.0.1301.768@0.0.1301.768" timestamp="1607910557094" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/handlers/event/event.go</url>
+          <line>55</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/handlers/event/event.go</url>
+          <line>53</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/viewmodels/auth.go</url>
+          <line>20</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -44,9 +44,9 @@ func main() {
 	db, err = gorm.Open(mysql.New(mysql.Config{
 		Conn: sqlDb,
 	}), &gorm.Config{
-		Logger:                 logger.Default.LogMode(logger.Error),
+		Logger:                 logger.Default.LogMode(logger.Warn),
 		SkipDefaultTransaction: true,
-		FullSaveAssociations: 	true,
+		FullSaveAssociations:   true,
 	})
 
 	if db == nil {

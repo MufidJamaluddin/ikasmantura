@@ -52,6 +52,8 @@ func SearchEvent(c *fiber.Ctx) error {
 
 	if authData, ok = viewmodels.GetAuthorizationData(c); ok {
 		data.CurrentUserId = authData.ID
+	} else {
+		data.CurrentUserId = 0
 	}
 
 	if total, err = eventService.GetTotal(db, &data); err != nil {
