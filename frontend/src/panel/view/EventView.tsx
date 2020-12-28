@@ -109,13 +109,13 @@ const transformData = (image, data) => {
         end:  moment(data.end).format("YYYY-MM-DDTHH:mm:ssZ"),
     }
 
+    const formData = ToFormData(transformedData)
+
     if(image && image.selectedFile) {
-        let formData = ToFormData(transformedData)
-        formData.append('image', image.selectedFile, image.selectedFile.name)
-        return formData
+        formData.append('image', image.selectedFile)
     }
 
-    return transformedData
+    return formData
 }
 
 export const EventEdit = props => {
@@ -134,7 +134,7 @@ export const EventEdit = props => {
                 </ReferenceInput>
                 <RichTextInput source="description" validate={[required()]}/>
                 <ImageInput source="image" label="Image (JPG)"
-                            onChange={e => { e.preventDefault(); setImage(e.target.files[0]); }}
+                            onChange={file => { setImage(file); }}
                             accept="image/jpeg" maxSize={500000}>
                     <ImageField source="src" title="title"/>
                 </ImageInput>
@@ -159,7 +159,7 @@ export const EventCreate = props => {
                 <TextInput source="organizer" validate={[required()]} />
                 <RichTextInput source="description" validate={[required()]} />
                 <ImageInput source="image" label="Image (JPG)"
-                            onChange={e => { e.preventDefault(); setImage(e.target.files[0]); }}
+                            onChange={file => { setImage(file); }}
                             accept="image/jpeg" maxSize={500000}>
                     <ImageField source="src" title="title"/>
                 </ImageInput>

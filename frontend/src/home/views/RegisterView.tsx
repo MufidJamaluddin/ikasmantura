@@ -171,7 +171,9 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
 
         try
         {
-            e.preventDefault()
+            if(e.cancelable) {
+                e.preventDefault()
+            }
 
             let inputValidateQueue = this.state.inputValidateQueue
             inputValidateQueue[e.target.name] = e.target

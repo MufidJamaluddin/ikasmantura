@@ -105,13 +105,16 @@ export const GalleryView = props => (
 )
 
 const transformData = (image, data) => {
-    let formData = ToFormData(data)
+
+    const formData = ToFormData(data)
 
     if(image && image.selectedFile) {
-        formData.append('original', image.selectedFile, image.selectedFile.name)
+        formData.delete('original')
+        formData.append('image', image.selectedFile)
     }
 
     return formData
+
 }
 
 export const GalleryEdit = props => {
@@ -128,7 +131,7 @@ export const GalleryEdit = props => {
                     <AutocompleteInput optionText="title"/>
                 </ReferenceInput>
                 <ImageInput source="original" label="Image (JPG)"
-                            onChange={e => { e.preventDefault(); setImage(e.target.value); }}
+                            onChange={file => { setImage(file); }}
                             accept="image/jpeg" maxSize={500000} validate={[required()]}>
                     <ImageField source="src" title="title"/>
                 </ImageInput>
@@ -150,7 +153,7 @@ export const GalleryCreate = props => {
                     <AutocompleteInput optionText="title"/>
                 </ReferenceInput>
                 <ImageInput source="original" label="Image (JPG)"
-                            onChange={e => { e.preventDefault(); setImage(e.target.value); }}
+                            onChange={file => { setImage(file); }}
                             accept="image/jpeg" maxSize={500000} validate={[required()]}>
                     <ImageField source="src" title="title"/>
                 </ImageInput>

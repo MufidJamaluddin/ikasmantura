@@ -37,18 +37,18 @@ export default class DataProviderFactory
                 jsonServerProvider(apiUrl + '/api/v1', httpClient);
 
             DataProviderFactory.dataProvider.create = (resource: string, params: CreateParams) =>
-                httpClient(`${apiUrl}/${resource}`, {
+                httpClient(`${apiUrl}/api/v1/${resource}`, {
                     method: 'POST',
                     body: (
                         params.data instanceof FormData ?
                             params.data : JSON.stringify(params.data)
                     ),
                 }).then(({ json }) => ({
-                    data: { ...params.data, id: json.id },
+                    data: json,
                 }))
 
             DataProviderFactory.dataProvider.update = (resource: string, params: UpdateParams) =>
-                httpClient(`${apiUrl}/${resource}/${params.id}`, {
+                httpClient(`${apiUrl}/api/v1/${resource}/${params.id}`, {
                     method: 'PUT',
                     body: (
                         params.data instanceof FormData ?

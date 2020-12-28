@@ -101,12 +101,14 @@ export const PostShow = (props) => (
 
 const transformData = (image, data) => {
 
+    const formData = ToFormData(data)
+
     if(image && image.selectedFile) {
-        let formData = ToFormData(data)
-        formData.append('image', image.selectedFile, image.selectedFile.name)
-        return formData
+        formData.append('image', image.selectedFile)
     }
-    return data
+
+    return formData
+
 }
 
 export const PostEdit = props => {
@@ -123,7 +125,7 @@ export const PostEdit = props => {
                     <AutocompleteInput optionText="name" />
                 </ReferenceInput>
                 <ImageInput source="image" label="Image (JPG)"
-                            onChange={e => { e.preventDefault(); setImage(e.target.value); }}
+                            onChange={file => { setImage(file); }}
                             accept="image/jpeg" maxSize={500000}>
                     <ImageField source="src" title="title" />
                 </ImageInput>
@@ -146,7 +148,7 @@ export const PostCreate = props => {
                     <AutocompleteInput optionText="name"/>
                 </ReferenceInput>
                 <ImageInput source="image" label="Image (JPG)"
-                            onChange={e => { e.preventDefault(); setImage(e.target.value); }}
+                            onChange={file => { setImage(file); }}
                             accept="image/jpeg" maxSize={500000}>
                     <ImageField source="src" title="title"/>
                 </ImageInput>

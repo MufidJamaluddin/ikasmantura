@@ -2,8 +2,8 @@ const {override} = require('customize-cra');
 const cspHtmlWebpackPlugin = require("csp-html-webpack-plugin");
 
 const cspConfigPolicy = {
-    'default-src':["'self'", "data:", "blob:", "filesystem:", "https://ikasmansituraja.org/", "http://ikasmansituraja.org/"],
-    'img-src': ["*", "data:", "blob:", "filesystem:" /*, "'unsafe-inline'", "'unsafe-eval'"*/ ],
+    'default-src':["'self'", "data:", "blob:", "filesystem:", "'unsafe-inline'", "https://ikasmansituraja.org/", "http://ikasmansituraja.org/"],
+    'img-src': ["*", "data:", "blob:", "filesystem:"],
     'script-src': ["'self'", "data:"],
     'font-src': ["'self'", "data:"],
     'style-src': ["'self'", "data:"],
