@@ -6,10 +6,13 @@ import (
 )
 
 type AuthorizationModel struct {
-	ID       uint
-	Username string
-	Email    string
-	IsAdmin  bool
+	ID       uint   `json:"id,omitempty"`
+	Username string `json:"name,omitempty"`
+	FullName string `json:"fullName,omitempty"`
+	Email    string `json:"email,omitempty"`
+	Role     string `json:"role,omitempty"`
+	Seq      uint64 `json:"pi,omitempty"`
+	Exp      int64  `json:"exp,omitempty"`
 }
 
 func GetAuthorizationData(ctx *fiber.Ctx) (*AuthorizationModel, bool) {
@@ -26,17 +29,19 @@ func GetAuthorizationData(ctx *fiber.Ctx) (*AuthorizationModel, bool) {
 }
 
 type LoginRequestDto struct {
+	Email string `query:"email,omitempty" json:"email,omitempty" xml:"email,omitempty" form:"email,omitempty"`
 	Username string `query:"username,omitempty" json:"username,omitempty" xml:"username,omitempty" form:"username,omitempty"`
 	Password string `query:"password,omitempty" json:"password,omitempty" xml:"password,omitempty" form:"password,omitempty"`
 }
 
 type LoginResponseDto struct {
-	Token   string    `query:"-" json:"-" xml:"-" form:"-"`
-	Expired time.Time `query:"-" json:"-" xml:"-" form:"-"`
+	Token   	 string    `query:"-" json:"token" xml:"token" form:"-"`
+	RefreshToken string	   `query:"-" json:"refreshToken" xml:"refreshToken" form:"-"`
+	Expired 	 time.Time `query:"-" json:"-" xml:"-" form:"-"`
 }
 
 type LoginDto struct {
 	LoginRequestDto
 	LoginResponseDto
-	Data UserDto `query:"-" json:"data" xml:"data" form:"-"`
+	Data UserDto `query:"-" json:"-" xml:"-" form:"-"`
 }

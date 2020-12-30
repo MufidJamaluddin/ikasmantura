@@ -47,17 +47,11 @@ func Route(app *fiber.App, db *gorm.DB) {
 		return c.Next()
 	}
 
-	secretHandler := jwtWare.New(jwtWare.Config{
-		SigningKey:  []byte(os.Getenv("SECRET_KEY")),
-		TokenLookup: "header:Authorization,cookie:web_ika_id",
-		SuccessHandler: func(ctx *fiber.Ctx) error {
-			return authHandler.AuthenticationHandler(ctx, db)
-		},
-	})
-
 	secretOrPublicHandler := jwtWare.New(jwtWare.Config{
 		SigningKey:  []byte(os.Getenv("SECRET_KEY")),
-		TokenLookup: "header:Authorization,cookie:web_ika_id",
+		TokenLookup: fmt.Sprintf(
+			"header:%s,cookie:%s",
+			os.Getenv("HEADER_TOKEN"), os.Getenv("COOKIE_TOKEN")),
 		ErrorHandler: func(ctx *fiber.Ctx, err error) error {
 			log.Println(err.Error())
 			ctx.Locals("user", nil)
@@ -65,9 +59,22 @@ func Route(app *fiber.App, db *gorm.DB) {
 			return ctx.Next()
 		},
 		SuccessHandler: func(ctx *fiber.Ctx) error {
-			return authHandler.AuthenticationHandler(ctx, db)
+			return authHandler.AuthorizationHandler(ctx, db, []string{})
 		},
 	})
+
+	secretHandler := func(allowedRoles []string) fiber.Handler {
+		return jwtWare.New(jwtWare.Config{
+			SigningKey:  []byte(os.Getenv("SECRET_KEY")),
+			TokenLookup: "header:Authorization,cookie:web_ika_id",
+			SuccessHandler: func(ctx *fiber.Ctx) error {
+				return authHandler.AuthorizationHandler(ctx, db, allowedRoles)
+			},
+		})
+	}
+
+	adminHandler := secretHandler([]string{"admin"})
+	allMemberHandler := secretHandler([]string{"admin", "member"})
 
 	cacheDuration, _ := strconv.Atoi(os.Getenv("CACHE_DURATION"))
 	cacheHandler := cache.New(cache.Config{
@@ -105,86 +112,88 @@ func Route(app *fiber.App, db *gorm.DB) {
 
 	about := apiV1.Group("/about")
 	about.Get("/:id", cacheHandler, publicHandler, aboutHandler.GetAbout)
-	about.Put("/:id", secretHandler, aboutHandler.UpdateAbout)
+	about.Put("/:id", adminHandler, aboutHandler.UpdateAbout)
 
 	album := apiV1.Group("/albums")
 	album.Get("", publicHandler, albumHandler.SearchAlbum)
 	album.Get("/:id", publicHandler, albumHandler.GetOneAlbum)
-	album.Post("", secretHandler, albumHandler.SaveAlbum)
-	album.Put("/:id", secretHandler, albumHandler.UpdateAlbum)
-	album.Delete("/:id", secretHandler, albumHandler.DeleteAlbum)
+	album.Post("", adminHandler, albumHandler.SaveAlbum)
+	album.Put("/:id", adminHandler, albumHandler.UpdateAlbum)
+	album.Delete("/:id", adminHandler, albumHandler.DeleteAlbum)
 
 	albumPhoto := apiV1.Group("/photos")
 	albumPhoto.Get("", publicHandler, albumPhotoHandler.SearchAlbumPhoto)
 	albumPhoto.Get("/:id", publicHandler, albumPhotoHandler.GetOneAlbumPhoto)
-	albumPhoto.Post("", secretHandler, albumPhotoHandler.SaveAlbumPhoto)
-	albumPhoto.Put("/:id", secretHandler, albumPhotoHandler.UpdateAlbumPhoto)
-	albumPhoto.Delete("/:id", secretHandler, albumPhotoHandler.DeleteAlbumPhoto)
+	albumPhoto.Post("", adminHandler, albumPhotoHandler.SaveAlbumPhoto)
+	albumPhoto.Put("/:id", adminHandler, albumPhotoHandler.UpdateAlbumPhoto)
+	albumPhoto.Delete("/:id", adminHandler, albumPhotoHandler.DeleteAlbumPhoto)
 
 	article := apiV1.Group("/articles")
 	article.Get("", publicHandler, articleHandler.SearchArticle)
 	article.Get("/:id", publicHandler, articleHandler.GetOneArticle)
-	article.Post("", secretHandler, articleHandler.SaveArticle)
-	article.Put("/:id", secretHandler, articleHandler.UpdateArticle)
-	article.Delete("/:id", secretHandler, articleHandler.DeleteArticle)
+	article.Post("", allMemberHandler, articleHandler.SaveArticle)
+	article.Put("/:id", allMemberHandler, articleHandler.UpdateArticle)
+	article.Delete("/:id", allMemberHandler, articleHandler.DeleteArticle)
 
 	topics := apiV1.Group("/article_topics")
 	topics.Get("", publicHandler, articleTopicHandler.SearchArticleTopic)
 	topics.Get("/:id", publicHandler, articleTopicHandler.GetOneArticleTopic)
-	topics.Post("", secretHandler, articleTopicHandler.SaveArticleTopic)
-	topics.Put("/:id", secretHandler, articleTopicHandler.UpdateArticleTopic)
-	topics.Delete("/:id", secretHandler, articleTopicHandler.DeleteArticleTopic)
+	topics.Post("", adminHandler, articleTopicHandler.SaveArticleTopic)
+	topics.Put("/:id", adminHandler, articleTopicHandler.UpdateArticleTopic)
+	topics.Delete("/:id", adminHandler, articleTopicHandler.DeleteArticleTopic)
 
 	auth := apiV1.Group("/auth")
+	auth.Get("", allMemberHandler, authHandler.GetLoggedInUser)
 	auth.Post("", publicHandler, authHandler.Login)
+	auth.Put("", allMemberHandler, authHandler.RefreshLogin)
 	auth.Delete("", publicHandler, authHandler.Logout)
 
 	department := apiV1.Group("/departments")
 	department.Get("", publicHandler, departmentHandler.SearchDepartment)
 	department.Get("/:id", publicHandler, departmentHandler.GetOneDepartment)
-	department.Post("", secretHandler, departmentHandler.SaveDepartment)
-	department.Put("/:id", secretHandler, departmentHandler.UpdateDepartment)
-	department.Delete("/:id", secretHandler, departmentHandler.DeleteDepartment)
+	department.Post("", adminHandler, departmentHandler.SaveDepartment)
+	department.Put("/:id", adminHandler, departmentHandler.UpdateDepartment)
+	department.Delete("/:id", adminHandler, departmentHandler.DeleteDepartment)
 
 	event := apiV1.Group("/events")
 	event.Get("", secretOrPublicHandler, eventHandler.SearchEvent)
 	event.Get("/:id", secretOrPublicHandler, eventHandler.GetOneEvent)
-	event.Post("", secretHandler, eventHandler.SaveEvent)
-	event.Put("/:id", secretHandler, eventHandler.UpdateEvent)
-	event.Delete("/:id", secretHandler, eventHandler.DeleteEvent)
+	event.Post("", adminHandler, eventHandler.SaveEvent)
+	event.Put("/:id", adminHandler, eventHandler.UpdateEvent)
+	event.Delete("/:id", adminHandler, eventHandler.DeleteEvent)
 
 	eventReg := apiV1.Group("/eventregister")
-	eventReg.Post("/:id", secretHandler, eventHandler.RegisterEvent)
+	eventReg.Post("/:id", allMemberHandler, eventHandler.RegisterEvent)
 
 	eventDownload := apiV1.Group("/eventsdownload")
-	eventDownload.Post("/:id", secretHandler, eventHandler.DownloadEventTicket)
+	eventDownload.Post("/:id", allMemberHandler, eventHandler.DownloadEventTicket)
 
 	// secretHandler, timeout.New(eventHandler.DownloadEventTicket, 2*time.Minute))
 	// timeout framework bisa race condition
 
 	user := apiV1.Group("/users")
-	user.Get("", publicHandler, userHandler.SearchUser)
-	user.Get("/:id", publicHandler, userHandler.GetOneUser)
-	user.Post("", secretHandler, userHandler.SaveUser)
-	user.Put("/:id", secretHandler, userHandler.UpdateUser)
-	user.Delete("/:id", secretHandler, userHandler.DeleteUser)
+	user.Get("", adminHandler, userHandler.SearchUser)
+	user.Get("/:id", adminHandler, userHandler.GetOneUser)
+	user.Post("", adminHandler, userHandler.SaveUser)
+	user.Put("/:id", adminHandler, userHandler.UpdateUser)
+	user.Delete("/:id", adminHandler, userHandler.DeleteUser)
 
 	classrooms := apiV1.Group("/classrooms")
 	classrooms.Get("", publicHandler, classroomHandler.SearchClassroom)
 	classrooms.Get("/:id", publicHandler, classroomHandler.GetOneClassroom)
-	classrooms.Post("", secretHandler, classroomHandler.SaveClassroom)
-	classrooms.Put("/:id", secretHandler, classroomHandler.UpdateClassroom)
-	classrooms.Delete("/:id", secretHandler, classroomHandler.DeleteClassroom)
+	classrooms.Post("", adminHandler, classroomHandler.SaveClassroom)
+	classrooms.Put("/:id", adminHandler, classroomHandler.UpdateClassroom)
+	classrooms.Delete("/:id", adminHandler, classroomHandler.DeleteClassroom)
 
 	tempUser := apiV1.Group("/temp_users")
 	tempUser.Get("", publicHandler, tempUserHandler.SearchTempUser)
 	tempUser.Get("/:id", publicHandler, tempUserHandler.GetOneTempUser)
 	tempUser.Post("", publicHandler, tempUserHandler.SaveTempUser)
-	tempUser.Put("/:id", secretHandler, tempUserHandler.UpdateTempUser)
-	tempUser.Delete("/:id", secretHandler, tempUserHandler.DeleteTempUser)
+	tempUser.Put("/:id", adminHandler, tempUserHandler.UpdateTempUser)
+	tempUser.Delete("/:id", adminHandler, tempUserHandler.DeleteTempUser)
 
 	verifyUser := apiV1.Group("/verify_user")
-	verifyUser.Post("/:id", secretHandler, tempUserHandler.VerifyUser)
+	verifyUser.Post("/:id", adminHandler, tempUserHandler.VerifyUser)
 
 	register := apiV1.Group("/register")
 	register.Post("/availability", publicHandler, tempUserHandler.CheckAvailabilityUser)

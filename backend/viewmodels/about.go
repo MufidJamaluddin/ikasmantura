@@ -10,6 +10,7 @@ type AboutDto struct {
 	Description string `json:"description,omitempty" xml:"description,omitempty" form:"description,omitempty"`
 	Vision      string `json:"vision,omitempty" xml:"vision,omitempty" form:"vision,omitempty"`
 	Mission     string `json:"mission,omitempty" xml:"mission,omitempty" form:"mission,omitempty"`
+	Email       string `json:"email,omitempty" xml:"email,omitempty" form:"email,omitempty"`
 	Facebook    string `json:"facebook,omitempty" xml:"facebook,omitempty" form:"facebook,omitempty"`
 	Twitter     string `json:"twitter,omitempty" xml:"twitter,omitempty" form:"twitter,omitempty"`
 	Instagram   string `json:"instagram,omitempty" xml:"instagram,omitempty" form:"instagram,omitempty"`

@@ -46,7 +46,7 @@ const EventFilter = (props) => {
     </Filter>)
 };
 
-export const EventList = props => {
+export const EventList = ({ permissions, ...props}) => {
     const isSmall = useMediaQuery((theme:any) => theme.breakpoints.down('sm'));
     return (
         <List title={props.options?.label} filters={<EventFilter {...props} />} {...props}>
@@ -67,7 +67,7 @@ export const EventList = props => {
                     <DateField source="end"/>
                     <ImageField source="thumbnail"/>
                     <ShowButton/>
-                    <EditButton/>
+                    { permissions === 'admin' ? <EditButton/> : null }
                 </Datagrid>
             )
             }

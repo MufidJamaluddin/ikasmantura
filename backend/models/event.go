@@ -6,7 +6,7 @@ import (
 )
 
 type Event struct {
-	ID           uint   `gorm:"primarykey"`
+	ID           uint   `gorm:"primaryKey"`
 	Organizer    string `gorm:"size:35"`
 	Title        string `gorm:"size:35"`
 	Description  string `gorm:"size:256"`
@@ -24,7 +24,7 @@ func (Event) CreateHistory() interface{} {
 }
 
 type UserEvent struct {
-	ID      uint `gorm:"primarykey"`
+	ID      uint `gorm:"primaryKey"`
 	UserId  uint
 	EventId uint
 	User    User  `gorm:"foreignKey:UserId"`
@@ -34,7 +34,7 @@ type UserEvent struct {
 
 type EventHistory struct {
 	utils.History
-	ID          uint   `gorm:"primarykey"`
+	ID          uint   `gorm:"primaryKey"`
 	Organizer   string `gorm:"size:35"`
 	Title       string `gorm:"size:35"`
 	Description string `gorm:"size:256"`

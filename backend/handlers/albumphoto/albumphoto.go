@@ -212,7 +212,7 @@ func UpdateAlbumPhoto(c *fiber.Ctx) error {
 // @Param q body viewmodels.AlbumPhotoDto true "New AlbumPhoto Data"
 // @Success 202 {object} viewmodels.AlbumPhotoDto
 // @Failure 400 {object} string
-// @Router /api/v1/photos [put]
+// @Router /api/v1/photos [post]
 func SaveAlbumPhoto(c *fiber.Ctx) error {
 	var (
 		data      viewmodels.AlbumPhotoDto

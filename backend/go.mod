@@ -12,6 +12,8 @@ require (
 	github.com/gofiber/jwt/v2 v2.1.0
 	github.com/joho/godotenv v1.3.0
 	github.com/liujiawm/graphics-go v0.0.0-20200331105750-879216a3393f
+	github.com/mileusna/useragent v1.0.2 // indirect
+	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/swaggo/swag v1.7.0
 	github.com/vcraescu/gorm-history/v2 v2.0.0
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect

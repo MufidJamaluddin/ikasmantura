@@ -29,7 +29,7 @@ const TopicFilter = (props) => (
     </Filter>
 );
 
-export const TopicList = props => {
+export const TopicList = ({ permissions, ...props}) => {
     const isSmall = useMediaQuery((theme:any) => theme.breakpoints.down('sm'));
     return (
         <List title={props.options?.label} filters={<TopicFilter {...props} />} {...props}>
@@ -42,7 +42,7 @@ export const TopicList = props => {
                     <TextField source="name" />
                     <TextField source="icon" />
                     <TextField source="description" />
-                    <EditButton />
+                    { permissions === 'admin' ? <EditButton/> : null }
                 </Datagrid>
             )}
         </List>

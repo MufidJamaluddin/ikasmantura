@@ -6,7 +6,7 @@ type UserDto struct {
 	Id         uint           `query:"-" json:"id,omitempty" xml:"id,omitempty" form:"id,omitempty"`
 	Name       string         `query:"name,omitempty" json:"name,omitempty" xml:"name,omitempty" form:"name,omitempty"`
 	Username   string         `query:"username,omitempty" json:"username,omitempty" xml:"username,omitempty" form:"username,omitempty"`
-	IsAdmin    bool           `query:"isAdmin" json:"isAdmin" xml:"isAdmin" form:"isAdmin"`
+	Role       string         `query:"role" json:"role" xml:"role" form:"role"`
 	Email      string         `query:"email,omitempty" json:"email,omitempty" xml:"email,omitempty" form:"email,omitempty"`
 	Phone      string         `query:"phone,omitempty" json:"phone,omitempty" xml:"phone,omitempty" form:"phone,omitempty"`
 	ForceYear  string         `query:"forceYear,omitempty" json:"forceYear,omitempty" xml:"forceYear,omitempty" form:"forceYear,omitempty"`

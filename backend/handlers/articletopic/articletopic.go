@@ -189,7 +189,7 @@ func UpdateArticleTopic(c *fiber.Ctx) error {
 // @Param q body viewmodels.ArticleTopicDto true "New Article Data"
 // @Success 201 {object} viewmodels.ArticleTopicDto
 // @Failure 400 {object} string
-// @Router /api/v1/articles/{id} [put]
+// @Router /api/v1/articles/{id} [post]
 func SaveArticleTopic(c *fiber.Ctx) error {
 	var (
 		data viewmodels.ArticleTopicDto

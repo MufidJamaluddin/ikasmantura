@@ -60,7 +60,7 @@ func GetAbout(c *fiber.Ctx) error {
 // @Success 200	{object} viewmodels.AboutDto
 // @Failure 400 {object} string
 // @Failure 404 {object} string
-// @Router /api/v1/about/{id} [get]
+// @Router /api/v1/about/{id} [put]
 func UpdateAbout(c *fiber.Ctx) error {
 	var (
 		data viewmodels.AboutDto

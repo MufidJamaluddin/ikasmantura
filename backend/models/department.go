@@ -5,7 +5,7 @@ import (
 )
 
 type Department struct {
-	ID     uint   `gorm:"primarykey"`
+	ID     uint   `gorm:"primaryKey"`
 	Name   string `gorm:"size:35"`
 	Type   uint8
 	UserId uint
@@ -20,7 +20,7 @@ func (Department) CreateHistory() interface{} {
 
 type DepartmentHistory struct {
 	utils.History
-	ID     uint `gorm:"primarykey"`
+	ID     uint `gorm:"primaryKey"`
 	UserId uint
 	Name   string `gorm:"size:35"`
 	Type   uint8

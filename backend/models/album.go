@@ -5,7 +5,7 @@ import (
 )
 
 type Album struct {
-	ID     uint         `gorm:"primarykey"`
+	ID     uint         `gorm:"primaryKey"`
 	Title  string       `gorm:"size:35"`
 	Photos []AlbumPhoto `gorm:"foreignKey:AlbumId"`
 	utils.Created
@@ -17,7 +17,7 @@ func (Album) CreateHistory() interface{} {
 }
 
 type AlbumPhoto struct {
-	ID        uint   `gorm:"primarykey"`
+	ID        uint   `gorm:"primaryKey"`
 	Title     string `gorm:"size:35"`
 	Image     string `gorm:"size:100"`
 	Thumbnail string `gorm:"size:100"`
@@ -29,7 +29,7 @@ type AlbumPhoto struct {
 
 type AlbumHistory struct {
 	utils.History
-	ID    uint   `gorm:"primarykey"`
+	ID    uint   `gorm:"primaryKey"`
 	Title string `gorm:"size:35"`
 	utils.Updated
 }

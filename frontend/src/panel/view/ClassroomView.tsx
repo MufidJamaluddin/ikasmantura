@@ -26,7 +26,7 @@ const ClassroomFilter = (props) => (
     </Filter>
 );
 
-export const ClassroomList = props => {
+export const ClassroomList = ({ permissions, ...props}) => {
     const isSmall = useMediaQuery((theme:any) => theme.breakpoints.down('sm'));
     return (
         <List title={props.options?.label} filters={<ClassroomFilter {...props} />} {...props}>
@@ -41,7 +41,7 @@ export const ClassroomList = props => {
                     <TextField source="major"/>
                     <TextField source="seq"/>
                     <ShowButton/>
-                    <EditButton/>
+                    { permissions === 'admin' ? <EditButton/> : null }
                 </Datagrid>
             )
             }

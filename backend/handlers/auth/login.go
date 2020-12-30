@@ -1,17 +1,43 @@
 package auth
 
 import (
+	"backend/models"
 	authService "backend/services/auth"
-	"backend/utils"
+	userService "backend/services/user"
 	"backend/viewmodels"
-	"github.com/form3tech-oss/jwt-go"
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
+	"log"
 	"os"
 	"time"
 )
 
 // @author Mufid Jamaluddin
+
+// GetLoggedInUser godoc
+// @Tags Authentication & Authorization
+// @Summary GetLoggedInUser
+// @Description GetLoggedInUser for get IKA SMAN Situraja users
+// @Accept json
+// @Produce json
+// @Success 200 {object} viewmodels.AuthorizationModel
+// @Failure 401 {object} string
+// @Router /api/v1/auth [get]
+func GetLoggedInUser(c *fiber.Ctx) error {
+	var (
+		err error
+		ok bool
+		authData *viewmodels.AuthorizationModel
+	)
+
+	if authData, ok = viewmodels.GetAuthorizationData(c); !ok {
+		return c.SendStatus(fiber.StatusUnauthorized)
+	}
+
+	err = c.JSON(authData)
+
+	return err
+}
 
 // Login godoc
 // @Tags Authentication & Authorization
@@ -26,11 +52,11 @@ import (
 func Login(c *fiber.Ctx) error {
 	var (
 		err       error
-		tokenizer *jwt.Token
 		loginData viewmodels.LoginDto
-		expired   time.Time
+		userLoginData	*models.UserLogin
 		db        *gorm.DB
 		ok        bool
+		token     *string
 	)
 
 	if db, ok = c.Locals("db").(*gorm.DB); !ok {
@@ -48,40 +74,98 @@ func Login(c *fiber.Ctx) error {
 		return err
 	}
 
-	loginData.Password = ""
-	loginData.Data.Password = ""
+	if userLoginData, err = SaveUserLogin(c, loginData.Data.Id); err != nil {
+		err = c.SendStatus(fiber.StatusInternalServerError)
+		return err
+	}
 
-	// Create token
-	tokenizer = jwt.New(jwt.SigningMethodHS256)
+	if token, err = DoLogin(c, userLoginData, &loginData.Data, &loginData.Expired);
+	err != nil {
+		return err
+	}
 
-	// Expiration
-	expired = time.Now().Add(time.Hour * 72)
+	loginData.Token = *token
+	loginData.RefreshToken = userLoginData.RefreshToken.String()
 
-	// Set claims
-	claims := tokenizer.Claims.(jwt.MapClaims)
-	claims["name"] = loginData.Username
-	claims["email"] = loginData.Data.Email
-	claims["id"] = loginData.Data.Id
-	claims["admin"] = loginData.Data.IsAdmin
-	claims["exp"] = expired.Unix()
+	err = c.JSON(&loginData.LoginResponseDto)
+	return err
+}
 
-	// Generate encoded token and send it as response.
-	if loginData.Token,
-		err = tokenizer.SignedString(utils.ToBytes(os.Getenv("SECRET_KEY"))); err != nil {
+func RefreshLogin(c *fiber.Ctx) error {
+	var (
+		err error
+		db *gorm.DB
+		ok bool
+		token     *string
+		refreshToken string
+		authData *viewmodels.AuthorizationModel
+		userLoginData models.UserLogin
+		userData viewmodels.UserDto
+		responseLogin viewmodels.LoginResponseDto
+		expired *time.Time
+	)
+
+	if authData, ok = viewmodels.GetAuthorizationData(c); !ok {
+		return c.SendStatus(fiber.StatusUnauthorized)
+	}
+
+	if db, ok = c.Locals("db").(*gorm.DB); !ok {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
-	loginData.Expired = expired
+	refreshToken = c.Cookies(os.Getenv("COOKIE_REFRESH_TOKEN"))
+	if refreshToken == "" {
+		refreshToken = c.Get(os.Getenv("HEADER_REFRESH_TOKEN"))
+	}
 
-	c.Cookie(&fiber.Cookie{
-		Name:     "web_ika_id",
-		Value:    loginData.Token,
-		Expires:  expired,
-		HTTPOnly: true,
-		SameSite: "strict",
-	})
+	if refreshToken != "" && authData.Role != "" {
+		authData.ID = 0
+		if err = db.Model(&userLoginData).
+			Where("user_id = ?", authData.ID).
+			Where("refresh_token = ?", refreshToken).
+			First(&userLoginData).
+			Error; err != nil {
+			c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
+			c.Status(fiber.StatusBadRequest)
+			return err
+		}
 
-	err = c.JSON(&loginData)
+		if authData.ID == 0 || !(authData.Seq < userLoginData.Seq) {
+			c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
+			c.ClearCookie(os.Getenv("COOKIE_REFRESH_TOKEN"))
+			return c.SendStatus(fiber.StatusForbidden)
+		}
+
+		if err = userService.FindById(db, authData.ID, &userData); err != nil {
+			return err
+		}
+
+		if userData.Username != authData.Username &&
+			userData.Role != authData.Role {
+			c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
+			c.ClearCookie(os.Getenv("COOKIE_REFRESH_TOKEN"))
+			log.Printf("User ID %s (username %s != %s)",
+				userData.Id, authData.Username, userData.Username)
+			return c.SendStatus(fiber.StatusUnauthorized)
+		}
+	} else {
+		userData.Id = authData.ID
+		userData.Role = authData.Role
+		userData.Username = authData.Username
+		userData.Email = authData.Email
+
+		userLoginData.Seq = authData.Seq + 1
+	}
+
+	if token, err = DoLogin(c, &userLoginData, &userData, expired);
+	err != nil {
+		return err
+	}
+
+	responseLogin.Token = *token
+	responseLogin.RefreshToken = userLoginData.RefreshToken.String()
+
+	err = c.JSON(&responseLogin)
 	return err
 }
 
@@ -99,7 +183,9 @@ func Login(c *fiber.Ctx) error {
 func Logout(c *fiber.Ctx) error {
 	var err error
 
-	c.ClearCookie("web_ika_id")
+	c.ClearCookie(os.Getenv("COOKIE_REFRESH_TOKEN"))
+	c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
+
 	err = c.SendStatus(fiber.StatusOK)
 
 	return err

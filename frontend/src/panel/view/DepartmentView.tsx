@@ -31,7 +31,7 @@ const DepartmentFilter = (props) => (
     </Filter>
 );
 
-export const DepartmentList = props => {
+export const DepartmentList = ({ permissions, ...props}) => {
     const isSmall = useMediaQuery((theme:any) => theme.breakpoints.down('sm'));
     return (
         <List title={props.options?.label} filters={<DepartmentFilter {...props} />} {...props}>
@@ -47,7 +47,7 @@ export const DepartmentList = props => {
                         <TextField source="name" />
                     </ReferenceField>
                     <ShowButton/>
-                    <EditButton/>
+                    { permissions === 'admin' ? <EditButton/> : null }
                 </Datagrid>
             )
             }

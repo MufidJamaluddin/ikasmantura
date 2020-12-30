@@ -12,7 +12,7 @@ func toPermanentModel(data *models.TempUser, out *models.User) {
 	out.ID = data.ID
 	out.Name = data.Name
 	out.Username = data.Username
-	out.IsAdmin = data.IsAdmin
+	out.Role = "member"
 	out.Password = data.Password
 	out.ForceYear = data.ForceYear
 	out.Address.ID = data.Address.ID
@@ -40,7 +40,6 @@ func toTempModel(data *viewmodels.UserDto, out *models.TempUser) {
 	out.ID = data.Id
 	out.Name = data.Name
 	out.Username = data.Username
-	out.IsAdmin = data.IsAdmin
 	out.Password = data.Password
 	out.ForceYear = data.ForceYear
 	out.Address.ID = data.Address.ID
@@ -69,7 +68,7 @@ func toViewModel(in *models.TempUser, out *viewmodels.UserDto) {
 	out.Id = in.ID
 	out.Name = in.Name
 	out.Username = in.Username
-	out.IsAdmin = in.IsAdmin
+	out.Role = ""
 	out.Password = in.Password
 	out.ForceYear = in.ForceYear
 	out.Address.ID = in.Address.ID

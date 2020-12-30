@@ -5,14 +5,14 @@ import (
 )
 
 type User struct {
-	ID         uint   `gorm:"primarykey"`
+	ID         uint   `gorm:"primaryKey"`
 	Name       string `gorm:"size:53"`
 	Username   string `gorm:"size:35,unique"`
 	Email      string `gorm:"size:286"`
 	Password   string `gorm:"size:40"`
 	Phone      string `gorm:"size:13"`
 	ForceYear  string `gorm:"size:4"`
-	IsAdmin    bool
+	Role       string `gorm:"size:6"`
 	Address    UserAddress     `gorm:"foreignKey:UserId"`
 	MyEvents   []UserEvent     `gorm:"foreignKey:UserId"`
 	Classrooms []UserClassroom `gorm:"foreignKey:UserId"`
@@ -21,7 +21,7 @@ type User struct {
 }
 
 type UserAddress struct {
-	ID      uint `gorm:"primarykey"`
+	ID      uint `gorm:"primaryKey"`
 	UserId  uint
 	Street  string
 	Suite   string `gorm:"size:35"`
@@ -43,7 +43,7 @@ func (User) CreateHistory() interface{} {
 
 type UserHistory struct {
 	utils.History
-	ID       uint   `gorm:"primarykey"`
+	ID       uint   `gorm:"primaryKey"`
 	Name     string `gorm:"size:53"`
 	Username string `gorm:"size:35"`
 	Email    string `gorm:"size:286"`
@@ -58,7 +58,7 @@ func (UserAddress) CreateHistory() interface{} {
 
 type UserAddressHistory struct {
 	utils.History
-	ID      uint `gorm:"primarykey"`
+	ID      uint `gorm:"primaryKey"`
 	Street  string
 	Suite   string
 	City    string

@@ -58,15 +58,7 @@ const GalleryListItem: FC<{ isSmall: boolean, customTitle: string }>
         <>
             <Title defaultTitle={customTitle} />
             <TopToolbar>
-            {
-                isSmall ? (
-                    <Box m={1}>
-                        <GalleryFilter context="form" />
-                    </Box>
-                ) : (
-                    <ListActions/>
-                )
-            }
+                <ListActions/>
             </TopToolbar>
             <Box display="flex">
                 <Box width={isSmall ? 'auto' : '100%'}>

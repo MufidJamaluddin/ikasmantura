@@ -36,7 +36,7 @@ const AlbumFilter = (props) => (
     </Filter>
 );
 
-export const AlbumList = props => {
+export const AlbumList = ({ permissions, ...props }) => {
     const isSmall = useMediaQuery((theme:any) => theme.breakpoints.down('sm'));
     return (
         <List title={props.options?.label} filters={<AlbumFilter {...props} />} {...props}>
@@ -56,7 +56,7 @@ export const AlbumList = props => {
                         <TextField source="name" />
                     </ReferenceField>
                     <ShowButton/>
-                    <EditButton/>
+                    { permissions === 'admin' ? <EditButton/> : null }
                 </Datagrid>
             )
             }

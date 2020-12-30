@@ -5,11 +5,12 @@ import (
 )
 
 type About struct {
-	ID          uint   `gorm:"primarykey"`
+	ID          uint   `gorm:"primaryKey"`
 	Title       string `gorm:"size:35"`
 	Description string
 	Vision      string
 	Mission     string
+	Email       string `gorm:"size:250"`
 	Facebook    string `gorm:"size:35"`
 	Twitter     string `gorm:"size:35"`
 	Instagram   string `gorm:"size:35"`

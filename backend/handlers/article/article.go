@@ -169,6 +169,14 @@ func UpdateArticle(c *fiber.Ctx) error {
 		return err
 	}
 
+	if err = articleService.FindById(db, id, &data); err != nil {
+		return err
+	}
+
+	if data.CreatedBy != authData.ID && authData.Role != "admin" {
+		return c.SendStatus(fiber.StatusUnauthorized)
+	}
+
 	if err = c.BodyParser(&data); err != nil {
 		return err
 	}
@@ -207,7 +215,7 @@ func UpdateArticle(c *fiber.Ctx) error {
 // @Param q body viewmodels.ArticleDto true "New Article Data"
 // @Success 201 {object} viewmodels.ArticleDto
 // @Failure 400 {object} string
-// @Router /api/v1/articles/{id} [put]
+// @Router /api/v1/articles/{id} [post]
 func SaveArticle(c *fiber.Ctx) error {
 	var (
 		data      viewmodels.ArticleDto
@@ -291,6 +299,14 @@ func DeleteArticle(c *fiber.Ctx) error {
 
 	if id, err = utils.ToUint(c.Params("id")); err != nil {
 		return err
+	}
+
+	if err = articleService.FindById(db, id, &data); err != nil {
+		return err
+	}
+
+	if data.CreatedBy != authData.ID && authData.Role != "admin" {
+		return c.SendStatus(fiber.StatusUnauthorized)
 	}
 
 	data.UpdatedBy = authData.ID

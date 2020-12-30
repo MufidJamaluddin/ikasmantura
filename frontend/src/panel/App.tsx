@@ -80,93 +80,100 @@ const AdminApp = (props: any) => (
            dataProvider={dataProvider}
            disableTelemetry
     >
+        { permissions => [
+            <Resource name="about"
+                      options={{"label": "Tentang Kami", "hidden": true}}
+                      edit={permissions === 'admin' ? AboutView.AboutEdit : null}
+                      show={AboutView.AboutShow}
+                      icon={AboutIcon}
+            />,
 
-        <Resource name="about"
-              options={{ "label": "Tentang Kami", "hidden": true }}
-              edit={AboutView.AboutEdit}
-              show={AboutView.AboutShow}
-              icon={AboutIcon}
-        />
+            <Resource name="classrooms"
+                options={{"label": "Kelas"}}
+                list={ClassroomView.ClassroomList}
+                edit={permissions === 'admin' ? ClassroomView.ClassroomEdit : null}
+                create={permissions === 'admin' ? ClassroomView.ClassroomCreate: null}
+                icon={AboutIcon}
+            />,
 
-        <Resource name="classrooms"
-                  options={{ "label": "Kelas" }}
-                  list={ClassroomView.ClassroomList}
-                  edit={ClassroomView.ClassroomEdit}
-                  create={ClassroomView.ClassroomCreate}
-                  icon={AboutIcon}
-        />
+            <Resource name="departments"
+                options={{"label": "Departemen", "divider": true}}
+                list={DepartmentView.DepartmentList}
+                show={DepartmentView.DepartmentShow}
+                edit={permissions === 'admin' ? DepartmentView.DepartmentEdit : null}
+                create={permissions === 'admin' ? DepartmentView.DepartmentCreate : null}
+                icon={DepartmentIcon}
+            />,
 
-        <Resource name="departments"
-              options={{ "label": "Departemen", "divider": true }}
-              list={DepartmentView.DepartmentList}
-              edit={DepartmentView.DepartmentEdit}
-              show={DepartmentView.DepartmentShow}
-              create={DepartmentView.DepartmentCreate}
-              icon={DepartmentIcon}
-        />
 
-        <Resource name="users"
-              options={{ "label": "Anggota", }}
-              list={UserView.UserList}
-              edit={UserView.UserEdit}
-              create={UserView.UserCreate}
-              show={UserView.UserView}
-              icon={UserIcon}
-        />
+            <Resource name="users"
+                options={{"label": "Anggota", "hidden": permissions !== 'admin'}}
+                list={permissions === 'admin' ? UserView.UserList : null}
+                show={permissions === 'admin' ? UserView.UserView : null}
+                edit={permissions === 'admin' ? UserView.UserEdit : null}
+                create={permissions === 'admin' ? UserView.UserCreate : null}
+                icon={UserIcon}
+            />,
 
-        <Resource name="temp_users"
-                  options={{ "label": "Registrasi Anggota", }}
-                  list={TempUserView.TempUserList}
-                  edit={TempUserView.TempUserEdit}
-                  create={TempUserView.TempUserCreate}
-                  show={TempUserView.TempUserView}
-                  icon={UserIcon}
-        />
+            <Resource name="temp_users"
+                options={{"label": "Registrasi Anggota", "hidden": permissions !== 'admin' }}
+                list={permissions === 'admin' ? TempUserView.TempUserList : null}
+                show={permissions === 'admin' ? TempUserView.TempUserView : null}
+                edit={permissions === 'admin' ? TempUserView.TempUserEdit : null}
+                create={permissions === 'admin' ? TempUserView.TempUserCreate : null}
+                icon={UserIcon}
+            />,
 
-        <Resource name="article_topics"
-                  options={{ "label": "Topik Artikel", "divider": true }}
-                  list={ArticleTopicView.TopicList}
-                  edit={ArticleTopicView.TopicEdit}
-                  create={ArticleTopicView.TopicCreate}
-                  icon={ArticleTopicIcon}
-        />
+            <Resource name="article_topics"
+                options={{"label": "Topik Artikel", "divider": true}}
+                list={ArticleTopicView.TopicList}
+                edit={permissions === 'admin' ? ArticleTopicView.TopicEdit : null}
+                create={permissions === 'admin' ? ArticleTopicView.TopicCreate : null}
+                icon={ArticleTopicIcon}
+            />,
 
-        <Resource name="articles"
-                  options={{ "label": "Artikel", "divider": false }}
-              list={ArticleView.PostList}
-              edit={ArticleView.PostEdit}
-              create={ArticleView.PostCreate}
-              show={ArticleView.PostShow}
-              icon={ArticleIcon}
-        />
+            <Resource name="articles"
+                options={{"label": "Artikel", "divider": false}}
+                list={ArticleView.PostList}
+                show={ArticleView.PostShow}
+                edit={
+                  permissions === 'admin' || permissions === 'member' ?
+                      ArticleView.PostEdit : null}
+                create={
+                  permissions === 'admin' || permissions === 'member' ?
+                      ArticleView.PostCreate : null}
+                icon={ArticleIcon}
+            />,
 
-        <Resource name="events"
-                  options={{ "label": "Agenda", "divider": true }}
-              list={EventView.EventList}
-              edit={EventView.EventEdit}
-              create={EventView.EventCreate}
-              show={EventView.EventView}
-              icon={EventViewIcon}
-        />
+            <Resource name="events"
+                options={{"label": "Agenda", "divider": true}}
+                list={EventView.EventList}
+                show={EventView.EventView}
+                edit={permissions === 'admin' ? EventView.EventEdit : null}
+                create={permissions === 'admin' ? EventView.EventCreate : null}
+                icon={EventViewIcon}
+            />,
 
-        <Resource name="albums"
-                  options={{ "label": "Album", "divider": true}}
-              list={AlbumView.AlbumList}
-              edit={AlbumView.AlbumEdit}
-              create={AlbumView.AlbumCreate}
-              show={AlbumView.AlbumView}
-              icon={AlbumViewIcon}
-        />
+            <Resource name="albums"
+                options={{"label": "Album", "divider": true}}
+                list={AlbumView.AlbumList}
+                show={AlbumView.AlbumView}
+                edit={permissions === 'admin' ? AlbumView.AlbumEdit : null}
+                create={permissions === 'admin' ? AlbumView.AlbumCreate : null}
+                icon={AlbumViewIcon}
+            />,
 
-        <Resource name="photos"
-                  options={{ "label": "Gallery", }}
-              list={GalleryView.GalleryList}
-              edit={GalleryView.GalleryEdit}
-              create={GalleryView.GalleryCreate}
-              show={GalleryView.GalleryView}
-              icon={GalleryIcon}
-        />
+            <Resource name="photos"
+                options={{"label": "Gallery",}}
+                list={GalleryView.GalleryList}
+                show={GalleryView.GalleryView}
+                edit={permissions === 'admin' ? GalleryView.GalleryEdit : null}
+                create={permissions === 'admin' ? GalleryView.GalleryCreate : null}
+                icon={GalleryIcon}
+            />,
 
+            ]
+        }
     </Admin>
 )
 

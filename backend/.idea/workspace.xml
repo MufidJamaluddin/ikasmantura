@@ -2,13 +2,39 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/models/user_login.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/InMemoryUserData.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/config-overrides.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/config-overrides.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/dataprovider/DataProviderFactory.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/DataProviderFactory.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/RegisterView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/RegisterView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/ArticleView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/ArticleView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/EventView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/EventView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/GalleryView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/GalleryView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/env" beforeDir="false" afterPath="$PROJECT_DIR$/env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/about/about.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/about/about.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/albumphoto/albumphoto.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/albumphoto/albumphoto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/article/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/article/article.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/articletopic/articletopic.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/articletopic/articletopic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/auth/authmiddle.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/auth/authmiddle.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/auth/login.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/auth/login.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrator.go" beforeDir="false" afterPath="$PROJECT_DIR$/migrator.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/about.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/about.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/album.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/album.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/article.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/classroom.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/classroom.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/department.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/department.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_temp.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user_temp.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/about/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/about/mapper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/auth/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/auth/command.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/temp_user/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/temp_user/mapper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/user/mapper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/about.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/about.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/auth.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/dataprovider/LoginProvider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/LoginProvider.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/dataprovider/authProvider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/authProvider.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/component/MyAvatar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/component/MyUserMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/component/MyUserMenu.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,16 +230,5 @@
     <state x="312" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1298.768@0.0.1298.768" timestamp="1601126189971" />
     <state x="312" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1299.768@0.0.1299.768" timestamp="1600905904444" />
     <state x="313" y="89" width="674" height="678" key="search.everywhere.popup/0.0.1301.768@0.0.1301.768" timestamp="1607910557094" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/viewmodels/auth.go</url>
-          <line>20</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

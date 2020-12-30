@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Edit, RichTextField, Show, SimpleForm, SimpleShowLayout, TextInput, required} from 'react-admin';
+import {Edit, RichTextField, Show, SimpleForm, SimpleShowLayout, TextInput, required, TextField} from 'react-admin';
 
 import RichTextInput from 'ra-input-rich-text';
 
@@ -15,10 +15,10 @@ export const AboutShow = (props) => (
             <RichTextField source="description" />
             <RichTextField source="vision" />
             <RichTextField source="mission" />
-            <RichTextField source="email" />
-            <RichTextField source="facebook" />
-            <RichTextField source="twitter" />
-            <RichTextField source="instagram" />
+            <TextField source="email" />
+            <TextField source="facebook" />
+            <TextField source="twitter" />
+            <TextField source="instagram" />
         </SimpleShowLayout>
     </Show>
 );
@@ -31,10 +31,10 @@ export const AboutEdit = props => (
             <RichTextInput source="description" validate={[required()]} />
             <RichTextInput source="vision" validate={[required()]} />
             <RichTextInput source="mission" validate={[required()]} />
-            <RichTextInput source="email" validate={[required()]} />
-            <RichTextInput source="facebook" validate={[required()]} />
-            <RichTextInput source="twitter" validate={[required()]} />
-            <RichTextInput source="instagram" validate={[required()]} />
+            <TextInput source="email" validate={[required()]} />
+            <TextInput source="facebook" validate={[required()]} />
+            <TextInput source="twitter" validate={[required()]} />
+            <TextInput source="instagram" validate={[required()]} />
         </SimpleForm>
     </Edit>
 );

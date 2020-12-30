@@ -51,7 +51,7 @@ const PostFilter = (props) => (
     </Filter>
 );
 
-export const PostList = props => {
+export const PostList = ({permissions, ...props}) => {
     const isSmall = useMediaQuery((theme:any) => theme.breakpoints.down('sm'));
     return (
         <List title={props.options?.label} filters={<PostFilter {...props} />} {...props}>
@@ -75,7 +75,8 @@ export const PostList = props => {
                         <TextField source="name" />
                     </ReferenceField>
                     <ShowButton />
-                    <EditButton />
+                    { permissions === 'admin' || permissions === 'member' ?
+                        <EditButton/> : null }
                 </Datagrid>
             )}
         </List>

@@ -12,7 +12,7 @@ func toModel(data *viewmodels.UserDto, out *models.User) {
 	out.ID = data.Id
 	out.Name = data.Name
 	out.Username = data.Username
-	out.IsAdmin = data.IsAdmin
+	out.Role = data.Role
 	out.Password = data.Password
 	out.ForceYear = data.ForceYear
 	out.Address.ID = data.Address.ID
@@ -41,7 +41,7 @@ func toViewModel(in *models.User, out *viewmodels.UserDto) {
 	out.Id = in.ID
 	out.Name = in.Name
 	out.Username = in.Username
-	out.IsAdmin = in.IsAdmin
+	out.Role = in.Role
 	out.Password = in.Password
 	out.ForceYear = in.ForceYear
 	out.Address.ID = in.Address.ID

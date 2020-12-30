@@ -3,7 +3,7 @@ package models
 import "backend/utils"
 
 type Article struct {
-	ID             uint   `gorm:"primarykey"`
+	ID             uint   `gorm:"primaryKey"`
 	Title          string `gorm:"size:35"`
 	Body           string
 	Image          string `gorm:"size:100"`
@@ -15,7 +15,7 @@ type Article struct {
 }
 
 type ArticleTopic struct {
-	ID          uint      `gorm:"primarykey"`
+	ID          uint      `gorm:"primaryKey"`
 	Name        string    `gorm:"size:35"`
 	Icon        string    `gorm:"size:35"`
 	Description string    `gorm:"size:35"`
@@ -30,7 +30,7 @@ func (ArticleTopic) CreateHistory() interface{} {
 
 type ArticleTopicHistory struct {
 	utils.History
-	ID   uint   `gorm:"primarykey"`
+	ID   uint   `gorm:"primaryKey"`
 	Name string `gorm:"size:35"`
 	utils.Updated
 }
