@@ -7,17 +7,17 @@ import {NotificationManager} from 'react-notifications';
 import moment from "moment";
 import 'moment/locale/id';
 
-import RegeTitle from "../component/RegeTitle";
-import {Card, Col, Container, Row} from "react-bootstrap";
+import {Card, Col, Row} from "react-bootstrap";
 import Image from "../component/Image";
 import DOMPurify from "../../utils/Sanitizer";
+import {ThemeContext} from "../component/PageTemplate";
 
 interface ArticlesItemState {
     data: any
 }
 
 export default class ArticlesItemView
-    extends PureComponent<RouteComponentProps<{id: string}>, ArticlesItemState>
+    extends PureComponent<RouteComponentProps<{id: string}>|any, ArticlesItemState>
 {
     constructor(props:any) {
         super(props);
@@ -26,6 +26,8 @@ export default class ArticlesItemView
         }
         moment.locale('id');
     }
+
+    static contextType = ThemeContext;
 
     updateData()
     {
@@ -38,6 +40,10 @@ export default class ArticlesItemView
             this.setState({
                 data: data
             })
+
+            let title = data?.title ?? 'Artikel IKA'
+
+            this.context.setHeader({ title: title, showTitle: false })
         }, error => {
             NotificationManager.error(error.message, error.name);
         })
@@ -64,32 +70,27 @@ export default class ArticlesItemView
         let createdAt = moment(item.createdAt).format('LLLL');
 
         return (
-            <>
-                <RegeTitle/>
-                <Container>
-                    <Row>
-                        <Col md={{span:10, offset:1}}>
-                            <Card>
-                                <Image
-                                    className="card-img-top"
-                                    src={item.image ?? "/static/img/jakarta.jpg"}
-                                    fallbackSrc={"/static/img/jakarta.jpg"}
-                                    alt={item.name}/>
-                                <Card.Title>
-                                    <h1 className="text-center">{item.title}</h1>
-                                </Card.Title>
-                                <Card.Text className="lead text-center">
-                                    <b>Oleh: {item.createdByName ?? 'Kakak Anonim'}</b> &nbsp;
-                                    <small>Pada: {createdAt}</small>
-                                </Card.Text>
-                                <Card.Body>
-                                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.body) }} />
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    </Row>
-                </Container>
-            </>
+            <Row>
+                <Col md={{span:10, offset:1}}>
+                    <Card>
+                        <Image
+                            className="card-img-top"
+                            src={item.image ?? "/static/img/jakarta.jpg"}
+                            fallbackSrc={"/static/img/jakarta.jpg"}
+                            alt={item.name}/>
+                        <Card.Title>
+                            <h1 className="text-center">{item.title}</h1>
+                        </Card.Title>
+                        <Card.Text className="lead text-center">
+                            <b>Oleh: {item.createdByName ?? 'Kakak Anonim'}</b> &nbsp;
+                            <small>Pada: {createdAt}</small>
+                        </Card.Text>
+                        <Card.Body>
+                            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.body) }} />
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
         )
     }
 

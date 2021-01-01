@@ -1,6 +1,5 @@
 import React, {PureComponent} from "react";
-import RegeTitle from "../component/RegeTitle";
-import {Button, Card, Col, Container, Form, Row, Tabs} from "react-bootstrap";
+import {Button, Card, Col, Form, Row, Tabs} from "react-bootstrap";
 import {Link, RouteComponentProps} from "react-router-dom";
 
 import DataProviderFactory from "../../dataprovider/DataProviderFactory";
@@ -11,6 +10,7 @@ import Select from "react-select";
 import makeAnimated from 'react-select/animated';
 import {TIForm, TIFormType} from "../component/CForm";
 import {ValidateEmail} from "../../utils/Form";
+import {ThemeContext} from "../component/PageTemplate";
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -20,10 +20,9 @@ const selectAnimatedComponents = makeAnimated();
 
 async function checkAvailability({ username = '', email = '' })
 {
-    let dataProvider = DataProviderFactory.getDataProvider()
-    var result:boolean
-    var lastUsername
-    var lastEmail
+    let result: boolean;
+    let lastUsername;
+    let lastEmail;
 
     try
     {
@@ -80,11 +79,13 @@ async function checkAvailability({ username = '', email = '' })
     return result
 }
 
-export default class RegisterView extends PureComponent<RouteComponentProps<any>,
+export default class RegisterView extends PureComponent<RouteComponentProps<any>|any,
     {classrooms: Array<any>, formType: TIFormType, formData: any, inputValidateQueue: any, nextValidation: number}>
 {
     private readonly formElement: React.RefObject<FormWithConstraints>
     private inputPassword: HTMLInputElement | null
+
+    static contextType = ThemeContext;
 
     constructor(props:any)
     {
@@ -258,6 +259,8 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
     componentDidMount()
     {
         this.updateClassrooms()
+
+        this.context.setHeader({ title: 'Pendaftaran Alumni', showTitle: false })
     }
 
     componentDidUpdate(prevProps: any, prevState: any, snapshot?: any)
@@ -652,110 +655,105 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
         let FormParent = formType === TIFormType.TABBED ? Tabs : Row;
 
         return (
-            <section className="features-icons bg-light">
-                <RegeTitle/>
-                <Container>
-                    <Row>
-                        <Col md={{span:10, offset:1}}>
-                            <Card>
+            <Row>
+                <Col md={{span:10, offset:1}}>
+                    <Card>
 
-                                <Card.Body>
-                                    <div className="fa-pull-left">
-                                        Pilih tampilan &nbsp;
-                                        <Button
-                                            className={
-                                                formType === TIFormType.TABBED ?
-                                                    'btn-kegiatan-active' : 'btn-kegiatan'
-                                            }
-                                            onClick={(e) => {
-                                                e.preventDefault()
-                                                this.setState(state => ({
-                                                    ...state,
-                                                    formType: TIFormType.TABBED
-                                                }))
-                                            }}
-                                        >
-                                            Isian Tab Ke Samping
-                                        </Button>
-                                        <Button
-                                            className={
-                                                formType === TIFormType.INLINE ?
-                                                    'btn-kegiatan-active' : 'btn-kegiatan'
-                                            }
-                                            onClick={(e) => {
-                                                e.preventDefault()
-                                                this.setState(state => ({
-                                                    ...state,
-                                                    formType: TIFormType.INLINE
-                                                }))
-                                            }}
-                                        >
-                                            Semua Isian Kebawah
-                                        </Button>
-                                    </div>
-                                    <div className="fa-pull-right">
-                                        Sudah pernah daftar? &nbsp;
-                                        <Link to={"/login"}>
-                                            <Button variant="warning" size="sm" type="button">
-                                                Masuk
-                                            </Button>
-                                        </Link>
-                                    </div>
-                                </Card.Body>
+                        <Card.Body>
+                            <div className="fa-pull-left">
+                                Pilih tampilan &nbsp;
+                                <Button
+                                    className={
+                                        formType === TIFormType.TABBED ?
+                                            'btn-kegiatan-active' : 'btn-kegiatan'
+                                    }
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        this.setState(state => ({
+                                            ...state,
+                                            formType: TIFormType.TABBED
+                                        }))
+                                    }}
+                                >
+                                    Isian Tab Ke Samping
+                                </Button>
+                                <Button
+                                    className={
+                                        formType === TIFormType.INLINE ?
+                                            'btn-kegiatan-active' : 'btn-kegiatan'
+                                    }
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        this.setState(state => ({
+                                            ...state,
+                                            formType: TIFormType.INLINE
+                                        }))
+                                    }}
+                                >
+                                    Semua Isian Kebawah
+                                </Button>
+                            </div>
+                            <div className="fa-pull-right">
+                                Sudah pernah daftar? &nbsp;
+                                <Link to={"/login"}>
+                                    <Button variant="warning" size="sm" type="button">
+                                        Masuk
+                                    </Button>
+                                </Link>
+                            </div>
+                        </Card.Body>
 
-                                <Card.Title>
-                                    <h1 className="text-center">Pendaftaran Alumni</h1>
-                                </Card.Title>
+                        <Card.Title>
+                            <h1 className="text-center">Pendaftaran Alumni</h1>
+                        </Card.Title>
 
-                                <FormWithConstraints
-                                    ref={this.formElement}
-                                    onSubmit={this.onSubmit}
-                                    noValidate>
+                        <FormWithConstraints
+                            ref={this.formElement}
+                            onSubmit={this.onSubmit}
+                            noValidate>
 
-                                    <Card.Body>
+                            <Card.Body>
 
-                                        <FormParent defaultActiveKey="account" id="uncontrolled-forms">
-                                            {this.renderAccount(
-                                                {
-                                                    title: 'Data Akun',
-                                                    eventKey: 'account',
-                                                    type: formType
-                                                }
-                                            )}
+                                <FormParent defaultActiveKey="account" id="uncontrolled-forms">
+                                    {this.renderAccount(
+                                        {
+                                            title: 'Data Akun',
+                                            eventKey: 'account',
+                                            type: formType
+                                        }
+                                    )}
 
-                                            {this.renderPersonal(
-                                                {
-                                                    title: 'Data Pribadi',
-                                                    eventKey: 'personal',
-                                                    type: formType
-                                                }
-                                            )}
+                                    {this.renderPersonal(
+                                        {
+                                            title: 'Data Pribadi',
+                                            eventKey: 'personal',
+                                            type: formType
+                                        }
+                                    )}
 
-                                            {this.renderAddress(
-                                                {
-                                                    title: 'Data Alamat Saat Ini',
-                                                    eventKey: 'address',
-                                                    type: formType
-                                                }
-                                            )}
-                                        </FormParent>
+                                    {this.renderAddress(
+                                        {
+                                            title: 'Data Alamat Saat Ini',
+                                            eventKey: 'address',
+                                            type: formType
+                                        }
+                                    )}
+                                </FormParent>
 
-                                    </Card.Body>
-                                    <Card.Footer>
-                                        <div className="row justify-content-center">
-                                            <Button variant="primary" type="submit">
-                                                Kirim Pendaftaran
-                                            </Button>
-                                        </div>
-                                    </Card.Footer>
+                            </Card.Body>
+                            <Card.Footer>
+                                <div className="row justify-content-center">
+                                    <Button variant="primary" type="submit">
+                                        Kirim Pendaftaran
+                                    </Button>
+                                </div>
+                            </Card.Footer>
 
-                                </FormWithConstraints>
+                        </FormWithConstraints>
 
-                            </Card>
-                        </Col>
-                    </Row>
-                </Container>
-            </section>
+                    </Card>
+                </Col>
+            </Row>
         )
     }
 }

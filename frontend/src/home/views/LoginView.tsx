@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef }  from "react";
+import React, {useState, useEffect, useRef, useContext} from "react";
 import RegeTitle from "../component/RegeTitle";
 import {Button, Card, Col, Container, Form, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
@@ -6,12 +6,14 @@ import {Link} from "react-router-dom";
 import {FieldFeedback, FieldFeedbacks, FormWithConstraints} from "react-form-with-constraints";
 import {NotificationManager} from 'react-notifications';
 import AuthProvider from "../../dataprovider/authProvider";
+import {ThemeContext} from "../component/PageTemplate";
 
-export default function LoginView({ history })
+export default function LoginView({ history, ...props })
 {
     const formEl = useRef(null);
 
     const [loading, setLoading] = useState(true);
+    const theme = useContext(ThemeContext);
 
     useEffect( () => {
         AuthProvider.checkAuth()
@@ -21,7 +23,9 @@ export default function LoginView({ history })
             .catch(() => {
                 setLoading(false)
             })
-    });
+
+        theme.setHeader({ title: 'Login', showTitle: false })
+    }, []);
 
     async function handleChange({ target }) {
         // Validates only the given fields and returns Promise<Field[]>
@@ -115,37 +119,32 @@ export default function LoginView({ history })
     }
 
     return (
-        <Container className="c-63vh-height" fluid>
-            <Row>
-                <RegeTitle/>
-            </Row>
-            <Row className="d-table h-100 w-100">
-                <Col className="d-table-cell align-middle w-100">
-                    <Card className="col-md-4 col-sm-8 mx-auto">
-                        {
-                            loading ? (
-                                <Card.Text>Loading...</Card.Text>
-                            ) : [
-                                <Card.Title>
-                                    <h1 className="text-center">Login</h1>
-                                </Card.Title>,
-                                <Card.Body>{renderFormLogin()}</Card.Body>,
-                                <Card.Footer className="row justify-content-center">
-                                    <p>
-                                    Belum mempunyai akun?
-                                    </p>
-                                    &nbsp;
-                                    <Link to={"/register"}>
-                                        <Button type="button" variant="warning" size="sm">
-                                            Daftar Akun
-                                        </Button>
-                                    </Link>
-                                </Card.Footer>,
-                            ]
-                        }
-                    </Card>
-                </Col>
-            </Row>
-        </Container>
+        <Row className="d-table h-100 w-100">
+            <Col className="d-table-cell align-middle w-100">
+                <Card className="col-md-4 col-sm-8 mx-auto">
+                    {
+                        loading ? (
+                            <Card.Text>Loading...</Card.Text>
+                        ) : [
+                            <Card.Title>
+                                <h1 className="text-center">Login</h1>
+                            </Card.Title>,
+                            <Card.Body>{renderFormLogin()}</Card.Body>,
+                            <Card.Footer className="row justify-content-center">
+                                <p>
+                                Belum mempunyai akun?
+                                </p>
+                                &nbsp;
+                                <Link to={"/register"}>
+                                    <Button type="button" variant="warning" size="sm">
+                                        Daftar Akun
+                                    </Button>
+                                </Link>
+                            </Card.Footer>,
+                        ]
+                    }
+                </Card>
+            </Col>
+        </Row>
     )
 }

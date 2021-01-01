@@ -10,6 +10,7 @@ import Image from "../component/Image";
 import {Link} from "react-router-dom";
 
 import ReactPaginate from 'react-paginate';
+import {ThemeContext} from "../component/PageTemplate";
 
 interface EventData {id: number, title: string, description: string, image: string, thumbnail: string}
 
@@ -52,6 +53,8 @@ export default class EventsListView extends PureComponent<any, EventsListViewSta
         this.handlePageChange = this.handlePageChange.bind(this)
         this.handleSearchForm = this.handleSearchForm.bind(this)
     }
+
+    static contextType = ThemeContext;
 
     updateData()
     {
@@ -133,6 +136,7 @@ export default class EventsListView extends PureComponent<any, EventsListViewSta
     {
         try
         {
+            this.context.setHeader({ title: 'Daftar Kegiatan', showTitle: true })
             this.updateData()
         }
         catch (e)
@@ -167,123 +171,125 @@ export default class EventsListView extends PureComponent<any, EventsListViewSta
             initialDate = moment().format('YYYY-MM-DD')
         }
 
+        let events = this.state.data ?? []
+
         return (
-            <>
-                <RegeTitle>
-                    <h1 className="text-center display-4">Daftar Kegiatan</h1>
-                </RegeTitle>
-                <Container>
-                    <Row>
-                        <Col md={{span:8, offset:2}}>
-                            <div className="fa-pull-right">
-                                <Link
-                                    to={{
-                                        pathname: '/events',
-                                        state: {
-                                            view: 0,
-                                            date: startGte ?? initialDate
-                                        }
-                                    }}
-                                >
-                                    <Button className="btn-kegiatan">Bulan</Button>
-                                </Link>
-                                <Link
-                                    to={{
-                                        pathname: '/events',
-                                        state: {
-                                            view: 1,
-                                            date: startGte ?? initialDate
-                                        }
-                                    }}
-                                >
-                                    <Button className="btn-kegiatan">Agenda</Button>
-                                </Link>
-                                <Button className="btn-kegiatan-active">Daftar</Button>
-                            </div>
-                        </Col>
-                        <Col md={12}>
-                            <Form inline onSubmit={this.handleSearchForm}
-                                  className={"row c-filter justify-content-center"}>
+            <Row>
+                <Col md={{span:8, offset:2}}>
+                    <div className="fa-pull-right">
+                        <Link
+                            to={{
+                                pathname: '/events',
+                                state: {
+                                    view: 0,
+                                    date: startGte ?? initialDate
+                                }
+                            }}
+                        >
+                            <Button className="btn-kegiatan">Bulan</Button>
+                        </Link>
+                        <Link
+                            to={{
+                                pathname: '/events',
+                                state: {
+                                    view: 1,
+                                    date: startGte ?? initialDate
+                                }
+                            }}
+                        >
+                            <Button className="btn-kegiatan">Agenda</Button>
+                        </Link>
+                        <Button className="btn-kegiatan-active">Daftar</Button>
+                    </div>
+                </Col>
+                <Col md={{span:8, offset:2}}>
+                    <br/>
+                    <Form onSubmit={this.handleSearchForm}>
 
-                                <Form.Group>
-                                    <Form.Label htmlFor="titleSearch" srOnly>Judul</Form.Label>
-                                    <Form.Control
-                                        id="titleSearch"
-                                        type="text"
-                                        name="title"
-                                        maxLength={100}
-                                        minLength={3}
-                                        required={false}
-                                        autoComplete="off"
-                                        placeholder="Judul Berita yang Anda Cari" />
-                                </Form.Group>
+                        <Form.Row className="justify-content-center">
 
-                                <Form.Group>
-                                    <Form.Label htmlFor="formSearch" srOnly>Mulai Acara</Form.Label>
-                                    <Form.Control
-                                        id="formSearch"
-                                        type="date"
-                                        name="start_gte"
-                                        required={false}
-                                        autoComplete="off"
-                                        placeholder="Mulai Acara"
-                                        defaultValue={this.props.initialDate}
-                                    />
-                                </Form.Group>
+                            <Form.Group as={Col} md="5">
+                                <Form.Label htmlFor="titleSearch" srOnly>Judul</Form.Label>
+                                <Form.Control
+                                    id="titleSearch"
+                                    type="text"
+                                    name="title"
+                                    maxLength={100}
+                                    minLength={3}
+                                    required={false}
+                                    autoComplete="off"
+                                    placeholder="Judul Berita yang Anda Cari" />
+                            </Form.Group>
 
+                            <Form.Group as={Col} md="5">
+                                <Form.Label htmlFor="formSearch" srOnly>Mulai Acara</Form.Label>
+                                <Form.Control
+                                    id="formSearch"
+                                    type="date"
+                                    name="start_gte"
+                                    required={false}
+                                    autoComplete="off"
+                                    placeholder="Mulai Acara"
+                                    defaultValue={this.props.initialDate}
+                                />
+                            </Form.Group>
+
+                            <Col md="2">
                                 <Button type="submit" variant="info" size="sm">
                                     Cari
                                 </Button>
-                            </Form>
+                            </Col>
 
-                        </Col>
-                        <Col md={12}>
+                        </Form.Row>
 
-                            <div className="row justify-content-center mb-3">
-                                {
-                                    this.state.data.map(item => {
-                                        return <div className="col-auto" key={item.id}>
-                                            <Card className="h-100" style={{'width':'15rem'}}>
-                                                <Image
-                                                    className="card-img-top"
-                                                    src={item.thumbnail ?? "/static/img/jakarta.jpg"}
-                                                    fallbackSrc={"/static/img/jakarta.jpg"}
-                                                    alt={item.title}/>
-                                                <Card.Body>
-                                                    <Card.Title><h4>{item.title}</h4></Card.Title>
-                                                    <p>{item.description} &nbsp;
-                                                        <Link to={`events/${item.id}`}>
-                                                            <small><b>Read More...</b></small>
-                                                        </Link>
-                                                    </p>
-                                                </Card.Body>
-                                            </Card>
-                                        </div>
-                                    })
-                                }
-                            </div>
+                    </Form>
 
-                        </Col>
-                        <Col md={12}>
+                </Col>
+                <Col md={12}>
 
-                            <ReactPaginate
-                                previousLabel={'previous'}
-                                nextLabel={'next'}
-                                breakLabel={'...'}
-                                breakClassName={'break-me'}
-                                pageCount={ this.state.total / this.state.pagination.perPage }
-                                marginPagesDisplayed={2}
-                                pageRangeDisplayed={5}
-                                onPageChange={this.handlePageChange}
-                                containerClassName={'pagination justify-content-center'}
-                                subContainerClassName={'pages pagination'}
-                                activeClassName={'active'}
-                            />
+                    <div className="row justify-content-center mb-3">
+                        {
+                            events.map(item => {
+                                return <div className="col-auto" key={item.id}>
+                                    <Card className="h-100" style={{'width':'15rem'}}>
+                                        <Image
+                                            className="card-img-top"
+                                            src={item.thumbnail ?? "/static/img/jakarta.jpg"}
+                                            fallbackSrc={"/static/img/jakarta.jpg"}
+                                            alt={item.title}/>
+                                        <Card.Body>
+                                            <Card.Title><h4>{item.title}</h4></Card.Title>
+                                            <p>{item.description} &nbsp;
+                                                <Link to={`events/${item.id}`}>
+                                                    <small><b>Read More...</b></small>
+                                                </Link>
+                                            </p>
+                                        </Card.Body>
+                                    </Card>
+                                </div>
+                            })
+                        }
+                    </div>
 
-                        </Col>
-                    </Row>
-                </Container>
-            </>
+                </Col>
+                <Col md={12}>
+
+                    <ReactPaginate
+                        previousLabel={'previous'}
+                        nextLabel={'next'}
+                        breakLabel={'...'}
+                        breakClassName={'break-me'}
+                        pageCount={ this.state.total / this.state.pagination.perPage }
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={this.handlePageChange}
+                        containerClassName={'pagination justify-content-center'}
+                        subContainerClassName={'pages pagination'}
+                        activeClassName={'active'}
+                    />
+
+                </Col>
+            </Row>
         );
     }
 }

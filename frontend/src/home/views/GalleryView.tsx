@@ -3,11 +3,11 @@ import React, {PureComponent} from "react";
 import ImageGallery from 'react-image-gallery';
 
 import 'react-image-gallery/styles/css/image-gallery.css'
-import {Alert, Badge, Button, Col, Container, Row} from "react-bootstrap";
-import RegeTitle from "../component/RegeTitle";
+import {Alert, Badge, Button, Col, Row} from "react-bootstrap";
 import DataProviderFactory from "../../dataprovider/DataProviderFactory";
 
 import {NotificationManager} from 'react-notifications';
+import {ThemeContext} from "../component/PageTemplate";
 
 interface Album {
     id: string|number
@@ -30,6 +30,8 @@ interface GalleryViewState {
 
 export default class GalleryView extends PureComponent<any, GalleryViewState>
 {
+    static contextType = ThemeContext;
+
     constructor(props: any)
     {
         super(props);
@@ -113,6 +115,7 @@ export default class GalleryView extends PureComponent<any, GalleryViewState>
         try
         {
             this.updateAlbums();
+            this.context.setHeader({ title: 'Galeri', showTitle: true })
         }
         catch (e)
         {
@@ -166,7 +169,7 @@ export default class GalleryView extends PureComponent<any, GalleryViewState>
         }).filter(item => item !== null)
 
         this.setState(oldState => {
-            return {...oldState, isLoading: true, selected: currentSelected, albums: albums}
+            return {...oldState, isLoading: true, selected: currentSelected, albums: albums, photos: []}
         })
     }
 
@@ -226,50 +229,36 @@ export default class GalleryView extends PureComponent<any, GalleryViewState>
     render()
     {
         if(this.state.isLoading) return (
-            <section className="showcase gallery">
-                <RegeTitle>
-                    <h1 className="text-center display-4">Galeri</h1>
-                </RegeTitle>
-                <Container>
-                    <Row className="justify-content-center mb-3">
-                        Loading Bro...
-                    </Row>
-                </Container>
-            </section>
+            <Row className="justify-content-center mb-3">
+                Loading Bro...
+            </Row>
         )
 
         let isWidthWide = (window.innerWidth <= 760);
 
         return (
-            <section className="showcase gallery">
-                <RegeTitle>
-                    <h1 className="text-center display-4">Galeri</h1>
-                </RegeTitle>
-                <Container>
-                    <Row>
-                        {
-                            this.renderAlbums()
-                        }
-                        {
-                            isWidthWide && this.renderSelectedAlbums()
-                        }
-                        <Col md={8}>
-                            {
-                                this.state.photos.length > 0 ? (
-                                    <ImageGallery items={this.state.photos}/>
-                                ) : (
-                                    <Alert variant="warning">
-                                        Album yang dipilih tidak memiliki foto, coba pilih album lain!
-                                    </Alert>
-                                )
-                            }
-                        </Col>
-                        {
-                            !isWidthWide && this.renderSelectedAlbums()
-                        }
-                    </Row>
-                </Container>
-            </section>
+            <Row>
+                {
+                    this.renderAlbums()
+                }
+                {
+                    isWidthWide && this.renderSelectedAlbums()
+                }
+                <Col md={8}>
+                    {
+                        this.state.photos.length > 0 ? (
+                            <ImageGallery items={this.state.photos}/>
+                        ) : (
+                            <Alert variant="warning">
+                                Album yang dipilih tidak memiliki foto, coba pilih album lain!
+                            </Alert>
+                        )
+                    }
+                </Col>
+                {
+                    !isWidthWide && this.renderSelectedAlbums()
+                }
+            </Row>
         )
     }
 }

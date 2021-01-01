@@ -7,6 +7,7 @@ import {NotificationManager} from 'react-notifications';
 import RegeTitle from "../component/RegeTitle";
 import {Card, Container, Alert} from "react-bootstrap";
 import Image from "../component/Image";
+import {ThemeContext} from "../component/PageTemplate";
 
 interface OrganizationViewState {
     total: number;
@@ -17,7 +18,7 @@ interface OrganizationViewState {
 }
 
 export default class OrganizationView
-    extends PureComponent<{},OrganizationViewState>
+    extends PureComponent<any,OrganizationViewState>
 {
     constructor(props:any) {
         super(props);
@@ -63,16 +64,12 @@ export default class OrganizationView
         })
     }
 
+    static contextType = ThemeContext;
+
     componentDidMount()
     {
-        try
-        {
-            this.updateOrganizationData()
-        }
-        catch (e)
-        {
-            NotificationManager.error('Koneksi Internet Terputus!', 'Error Koneksi');
-        }
+        this.updateOrganizationData()
+        this.context.setHeader({ title: 'Struktur Organisasi', showTitle: true })
     }
 
     render() {
@@ -85,41 +82,32 @@ export default class OrganizationView
         ]
 
         return (
-            <section className="features-icons bg-light">
-                <RegeTitle>
-                    <h1 className="text-center display-4">
-                        Struktur Organisasi
-                    </h1>
-                </RegeTitle>
-                <Container>
-                    <div className="row justify-content-center mb-3">
-                        {
-                            data.length === 0 && (
-                                <Alert variant="warning">
-                                    <strong>Belum ada kepengurusan IKA SMAN Situraja</strong>
-                                </Alert>
-                            )
-                        }
-                        {
-                            data.map((item, key) => {
-                                return <div className="col-auto mb-2" key={item.id}>
-                                    <Card style={{'width':'12rem'}} className="h-100">
-                                        <Image
-                                            className="card-img-top"
-                                            src={item.image ?? process.env.PUBLIC_URL + images[key % 3]}
-                                            fallbackSrc={process.env.PUBLIC_URL + images[0]}
-                                            alt={item.name}/>
-                                        <Card.Body>
-                                            <p className={"lead"}>{item.userFullname ?? '<Kak IKA>'}</p>
-                                            <b>{item.name}</b>
-                                        </Card.Body>
-                                    </Card>
-                                </div>
-                            })
-                        }
-                    </div>
-                </Container>
-            </section>
+            <div className="row justify-content-center mb-3">
+                {
+                    data.length === 0 && (
+                        <Alert variant="warning">
+                            <strong>Belum ada kepengurusan IKA SMAN Situraja</strong>
+                        </Alert>
+                    )
+                }
+                {
+                    data.map((item, key) => {
+                        return <div className="col-auto mb-2" key={item.id}>
+                            <Card style={{'width':'12rem'}} className="h-100">
+                                <Image
+                                    className="card-img-top"
+                                    src={item.image ?? process.env.PUBLIC_URL + images[key % 3]}
+                                    fallbackSrc={process.env.PUBLIC_URL + images[0]}
+                                    alt={item.name}/>
+                                <Card.Body>
+                                    <p className={"lead"}>{item.userFullname ?? '<Kak IKA>'}</p>
+                                    <b>{item.name}</b>
+                                </Card.Body>
+                            </Card>
+                        </div>
+                    })
+                }
+            </div>
         )
     }
 }

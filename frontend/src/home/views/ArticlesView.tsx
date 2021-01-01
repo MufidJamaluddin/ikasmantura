@@ -9,10 +9,10 @@ import {NotificationManager} from 'react-notifications';
 
 import ReactPaginate from 'react-paginate';
 
-import RegeTitle from "../component/RegeTitle";
-import {Button, Card, Col, Container, Form, Row} from "react-bootstrap";
+import {Button, Card, Col, Form, Row} from "react-bootstrap";
 import {RouteComponentProps} from "react-router";
 import Image from "../component/Image";
+import {ThemeContext} from "../component/PageTemplate";
 
 interface ArticleItem {
     title?: string
@@ -32,7 +32,8 @@ interface ArticlesViewState
     selectedTopic?: string|number;
 }
 
-class ArticlesView extends React.PureComponent<RouteComponentProps<unknown, unknown, {topicId?: string|number}>, ArticlesViewState>
+class ArticlesView extends React.PureComponent<
+    RouteComponentProps<unknown, unknown, {topicId?: string|number}>|any, ArticlesViewState>
 {
     constructor(props:any)
     {
@@ -59,6 +60,8 @@ class ArticlesView extends React.PureComponent<RouteComponentProps<unknown, unkn
         this.handlePageChange = this.handlePageChange.bind(this)
         this.handleSearchForm = this.handleSearchForm.bind(this)
     }
+
+    static contextType = ThemeContext;
 
     updateData()
     {
@@ -126,6 +129,8 @@ class ArticlesView extends React.PureComponent<RouteComponentProps<unknown, unkn
         {
             this.updateTopics()
             this.updateData()
+
+            this.context.setHeader({ title: 'Daftar Kegiatan', showTitle: true })
         }
         catch (e)
         {
@@ -196,110 +201,110 @@ class ArticlesView extends React.PureComponent<RouteComponentProps<unknown, unkn
         let topicId = this.props.location?.state?.topicId ?? 0
         const history = this.props.history
 
+        let articles = this.state.data ?? []
+
         return (
-            <>
-                <RegeTitle>
-                    <h1 className="text-center display-4">Artikel</h1>
-                </RegeTitle>
-                <Container>
-                    <Row>
-                        <Col md={12}>
-                            <Form inline onSubmit={this.handleSearchForm} className={"row c-filter justify-content-center"}>
+            <Row>
+                <Col md={{span:8, offset:2}}>
 
-                                <Form.Group>
-                                    <Form.Label htmlFor="topicSearch" srOnly>Topik</Form.Label>
-                                    <Form.Control
-                                        as="select"
-                                        id="topicSearch"
-                                        required={true}
-                                        value={topicId}
-                                        onChange={(e) => {
-                                            let state = {
-                                                topicId: e.target.value
-                                            };
+                    <Form onSubmit={this.handleSearchForm}>
 
-                                            history.replace({ ...history.location, state});
-                                        }}
-                                        name="topicId">
-                                            <option value={0}>
-                                                Semua
-                                            </option>
-                                            {
-                                                this.state.topics.map(item => (
-                                                    <option key={item.id} value={item.id}>
-                                                        {item.name}
-                                                    </option>
-                                                ))
-                                            }
-                                    </Form.Control>
-                                </Form.Group>
+                        <Form.Row className="justify-content-center">
+                            <Form.Group as={Col} md="5">
+                                <Form.Label htmlFor="topicSearch" srOnly>Topik</Form.Label>
+                                <Form.Control
+                                    as="select"
+                                    id="topicSearch"
+                                    required={true}
+                                    value={topicId}
+                                    onChange={(e) => {
+                                        let state = {
+                                            topicId: e.target.value
+                                        };
 
-                                <Form.Group>
-                                    <Form.Label htmlFor="titleSearch" srOnly>Judul</Form.Label>
-                                    <Form.Control
-                                        id="titleSearch"
-                                        type="text"
-                                        name="title"
-                                        maxLength={100}
-                                        minLength={3}
-                                        required={false}
-                                        autoComplete="off"
-                                        placeholder="Judul Berita yang Anda Cari" />
-                                </Form.Group>
+                                        history.replace({ ...history.location, state});
+                                    }}
+                                    name="topicId">
+                                        <option value={0}>
+                                            Semua
+                                        </option>
+                                        {
+                                            this.state.topics.map(item => (
+                                                <option key={item.id} value={item.id}>
+                                                    {item.name}
+                                                </option>
+                                            ))
+                                        }
+                                </Form.Control>
+                            </Form.Group>
 
+                            <Form.Group as={Col} md="5">
+                                <Form.Label htmlFor="titleSearch" srOnly>Judul</Form.Label>
+                                <Form.Control
+                                    id="titleSearch"
+                                    type="text"
+                                    name="title"
+                                    maxLength={100}
+                                    minLength={3}
+                                    required={false}
+                                    autoComplete="off"
+                                    placeholder="Judul Berita yang Anda Cari" />
+                            </Form.Group>
+
+                            <Col md="2">
                                 <Button type="submit" variant="info" size="sm">
                                     Cari
                                 </Button>
-                            </Form>
+                            </Col>
+                        </Form.Row>
+                    </Form>
 
-                        </Col>
-                        <Col md={12}>
+                </Col>
+                <Col md={12}>
 
-                            <div className="row justify-content-center mb-3">
-                            {
-                                this.state.data.map(item => {
-                                    return <div className="col-auto" key={item.id}>
-                                        <Card className="h-100" style={{'width':'15rem'}}>
-                                            <Image
-                                                className="card-img-top"
-                                                src={item.thumbnail ?? "/static/img/jakarta.jpg"}
-                                                fallbackSrc={"/static/img/jakarta.jpg"}
-                                                alt={item.name}/>
-                                            <Card.Body>
-                                                <Card.Title><h4>{item.title}</h4></Card.Title>
-                                                <p>{item.description} &nbsp;
-                                                    <Link to={`articles/${item.id}`}>
-                                                        <small><b>Read More...</b></small>
-                                                    </Link>
-                                                </p>
-                                            </Card.Body>
-                                        </Card>
-                                    </div>
-                                })
-                            }
+                    <div className="row justify-content-center mb-3">
+                    {
+                        articles.map(item => {
+                            return <div className="col-auto" key={item.id}>
+                                <Card className="h-100" style={{'width':'15rem'}}>
+                                    <Image
+                                        className="card-img-top"
+                                        src={item.thumbnail ?? "/static/img/jakarta.jpg"}
+                                        fallbackSrc={"/static/img/jakarta.jpg"}
+                                        alt={item.name}/>
+                                    <Card.Body>
+                                        <Card.Title><h4>{item.title}</h4></Card.Title>
+                                        <p>{item.description} &nbsp;
+                                            <Link to={`articles/${item.id}`}>
+                                                <small><b>Read More...</b></small>
+                                            </Link>
+                                        </p>
+                                    </Card.Body>
+                                </Card>
                             </div>
+                        })
+                    }
+                    </div>
 
-                        </Col>
-                        <Col md={12}>
+                </Col>
+                <Col md={12}>
 
-                            <ReactPaginate
-                                previousLabel={'previous'}
-                                nextLabel={'next'}
-                                breakLabel={'...'}
-                                breakClassName={'break-me'}
-                                pageCount={ this.state.total / this.state.pagination.perPage }
-                                marginPagesDisplayed={2}
-                                pageRangeDisplayed={5}
-                                onPageChange={this.handlePageChange}
-                                containerClassName={'pagination justify-content-center'}
-                                subContainerClassName={'pages pagination'}
-                                activeClassName={'active'}
-                            />
+                    <ReactPaginate
+                        previousLabel={'previous'}
+                        nextLabel={'next'}
+                        breakLabel={'...'}
+                        breakClassName={'break-me'}
+                        pageCount={ this.state.total / this.state.pagination.perPage }
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={this.handlePageChange}
+                        containerClassName={'pagination justify-content-center'}
+                        subContainerClassName={'pages pagination'}
+                        activeClassName={'active'}
+                    />
 
-                        </Col>
-                    </Row>
-                </Container>
-            </>
+                </Col>
+            </Row>
         )
     }
 }
