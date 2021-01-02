@@ -1,13 +1,15 @@
 import React, {PureComponent} from "react";
 
-export default class Image extends PureComponent<any, {errored: boolean, src: string}>
+import altImg from "./../../resource/smantura.jpg"
+
+export default class Image extends PureComponent<any, {errored: boolean, src: any}>
 {
     constructor(props)
     {
         super(props);
 
         this.state = {
-            src: props.src,
+            src: props.src ?? (props.fallbackSrc ?? altImg),
             errored: false,
         };
     }
@@ -17,7 +19,7 @@ export default class Image extends PureComponent<any, {errored: boolean, src: st
         if (!this.state.errored)
         {
             this.setState({
-                src: this.props.fallbackSrc,
+                src: this.props.fallbackSrc ?? altImg,
                 errored: true,
             });
         }

@@ -2,7 +2,6 @@ import React, {PureComponent} from "react";
 import {Button, Card, Col, Form, Row, Tabs} from "react-bootstrap";
 import {Link, RouteComponentProps} from "react-router-dom";
 
-import DataProviderFactory from "../../dataprovider/DataProviderFactory";
 import {NotificationManager} from 'react-notifications';
 import {Async, FieldFeedback, FieldFeedbacks, FormWithConstraints} from "react-form-with-constraints";
 
@@ -11,73 +10,14 @@ import makeAnimated from 'react-select/animated';
 import {TIForm, TIFormType} from "../component/CForm";
 import {ValidateEmail} from "../../utils/Form";
 import {ThemeContext} from "../component/PageTemplate";
+import {checkAvailability, registerNewAccount} from "../models/AccountModel";
+import {getClassrooms} from "../models/ClassroomsModel";
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 const selectAnimatedComponents = makeAnimated();
-
-async function checkAvailability({ username = '', email = '' })
-{
-    let result: boolean;
-    let lastUsername;
-    let lastEmail;
-
-    try
-    {
-        if(lastUsername === username && lastEmail === email)
-        {
-            return result
-        }
-
-        lastUsername = username
-        lastEmail = email
-
-        result = await fetch('api/v1/register/availability', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                username: username,
-                email: email,
-            })
-        })
-        .then(resp => {
-            if(resp.status < 200 && resp.status > 399)
-                throw new Error('Server sibuk!')
-
-            return resp.json()
-        })
-        .then((resp:any) => {
-            console.log(resp)
-            return !resp?.exist
-        }).catch(error => {
-            NotificationManager.error(error?.toString(), 'Cek Ketersediaan Akun: Error Koneksi');
-            return true
-        })
-
-        if(result)
-        {
-            NotificationManager.info(
-                `Akun "${username} ${email}" tersedia!`,
-                'Akun tersedia');
-        }
-        else
-        {
-            NotificationManager.warning(
-            `Akun "${username} ${email}" tidak tersedia!`,
-            'Akun tidak tersedia');
-        }
-    }
-    catch (e)
-    {
-        result = true
-    }
-
-    return result
-}
 
 export default class RegisterView extends PureComponent<RouteComponentProps<any>|any,
     {classrooms: Array<any>, formType: TIFormType, formData: any, inputValidateQueue: any, nextValidation: number}>
@@ -118,29 +58,15 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
             return;
         }
 
-        let dataProvider = DataProviderFactory.getDataProvider()
         let formData = this.state.formData
 
         formData.classrooms = formData.classrooms.map(item => {
             return { id: item }
         })
 
-        try
-        {
-            dataProvider.create("temp_users", formData).then(_ => {
-
-                NotificationManager.success(
-                    'Pendaftaran Sukses, Mohon Tunggu Konfirmasi Admin!', 'Pendaftaran Sukses');
-
-                this.props.history.push('/login')
-
-            }, error => {
-                NotificationManager.error(error.message, `Pendaftaran Gagal: ${error.name}`);
-            })
-        }
-        catch (e)
-        {
-            NotificationManager.error('Koneksi Internet Terputus!', 'Error Koneksi');
+        let result = await registerNewAccount(formData)
+        if(result) {
+            this.props.history.push('/login')
         }
     }
 
@@ -214,46 +140,21 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
         return await checkAvailability({ email: value })
     }
 
-    updateClassrooms()
+    async updateClassrooms()
     {
-        try
-        {
-            let dataProvider = DataProviderFactory.getDataProvider()
-            dataProvider.getList("classrooms", {
-                pagination: {
-                    page: 1,
-                    perPage: 100,
-                },
-                sort: {
-                    field: 'id',
-                    order: 'ASC'
-                },
-                filter: {
-                },
-            }).then(resp => {
-                this.setState(state => {
+        let classrooms = await getClassrooms() ?? []
 
-                    let optionsData = resp.data.map(item => {
-                        let label = `${item.level} - ${item.major} - ${item.seq}`
-                        return {
-                            value: item.id,
-                            label: label,
-                        }
-                    })
+        let nClassrooms = classrooms.map(item => {
+            let label = `${item.level} - ${item.major} - ${item.seq}`
+            return {
+                value: item.id,
+                label: label,
+            }
+        })
 
-                    return {...state, classrooms: optionsData }
-                })
-            }, error => {
-                NotificationManager.error(error.message, error.name);
-            })
-        }
-        catch(e)
-        {
-            NotificationManager.error('Koneksi Internet Terputus!', 'Error Koneksi');
-            this.setState(state => {
-                return {...state, classrooms: [] }
-            })
-        }
+        this.setState(state => {
+            return {...state, classrooms: nClassrooms }
+        })
     }
 
     componentDidMount()

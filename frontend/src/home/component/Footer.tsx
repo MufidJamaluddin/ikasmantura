@@ -9,13 +9,14 @@ export default function Footer() {
     const [state, actions] = useStore('AboutModel')
 
     useEffect(() => {
-        // @ts-ignore
         actions.init()
     }, [])
 
+    let data = { ...state?.data }
+
     let {
-        title, facebook, twitter, instagram, email
-    } = state.data ?? {}
+        title = '', facebook = '', twitter = '', instagram = '', email = ''
+    } = data
 
     return (
         <div className="footerContainer">

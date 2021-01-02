@@ -4,22 +4,11 @@ import ImageGallery from 'react-image-gallery';
 
 import 'react-image-gallery/styles/css/image-gallery.css'
 import {Alert, Badge, Button, Col, Row} from "react-bootstrap";
-import DataProviderFactory from "../../dataprovider/DataProviderFactory";
 
 import {NotificationManager} from 'react-notifications';
 import {ThemeContext} from "../component/PageTemplate";
-
-interface Album {
-    id: string|number
-    title: string
-}
-
-interface Photo {
-    id: string|number
-    title: string
-    image: string
-    thumbnail: string
-}
+import {Album, getAlbums} from "../models/AlbumModel";
+import {getPhotoByAlbumIds, Photo} from "../models/PhotoModel";
 
 interface GalleryViewState {
     albums: Array<Album>
@@ -45,67 +34,26 @@ export default class GalleryView extends PureComponent<any, GalleryViewState>
         this.chooseAlbum = this.chooseAlbum.bind(this)
     }
 
-    updateAlbums()
-    {
-        let dataProvider = DataProviderFactory.getDataProvider()
-        dataProvider.getList("albums", {
-            pagination: {
-                page: 1,
-                perPage: 100,
-            },
-            sort: {
-                field: 'id',
-                order: 'DESC'
-            },
-            filter: {
-            },
-        }).then(resp => {
-            this.setState(oldState => {
-                return {...oldState, albums: resp.data as Array<Album>, isLoading: false }
-            })
-        }, error => {
-            NotificationManager.error(error.message, error.name);
-            this.setState(oldState => {
-                return {...oldState, isLoading: false}
-            })
+    async updateAlbums() {
+        let albums = await getAlbums() ?? []
+
+        this.setState(oldState => {
+            return {...oldState, albums: albums as Array<Album>, isLoading: false}
         })
     }
 
-    updatePhotos()
-    {
-        if(this.state.isLoading)
-        {
-            let searchData = {
-                pagination: {
-                    page: 1,
-                    perPage: 1000,
-                },
-                sort: {
-                    field: 'id',
-                    order: 'ASC'
-                },
-                filter: {
-                    albumId: this.state.selected.map(item => item.id)
-                },
-            }
+    async updatePhotos() {
+        if (this.state.isLoading) {
+            let requestedAlbumIds = this.state.selected.map(item => item.id)
 
-            const dataProvider = DataProviderFactory.getDataProvider()
+            let photos = await getPhotoByAlbumIds(requestedAlbumIds) ?? []
 
-            dataProvider.getList("photos", searchData).then(resp => {
-                this.setState(state => {
-                    let newState = {
-                        photos: resp.data as Array<Photo>,
-                        isLoading: false,
-                    }
-                    return {...state, ...newState}
-                })
-            }, error => {
-                NotificationManager.error(error.message, error.name);
-
-                this.setState(state => {
-                    let newState = {isLoading: false}
-                    return {...state, ...newState}
-                })
+            this.setState(state => {
+                let newState = {
+                    photos: photos as Array<Photo>,
+                    isLoading: false,
+                }
+                return {...state, ...newState}
             })
         }
     }

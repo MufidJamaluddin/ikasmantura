@@ -3,9 +3,14 @@ import {NotificationManager} from 'react-notifications';
 
 export interface AboutItem {
     id: number|string
+    title: string
+    email: string
     description: string
     vision: string
     mission: string
+    facebook: string
+    twitter: string
+    instagram: string
 }
 
 async function getAbout () {

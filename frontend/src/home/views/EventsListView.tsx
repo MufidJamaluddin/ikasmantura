@@ -1,11 +1,10 @@
 import React, {PureComponent} from "react";
-import RegeTitle from "../component/RegeTitle";
 
 import {NotificationManager} from 'react-notifications';
 import moment from "moment";
 import DataProviderFactory from "../../dataprovider/DataProviderFactory";
 import {PaginationPayload, SortPayload} from "ra-core/src/types";
-import {Button, Card, Col, Container, Form, Row} from "react-bootstrap";
+import {Button, Card, Col, Form, Row} from "react-bootstrap";
 import Image from "../component/Image";
 import {Link} from "react-router-dom";
 
@@ -254,8 +253,7 @@ export default class EventsListView extends PureComponent<any, EventsListViewSta
                                     <Card className="h-100" style={{'width':'15rem'}}>
                                         <Image
                                             className="card-img-top"
-                                            src={item.thumbnail ?? "/static/img/jakarta.jpg"}
-                                            fallbackSrc={"/static/img/jakarta.jpg"}
+                                            src={item.thumbnail}
                                             alt={item.title}/>
                                         <Card.Body>
                                             <Card.Title><h4>{item.title}</h4></Card.Title>

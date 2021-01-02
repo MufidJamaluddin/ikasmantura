@@ -8,11 +8,10 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import listGridPlugin from '@fullcalendar/list'
 
 import idLocale from '@fullcalendar/core/locales/id'
-import DataProviderFactory from "../../dataprovider/DataProviderFactory";
 
-import {NotificationManager} from 'react-notifications';
 import {Col, Row} from "react-bootstrap";
 import {ThemeContext} from "../component/PageTemplate";
+import {initEvents} from "../models/EventsModel";
 
 export default class EventsView extends React.PureComponent<
     RouteComponentProps<unknown, unknown, {view?: string|number, date: Date|string}>|any>
@@ -31,36 +30,7 @@ export default class EventsView extends React.PureComponent<
         let end = moment(fetchInfo.end.valueOf())
             .format('YYYY-MM-DD')
 
-        const dataProvider = DataProviderFactory.getDataProvider()
-
-        let params:any = {
-            pagination: {
-                page: 1,
-                perPage: 1000,
-            },
-            sort: {
-                field: '',
-                order: '',
-            },
-            filter: {
-                start_gte: start,
-                start_lte: end
-            },
-        }
-
-        try
-        {
-            dataProvider.getList('events', params).then(value => {
-                successCallback(value.data);
-            }, error => {
-                NotificationManager.error(error.message, error.name)
-                failureCallback(error);
-            })
-        }
-        catch (e)
-        {
-            NotificationManager.error('Koneksi Internet Tidak Ada!', 'Error Koneksi');
-        }
+        initEvents({ start, end, successCallback, failureCallback })
     }
 
     getHeader() {

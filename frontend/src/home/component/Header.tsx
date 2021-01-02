@@ -1,4 +1,4 @@
-import React, {PureComponent, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import {Image, Nav, Navbar, NavDropdown, Container} from "react-bootstrap";
 
@@ -38,9 +38,11 @@ export default function Header(props)
         }
     }, [])
 
+    let data: any = state?.data || {}
+
     let {
         title
-    } = state.data ?? {}
+    } = data
 
     return (
         <Navbar expand="lg" sticky="top">

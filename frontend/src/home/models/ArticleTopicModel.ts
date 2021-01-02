@@ -25,12 +25,22 @@ async function getTopics () {
     }).then(resp => {
         return resp.data as Array<ArticleTopicItem>
     }, error => {
-        NotificationManager.error(error.message, error.name)
+        NotificationManager.error(error.message, `Error Koneksi: ${error.name}`)
         return null
     })
 }
 
-const ArticleTopicModel = {
+interface StateType {
+    data: Array<ArticleTopicItem>|null
+    fetched: boolean
+}
+
+interface ActionsParamType {
+    init: undefined
+    done: undefined
+}
+
+const ArticleTopicModel: ModelType<StateType, ActionsParamType> = {
     state: {
         data: null,
         fetched: false,
@@ -43,7 +53,7 @@ const ArticleTopicModel = {
             if(state.fetched) {
                 return state
             }
-            actions.done()
+            await actions.done()
 
             let newState = {...state ?? {}}
             if (newState.data === null) {

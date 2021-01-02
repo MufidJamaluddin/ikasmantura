@@ -1,8 +1,4 @@
-import React, {PureComponent} from "react";
-import {RouteComponentProps} from "react-router";
-import DataProviderFactory from "../../dataprovider/DataProviderFactory";
-
-import {NotificationManager} from 'react-notifications';
+import React, {useContext, useEffect} from "react";
 
 import moment from "moment";
 import 'moment/locale/id';
@@ -10,88 +6,57 @@ import 'moment/locale/id';
 import {Card, Col, Row} from "react-bootstrap";
 import Image from "../component/Image";
 import DOMPurify from "../../utils/Sanitizer";
+import {useStore} from "../models";
 import {ThemeContext} from "../component/PageTemplate";
+import {ArticleItem} from "../models/ArticleModel";
 
-interface ArticlesItemState {
-    data: any
-}
-
-export default class ArticlesItemView
-    extends PureComponent<RouteComponentProps<{id: string}>|any, ArticlesItemState>
+export default function ArticlesItemView(props)
 {
-    constructor(props:any) {
-        super(props);
-        this.state = {
-            data: null
-        }
-        moment.locale('id');
-    }
+    const id = props.match.params.id
 
-    static contextType = ThemeContext;
+    const [state, actions] = useStore('ArticleModel')
+    const theme = useContext(ThemeContext)
 
-    updateData()
-    {
-        let dataProvider = DataProviderFactory.getDataProvider()
-        let id = this.props.match.params.id
+    let item: ArticleItem = { ...state?.selected }
 
-        dataProvider.getOne('articles', { id: id }).then(resp => {
-            let data = resp.data
+    useEffect(() => {
+        theme.setHeader({ title: item?.title ?? 'Artikel', showTitle: true })
+        actions.getArticleById(id)
+        return actions.reset
+    }, [id])
 
-            this.setState({
-                data: data
-            })
+    let {
+        title,
+        image,
+        body,
+        createdByName,
+        createdAt,
+    } = item
 
-            let title = data?.title ?? 'Artikel IKA'
+    let fCreatedAt = moment(createdAt).format('LLLL');
 
-            this.context.setHeader({ title: title, showTitle: false })
-        }, error => {
-            NotificationManager.error(error.message, error.name);
-        })
-    }
-
-    componentDidMount()
-    {
-        try
-        {
-            this.updateData()
-        }
-        catch (e)
-        {
-            NotificationManager.error('Koneksi Internet Tidak Ada!', 'Error Koneksi');
-        }
-    }
-
-    render()
-    {
-        let item = this.state.data
-
-        if(item === null) return <div className="c-center-box c-loader"/>;
-
-        let createdAt = moment(item.createdAt).format('LLLL');
-
-        return (
-            <Row>
-                <Col md={{span:10, offset:1}}>
-                    <Card>
-                        <Image
-                            className="card-img-top"
-                            src={item.image ?? "/static/img/jakarta.jpg"}
-                            fallbackSrc={"/static/img/jakarta.jpg"}
-                            alt={item.name}/>
-                        <Card.Title>
-                            <h1 className="text-center">{item.title}</h1>
-                        </Card.Title>
-                        <Card.Text className="lead text-center">
-                            <b>Oleh: {item.createdByName ?? 'Kakak Anonim'}</b> &nbsp;
-                            <small>Pada: {createdAt}</small>
-                        </Card.Text>
-                        <Card.Body>
-                            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.body) }} />
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-        )
-    }
-
+    return (
+        <Row>
+            <Col md={{span:10, offset:1}}>
+                <Card>
+                    <Image
+                        className="card-img-top"
+                        src={image}
+                        alt={title}/>
+                    <Card.Title>
+                        <h1 className="text-center">{title}</h1>
+                    </Card.Title>
+                    <Card.Text className="lead text-center">
+                        <b>Oleh: {createdByName ?? 'Kakak Anonim'}</b> &nbsp;
+                        <small>Pada: {fCreatedAt}</small>
+                    </Card.Text>
+                    <Card.Body>
+                        <div dangerouslySetInnerHTML={{
+                            __html: body ? DOMPurify.sanitize(body) : ''
+                        }} />
+                    </Card.Body>
+                </Card>
+            </Col>
+        </Row>
+    )
 }
