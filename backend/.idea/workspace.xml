@@ -34,7 +34,6 @@
       <change beforePath="$PROJECT_DIR$/utils/getparam.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/getparam.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/viewmodels/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/article.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/viewmodels/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/event.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/dataprovider/DataProviderFactory.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/DataProviderFactory.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/dataprovider/authProvider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/authProvider.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/home/component/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/component/Footer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/home/component/PageTemplate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/component/PageTemplate.tsx" afterDir="false" />

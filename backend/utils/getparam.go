@@ -16,7 +16,7 @@ type GetParams struct {
 	Search string `query:"q,omitempty" json:"-" xml:"-" form:"-"`
 }
 
-func (p *GetParams) Filter(db *gorm.DB, searchFields []string) {
+func (p *GetParams) Filter(db *gorm.DB, searchFields []string, withLimit bool) {
 	if p.Ids != nil {
 		if len(p.Ids) > 0 {
 			db.Where("id IN ?", p.Ids)
@@ -27,7 +27,7 @@ func (p *GetParams) Filter(db *gorm.DB, searchFields []string) {
 			db.Order(fmt.Sprintf("%s %s", ToSneakyCase(p.Sort), p.Order))
 		}
 	}
-	if p.Start < p.End {
+	if withLimit && p.Start < p.End {
 		db.Limit(int(p.End - p.Start)).Offset(int(p.Start))
 	}
 	if p.Search != "" && searchFields != nil {

@@ -26,7 +26,7 @@ func GetTotal(db *gorm.DB, search *viewmodels.AlbumPhotoParam) (uint, error) {
 
 	tx = db.Model(&model)
 
-	search.Filter(tx, albumPhotoSearchFields)
+	search.Filter(tx, albumPhotoSearchFields, false)
 
 	if err = tx.Count(&total).Error; err != nil {
 		return 0, err
@@ -44,7 +44,7 @@ func Find(db *gorm.DB, search *viewmodels.AlbumPhotoParam, callback func(*viewmo
 	)
 
 	tx = db.Model(&model)
-	search.Filter(tx, albumPhotoSearchFields)
+	search.Filter(tx, albumPhotoSearchFields, true)
 
 	if rows, err = tx.Rows(); err != nil {
 		return err

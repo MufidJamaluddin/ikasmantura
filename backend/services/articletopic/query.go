@@ -26,7 +26,7 @@ func GetTotal(db *gorm.DB, search *viewmodels.ArticleTopicParam) (uint, error) {
 
 	tx = db.Model(&model)
 
-	search.Filter(tx, articleTopicSearchFields)
+	search.Filter(tx, articleTopicSearchFields, false)
 
 	if err = tx.Count(&total).Error; err != nil {
 		return 0, err
@@ -45,7 +45,7 @@ func Find(db *gorm.DB, search *viewmodels.ArticleTopicParam, callback func(*view
 
 	tx = db.Model(&model)
 
-	search.Filter(tx, articleTopicSearchFields)
+	search.Filter(tx, articleTopicSearchFields, true)
 
 	if rows, err = tx.Rows(); err != nil {
 		return err
