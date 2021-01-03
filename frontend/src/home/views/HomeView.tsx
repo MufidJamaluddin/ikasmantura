@@ -3,6 +3,7 @@ import { Col, Row } from "react-bootstrap";
 import {useStore} from "../models";
 import HomeMenu from "../component/HomeMenu";
 import {ThemeContext} from "../component/PageTemplate";
+import {strip_tags} from "../../utils/Security";
 
 export default function HomeView(props)
 {
@@ -56,13 +57,14 @@ export default function HomeView(props)
 
             {
                 topics.map(item => {
+                    let description = strip_tags(item.description)
                     return (
                         <Col sm={6} md={4} lg={2} key={item.id}>
                             <HomeMenu
                                 id={item.id}
                                 name={item.name}
                                 icon={item.icon}
-                                description={item.description}
+                                description={description}
                                 linkTo={{
                                     pathname: '/articles',
                                     state: {

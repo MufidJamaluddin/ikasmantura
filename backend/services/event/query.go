@@ -6,6 +6,7 @@ import (
 	"backend/viewmodels"
 	"database/sql"
 	"fmt"
+	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
 	"strings"
 )
@@ -18,10 +19,10 @@ func init() {
 	}
 }
 
-func searchFilter(tx *gorm.DB, search *viewmodels.EventParam) {
+func searchFilter(tx *gorm.DB, search *viewmodels.EventParam, withLimit bool) {
 	var title string
 
-	search.Filter(tx, eventSearchFields)
+	search.Filter(tx, eventSearchFields, withLimit)
 
 	if search.StartFrom != nil {
 		tx.Where("start >= ?", search.StartFrom)
@@ -51,7 +52,7 @@ func GetTotal(db *gorm.DB, search *viewmodels.EventParam) (uint, error) {
 		tx = db.Model(&model)
 	}
 
-	searchFilter(tx, search)
+	searchFilter(tx, search, false)
 
 	tx.Count(&total)
 
@@ -81,7 +82,7 @@ func Find(db *gorm.DB, search *viewmodels.EventParam, callback func(*viewmodels.
 		tx = db.Model(&model)
 	}
 
-	searchFilter(tx, search)
+	searchFilter(tx, search, true)
 
 	if rows, err = tx.Rows(); err != nil {
 		return err
@@ -97,15 +98,20 @@ func Find(db *gorm.DB, search *viewmodels.EventParam, callback func(*viewmodels.
 	return err
 }
 
-func FindById(db *gorm.DB, id uint, out *viewmodels.EventDto) error {
+func FindById(db *gorm.DB, id string, out *viewmodels.EventDto) error {
 	var (
 		err     error
 		err2    error
 		model   models.Event
 		creator models.User
+		uid     uuid.UUID
 	)
 
-	if err = repository.FindById(db, id, &model); err == nil {
+	if uid, err = uuid.FromString(id); err != nil {
+		return err
+	}
+
+	if err = db.Where("id = ?", uid.Bytes()).First(&model).Error; err == nil {
 		toViewModel(&model, out, false)
 	}
 

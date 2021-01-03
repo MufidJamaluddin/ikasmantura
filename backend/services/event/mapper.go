@@ -4,10 +4,11 @@ import (
 	"backend/models"
 	"backend/utils"
 	"backend/viewmodels"
+	uuid "github.com/satori/go.uuid"
 )
 
 func toModel(data *viewmodels.EventDto, out *models.Event) {
-	out.ID = data.Id
+	out.ID, _ = uuid.FromString(data.Id)
 	out.Title = data.Title
 	out.Description = data.Description
 	out.Start = data.Start
@@ -20,7 +21,7 @@ func toModel(data *viewmodels.EventDto, out *models.Event) {
 }
 
 func toViewModel(in *models.Event, out *viewmodels.EventDto, isCurrentUserSearch bool) {
-	out.Id = in.ID
+	out.Id = in.ID.String()
 	out.Title = in.Title
 	out.Description = in.Description
 	out.Start = in.Start

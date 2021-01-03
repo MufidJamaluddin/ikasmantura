@@ -2,11 +2,13 @@ package models
 
 import (
 	"backend/utils"
+	uuid "github.com/satori/go.uuid"
+	"gorm.io/gorm"
 	"time"
 )
 
 type Event struct {
-	ID           uint   `gorm:"primaryKey"`
+	ID           uuid.UUID  `gorm:"type:binary(16);primaryKey"`
 	Organizer    string `gorm:"size:35"`
 	Title        string `gorm:"size:35"`
 	Description  string `gorm:"size:256"`
@@ -17,6 +19,11 @@ type Event struct {
 	Participants []UserEvent `gorm:"foreignKey:EventId"`
 	utils.Created
 	utils.Updated
+}
+
+func (base *Event) BeforeCreate(scope *gorm.DB) (err error) {
+	base.ID = uuid.NewV4()
+	return
 }
 
 func (Event) CreateHistory() interface{} {

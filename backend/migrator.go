@@ -2,44 +2,55 @@ package main
 
 import (
 	"backend/models"
+	"github.com/go-gormigrate/gormigrate/v2"
 	"gorm.io/gorm"
 	"log"
 )
 
 func Migrate(db *gorm.DB) {
-	err := db.AutoMigrate(
-		&models.User{},
-		&models.UserHistory{},
-		&models.UserAddress{},
-		&models.UserAddressHistory{},
+	var err error
 
-		&models.UserLogin{},
+	m := gormigrate.New(db, gormigrate.DefaultOptions, []*gormigrate.Migration{
 
-		&models.TempUser{},
-		&models.TempUserAddress{},
+	})
 
-		&models.About{},
-		&models.AboutHistory{},
+	m.InitSchema(func(tx *gorm.DB) error {
+		return tx.AutoMigrate(
+			&models.User{},
+			&models.UserHistory{},
+			&models.UserAddress{},
+			&models.UserAddressHistory{},
 
-		&models.Album{},
-		&models.AboutHistory{},
-		&models.AlbumPhoto{},
+			&models.UserLogin{},
 
-		&models.Article{},
-		&models.ArticleTopic{},
+			&models.TempUser{},
+			&models.TempUserAddress{},
 
-		&models.Classroom{},
-		&models.ClassroomHistory{},
+			&models.About{},
+			&models.AboutHistory{},
 
-		&models.UserClassroom{},
+			&models.Album{},
+			&models.AboutHistory{},
+			&models.AlbumPhoto{},
 
-		&models.TempUserClassroom{},
+			&models.Article{},
+			&models.ArticleTopic{},
 
-		&models.Department{},
-		&models.DepartmentHistory{},
+			&models.Classroom{},
+			&models.ClassroomHistory{},
 
-		&models.Event{},
-		&models.UserEvent{})
+			&models.UserClassroom{},
+
+			&models.TempUserClassroom{},
+
+			&models.Department{},
+			&models.DepartmentHistory{},
+
+			&models.Event{},
+			&models.UserEvent{})
+	})
+
+	err = m.Migrate()
 
 	log.Println(err)
 }

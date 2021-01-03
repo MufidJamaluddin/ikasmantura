@@ -49,13 +49,12 @@ class PageTemplate extends PureComponent {
     }
 
     render() {
-        let { children } = this.props
         return (
             <section className="features-icons bg-light">
                 <PageTitle ref={this.titleRef} />
                 <Container>
                     <ThemeContext.Provider value={{ setHeader: this.setHeader }}>
-                        { children }
+                        { this.props.children }
                     </ThemeContext.Provider>
                 </Container>
             </section>

@@ -1,9 +1,13 @@
 package models
 
-import "backend/utils"
+import (
+	"backend/utils"
+	uuid "github.com/satori/go.uuid"
+	"gorm.io/gorm"
+)
 
 type Article struct {
-	ID             uint   `gorm:"primaryKey"`
+	ID             uuid.UUID `gorm:"type:binary(16);primaryKey"`
 	Title          string `gorm:"size:35"`
 	Body           string
 	Image          string `gorm:"size:100"`
@@ -12,6 +16,11 @@ type Article struct {
 	ArticleTopic   ArticleTopic `gorm:"foreignKey:ArticleTopicId"`
 	utils.Created
 	utils.Updated
+}
+
+func (base *Article) BeforeCreate(scope *gorm.DB) (err error) {
+	base.ID = uuid.NewV4()
+	return
 }
 
 type ArticleTopic struct {

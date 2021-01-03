@@ -8,11 +8,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/SebastiaanKlippert/go-wkhtmltopdf"
+	"github.com/go-errors/errors"
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
 	"mime/multipart"
 	"os"
-	"strconv"
 	"strings"
 )
 
@@ -117,7 +117,7 @@ func GetOneEvent(c *fiber.Ctx) error {
 	var (
 		data     viewmodels.EventDto
 		err      error
-		id       uint
+		id       string
 		jsonData []byte
 		db       *gorm.DB
 		ok       bool
@@ -129,8 +129,8 @@ func GetOneEvent(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
-	if id, err = utils.ToUint(c.Params("id")); err != nil {
-		return err
+	if id = c.Params("id"); id == "" {
+		return errors.New("field ID wajib diisi")
 	}
 
 	if authData, ok = viewmodels.GetAuthorizationData(c); ok {
@@ -169,7 +169,7 @@ func UpdateEvent(c *fiber.Ctx) error {
 		fileName  string
 		imageFile *multipart.FileHeader
 		err       error
-		id        uint
+		id        string
 		db        *gorm.DB
 		ok        bool
 
@@ -184,8 +184,8 @@ func UpdateEvent(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusUnauthorized)
 	}
 
-	if id, err = utils.ToUint(c.Params("id")); err != nil {
-		return err
+	if id = c.Params("id"); id == "" {
+		return errors.New("field ID wajib diisi")
 	}
 
 	if err = c.BodyParser(&data); err != nil {
@@ -198,7 +198,7 @@ func UpdateEvent(c *fiber.Ctx) error {
 	}
 
 	imageFile, err = c.FormFile("image")
-	fileName = strconv.Itoa(int(data.Id))
+	fileName = data.Id
 	if err == nil {
 		if image, err = utils.UploadImageJPG(c, imageFile, fileName); err == nil {
 			data.Image = image
@@ -258,7 +258,7 @@ func SaveEvent(c *fiber.Ctx) error {
 	}
 
 	imageFile, err = c.FormFile("image")
-	fileName = strconv.Itoa(int(data.Id))
+	fileName = data.Id
 	if err == nil {
 		if image, err = utils.UploadImageJPG(c, imageFile, fileName); err == nil {
 			data.Image = image
@@ -292,7 +292,7 @@ func DeleteEvent(c *fiber.Ctx) error {
 		data  viewmodels.EventDto
 		image string
 		err   error
-		id    uint
+		id    string
 		db    *gorm.DB
 		ok    bool
 
@@ -307,8 +307,8 @@ func DeleteEvent(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusUnauthorized)
 	}
 
-	if id, err = utils.ToUint(c.Params("id")); err != nil {
-		return err
+	if id = c.Params("id"); id == "" {
+		return errors.New("field ID wajib diisi")
 	}
 
 	data.UpdatedBy = authData.ID

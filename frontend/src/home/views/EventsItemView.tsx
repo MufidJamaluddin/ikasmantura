@@ -102,7 +102,7 @@ export default class EventItemView
                             }
                         </Card.Text>
                         <Card.Body>
-                            <div dangerouslySetInnerHTML={{
+                            <div className="text-justify" dangerouslySetInnerHTML={{
                                 __html: description ? DOMPurify.sanitize(description) : '' }} />
                         </Card.Body>
                     </Card>

@@ -2,10 +2,10 @@ package article
 
 import (
 	"backend/models"
-	"backend/repository"
 	"backend/viewmodels"
 	"database/sql"
 	"fmt"
+	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
 	"strings"
 )
@@ -14,7 +14,7 @@ var articleSearchFields []string
 
 func init() {
 	articleSearchFields = []string{
-		"title", "article_topic_id",
+		"title",
 	}
 }
 
@@ -23,12 +23,12 @@ func GetTotal(db *gorm.DB, search *viewmodels.ArticleParam) (uint, error) {
 		err   error
 		model models.Article
 		tx    *gorm.DB
-		total int64
+		total int64 = 0
 	)
 
 	tx = db.Model(&model)
 
-	searchFilter(tx, search)
+	searchFilter(tx, search, false)
 
 	if err = tx.Count(&total).Error; err != nil {
 		return 0, err
@@ -37,10 +37,10 @@ func GetTotal(db *gorm.DB, search *viewmodels.ArticleParam) (uint, error) {
 	return uint(total), err
 }
 
-func searchFilter(tx *gorm.DB, search *viewmodels.ArticleParam) {
+func searchFilter(tx *gorm.DB, search *viewmodels.ArticleParam, withLimit bool) {
 	var title string
 
-	search.Filter(tx, articleSearchFields)
+	search.Filter(tx, articleSearchFields, withLimit)
 
 	if search.StartFrom != nil {
 		tx.Where("start >= ?", search.StartFrom)
@@ -56,7 +56,7 @@ func searchFilter(tx *gorm.DB, search *viewmodels.ArticleParam) {
 	}
 
 	if search.TopicId != 0 {
-		tx.Where("topicId = ?", search.TopicId)
+		tx.Where("article_topic_id = ?", search.TopicId)
 	}
 }
 
@@ -69,11 +69,11 @@ func Find(db *gorm.DB, search *viewmodels.ArticleParam, callback func(*viewmodel
 	)
 
 	tx = db.Model(&model).Select([]string{
-		"id", "title", "SUBSTRING(body, 1, 20) as body", "thumbnail", "image",
+		"id", "title", "SUBSTRING(body, 1, 50) as body", "thumbnail", "image",
 		"created_by", "created_at", "updated_by", "updated_at",
 	})
 
-	searchFilter(tx, search)
+	searchFilter(tx, search, true)
 
 	if rows, err = tx.Rows(); err != nil {
 		return err
@@ -89,14 +89,19 @@ func Find(db *gorm.DB, search *viewmodels.ArticleParam, callback func(*viewmodel
 	return err
 }
 
-func FindById(db *gorm.DB, id uint, out *viewmodels.ArticleDto) error {
+func FindById(db *gorm.DB, id string, out *viewmodels.ArticleDto) error {
 	var (
 		err   error
 		model models.Article
 		user  models.User
+		uid   uuid.UUID
 	)
 
-	if err = repository.FindById(db, id, &model); err == nil {
+	if uid, err = uuid.FromString(id); err != nil {
+		return err
+	}
+
+	if err = db.Where("id = ?", uid.Bytes()).First(&model).Error; err == nil {
 		toViewModel(&model, out)
 
 		db.Select("name").First(&user, model.CreatedBy)

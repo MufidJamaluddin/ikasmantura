@@ -10,7 +10,7 @@ type EventDto struct {
 	Organizer            string       `query:"organizer,omitempty" json:"organizer,omitempty" xml:"organizer,omitempty" form:"organizer,omitempty"`
 	Title                string       `query:"title,omitempty" json:"title,omitempty" xml:"title,omitempty" form:"title,omitempty"`
 	IsMyEvent            bool         `query:"myEvent,omitempty" json:"myEvent,omitempty" xml:"myEvent,omitempty" form:"myEvent,omitempty"`
-	Id                   uint         `query:"-" json:"id,omitempty" xml:"id,omitempty" form:"id,omitempty"`
+	Id                   string       `query:"-" json:"id,omitempty" xml:"id,omitempty" form:"id,omitempty"`
 	Description          string       `query:"-" json:"description,omitempty" xml:"description,omitempty" form:"description,omitempty"`
 	Image                string       `query:"-" json:"image,omitempty" xml:"image,omitempty" form:"-"`
 	Thumbnail            string       `query:"-" json:"thumbnail,omitempty" xml:"thumbnail,omitempty" form:"-"`
@@ -28,10 +28,6 @@ type UserEventDto struct {
 	UserId  uint
 	EventId uint
 	utils.Created
-}
-
-func (p *EventDto) GetId() uint {
-	return p.Id
 }
 
 type EventParam struct {

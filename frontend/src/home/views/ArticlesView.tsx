@@ -13,11 +13,14 @@ import {useContext, useEffect, useState} from "react";
 import {ThemeContext} from "../component/PageTemplate";
 import {ArticleTopicItem} from "../models/ArticleTopicModel";
 import {ArticleItem} from "../models/ArticleModel";
+import {strip_tags} from "../../utils/Security";
 
 function ArticleItemView(props) {
     let {
-        id, thumbnail, title, description
+        id, thumbnail, title, body
     } = props
+
+    body = strip_tags(body)
 
     return (
         <div className="col-auto" key={id}>
@@ -28,7 +31,9 @@ function ArticleItemView(props) {
                     alt={title}/>
                 <Card.Body>
                     <Card.Title><h4>{title}</h4></Card.Title>
-                    <p>{description} &nbsp;
+                    <p>
+                        {body}
+                        &nbsp;
                         <Link to={`articles/${id}`}>
                             <small><b>Read More...</b></small>
                         </Link>
@@ -145,6 +150,10 @@ function ArticlesView(props)
 
         return actionsArticle.reset
     }, [cTopicId, cTitle])
+
+    if(!stateArticle?.data) {
+        return <div className="c-center-box c-loader"/>
+    }
 
     return (
         <Row>

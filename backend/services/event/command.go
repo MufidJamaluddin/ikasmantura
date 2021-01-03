@@ -4,10 +4,11 @@ import (
 	"backend/models"
 	"backend/repository"
 	"backend/viewmodels"
+	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
 )
 
-func Update(db *gorm.DB, id uint, out *viewmodels.EventDto) error {
+func Update(db *gorm.DB, id string, out *viewmodels.EventDto) error {
 	var (
 		err   error
 		model models.Event
@@ -28,18 +29,20 @@ func Save(db *gorm.DB, out *viewmodels.EventDto) error {
 
 	toModel(out, &model)
 	if err = repository.Save(db, &model); err == nil {
-		out.Id = model.ID
+		out.Id = model.ID.String()
 	}
 	return err
 }
 
-func Delete(db *gorm.DB, id uint, out *viewmodels.EventDto) error {
+func Delete(db *gorm.DB, id string, out *viewmodels.EventDto) error {
 	var (
 		err   error
 		model models.Event
 	)
 
-	model.ID = id
+	if model.ID, err = uuid.FromString(id); err != nil {
+		return err
+	}
 
 	if err = repository.Delete(db, &model); err == nil {
 		toViewModel(&model, out, false)
@@ -58,7 +61,7 @@ func RegisterEvent(db *gorm.DB, eventId uint, userId uint) error {
 	db.First(&userModel, userId)
 	db.First(&eventModel, eventId)
 
-	if eventModel.ID != 0 && userModel.ID != 0 {
+	if eventModel.ID != uuid.Nil && userModel.ID != 0 {
 
 		userEvent.UserId = userId
 		userEvent.EventId = eventId

@@ -5,12 +5,12 @@ import (
 	"backend/utils"
 	"backend/viewmodels"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
 	"mime/multipart"
 	"os"
-	"strconv"
 	"strings"
 )
 
@@ -107,7 +107,7 @@ func GetOneArticle(c *fiber.Ctx) error {
 	var (
 		data viewmodels.ArticleDto
 		err  error
-		id   uint
+		id   string
 		db   *gorm.DB
 		ok   bool
 	)
@@ -116,8 +116,8 @@ func GetOneArticle(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
-	if id, err = utils.ToUint(c.Params("id")); err != nil {
-		return err
+	if id = c.Params("id"); id == "" {
+		return errors.New("field ID wajib diisi")
 	}
 
 	if err = articleService.FindById(db, id, &data); err != nil {
@@ -150,7 +150,7 @@ func UpdateArticle(c *fiber.Ctx) error {
 		imageFile *multipart.FileHeader
 		fileName  string
 		err       error
-		id        uint
+		id        string
 		db        *gorm.DB
 		ok        bool
 
@@ -165,7 +165,7 @@ func UpdateArticle(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusUnauthorized)
 	}
 
-	if id, err = utils.ToUint(c.Params("id")); err != nil {
+	if id = c.Params("id"); id == "" {
 		return err
 	}
 
@@ -186,7 +186,7 @@ func UpdateArticle(c *fiber.Ctx) error {
 		return err
 	}
 
-	fileName = strconv.Itoa(int(id))
+	fileName = id
 	imageFile, err = c.FormFile("image")
 	if err == nil {
 		if image, err = utils.UploadImageJPG(c, imageFile, fileName); err == nil {
@@ -248,7 +248,7 @@ func SaveArticle(c *fiber.Ctx) error {
 		return err
 	}
 
-	fileName = strconv.Itoa(int(data.Id))
+	fileName = data.Id
 	imageFile, err = c.FormFile("image")
 	if err == nil {
 		if image, err = utils.UploadImageJPG(c, imageFile, fileName); err == nil {
@@ -282,7 +282,7 @@ func DeleteArticle(c *fiber.Ctx) error {
 		data  viewmodels.ArticleDto
 		image string
 		err   error
-		id    uint
+		id    string
 		db    *gorm.DB
 		ok    bool
 
@@ -297,8 +297,8 @@ func DeleteArticle(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusUnauthorized)
 	}
 
-	if id, err = utils.ToUint(c.Params("id")); err != nil {
-		return err
+	if id = c.Params("id"); id == "" {
+		return errors.New("field ID wajib diisi")
 	}
 
 	if err = articleService.FindById(db, id, &data); err != nil {

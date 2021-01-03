@@ -23,7 +23,7 @@ async function getArticles({ page, perPage, filter }) {
             cFilter.title = title
         }
     }
-    if(filter.topicId) {
+    if(filter.topicId !== 0) {
         cFilter.topicId = filter.topicId
     }
 

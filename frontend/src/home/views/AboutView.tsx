@@ -11,6 +11,7 @@ export default function AboutView(props) {
     const theme = useContext(ThemeContext);
 
     useEffect(() => {
+        // @ts-ignore
         actions.init()
         theme.setHeader({ title: 'Tentang Kami', showTitle: true })
     }, [])

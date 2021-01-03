@@ -8,7 +8,7 @@ import {getOrganizations} from "../models/OrganizationModel";
 import blankAvatar from './../../resource/blank_avatar.svg'
 
 interface OrganizationViewState {
-    data: Array<any>;
+    data: Array<any>|null;
 }
 
 function PeopleProfile(props) {
@@ -39,14 +39,14 @@ export default class OrganizationView
     constructor(props:any) {
         super(props);
         this.state = {
-            data: [],
+            data: null,
         }
     }
 
     async updateOrganizationData() {
         let data = await getOrganizations()
 
-        this.setState({ data: data?.data ?? [] })
+        this.setState({ data: data?.data })
     }
 
     static contextType = ThemeContext;
@@ -58,7 +58,11 @@ export default class OrganizationView
     }
 
     render() {
-        let data: Array<any> = this.state.data
+        let data: Array<any>|null = this.state.data
+
+        if(!Array.isArray(data)) {
+            return <div className="c-center-box c-loader"/>
+        }
 
         return (
             <div className="row justify-content-center mb-3">

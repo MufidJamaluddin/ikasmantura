@@ -94,7 +94,6 @@ func DoLogin(
 	claims["id"] = userData.Id
 	claims["role"] = userData.Role
 	claims["ip"] = c.Context().RemoteIP().String()
-	claims["pi"] = userLogin.Seq
 	claims["exp"] = expired.Unix()
 
 	// Generate encoded token and send it as response.
@@ -150,7 +149,7 @@ func AuthorizationHandler(c *fiber.Ctx, db *gorm.DB, pageRoles []string) error {
 		if len(pageRoles) == 0 {
 			authorized = true
 		} else {
-			for pageRole = range pageRoles {
+			for _, pageRole = range pageRoles {
 				authorized = authorized || tokenRole == pageRole
 			}
 		}

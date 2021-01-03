@@ -17,13 +17,15 @@ export default function ArticlesItemView(props)
     const [state, actions] = useStore('ArticleModel')
     const theme = useContext(ThemeContext)
 
-    let item: ArticleItem = { ...state?.selected }
+    let item: ArticleItem = state?.selected
 
     useEffect(() => {
-        theme.setHeader({ title: item?.title ?? 'Artikel', showTitle: true })
+        theme.setHeader({ title: item?.title ?? 'Artikel', showTitle: false })
         actions.getArticleById(id)
         return actions.reset
     }, [id])
+
+    if(!item) return <div className="c-center-box c-loader"/>
 
     let {
         title,
@@ -51,7 +53,7 @@ export default function ArticlesItemView(props)
                         <small>Pada: {fCreatedAt}</small>
                     </Card.Text>
                     <Card.Body>
-                        <div dangerouslySetInnerHTML={{
+                        <div className="text-justify" dangerouslySetInnerHTML={{
                             __html: body ? DOMPurify.sanitize(body) : ''
                         }} />
                     </Card.Body>

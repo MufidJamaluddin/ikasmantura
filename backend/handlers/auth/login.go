@@ -130,7 +130,7 @@ func RefreshLogin(c *fiber.Ctx) error {
 			return err
 		}
 
-		if authData.ID == 0 || !(authData.Seq < userLoginData.Seq) {
+		if authData.ID == 0 {
 			c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
 			c.ClearCookie(os.Getenv("COOKIE_REFRESH_TOKEN"))
 			return c.SendStatus(fiber.StatusForbidden)
@@ -153,8 +153,6 @@ func RefreshLogin(c *fiber.Ctx) error {
 		userData.Role = authData.Role
 		userData.Username = authData.Username
 		userData.Email = authData.Email
-
-		userLoginData.Seq = authData.Seq + 1
 	}
 
 	if token, err = DoLogin(c, &userLoginData, &userData, expired);

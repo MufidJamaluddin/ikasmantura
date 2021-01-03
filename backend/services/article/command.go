@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func Update(db *gorm.DB, id uint, out *viewmodels.ArticleDto) error {
+func Update(db *gorm.DB, id string, out *viewmodels.ArticleDto) error {
 	var (
 		err   error
 		model models.Article
@@ -28,12 +28,12 @@ func Save(db *gorm.DB, out *viewmodels.ArticleDto) error {
 
 	toModel(out, &model)
 	if err = repository.Save(db, &model); err == nil {
-		out.Id = model.ID
+		out.Id = model.ID.String()
 	}
 	return err
 }
 
-func Delete(db *gorm.DB, id uint, out *viewmodels.ArticleDto) error {
+func Delete(db *gorm.DB, id string, out *viewmodels.ArticleDto) error {
 	var (
 		err   error
 		model models.Article

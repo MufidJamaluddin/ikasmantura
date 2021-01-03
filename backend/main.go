@@ -47,6 +47,7 @@ func main() {
 		Logger:                 logger.Default.LogMode(logger.Warn),
 		SkipDefaultTransaction: true,
 		FullSaveAssociations:   true,
+		DisableForeignKeyConstraintWhenMigrating: true,
 	})
 
 	if db == nil {

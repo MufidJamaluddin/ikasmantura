@@ -1,5 +1,6 @@
 import DataProviderFactory from "../../dataprovider/DataProviderFactory";
 import {NotificationManager} from 'react-notifications';
+import InMemoryCache from "../../dataprovider/InMemoryCache";
 
 export interface AboutItem {
     id: number|string
@@ -27,22 +28,21 @@ async function getAbout () {
 const AboutModel = {
     state: {
         data: null,
-        fetched: false,
     },
     actions: {
-        done: (_, { state }) => {
-            return { ...state, fetched: true }
-        },
         init: async (_, { state, actions  }) => {
-            if(state.fetched) {
+            let cacheKey = 'fetched_about'
+            if(InMemoryCache.getCache(cacheKey)) {
                 return state
             }
-            actions.done()
+            InMemoryCache.setCache(cacheKey, true)
 
             let newState = { ...state }
             if (newState.data === null) {
                 newState.data = await getAbout()
-                newState.fetched = newState.data === null
+                if(newState.data === null) {
+                    InMemoryCache.setCache(cacheKey, false)
+                }
             }
             return newState
         }

@@ -8,7 +8,7 @@ type User struct {
 	ID         uint   `gorm:"primaryKey"`
 	Name       string `gorm:"size:53"`
 	Username   string `gorm:"size:35,unique"`
-	Email      string `gorm:"size:286"`
+	Email      string `gorm:"size:286,unique"`
 	Password   string `gorm:"size:40"`
 	Phone      string `gorm:"size:13"`
 	ForceYear  string `gorm:"size:4"`

@@ -1,5 +1,6 @@
 import LoginProvider from "./LoginProvider";
 import inMemoryUserData from './InMemoryUserData'
+import {NotificationManager} from 'react-notifications';
 
 const ApiUrl = process.env.PUBLIC_URL + '/api/v1'
 
@@ -40,7 +41,14 @@ const authProvider = {
                         throw new Error("Connection Error")
                     }
                     return data.json()
+                }).catch(err => {
+                    NotificationManager.warn('Ada masalah koneksi', 'Oops!')
+                    return null
                 })
+
+            if(userData === null) {
+                return Promise.reject()
+            }
         }
 
         let expiration = userData.exp * 1000

@@ -9,6 +9,7 @@ export default function Footer() {
     const [state, actions] = useStore('AboutModel')
 
     useEffect(() => {
+        // @ts-ignore
         actions.init()
     }, [])
 

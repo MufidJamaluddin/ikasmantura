@@ -28,8 +28,7 @@ func (d deviceType) Value() (driver.Value, error) {
 
 type UserLogin struct {
 	UserId      uint   	   `gorm:"primaryKey;autoIncrement:false"`
-	Seq 		uint64 	   `gorm:"primaryKey;autoIncrement:true"`
-	RefreshToken uuid.UUID `gorm:"type:uuid;"`
+	RefreshToken uuid.UUID `gorm:"type:binary(16);primaryKey"`
 	RemoteIP 	string 	   `gorm:"size:45"`
 	OSName 		string 	   `gorm:"size:35"`
 	OSVersion 	string 	   `gorm:"size:10"`

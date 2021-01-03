@@ -1,5 +1,6 @@
 import DataProviderFactory from "../../dataprovider/DataProviderFactory";
 import {NotificationManager} from 'react-notifications';
+import InMemoryCache from "../../dataprovider/InMemoryCache";
 
 export interface ArticleTopicItem {
     id: number|string
@@ -32,33 +33,30 @@ async function getTopics () {
 
 interface StateType {
     data: Array<ArticleTopicItem>|null
-    fetched: boolean
 }
 
 interface ActionsParamType {
     init: undefined
-    done: undefined
 }
 
 const ArticleTopicModel: ModelType<StateType, ActionsParamType> = {
     state: {
         data: null,
-        fetched: false,
     },
     actions: {
-        done: (_, { state }) => {
-            return { ...state, fetched: true }
-        },
         init: async (_, {state, actions}) => {
-            if(state.fetched) {
+            let cacheKey = 'fetched_topics'
+            if(InMemoryCache.getCache(cacheKey)) {
                 return state
             }
-            await actions.done()
+            InMemoryCache.setCache(cacheKey, true)
 
             let newState = {...state ?? {}}
             if (newState.data === null) {
                 newState.data = await getTopics()
-                newState.fetched = newState.data === null
+                if(newState.data === null) {
+                    InMemoryCache.setCache(cacheKey, false)
+                }
             }
             return newState
         }
