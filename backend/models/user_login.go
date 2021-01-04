@@ -1,34 +1,14 @@
 package models
 
 import (
-	"database/sql/driver"
 	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
-	"gorm.io/gorm/utils"
 	"time"
 )
 
-type deviceType string
-
-const (
-	mobile = "mobile"
-	tablet = "tablet"
-	desktop = "desktop"
-	bot = "bot"
-)
-
-func (d *deviceType) Scan(value interface{}) error {
-	*d = deviceType(value.([]byte))
-	return nil
-}
-
-func (d deviceType) Value() (driver.Value, error) {
-	return utils.ToString(d), nil
-}
-
 type UserLogin struct {
 	UserId      uint   	   `gorm:"primaryKey;autoIncrement:false"`
-	RefreshToken uuid.UUID `gorm:"type:binary(16);primaryKey"`
+	RefreshToken UUID 	   `gorm:"type:binary(16);primaryKey"`
 	RemoteIP 	string 	   `gorm:"size:45"`
 	OSName 		string 	   `gorm:"size:35"`
 	OSVersion 	string 	   `gorm:"size:10"`
@@ -38,6 +18,6 @@ type UserLogin struct {
 }
 
 func (base *UserLogin) BeforeCreate(scope *gorm.DB) (err error) {
-	base.RefreshToken = uuid.NewV4()
+	base.RefreshToken = UUID(uuid.NewV1())
 	return
 }

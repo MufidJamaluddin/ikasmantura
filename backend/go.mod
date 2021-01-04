@@ -3,6 +3,7 @@ module backend
 go 1.15
 
 require (
+	github.com/MufidJamaluddin/uuidv1_orderer v0.0.0-20210104001412-76aab6e78fb3
 	github.com/SebastiaanKlippert/go-wkhtmltopdf v1.6.1
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/arsmn/fiber-swagger/v2 v2.2.0

@@ -70,6 +70,10 @@ func Route(app *fiber.App, db *gorm.DB) {
 			SuccessHandler: func(ctx *fiber.Ctx) error {
 				return authHandler.AuthorizationHandler(ctx, db, allowedRoles)
 			},
+			ErrorHandler: func(ctx *fiber.Ctx, err error) error {
+				log.Println(err.Error())
+				return ctx.SendStatus(fiber.StatusUnauthorized)
+			},
 		})
 	}
 

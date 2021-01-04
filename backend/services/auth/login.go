@@ -3,6 +3,7 @@ package auth
 import (
 	error2 "backend/error"
 	"backend/models"
+	"backend/utils"
 	"backend/viewmodels"
 	"crypto/sha1"
 	"fmt"
@@ -21,10 +22,10 @@ func Login(db *gorm.DB, data *viewmodels.LoginDto) error {
 
 	db.Where("username = ?", data.Username).FirstOrInit(&model)
 
-	if model.Username != "" {
+	if model.Username != "" && model.Password != "" {
 		hasher = sha1.New()
 
-		userPwd = append(userPwd, data.Password...)
+		userPwd = utils.ToBytes(data.Password)
 		hasher.Write(userPwd)
 
 		hashUserPwd = hasher.Sum(nil)

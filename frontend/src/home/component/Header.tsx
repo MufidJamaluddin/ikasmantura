@@ -8,12 +8,12 @@ import { Link } from "react-router-dom";
 
 import AuthProvider from "../../dataprovider/authProvider";
 import {useStore} from "../models";
+import InMemoryUserData from "../../dataprovider/InMemoryUserData";
 
-export default function Header(props)
-{
-    const [state, actions] = useStore('AboutModel')
+function UserMenu(props) {
 
     const [isLogin, setIsLogin] = useState(false)
+    const [userData, setUserData] = useState(null)
 
     useEffect(() => {
         let life = true
@@ -30,12 +30,43 @@ export default function Header(props)
 
         checkLogin()
 
-        // @ts-ignore
-        actions.init()
-
         return () => {
             life = false
         }
+    }, [])
+
+    useEffect(() => {
+
+        setUserData(InMemoryUserData.getUser())
+
+    }, [InMemoryUserData.getUser()])
+
+    return (
+        isLogin ? (
+            <Nav.Link as={Link} to={"/panel"}>
+                <span><i className="fas fa-user"/></span>
+                {userData.fullName}
+            </Nav.Link>
+        ) : (
+            <NavDropdown title="Alumni" id="basic-nav-dropdown">
+                <NavDropdown.Item as={Link} to={"/register"}>
+                    Daftar
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to={"/login"}>
+                    Masuk
+                </NavDropdown.Item>
+            </NavDropdown>
+        )
+    )
+}
+
+export default function Header(props)
+{
+    const [state, actions] = useStore('AboutModel')
+
+    useEffect(() => {
+        // @ts-ignore
+        actions.init()
     }, [])
 
     let data: any = state?.data || {}
@@ -76,22 +107,7 @@ export default function Header(props)
                             Artikel
                         </Nav.Link>
                         <Nav.Link as={Link} to={"/gallery"}>Galeri</Nav.Link>
-                        {
-                            isLogin ? (
-                                <Nav.Link as={Link} to={"/panel"}>
-                                    <span><i className="fas fa-user"/></span>
-                                </Nav.Link>
-                            ) : (
-                                <NavDropdown title="Alumni" id="basic-nav-dropdown">
-                                    <NavDropdown.Item as={Link} to={"/register"}>
-                                        Daftar
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item as={Link} to={"/login"}>
-                                        Masuk
-                                    </NavDropdown.Item>
-                                </NavDropdown>
-                            )
-                        }
+                        <UserMenu />
                     </Nav>
                 </Navbar.Collapse>
             </Container>

@@ -47,9 +47,18 @@ func SaveUserLogin(c *fiber.Ctx, userId uint) (*models.UserLogin, error) {
 
 	userLoginData.UserId = userId
 	userLoginData.RemoteIP = c.Context().RemoteIP().String()
-	userLoginData.Device = strings.Trim(userAgent.Device, " ")[0:35]
-	userLoginData.OSName = strings.Trim(userAgent.OS, " ")[0:35]
-	userLoginData.OSVersion = strings.Trim(userAgent.OSVersion, " ")[0:10]
+	userLoginData.Device = strings.Trim(userAgent.Device, " ")
+	if len(userLoginData.Device) > 35 {
+		userLoginData.Device = userLoginData.Device[:35]
+	}
+	userLoginData.OSName = strings.Trim(userAgent.OS, " ")
+	if len(userLoginData.OSName) > 10 {
+		userLoginData.OSName = userLoginData.OSName[:10]
+	}
+	userLoginData.OSVersion = strings.Trim(userAgent.OSVersion, " ")
+	if len(userLoginData.OSVersion) > 35 {
+		userLoginData.OSVersion = userLoginData.OSVersion[:35]
+	}
 
 	if userAgent.Bot {
 		userLoginData.DeviceType = "bot"
@@ -84,7 +93,7 @@ func DoLogin(
 	tokenizer = jwt.New(jwt.SigningMethodHS256)
 
 	// Expiration
-	*expired = time.Now().Add(time.Hour * 3)
+	*expired = time.Now().Add(5 * 24 * time.Hour)
 
 	// Set claims
 	claims := tokenizer.Claims.(jwt.MapClaims)
@@ -102,8 +111,8 @@ func DoLogin(
 		return nil, c.SendStatus(fiber.StatusInternalServerError)
 	}
 
-	if userLogin.RefreshToken != uuid.Nil {
-		refreshToken = userLogin.RefreshToken.String()
+	if uuid.UUID(userLogin.RefreshToken) != uuid.Nil {
+		refreshToken = uuid.UUID(userLogin.RefreshToken).String()
 	} else {
 		refreshToken = ""
 	}
@@ -120,7 +129,7 @@ func DoLogin(
 		c.Cookie(&fiber.Cookie{
 			Name:     os.Getenv("COOKIE_REFRESH_TOKEN"),
 			Value:    refreshToken,
-			Expires:  (*expired).Add(5 * 24 * time.Hour),
+			Expires:  (*expired).Add(30 * 24 * time.Hour),
 			HTTPOnly: true,
 			SameSite: "strict",
 		})
@@ -132,7 +141,6 @@ func DoLogin(
 func AuthorizationHandler(c *fiber.Ctx, db *gorm.DB, pageRoles []string) error {
 	var (
 		currentUserId int
-		seq           uint64
 		userdata      *viewmodels.AuthorizationModel
 		claims        jwt.MapClaims
 		remoteIp      string
@@ -159,7 +167,6 @@ func AuthorizationHandler(c *fiber.Ctx, db *gorm.DB, pageRoles []string) error {
 		}
 
 		currentUserId = int(claims["id"].(float64))
-		seq = uint64(claims["pi"].(float64))
 		exp = int64(claims["exp"].(float64))
 		remoteIp = c.Context().RemoteIP().String()
 
@@ -178,7 +185,6 @@ func AuthorizationHandler(c *fiber.Ctx, db *gorm.DB, pageRoles []string) error {
 			Role:  	  claims["role"].(string),
 			FullName: claims["fullName"].(string),
 			Exp:      exp,
-			Seq:      seq,
 		}
 
 		c.Locals("db", history.SetUser(db, history.User{

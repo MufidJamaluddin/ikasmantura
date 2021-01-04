@@ -11,7 +11,6 @@ type AuthorizationModel struct {
 	FullName string `json:"fullName,omitempty"`
 	Email    string `json:"email,omitempty"`
 	Role     string `json:"role,omitempty"`
-	Seq      uint64 `json:"pi,omitempty"`
 	Exp      int64  `json:"exp,omitempty"`
 }
 

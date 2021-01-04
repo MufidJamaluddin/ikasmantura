@@ -45,8 +45,11 @@ export default class GalleryView extends PureComponent<any, GalleryViewState>
     async updatePhotos() {
         if (this.state.isLoading) {
             let requestedAlbumIds = this.state.selected.map(item => item.id)
+            let photos = []
 
-            let photos = await getPhotoByAlbumIds(requestedAlbumIds) ?? []
+            if(requestedAlbumIds.length > 0) {
+                photos = await getPhotoByAlbumIds(requestedAlbumIds) ?? []
+            }
 
             this.setState(state => {
                 let newState = {
@@ -98,7 +101,7 @@ export default class GalleryView extends PureComponent<any, GalleryViewState>
         }).filter(item => item !== null)
 
         this.setState(oldState => {
-            return {...oldState, isLoading: true, selected: selected, albums: currentAlbums}
+            return {...oldState, isLoading: true, selected: selected, albums: currentAlbums, photos: []}
         })
     }
 

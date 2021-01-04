@@ -28,7 +28,7 @@ func Save(db *gorm.DB, out *viewmodels.ArticleDto) error {
 
 	toModel(out, &model)
 	if err = repository.Save(db, &model); err == nil {
-		out.Id = model.ID.String()
+		out.Id = model.ID.Guid().String()
 	}
 	return err
 }

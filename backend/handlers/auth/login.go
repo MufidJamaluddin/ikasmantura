@@ -6,6 +6,7 @@ import (
 	userService "backend/services/user"
 	"backend/viewmodels"
 	"github.com/gofiber/fiber/v2"
+	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
 	"log"
 	"os"
@@ -59,6 +60,10 @@ func Login(c *fiber.Ctx) error {
 		token     *string
 	)
 
+	if c.Cookies(os.Getenv("COOKIE_TOKEN"), "") != "" {
+		return c.Redirect("/panel")
+	}
+
 	if db, ok = c.Locals("db").(*gorm.DB); !ok {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
@@ -85,7 +90,7 @@ func Login(c *fiber.Ctx) error {
 	}
 
 	loginData.Token = *token
-	loginData.RefreshToken = userLoginData.RefreshToken.String()
+	loginData.RefreshToken = uuid.UUID(userLoginData.RefreshToken).String()
 
 	err = c.JSON(&loginData.LoginResponseDto)
 	return err
@@ -161,7 +166,7 @@ func RefreshLogin(c *fiber.Ctx) error {
 	}
 
 	responseLogin.Token = *token
-	responseLogin.RefreshToken = userLoginData.RefreshToken.String()
+	responseLogin.RefreshToken = uuid.UUID(userLoginData.RefreshToken).String()
 
 	err = c.JSON(&responseLogin)
 	return err

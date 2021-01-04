@@ -10,7 +10,6 @@ import {Link} from "react-router-dom";
 
 import ReactPaginate from 'react-paginate';
 import {ThemeContext} from "../component/PageTemplate";
-import DOMPurify from "../../utils/Sanitizer";
 import {strip_tags} from "../../utils/Security";
 
 interface EventData {id: number, title: string, description: string, image: string, thumbnail: string}
@@ -255,7 +254,7 @@ export default class EventsListView extends PureComponent<any, EventsListViewSta
                     <div className="row justify-content-center mb-3">
                         {
                             events.map(item => {
-                                item.description = strip_tags(item.description)
+                                item.description = strip_tags(item.description ?? '').slice(0, 50);
                                 return <div className="col-auto" key={item.id}>
                                     <Card className="h-100" style={{'width':'15rem'}}>
                                         <Image

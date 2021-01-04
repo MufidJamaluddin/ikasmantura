@@ -29,7 +29,7 @@ func Save(db *gorm.DB, out *viewmodels.EventDto) error {
 
 	toModel(out, &model)
 	if err = repository.Save(db, &model); err == nil {
-		out.Id = model.ID.String()
+		out.Id = model.ID.Guid().String()
 	}
 	return err
 }
@@ -38,11 +38,14 @@ func Delete(db *gorm.DB, id string, out *viewmodels.EventDto) error {
 	var (
 		err   error
 		model models.Event
+		uid uuid.UUID
 	)
 
-	if model.ID, err = uuid.FromString(id); err != nil {
+	if uid, err = uuid.FromString(id); err != nil {
 		return err
 	}
+
+	model.ID = models.UUID(uid)
 
 	if err = repository.Delete(db, &model); err == nil {
 		toViewModel(&model, out, false)
@@ -61,7 +64,7 @@ func RegisterEvent(db *gorm.DB, eventId uint, userId uint) error {
 	db.First(&userModel, userId)
 	db.First(&eventModel, eventId)
 
-	if eventModel.ID != uuid.Nil && userModel.ID != 0 {
+	if eventModel.ID.Guid() != uuid.Nil && userModel.ID != 0 {
 
 		userEvent.UserId = userId
 		userEvent.EventId = eventId

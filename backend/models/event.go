@@ -8,7 +8,7 @@ import (
 )
 
 type Event struct {
-	ID           uuid.UUID  `gorm:"type:binary(16);primaryKey"`
+	ID           UUID  `gorm:"type:binary(16);primaryKey"`
 	Organizer    string `gorm:"size:35"`
 	Title        string `gorm:"size:35"`
 	Description  string `gorm:"size:256"`
@@ -22,7 +22,7 @@ type Event struct {
 }
 
 func (base *Event) BeforeCreate(scope *gorm.DB) (err error) {
-	base.ID = uuid.NewV4()
+	base.ID = UUID(uuid.NewV1())
 	return
 }
 

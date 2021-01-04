@@ -1,16 +1,18 @@
 import React, {useState, useEffect, useRef, useContext} from "react";
 import {Button, Card, Col, Form, Row} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 import {FieldFeedback, FieldFeedbacks, FormWithConstraints} from "react-form-with-constraints";
 import {NotificationManager} from 'react-notifications';
 import AuthProvider from "../../dataprovider/authProvider";
 import {ThemeContext} from "../component/PageTemplate";
 import {login} from "../models/AccountModel";
+import authProvider from "../../dataprovider/authProvider";
 
 function FormLogin(props) {
 
     const formEl = useRef(null);
+    const history = useHistory()
 
     async function handleChange({ target }) {
         // Validates only the given fields and returns Promise<Field[]>
@@ -29,12 +31,13 @@ function FormLogin(props) {
 
         let formData = new FormData(e.target)
 
-        let result = await login({
+        let result = await authProvider.login({
             username: formData.get('username'),
             password: formData.get('password')
-        })
+        }).then(() => true).catch(() => false)
+
         if(result) {
-            this.props.history.push('/panel')
+            history.replace('/panel')
         }
     }
 
