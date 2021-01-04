@@ -2,6 +2,7 @@ package models
 
 import (
 	"backend/utils"
+	uuid "github.com/satori/go.uuid"
 )
 
 type User struct {
@@ -13,6 +14,7 @@ type User struct {
 	Phone      string `gorm:"size:13"`
 	ForceYear  string `gorm:"size:4"`
 	Role       string `gorm:"size:6"`
+	RefreshToken uuid.UUID `gorm:"type:binary(16)"`
 	Address    UserAddress     `gorm:"foreignKey:UserId"`
 	MyEvents   []UserEvent     `gorm:"foreignKey:UserId"`
 	Classrooms []UserClassroom `gorm:"foreignKey:UserId"`

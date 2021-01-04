@@ -3,10 +3,10 @@ package event
 import (
 	"backend/models"
 	"backend/repository"
+	"backend/utils"
 	"backend/viewmodels"
 	"database/sql"
 	"fmt"
-	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
 	"strings"
 )
@@ -104,14 +104,14 @@ func FindById(db *gorm.DB, id string, out *viewmodels.EventDto) error {
 		err2    error
 		model   models.Event
 		creator models.User
-		uid     uuid.UUID
+		uid     utils.UUID
 	)
 
-	if uid, err = uuid.FromString(id); err != nil {
+	if uid, err = utils.FromBase64UUID(id); err != nil {
 		return err
 	}
 
-	if err = db.Where("id = ?", uid.Bytes()).First(&model).Error; err == nil {
+	if err = db.Where("id = ?", uid.OrderedValue()).First(&model).Error; err == nil {
 		toViewModel(&model, out, false)
 	}
 

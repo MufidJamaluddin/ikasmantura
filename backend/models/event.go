@@ -8,12 +8,12 @@ import (
 )
 
 type Event struct {
-	ID           UUID  `gorm:"type:binary(16);primaryKey"`
-	Organizer    string `gorm:"size:35"`
-	Title        string `gorm:"size:35"`
-	Description  string `gorm:"size:256"`
-	Image        string `gorm:"size:100"`
-	Thumbnail    string `gorm:"size:100"`
+	ID           utils.UUID `gorm:"type:binary(16);primaryKey"`
+	Organizer    string     `gorm:"size:35"`
+	Title        string     `gorm:"size:35"`
+	Description  string     `gorm:"size:256"`
+	Image        string     `gorm:"size:100"`
+	Thumbnail    string     `gorm:"size:100"`
 	Start        time.Time
 	End          time.Time
 	Participants []UserEvent `gorm:"foreignKey:EventId"`
@@ -22,7 +22,7 @@ type Event struct {
 }
 
 func (base *Event) BeforeCreate(scope *gorm.DB) (err error) {
-	base.ID = UUID(uuid.NewV1())
+	base.ID = utils.UUID(uuid.NewV1())
 	return
 }
 

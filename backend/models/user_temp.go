@@ -1,5 +1,7 @@
 package models
 
+import uuid "github.com/satori/go.uuid"
+
 type TempUser struct {
 	ID         uint   `gorm:"primaryKey"`
 	Name       string `gorm:"size:53"`
@@ -8,6 +10,7 @@ type TempUser struct {
 	Password   string `gorm:"size:40"`
 	Phone      string `gorm:"size:13"`
 	ForceYear  string `gorm:"size:4"`
+	RefreshToken uuid.UUID `gorm:"type:binary(16)"`
 	Address    TempUserAddress     `gorm:"foreignKey:UserId"`
 	Classrooms []TempUserClassroom `gorm:"foreignKey:UserId"`
 }

@@ -11,6 +11,7 @@ type UserDto struct {
 	Phone      string         `query:"phone,omitempty" json:"phone,omitempty" xml:"phone,omitempty" form:"phone,omitempty"`
 	ForceYear  string         `query:"forceYear,omitempty" json:"forceYear,omitempty" xml:"forceYear,omitempty" form:"forceYear,omitempty"`
 	Password   string         `query:"-" json:"password,omitempty" xml:"password,omitempty" form:"password,omitempty"`
+	RefreshToken string       `query:"-" json:"-" xml:"-" form:"-"`
 	Address    UserAddressDto `query:"-" json:"address,omitempty" xml:"address,omitempty" form:"address,omitempty"`
 	Classrooms []ClassroomDto `query:"-" json:"classrooms,omitempty" xml:"classrooms,omitempty" form:"classrooms,omitempty"`
 	utils.Created

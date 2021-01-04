@@ -36,16 +36,14 @@ function UserMenu(props) {
     }, [])
 
     useEffect(() => {
-
         setUserData(InMemoryUserData.getUser())
-
-    }, [InMemoryUserData.getUser()])
+    })
 
     return (
-        isLogin ? (
+        (isLogin || userData) ? (
             <Nav.Link as={Link} to={"/panel"}>
                 <span><i className="fas fa-user"/></span>
-                {userData.fullName}
+                {userData?.fullName}
             </Nav.Link>
         ) : (
             <NavDropdown title="Alumni" id="basic-nav-dropdown">

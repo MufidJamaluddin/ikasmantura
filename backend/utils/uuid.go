@@ -1,4 +1,4 @@
-package models
+package utils
 
 import (
 	"database/sql/driver"
@@ -17,6 +17,11 @@ func (d *UUID) Scan(value interface{}) (err error) {
 	)
 
 	oid = value.([]byte)
+
+	if len(oid) == 0 {
+		*d = UUID(uuid.Nil)
+	}
+
 	if len(oid) != 16 {
 		err = fmt.Errorf("uuid: UUID must be exactly 16 bytes long, got %d bytes", len(oid))
 		return
@@ -31,15 +36,25 @@ func (d *UUID) Scan(value interface{}) (err error) {
 }
 
 func (d UUID) Value() (driver.Value, error) {
+	var oid [16]byte
+	oid = d.OrderedValue()
+	return oid, nil
+}
+
+func (d UUID) OrderedValue() uuid.UUID {
 	var (
 		uid uuid.UUID
 		oid [16]byte
 	)
 
 	uid = uuid.UUID(d)
-	oid = OrderedUUIDv1.ToOrderedUuid(uid)
 
-	return oid, nil
+	if uid == uuid.Nil {
+		return uuid.Nil
+	}
+
+	oid = OrderedUUIDv1.ToOrderedUuid(uid)
+	return oid
 }
 
 func (d UUID) Guid() (uid uuid.UUID) {

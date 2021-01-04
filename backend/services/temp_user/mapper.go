@@ -15,6 +15,7 @@ func toPermanentModel(data *models.TempUser, out *models.User) {
 	out.Role = "member"
 	out.Password = data.Password
 	out.ForceYear = data.ForceYear
+	out.RefreshToken = data.RefreshToken
 	out.Address.ID = data.Address.ID
 	out.Address.Street = data.Address.Street
 	out.Address.Suite = data.Address.Suite
@@ -70,6 +71,7 @@ func toViewModel(in *models.TempUser, out *viewmodels.UserDto) {
 	out.Username = in.Username
 	out.Role = ""
 	out.Password = in.Password
+	out.RefreshToken = in.RefreshToken.String()
 	out.ForceYear = in.ForceYear
 	out.Address.ID = in.Address.ID
 	out.Address.Street = in.Address.Street

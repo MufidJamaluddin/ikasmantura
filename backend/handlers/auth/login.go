@@ -1,10 +1,10 @@
 package auth
 
 import (
-	"backend/models"
 	authService "backend/services/auth"
-	userService "backend/services/user"
+	"backend/utils"
 	"backend/viewmodels"
+	"encoding/base64"
 	"github.com/gofiber/fiber/v2"
 	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
@@ -54,7 +54,6 @@ func Login(c *fiber.Ctx) error {
 	var (
 		err       error
 		loginData viewmodels.LoginDto
-		userLoginData	*models.UserLogin
 		db        *gorm.DB
 		ok        bool
 		token     *string
@@ -79,18 +78,14 @@ func Login(c *fiber.Ctx) error {
 		return err
 	}
 
-	if userLoginData, err = SaveUserLogin(c, loginData.Data.Id); err != nil {
-		err = c.SendStatus(fiber.StatusInternalServerError)
-		return err
-	}
-
-	if token, err = DoLogin(c, userLoginData, &loginData.Data, &loginData.Expired);
+	if token, err = DoLogin(c, &loginData.Data, &loginData.Expired);
 	err != nil {
 		return err
 	}
 
 	loginData.Token = *token
-	loginData.RefreshToken = uuid.UUID(userLoginData.RefreshToken).String()
+	loginData.RefreshToken = base64.StdEncoding.
+		EncodeToString(utils.ToBytes(loginData.Data.RefreshToken))
 
 	err = c.JSON(&loginData.LoginResponseDto)
 	return err
@@ -104,7 +99,6 @@ func RefreshLogin(c *fiber.Ctx) error {
 		token     *string
 		refreshToken string
 		authData *viewmodels.AuthorizationModel
-		userLoginData models.UserLogin
 		userData viewmodels.UserDto
 		responseLogin viewmodels.LoginResponseDto
 		expired *time.Time
@@ -123,17 +117,9 @@ func RefreshLogin(c *fiber.Ctx) error {
 		refreshToken = c.Get(os.Getenv("HEADER_REFRESH_TOKEN"))
 	}
 
+	userData.Id = authData.ID
+
 	if refreshToken != "" && authData.Role != "" {
-		authData.ID = 0
-		if err = db.Model(&userLoginData).
-			Where("user_id = ?", authData.ID).
-			Where("refresh_token = ?", refreshToken).
-			First(&userLoginData).
-			Error; err != nil {
-			c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
-			c.Status(fiber.StatusBadRequest)
-			return err
-		}
 
 		if authData.ID == 0 {
 			c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
@@ -141,12 +127,13 @@ func RefreshLogin(c *fiber.Ctx) error {
 			return c.SendStatus(fiber.StatusForbidden)
 		}
 
-		if err = userService.FindById(db, authData.ID, &userData); err != nil {
+		if err = authService.RefreshToken(db, &userData); err != nil {
 			return err
 		}
 
 		if userData.Username != authData.Username &&
-			userData.Role != authData.Role {
+			userData.Role != authData.Role &&
+			userData.RefreshToken != refreshToken {
 			c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
 			c.ClearCookie(os.Getenv("COOKIE_REFRESH_TOKEN"))
 			log.Printf("User ID %s (username %s != %s)",
@@ -154,19 +141,19 @@ func RefreshLogin(c *fiber.Ctx) error {
 			return c.SendStatus(fiber.StatusUnauthorized)
 		}
 	} else {
-		userData.Id = authData.ID
 		userData.Role = authData.Role
 		userData.Username = authData.Username
 		userData.Email = authData.Email
+		userData.RefreshToken = uuid.NewV4().String()
 	}
 
-	if token, err = DoLogin(c, &userLoginData, &userData, expired);
+	if token, err = DoLogin(c, &userData, expired);
 	err != nil {
 		return err
 	}
 
 	responseLogin.Token = *token
-	responseLogin.RefreshToken = uuid.UUID(userLoginData.RefreshToken).String()
+	responseLogin.RefreshToken = userData.RefreshToken
 
 	err = c.JSON(&responseLogin)
 	return err

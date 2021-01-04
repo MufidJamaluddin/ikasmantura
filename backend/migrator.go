@@ -21,8 +21,6 @@ func Migrate(db *gorm.DB) {
 			&models.UserAddress{},
 			&models.UserAddressHistory{},
 
-			&models.UserLogin{},
-
 			&models.TempUser{},
 			&models.TempUserAddress{},
 

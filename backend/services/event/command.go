@@ -3,6 +3,7 @@ package event
 import (
 	"backend/models"
 	"backend/repository"
+	"backend/utils"
 	"backend/viewmodels"
 	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
@@ -38,14 +39,14 @@ func Delete(db *gorm.DB, id string, out *viewmodels.EventDto) error {
 	var (
 		err   error
 		model models.Event
-		uid uuid.UUID
+		uid   utils.UUID
 	)
 
-	if uid, err = uuid.FromString(id); err != nil {
+	if uid, err = utils.FromBase64UUID(id); err != nil {
 		return err
 	}
 
-	model.ID = models.UUID(uid)
+	model.ID = uid
 
 	if err = repository.Delete(db, &model); err == nil {
 		toViewModel(&model, out, false)

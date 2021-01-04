@@ -2,30 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/userdevice.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/uuid.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/uuidutils.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handlers/auth/authmiddle.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/auth/authmiddle.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handlers/auth/login.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/auth/login.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrator.go" beforeDir="false" afterPath="$PROJECT_DIR$/migrator.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/article.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/event.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user_login.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user_login.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/article/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/article/command.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_login.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_temp.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user_temp.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/userdevice.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/uuid.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/uuid.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/article/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/article/mapper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/article/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/article/query.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/auth/login.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/auth/login.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/event/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/event/command.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/event/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/event/mapper.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/event/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/event/query.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/viewmodels/auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/auth.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/dataprovider/DataProviderFactory.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/DataProviderFactory.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/temp_user/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/temp_user/mapper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/user/mapper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/user.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/home/component/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/component/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/EventsListView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/EventsListView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/GalleryView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/GalleryView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/LoginView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/LoginView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/models/AboutModel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/models/AboutModel.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,19 +69,19 @@
     <property name="settings.editor.selected.configurable" value="go.sdk" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\SMANTURA\ikasmantura\backend\viewmodels" />
-      <recent name="D:\SMANTURA\ikasmantura\backend\handlers\user" />
-      <recent name="D:\SMANTURA\ikasmantura\backend\handlers\event" />
-      <recent name="D:\SMANTURA\ikasmantura\backend\handlers\department" />
-      <recent name="D:\SMANTURA\ikasmantura\backend\handlers\auth" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\SMANTURA\ikasmantura\backend\services\classroom" />
       <recent name="D:\SMANTURA\ikasmantura\backend\handlers\classroom" />
       <recent name="D:\SMANTURA\ikasmantura\backend\handlers" />
       <recent name="D:\SMANTURA\ikasmantura\backend" />
       <recent name="D:\SMANTURA\webika\backend\handlers" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\SMANTURA\ikasmantura\backend\utils" />
+      <recent name="D:\SMANTURA\ikasmantura\backend\viewmodels" />
+      <recent name="D:\SMANTURA\ikasmantura\backend\handlers\user" />
+      <recent name="D:\SMANTURA\ikasmantura\backend\handlers\event" />
+      <recent name="D:\SMANTURA\ikasmantura\backend\handlers\department" />
     </key>
   </component>
   <component name="RunManager" selected="Go Build.go build backend">

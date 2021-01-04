@@ -1,16 +1,14 @@
 package auth
 
 import (
-	"backend/models"
-	"backend/repository"
 	"backend/utils"
 	"backend/viewmodels"
+	"encoding/base64"
 	"fmt"
 	"github.com/form3tech-oss/jwt-go"
 	"github.com/go-errors/errors"
 	"github.com/gofiber/fiber/v2"
 	ua2 "github.com/mileusna/useragent"
-	uuid "github.com/satori/go.uuid"
 	history "github.com/vcraescu/gorm-history/v2"
 	"gorm.io/gorm"
 	"os"
@@ -29,55 +27,8 @@ func GetUserAgentData(c *fiber.Ctx) *ua2.UserAgent {
 	return &userAgent
 }
 
-func SaveUserLogin(c *fiber.Ctx, userId uint) (*models.UserLogin, error) {
-
-	var (
-		err 	  		error
-		ok 		  		bool
-		db		  		*gorm.DB
-		userAgent 		*ua2.UserAgent
-		userLoginData	models.UserLogin
-	)
-
-	if db, ok = c.Locals("db").(*gorm.DB); !ok {
-		return nil, c.SendStatus(fiber.StatusInternalServerError)
-	}
-
-	userAgent = GetUserAgentData(c)
-
-	userLoginData.UserId = userId
-	userLoginData.RemoteIP = c.Context().RemoteIP().String()
-	userLoginData.Device = strings.Trim(userAgent.Device, " ")
-	if len(userLoginData.Device) > 35 {
-		userLoginData.Device = userLoginData.Device[:35]
-	}
-	userLoginData.OSName = strings.Trim(userAgent.OS, " ")
-	if len(userLoginData.OSName) > 10 {
-		userLoginData.OSName = userLoginData.OSName[:10]
-	}
-	userLoginData.OSVersion = strings.Trim(userAgent.OSVersion, " ")
-	if len(userLoginData.OSVersion) > 35 {
-		userLoginData.OSVersion = userLoginData.OSVersion[:35]
-	}
-
-	if userAgent.Bot {
-		userLoginData.DeviceType = "bot"
-	} else if userAgent.Mobile {
-		userLoginData.DeviceType = "mobile"
-	} else if userAgent.Tablet {
-		userLoginData.DeviceType = "tablet"
-	} else if userAgent.Desktop {
-		userLoginData.DeviceType = "desktop"
-	}
-
-	err = repository.Save(db, &userLoginData)
-
-	return &userLoginData, err
-}
-
 func DoLogin(
 	c *fiber.Ctx,
-	userLogin *models.UserLogin,
 	userData *viewmodels.UserDto,
 	expired *time.Time,
 	) (*string, error) {
@@ -102,19 +53,13 @@ func DoLogin(
 	claims["email"] = userData.Email
 	claims["id"] = userData.Id
 	claims["role"] = userData.Role
-	claims["ip"] = c.Context().RemoteIP().String()
+	claims["di"] = base64.StdEncoding.EncodeToString(c.Context().RemoteIP())
 	claims["exp"] = expired.Unix()
 
 	// Generate encoded token and send it as response.
 	if token, err = tokenizer.SignedString(utils.ToBytes(os.Getenv("SECRET_KEY")));
 	err != nil {
 		return nil, c.SendStatus(fiber.StatusInternalServerError)
-	}
-
-	if uuid.UUID(userLogin.RefreshToken) != uuid.Nil {
-		refreshToken = uuid.UUID(userLogin.RefreshToken).String()
-	} else {
-		refreshToken = ""
 	}
 
 	c.Cookie(&fiber.Cookie{
@@ -143,11 +88,14 @@ func AuthorizationHandler(c *fiber.Ctx, db *gorm.DB, pageRoles []string) error {
 		currentUserId int
 		userdata      *viewmodels.AuthorizationModel
 		claims        jwt.MapClaims
-		remoteIp      string
 		tokenRole     string
 		pageRole      string
 		exp           int64
 		authorized    = false
+		di            string
+		cdi           string
+		bdi           []byte
+		err           error
 	)
 
 	if user := c.Locals("user").(*jwt.Token); user != nil {
@@ -168,14 +116,23 @@ func AuthorizationHandler(c *fiber.Ctx, db *gorm.DB, pageRoles []string) error {
 
 		currentUserId = int(claims["id"].(float64))
 		exp = int64(claims["exp"].(float64))
-		remoteIp = c.Context().RemoteIP().String()
+		cdi = claims["ip"].(string)
+		di = base64.StdEncoding.EncodeToString(c.Context().RemoteIP())
 
-		if claims["ip"].(string) != c.Context().RemoteIP().String() {
+		if strings.Compare(cdi, di) != 0 {
 			c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
 			c.Status(fiber.StatusUnauthorized)
+
+			if bdi, err = base64.StdEncoding.DecodeString(cdi); err != nil {
+				return errors.New(err.Error())
+			}
+
+			cdi = string(bdi)
+
 			return errors.New(
 				fmt.Sprintf("User ID %s IP's changed from %s to %s",
-					currentUserId, claims["ip"], remoteIp))
+					currentUserId, cdi,
+					c.Context().RemoteIP().String()))
 		}
 
 		userdata = &viewmodels.AuthorizationModel{

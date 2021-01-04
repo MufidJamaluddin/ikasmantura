@@ -7,9 +7,32 @@ import (
 	"backend/viewmodels"
 	"crypto/sha1"
 	"fmt"
+	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
 	"hash"
 )
+
+func RefreshToken(db *gorm.DB, data *viewmodels.UserDto) (err error) {
+	var (
+		model models.User
+	)
+
+	if err = db.Model(&model).
+		Where("id = ?", data.Id).
+		First(&model).Error;
+	err != nil {
+		return
+	}
+
+	model.RefreshToken = uuid.NewV4()
+
+	if err = db.Save(model).Error; err != nil {
+		return err
+	}
+
+	toViewModel(&model, data)
+	return
+}
 
 func Login(db *gorm.DB, data *viewmodels.LoginDto) error {
 	var (

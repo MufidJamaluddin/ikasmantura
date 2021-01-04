@@ -44,6 +44,7 @@ func toViewModel(in *models.User, out *viewmodels.UserDto) {
 	out.Role = in.Role
 	out.Password = in.Password
 	out.ForceYear = in.ForceYear
+	out.RefreshToken = in.RefreshToken.String()
 	out.Address.ID = in.Address.ID
 	out.Address.Street = in.Address.Street
 	out.Address.Suite = in.Address.Suite
