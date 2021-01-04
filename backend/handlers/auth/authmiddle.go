@@ -3,7 +3,6 @@ package auth
 import (
 	"backend/utils"
 	"backend/viewmodels"
-	"encoding/base64"
 	"fmt"
 	"github.com/form3tech-oss/jwt-go"
 	"github.com/go-errors/errors"
@@ -13,14 +12,13 @@ import (
 	"gorm.io/gorm"
 	"os"
 	"strconv"
-	"strings"
 	"time"
 )
 
 func GetUserAgentData(c *fiber.Ctx) *ua2.UserAgent {
 	var (
 		userAgentStr string
-		userAgent ua2.UserAgent
+		userAgent    ua2.UserAgent
 	)
 	userAgentStr = string(c.Context().UserAgent())
 	userAgent = ua2.Parse(userAgentStr)
@@ -31,13 +29,13 @@ func DoLogin(
 	c *fiber.Ctx,
 	userData *viewmodels.UserDto,
 	expired *time.Time,
-	) (*string, error) {
+) (*string, error) {
 
 	var (
-		err 	  		error
-		token     		string
-		refreshToken    string
-		tokenizer 		*jwt.Token
+		err          error
+		token        string
+		refreshToken string
+		tokenizer    *jwt.Token
 	)
 
 	// Create token
@@ -53,12 +51,11 @@ func DoLogin(
 	claims["email"] = userData.Email
 	claims["id"] = userData.Id
 	claims["role"] = userData.Role
-	claims["di"] = base64.StdEncoding.EncodeToString(c.Context().RemoteIP())
+	claims["ip"] = c.IP()
 	claims["exp"] = expired.Unix()
 
 	// Generate encoded token and send it as response.
-	if token, err = tokenizer.SignedString(utils.ToBytes(os.Getenv("SECRET_KEY")));
-	err != nil {
+	if token, err = tokenizer.SignedString(utils.ToBytes(os.Getenv("SECRET_KEY"))); err != nil {
 		return nil, c.SendStatus(fiber.StatusInternalServerError)
 	}
 
@@ -92,10 +89,7 @@ func AuthorizationHandler(c *fiber.Ctx, db *gorm.DB, pageRoles []string) error {
 		pageRole      string
 		exp           int64
 		authorized    = false
-		di            string
-		cdi           string
-		bdi           []byte
-		err           error
+		ip            string
 	)
 
 	if user := c.Locals("user").(*jwt.Token); user != nil {
@@ -116,30 +110,23 @@ func AuthorizationHandler(c *fiber.Ctx, db *gorm.DB, pageRoles []string) error {
 
 		currentUserId = int(claims["id"].(float64))
 		exp = int64(claims["exp"].(float64))
-		cdi = claims["ip"].(string)
-		di = base64.StdEncoding.EncodeToString(c.Context().RemoteIP())
+		ip = claims["ip"].(string)
 
-		if strings.Compare(cdi, di) != 0 {
+		if ip != c.IP() {
 			c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
 			c.Status(fiber.StatusUnauthorized)
 
-			if bdi, err = base64.StdEncoding.DecodeString(cdi); err != nil {
-				return errors.New(err.Error())
-			}
-
-			cdi = string(bdi)
-
 			return errors.New(
 				fmt.Sprintf("User ID %s IP's changed from %s to %s",
-					currentUserId, cdi,
-					c.Context().RemoteIP().String()))
+					currentUserId, ip,
+					c.IP()))
 		}
 
 		userdata = &viewmodels.AuthorizationModel{
 			ID:       uint(currentUserId),
 			Username: claims["name"].(string),
 			Email:    claims["email"].(string),
-			Role:  	  claims["role"].(string),
+			Role:     claims["role"].(string),
 			FullName: claims["fullName"].(string),
 			Exp:      exp,
 		}

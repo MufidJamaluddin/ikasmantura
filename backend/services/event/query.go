@@ -72,15 +72,15 @@ func Find(db *gorm.DB, search *viewmodels.EventParam, callback func(*viewmodels.
 
 	tx = db.Model(&model)
 
-	if isCurrentUserSearch {
-		if search.IsMyEvent {
-			tx = tx.Joins("JOIN user_events ON user_id = ?", search.CurrentUserId)
-		} else {
-			tx = tx.Preload("user_events", "user_id = ?", search.CurrentUserId)
+	/*
+		if isCurrentUserSearch {
+			if search.IsMyEvent {
+				tx = tx.Joins("JOIN user_events ON user_id = ?", search.CurrentUserId)
+			} else {
+				tx = tx.Preload("user_events", "user_id = ?", search.CurrentUserId)
+			}
 		}
-	} else {
-		tx = db.Model(&model)
-	}
+	*/
 
 	searchFilter(tx, search, true)
 
@@ -111,7 +111,7 @@ func FindById(db *gorm.DB, id string, out *viewmodels.EventDto) error {
 		return err
 	}
 
-	if err = db.Where("id = ?", uid.OrderedValue()).First(&model).Error; err == nil {
+	if err = db.Where("id = ?", uid.OrderedValue().Bytes()).First(&model).Error; err == nil {
 		toViewModel(&model, out, false)
 	}
 

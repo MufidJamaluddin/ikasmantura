@@ -48,7 +48,7 @@ func Route(app *fiber.App, db *gorm.DB) {
 	}
 
 	secretOrPublicHandler := jwtWare.New(jwtWare.Config{
-		SigningKey:  []byte(os.Getenv("SECRET_KEY")),
+		SigningKey: []byte(os.Getenv("SECRET_KEY")),
 		TokenLookup: fmt.Sprintf(
 			"header:%s,cookie:%s",
 			os.Getenv("HEADER_TOKEN"), os.Getenv("COOKIE_TOKEN")),
@@ -78,7 +78,7 @@ func Route(app *fiber.App, db *gorm.DB) {
 	}
 
 	adminHandler := secretHandler([]string{"admin"})
-	allMemberHandler := secretHandler([]string{"admin", "member"})
+	allMemberHandler := secretHandler([]string{"admin", "member", ""})
 
 	cacheDuration, _ := strconv.Atoi(os.Getenv("CACHE_DURATION"))
 	cacheHandler := cache.New(cache.Config{

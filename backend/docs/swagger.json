@@ -1,2356 +1,3237 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "contact": {},
-    "license": {}
-  },
-  "paths": {
-    "/api/v1/about/{id}": {
-      "get": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Update About of IKA SMAN Situraja Website",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Web Info"
-        ],
-        "summary": "Update Web About",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "About ID (default 1)",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/dto.AboutDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
+    "swagger": "2.0",
+    "info": {
+        "contact": {},
+        "license": {}
     },
-    "/api/v1/album/{id}": {
-      "delete": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Delete one album by id",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Album"
-        ],
-        "summary": "Delete one album by id",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Album ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "schema": {
-              "$ref": "#/definitions/dto.AlbumDto"
+    "paths": {
+        "/api/v1/about/{id}": {
+            "get": {
+                "description": "About of IKA SMAN Situraja Website",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Web Info"
+                ],
+                "summary": "Get Web About",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "About ID (default 1)",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.AboutDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update About of IKA SMAN Situraja Website",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Web Info"
+                ],
+                "summary": "Update Web About",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "About ID (default 1)",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.AboutDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
             }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
+        },
+        "/api/v1/album/{id}": {
+            "delete": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete one album by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Album"
+                ],
+                "summary": "Delete one album by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Album ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.AlbumDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
             }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "type": "string"
+        },
+        "/api/v1/albums": {
+            "get": {
+                "description": "Get album data with pagination",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Album"
+                ],
+                "summary": "Search album data",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "createdAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "createdBy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "title",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "updatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updatedBy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "userId",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/viewmodels.AlbumDto"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Save album",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Album"
+                ],
+                "summary": "Save album",
+                "parameters": [
+                    {
+                        "description": "New Album Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.AlbumDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.AlbumDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
             }
-          }
+        },
+        "/api/v1/albums/{id}": {
+            "get": {
+                "description": "Get album data by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Album"
+                ],
+                "summary": "Get one album data by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Album ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.AlbumDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update album",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Album"
+                ],
+                "summary": "Update album",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Album ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "New Album Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.AlbumDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.AlbumDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/article/{id}": {
+            "delete": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete one article by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Delete one article by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Article ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ArticleTopicDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/articles": {
+            "get": {
+                "description": "Get article data with pagination",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Search article data",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "createdAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "createdBy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "description",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "icon",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "updatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updatedBy",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/viewmodels.ArticleTopicDto"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/articles/{id}": {
+            "get": {
+                "description": "Get data by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Get one data by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Article ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ArticleTopicDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update article",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Update article",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Article ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "New Article Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ArticleTopicDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ArticleTopicDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Save article",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Save article",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Article ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "New Article Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ArticleTopicDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ArticleTopicDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth": {
+            "get": {
+                "description": "GetLoggedInUser for get IKA SMAN Situraja users",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication \u0026 Authorization"
+                ],
+                "summary": "GetLoggedInUser",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.AuthorizationModel"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Login to IKA SMAN Situraja",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication \u0026 Authorization"
+                ],
+                "summary": "Login",
+                "parameters": [
+                    {
+                        "description": "Pagination Options",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.LoginDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.LoginDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Logout to IKA SMAN Situraja",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication \u0026 Authorization"
+                ],
+                "summary": "Logout",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/classroom/{id}": {
+            "delete": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete one classroom by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Classroom"
+                ],
+                "summary": "Delete one classroom by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Classroom ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ClassroomDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/classrooms": {
+            "get": {
+                "description": "Get classroom data with pagination",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Classroom"
+                ],
+                "summary": "Search classroom data",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "createdAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "createdBy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "level",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "major",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "seq",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "updatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updatedBy",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/viewmodels.ClassroomDto"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Save classroom",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Classroom"
+                ],
+                "summary": "Save classroom",
+                "parameters": [
+                    {
+                        "description": "New Classroom Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ClassroomDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ClassroomDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/classrooms/{id}": {
+            "get": {
+                "description": "Get classroom data by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Classroom"
+                ],
+                "summary": "Get one classroom data by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Classroom ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ClassroomDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update classroom",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Classroom"
+                ],
+                "summary": "Update classroom",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Classroom ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "New Classroom Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ClassroomDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ClassroomDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/department/{id}": {
+            "delete": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete one department  by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Delete one department  by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Department ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.DepartmentDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/departments": {
+            "get": {
+                "description": "Search Department",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Search Department",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "createdAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "createdBy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "type",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "updatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updatedBy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "userFullname",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "userId",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/viewmodels.DepartmentDto"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update department",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Save department",
+                "parameters": [
+                    {
+                        "description": "New Department Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.DepartmentDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.DepartmentDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/departments/{id}": {
+            "get": {
+                "description": "Get data by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Get one data by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Department ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.DepartmentDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update department",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Update department",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Department ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "New Department Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.DepartmentDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.DepartmentDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/event/{id}": {
+            "delete": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete one event  by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Event Management"
+                ],
+                "summary": "Delete one event  by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Event ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.EventDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/event_register/{id}": {
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Register event",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Event Management"
+                ],
+                "summary": "Register event",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Event ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/events": {
+            "get": {
+                "description": "Search Event",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Event Management"
+                ],
+                "summary": "Search Event",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "createdAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "createdAt_gte",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "createdAt_lte",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "createdBy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "createdByName",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "description",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "end",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "image",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "myEvent",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "organizer",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "start",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "thumbnail",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "title",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "updatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updatedBy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "userId",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/viewmodels.EventDto"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Save event",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Event Management"
+                ],
+                "summary": "Save event",
+                "parameters": [
+                    {
+                        "description": "New Event Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.EventDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.EventDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/events/{id}": {
+            "get": {
+                "description": "Get data by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Event Management"
+                ],
+                "summary": "Get one data by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Event ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.EventDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update event",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Event Management"
+                ],
+                "summary": "Update event",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Event ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "New Event Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.EventDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.EventDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/photos": {
+            "get": {
+                "description": "Get photo data with pagination",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Album"
+                ],
+                "summary": "Search photo data",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "albumId",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "createdAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "createdBy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "original",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "thumbnail",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "title",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "updatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updatedBy",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/viewmodels.AlbumPhotoDto"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Save photo",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Album"
+                ],
+                "summary": "Save photo",
+                "parameters": [
+                    {
+                        "description": "New AlbumPhoto Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.AlbumPhotoDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.AlbumPhotoDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/photos/{id}": {
+            "get": {
+                "description": "Get album photo data by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Album"
+                ],
+                "summary": "Get one album photo data by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Album Photo ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.AlbumPhotoDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update photo",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Album"
+                ],
+                "summary": "Update photo",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "AlbumPhoto ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "New AlbumPhoto Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.AlbumPhotoDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.AlbumPhotoDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete one album photo by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Album"
+                ],
+                "summary": "Delete one album photo by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Album Photo ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.AlbumPhotoDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/register/availability": {
+            "post": {
+                "description": "Add new user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Add new user",
+                "parameters": [
+                    {
+                        "description": "New User Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserAvailabilityDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserAvailabilityResponseDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/temp_users": {
+            "get": {
+                "description": "Search Department",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Search Department",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "createdAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "createdBy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "email",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "forceYear",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "password",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "phone",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "role",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "updatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updatedBy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "username",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/viewmodels.UserDto"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Add new user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Add new user",
+                "parameters": [
+                    {
+                        "description": "New User Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/temp_users/{id}": {
+            "get": {
+                "description": "Get data by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Get one data by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update user",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "New User Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/{id}": {
+            "delete": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete one user by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Delete one user by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users": {
+            "get": {
+                "description": "Search Department",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Search Department",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "createdAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "createdBy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "email",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "forceYear",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "password",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "phone",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "role",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "updatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updatedBy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "username",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/viewmodels.UserDto"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Add new user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Add new user",
+                "parameters": [
+                    {
+                        "description": "New User Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/{id}": {
+            "get": {
+                "description": "Get data by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Get one data by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update user",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "New User Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/verify_user": {
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Add new user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Add new user",
+                "parameters": [
+                    {
+                        "description": "New User Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
-      }
     },
-    "/api/v1/albums": {
-      "get": {
-        "description": "Get album data with pagination",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Album"
-        ],
-        "summary": "Search album data",
-        "parameters": [
-          {
-            "type": "string",
-            "name": "createdAt",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "createdBy",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "id",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "title",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "updatedAt",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "updatedBy",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "userId",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/dto.AlbumDto"
-              }
+    "definitions": {
+        "viewmodels.AboutDto": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "facebook": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "instagram": {
+                    "type": "string"
+                },
+                "mission": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "twitter": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                },
+                "vision": {
+                    "type": "string"
+                }
             }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
+        },
+        "viewmodels.AlbumDto": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
+                }
             }
-          }
+        },
+        "viewmodels.AlbumParam": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "viewmodels.AlbumPhotoDto": {
+            "type": "object",
+            "properties": {
+                "albumId": {
+                    "type": "integer"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "original": {
+                    "type": "string"
+                },
+                "thumbnail": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                }
+            }
+        },
+        "viewmodels.AlbumPhotoParam": {
+            "type": "object",
+            "properties": {
+                "albumId": {
+                    "type": "integer"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "original": {
+                    "type": "string"
+                },
+                "thumbnail": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                }
+            }
+        },
+        "viewmodels.ArticleDto": {
+            "type": "object",
+            "properties": {
+                "body": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "createdByName": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "thumbnail": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "topicId": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "viewmodels.ArticleParam": {
+            "type": "object",
+            "properties": {
+                "body": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdAt_gte": {
+                    "type": "string"
+                },
+                "createdAt_lte": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "createdByName": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "thumbnail": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "topicId": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "viewmodels.ArticleTopicDto": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                }
+            }
+        },
+        "viewmodels.ArticleTopicParam": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                }
+            }
+        },
+        "viewmodels.AuthorizationModel": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "exp": {
+                    "type": "integer"
+                },
+                "fullName": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                }
+            }
+        },
+        "viewmodels.ClassroomDto": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "level": {
+                    "type": "string"
+                },
+                "major": {
+                    "type": "string"
+                },
+                "seq": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                }
+            }
+        },
+        "viewmodels.ClassroomParam": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "level": {
+                    "type": "string"
+                },
+                "major": {
+                    "type": "string"
+                },
+                "seq": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                }
+            }
+        },
+        "viewmodels.DepartmentDto": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                },
+                "userFullname": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "viewmodels.DepartmentParam": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                },
+                "userFullname": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "viewmodels.EventDto": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "createdByName": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "end": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "myEvent": {
+                    "type": "boolean"
+                },
+                "organizer": {
+                    "type": "string"
+                },
+                "registration": {
+                    "type": "object",
+                    "$ref": "#/definitions/viewmodels.UserEventDto"
+                },
+                "start": {
+                    "type": "string"
+                },
+                "thumbnail": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "viewmodels.EventParam": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdAt_gte": {
+                    "type": "string"
+                },
+                "createdAt_lte": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "createdByName": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "end": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "myEvent": {
+                    "type": "boolean"
+                },
+                "organizer": {
+                    "type": "string"
+                },
+                "registration": {
+                    "type": "object",
+                    "$ref": "#/definitions/viewmodels.UserEventDto"
+                },
+                "start": {
+                    "type": "string"
+                },
+                "thumbnail": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "viewmodels.LoginDto": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "refreshToken": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "viewmodels.UserAddressDto": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "street": {
+                    "type": "string"
+                },
+                "suite": {
+                    "type": "string"
+                },
+                "zipcode": {
+                    "type": "string"
+                }
+            }
+        },
+        "viewmodels.UserAvailabilityDto": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "viewmodels.UserAvailabilityResponseDto": {
+            "type": "object",
+            "properties": {
+                "exist": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "viewmodels.UserDto": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "object",
+                    "$ref": "#/definitions/viewmodels.UserAddressDto"
+                },
+                "classrooms": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/viewmodels.ClassroomDto"
+                    }
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "forceYear": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "viewmodels.UserEventDto": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "eventId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "viewmodels.UserParam": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "object",
+                    "$ref": "#/definitions/viewmodels.UserAddressDto"
+                },
+                "classrooms": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/viewmodels.ClassroomDto"
+                    }
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "forceYear": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
         }
-      },
-      "post": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Save album",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Album"
-        ],
-        "summary": "Save album",
-        "parameters": [
-          {
-            "description": "New Album Data",
-            "name": "q",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.AlbumDto"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "schema": {
-              "$ref": "#/definitions/dto.AlbumDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/albums/{id}": {
-      "get": {
-        "description": "Get album data by id",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Album"
-        ],
-        "summary": "Get one album data by id",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Album ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/dto.AlbumDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "put": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Update album",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Album"
-        ],
-        "summary": "Update album",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Album ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "description": "New Album Data",
-            "name": "q",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.AlbumDto"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "schema": {
-              "$ref": "#/definitions/dto.AlbumDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/article/{id}": {
-      "delete": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Delete one article by id",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Article"
-        ],
-        "summary": "Delete one article by id",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Article ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/dto.ArticleDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/articles": {
-      "get": {
-        "description": "Get article data with pagination",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Article"
-        ],
-        "summary": "Search article data",
-        "parameters": [
-          {
-            "type": "string",
-            "name": "body",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "createdAt",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "createdBy",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "id",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "image",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "title",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "topicId",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "updatedAt",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "updatedBy",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "userId",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/dto.ArticleDto"
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/articles/{id}": {
-      "get": {
-        "description": "Get data by id",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Article"
-        ],
-        "summary": "Get one data by id",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Article ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/dto.ArticleDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "put": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Save article",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Article"
-        ],
-        "summary": "Save article",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Article ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "description": "New Article Data",
-            "name": "q",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.ArticleDto"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created",
-            "schema": {
-              "$ref": "#/definitions/dto.ArticleDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/auth": {
-      "post": {
-        "description": "Login to IKA SMAN Situraja",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Authentication \u0026 Authorization"
-        ],
-        "summary": "Login",
-        "parameters": [
-          {
-            "description": "Pagination Options",
-            "name": "q",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.LoginDto"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/dto.LoginDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "delete": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Logout to IKA SMAN Situraja",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Authentication \u0026 Authorization"
-        ],
-        "summary": "Logout",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/department/{id}": {
-      "delete": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Delete one department  by id",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "User Management"
-        ],
-        "summary": "Delete one department  by id",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Department ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "schema": {
-              "$ref": "#/definitions/dto.DepartmentDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/departments": {
-      "get": {
-        "description": "Search Department",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "User Management"
-        ],
-        "summary": "Search Department",
-        "parameters": [
-          {
-            "type": "string",
-            "name": "createdAt",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "createdBy",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "id",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "name",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "type",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "updatedAt",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "updatedBy",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "userFullname",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "userId",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/dto.DepartmentDto"
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "post": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Update department",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "User Management"
-        ],
-        "summary": "Save department",
-        "parameters": [
-          {
-            "description": "New Department Data",
-            "name": "q",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.DepartmentDto"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "schema": {
-              "$ref": "#/definitions/dto.DepartmentDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/departments/{id}": {
-      "get": {
-        "description": "Get data by id",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "User Management"
-        ],
-        "summary": "Get one data by id",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Department ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/dto.DepartmentDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "put": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Update department",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "User Management"
-        ],
-        "summary": "Update department",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Department ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "description": "New Department Data",
-            "name": "q",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.DepartmentDto"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "schema": {
-              "$ref": "#/definitions/dto.DepartmentDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/event/{id}": {
-      "delete": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Delete one event  by id",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Event Management"
-        ],
-        "summary": "Delete one event  by id",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Event ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "schema": {
-              "$ref": "#/definitions/dto.EventDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/event_register/{id}": {
-      "post": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Register event",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Event Management"
-        ],
-        "summary": "Register event",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Event ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/events": {
-      "get": {
-        "description": "Search Event",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Event Management"
-        ],
-        "summary": "Search Event",
-        "parameters": [
-          {
-            "type": "string",
-            "name": "createdAt",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "createdBy",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "createdByName",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "description",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "end",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "end_lte",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "id",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "image",
-            "in": "query"
-          },
-          {
-            "type": "boolean",
-            "name": "myEvent",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "organizer",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "start",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "start_gte",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "title",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "updatedAt",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "updatedBy",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "userId",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/dto.EventDto"
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "post": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Save event",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Event Management"
-        ],
-        "summary": "Save event",
-        "parameters": [
-          {
-            "description": "New Event Data",
-            "name": "q",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.EventDto"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "schema": {
-              "$ref": "#/definitions/dto.EventDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/events/{id}": {
-      "get": {
-        "description": "Get data by id",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Event Management"
-        ],
-        "summary": "Get one data by id",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Event ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/dto.EventDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "put": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Update event",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Event Management"
-        ],
-        "summary": "Update event",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Event ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "description": "New Event Data",
-            "name": "q",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.EventDto"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "schema": {
-              "$ref": "#/definitions/dto.EventDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/photos": {
-      "get": {
-        "description": "Get photo data with pagination",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Album"
-        ],
-        "summary": "Search photo data",
-        "parameters": [
-          {
-            "type": "integer",
-            "name": "albumId",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "createdAt",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "createdBy",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "id",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "image",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "thumbnail",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "title",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "updatedAt",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "updatedBy",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/dto.AlbumPhotoDto"
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "put": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Save photo",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Album"
-        ],
-        "summary": "Save photo",
-        "parameters": [
-          {
-            "description": "New AlbumPhoto Data",
-            "name": "q",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.AlbumPhotoDto"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "schema": {
-              "$ref": "#/definitions/dto.AlbumPhotoDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/photos/{id}": {
-      "get": {
-        "description": "Get album photo data by id",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Album"
-        ],
-        "summary": "Get one album photo data by id",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Album Photo ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/dto.AlbumPhotoDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "put": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Update photo",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Album"
-        ],
-        "summary": "Update photo",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "AlbumPhoto ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "description": "New AlbumPhoto Data",
-            "name": "q",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.AlbumPhotoDto"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "schema": {
-              "$ref": "#/definitions/dto.AlbumPhotoDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "delete": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Delete one album photo by id",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Album"
-        ],
-        "summary": "Delete one album photo by id",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Album Photo ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "schema": {
-              "$ref": "#/definitions/dto.AlbumPhotoDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/user/{id}": {
-      "delete": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Delete one user by id",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "User Management"
-        ],
-        "summary": "Delete one user by id",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "User ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "schema": {
-              "$ref": "#/definitions/dto.UserDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/users": {
-      "get": {
-        "description": "Search Department",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "User Management"
-        ],
-        "summary": "Search Department",
-        "parameters": [
-          {
-            "type": "string",
-            "name": "createdAt",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "createdBy",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "email",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "id",
-            "in": "query"
-          },
-          {
-            "type": "boolean",
-            "name": "isAdmin",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "name",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "password",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "phone",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "updatedAt",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "name": "updatedBy",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "username",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/dto.UserDto"
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "post": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Add new user",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "User"
-        ],
-        "summary": "Add new user",
-        "parameters": [
-          {
-            "description": "New User Data",
-            "name": "q",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.UserDto"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "schema": {
-              "$ref": "#/definitions/dto.UserDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/users/{id}": {
-      "get": {
-        "description": "Get data by id",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "User Management"
-        ],
-        "summary": "Get one data by id",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "User ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/dto.UserDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "put": {
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Update user",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "User"
-        ],
-        "summary": "Update user",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "User ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "description": "New User Data",
-            "name": "q",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.UserDto"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "schema": {
-              "$ref": "#/definitions/dto.UserDto"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
     }
-  },
-  "definitions": {
-    "dto.AboutDto": {
-      "type": "object",
-      "properties": {
-        "createdAt": {
-          "type": "string"
-        },
-        "createdBy": {
-          "type": "integer"
-        },
-        "description": {
-          "type": "string"
-        },
-        "id": {
-          "type": "integer"
-        },
-        "mission": {
-          "type": "string"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "integer"
-        },
-        "vision": {
-          "type": "string"
-        }
-      }
-    },
-    "dto.AlbumDto": {
-      "type": "object",
-      "properties": {
-        "createdAt": {
-          "type": "string"
-        },
-        "createdBy": {
-          "type": "integer"
-        },
-        "id": {
-          "type": "integer"
-        },
-        "title": {
-          "type": "string"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "integer"
-        },
-        "userId": {
-          "type": "integer"
-        }
-      }
-    },
-    "dto.AlbumParam": {
-      "type": "object",
-      "properties": {
-        "createdAt": {
-          "type": "string"
-        },
-        "createdBy": {
-          "type": "integer"
-        },
-        "id": {
-          "type": "integer"
-        },
-        "title": {
-          "type": "string"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "integer"
-        },
-        "userId": {
-          "type": "integer"
-        }
-      }
-    },
-    "dto.AlbumPhotoDto": {
-      "type": "object",
-      "properties": {
-        "albumId": {
-          "type": "integer"
-        },
-        "createdAt": {
-          "type": "string"
-        },
-        "createdBy": {
-          "type": "integer"
-        },
-        "id": {
-          "type": "integer"
-        },
-        "image": {
-          "type": "string"
-        },
-        "thumbnail": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "integer"
-        }
-      }
-    },
-    "dto.AlbumPhotoParam": {
-      "type": "object",
-      "properties": {
-        "albumId": {
-          "type": "integer"
-        },
-        "createdAt": {
-          "type": "string"
-        },
-        "createdBy": {
-          "type": "integer"
-        },
-        "id": {
-          "type": "integer"
-        },
-        "image": {
-          "type": "string"
-        },
-        "thumbnail": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "integer"
-        }
-      }
-    },
-    "dto.ArticleDto": {
-      "type": "object",
-      "properties": {
-        "body": {
-          "type": "string"
-        },
-        "createdAt": {
-          "type": "string"
-        },
-        "createdBy": {
-          "type": "integer"
-        },
-        "id": {
-          "type": "integer"
-        },
-        "image": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "topicId": {
-          "type": "integer"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "integer"
-        },
-        "userId": {
-          "type": "integer"
-        }
-      }
-    },
-    "dto.ArticleParam": {
-      "type": "object",
-      "properties": {
-        "body": {
-          "type": "string"
-        },
-        "createdAt": {
-          "type": "string"
-        },
-        "createdBy": {
-          "type": "integer"
-        },
-        "id": {
-          "type": "integer"
-        },
-        "image": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "topicId": {
-          "type": "integer"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "integer"
-        },
-        "userId": {
-          "type": "integer"
-        }
-      }
-    },
-    "dto.ArticleTopicDto": {
-      "type": "object",
-      "properties": {
-        "createdAt": {
-          "type": "string"
-        },
-        "createdBy": {
-          "type": "integer"
-        },
-        "id": {
-          "type": "integer"
-        },
-        "name": {
-          "type": "string"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "integer"
-        }
-      }
-    },
-    "dto.ArticleTopicParam": {
-      "type": "object",
-      "properties": {
-        "createdAt": {
-          "type": "string"
-        },
-        "createdBy": {
-          "type": "integer"
-        },
-        "id": {
-          "type": "integer"
-        },
-        "name": {
-          "type": "string"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "integer"
-        }
-      }
-    },
-    "dto.DepartmentDto": {
-      "type": "object",
-      "properties": {
-        "createdAt": {
-          "type": "string"
-        },
-        "createdBy": {
-          "type": "integer"
-        },
-        "id": {
-          "type": "integer"
-        },
-        "name": {
-          "type": "string"
-        },
-        "type": {
-          "type": "integer"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "integer"
-        },
-        "userFullname": {
-          "type": "string"
-        },
-        "userId": {
-          "type": "integer"
-        }
-      }
-    },
-    "dto.DepartmentParam": {
-      "type": "object",
-      "properties": {
-        "createdAt": {
-          "type": "string"
-        },
-        "createdBy": {
-          "type": "integer"
-        },
-        "id": {
-          "type": "integer"
-        },
-        "name": {
-          "type": "string"
-        },
-        "type": {
-          "type": "integer"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "integer"
-        },
-        "userFullname": {
-          "type": "string"
-        },
-        "userId": {
-          "type": "integer"
-        }
-      }
-    },
-    "dto.EventDto": {
-      "type": "object",
-      "properties": {
-        "createdAt": {
-          "type": "string"
-        },
-        "createdBy": {
-          "type": "integer"
-        },
-        "createdByName": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "end": {
-          "type": "string"
-        },
-        "id": {
-          "type": "integer"
-        },
-        "image": {
-          "type": "string"
-        },
-        "myEvent": {
-          "type": "boolean"
-        },
-        "organizer": {
-          "type": "string"
-        },
-        "registration": {
-          "type": "object",
-          "$ref": "#/definitions/dto.UserEventDto"
-        },
-        "start": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "integer"
-        },
-        "userId": {
-          "type": "integer"
-        }
-      }
-    },
-    "dto.EventParam": {
-      "type": "object",
-      "properties": {
-        "createdAt": {
-          "type": "string"
-        },
-        "createdBy": {
-          "type": "integer"
-        },
-        "createdByName": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "end": {
-          "type": "string"
-        },
-        "end_lte": {
-          "type": "string"
-        },
-        "id": {
-          "type": "integer"
-        },
-        "image": {
-          "type": "string"
-        },
-        "myEvent": {
-          "type": "boolean"
-        },
-        "organizer": {
-          "type": "string"
-        },
-        "registration": {
-          "type": "object",
-          "$ref": "#/definitions/dto.UserEventDto"
-        },
-        "start": {
-          "type": "string"
-        },
-        "start_gte": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "integer"
-        },
-        "userId": {
-          "type": "integer"
-        }
-      }
-    },
-    "dto.LoginDto": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "type": "object",
-          "$ref": "#/definitions/dto.UserDto"
-        },
-        "password": {
-          "type": "string"
-        },
-        "username": {
-          "type": "string"
-        }
-      }
-    },
-    "dto.UserAddressDto": {
-      "type": "object",
-      "properties": {
-        "city": {
-          "type": "string"
-        },
-        "id": {
-          "type": "integer"
-        },
-        "street": {
-          "type": "string"
-        },
-        "suite": {
-          "type": "string"
-        },
-        "zipcode": {
-          "type": "string"
-        }
-      }
-    },
-    "dto.UserDto": {
-      "type": "object",
-      "properties": {
-        "address": {
-          "type": "object",
-          "$ref": "#/definitions/dto.UserAddressDto"
-        },
-        "createdAt": {
-          "type": "string"
-        },
-        "createdBy": {
-          "type": "integer"
-        },
-        "email": {
-          "type": "string"
-        },
-        "id": {
-          "type": "integer"
-        },
-        "isAdmin": {
-          "type": "boolean"
-        },
-        "name": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        },
-        "phone": {
-          "type": "string"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "integer"
-        },
-        "username": {
-          "type": "string"
-        }
-      }
-    },
-    "dto.UserEventDto": {
-      "type": "object",
-      "properties": {
-        "createdAt": {
-          "type": "string"
-        },
-        "createdBy": {
-          "type": "integer"
-        },
-        "eventId": {
-          "type": "integer"
-        },
-        "id": {
-          "type": "integer"
-        },
-        "userId": {
-          "type": "integer"
-        }
-      }
-    },
-    "dto.UserParam": {
-      "type": "object",
-      "properties": {
-        "address": {
-          "type": "object",
-          "$ref": "#/definitions/dto.UserAddressDto"
-        },
-        "createdAt": {
-          "type": "string"
-        },
-        "createdBy": {
-          "type": "integer"
-        },
-        "email": {
-          "type": "string"
-        },
-        "id": {
-          "type": "integer"
-        },
-        "isAdmin": {
-          "type": "boolean"
-        },
-        "name": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        },
-        "phone": {
-          "type": "string"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "integer"
-        },
-        "username": {
-          "type": "string"
-        }
-      }
-    }
-  }
 }

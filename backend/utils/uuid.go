@@ -36,8 +36,8 @@ func (d *UUID) Scan(value interface{}) (err error) {
 }
 
 func (d UUID) Value() (driver.Value, error) {
-	var oid [16]byte
-	oid = d.OrderedValue()
+	var oid []byte
+	oid = d.OrderedValue().Bytes()
 	return oid, nil
 }
 

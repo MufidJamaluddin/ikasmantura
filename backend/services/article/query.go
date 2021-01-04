@@ -101,7 +101,7 @@ func FindById(db *gorm.DB, id string, out *viewmodels.ArticleDto) error {
 		return err
 	}
 
-	if err = db.Where("id = ?", uid.OrderedValue()).First(&model).Error; err == nil {
+	if err = db.Where("id = ?", uid.OrderedValue().Bytes()).First(&model).Error; err == nil {
 		toViewModel(&model, out)
 
 		db.Select("name").First(&user, model.CreatedBy)

@@ -26,8 +26,8 @@ import (
 // @Router /api/v1/auth [get]
 func GetLoggedInUser(c *fiber.Ctx) error {
 	var (
-		err error
-		ok bool
+		err      error
+		ok       bool
 		authData *viewmodels.AuthorizationModel
 	)
 
@@ -59,10 +59,6 @@ func Login(c *fiber.Ctx) error {
 		token     *string
 	)
 
-	if c.Cookies(os.Getenv("COOKIE_TOKEN"), "") != "" {
-		return c.Redirect("/panel")
-	}
-
 	if db, ok = c.Locals("db").(*gorm.DB); !ok {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
@@ -78,8 +74,7 @@ func Login(c *fiber.Ctx) error {
 		return err
 	}
 
-	if token, err = DoLogin(c, &loginData.Data, &loginData.Expired);
-	err != nil {
+	if token, err = DoLogin(c, &loginData.Data, &loginData.Expired); err != nil {
 		return err
 	}
 
@@ -93,15 +88,15 @@ func Login(c *fiber.Ctx) error {
 
 func RefreshLogin(c *fiber.Ctx) error {
 	var (
-		err error
-		db *gorm.DB
-		ok bool
-		token     *string
-		refreshToken string
-		authData *viewmodels.AuthorizationModel
-		userData viewmodels.UserDto
+		err           error
+		db            *gorm.DB
+		ok            bool
+		token         *string
+		refreshToken  string
+		authData      *viewmodels.AuthorizationModel
+		userData      viewmodels.UserDto
 		responseLogin viewmodels.LoginResponseDto
-		expired *time.Time
+		expired       *time.Time
 	)
 
 	if authData, ok = viewmodels.GetAuthorizationData(c); !ok {
@@ -147,8 +142,7 @@ func RefreshLogin(c *fiber.Ctx) error {
 		userData.RefreshToken = uuid.NewV4().String()
 	}
 
-	if token, err = DoLogin(c, &userData, expired);
-	err != nil {
+	if token, err = DoLogin(c, &userData, expired); err != nil {
 		return err
 	}
 

@@ -27,6 +27,48 @@ var doc = `{
     "paths": {
         "/api/v1/about/{id}": {
             "get": {
+                "description": "About of IKA SMAN Situraja Website",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Web Info"
+                ],
+                "summary": "Get Web About",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "About ID (default 1)",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.AboutDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
                 "security": [
                     {
                         "BasicAuth": []
@@ -369,7 +411,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/viewmodels.ArticleDto"
+                            "$ref": "#/definitions/viewmodels.ArticleTopicDto"
                         }
                     },
                     "400": {
@@ -403,11 +445,6 @@ var doc = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "name": "body",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
                         "name": "createdAt",
                         "in": "query"
                     },
@@ -417,23 +454,23 @@ var doc = `{
                         "in": "query"
                     },
                     {
+                        "type": "string",
+                        "name": "description",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "icon",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "name": "id",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "name": "image",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "name": "title",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "name": "topicId",
+                        "name": "name",
                         "in": "query"
                     },
                     {
@@ -445,11 +482,6 @@ var doc = `{
                         "type": "integer",
                         "name": "updatedBy",
                         "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "name": "userId",
-                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -458,7 +490,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/viewmodels.ArticleDto"
+                                "$ref": "#/definitions/viewmodels.ArticleTopicDto"
                             }
                         }
                     },
@@ -497,7 +529,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/viewmodels.ArticleDto"
+                            "$ref": "#/definitions/viewmodels.ArticleTopicDto"
                         }
                     },
                     "400": {
@@ -509,6 +541,59 @@ var doc = `{
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update article",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Update article",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Article ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "New Article Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ArticleTopicDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ArticleTopicDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
                 "security": [
                     {
                         "BasicAuth": []
@@ -542,7 +627,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/viewmodels.ArticleDto"
+                            "$ref": "#/definitions/viewmodels.ArticleTopicDto"
                         }
                     }
                 ],
@@ -550,7 +635,7 @@ var doc = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/viewmodels.ArticleDto"
+                            "$ref": "#/definitions/viewmodels.ArticleTopicDto"
                         }
                     },
                     "400": {
@@ -563,6 +648,33 @@ var doc = `{
             }
         },
         "/api/v1/auth": {
+            "get": {
+                "description": "GetLoggedInUser for get IKA SMAN Situraja users",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication \u0026 Authorization"
+                ],
+                "summary": "GetLoggedInUser",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.AuthorizationModel"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "Login to IKA SMAN Situraja",
                 "consumes": [
@@ -626,6 +738,269 @@ var doc = `{
                         "description": "OK",
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/classroom/{id}": {
+            "delete": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete one classroom by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Classroom"
+                ],
+                "summary": "Delete one classroom by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Classroom ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ClassroomDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/classrooms": {
+            "get": {
+                "description": "Get classroom data with pagination",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Classroom"
+                ],
+                "summary": "Search classroom data",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "createdAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "createdBy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "level",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "major",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "seq",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "updatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updatedBy",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/viewmodels.ClassroomDto"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Save classroom",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Classroom"
+                ],
+                "summary": "Save classroom",
+                "parameters": [
+                    {
+                        "description": "New Classroom Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ClassroomDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ClassroomDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/classrooms/{id}": {
+            "get": {
+                "description": "Get classroom data by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Classroom"
+                ],
+                "summary": "Get one classroom data by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Classroom ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ClassroomDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update classroom",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Classroom"
+                ],
+                "summary": "Update classroom",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Classroom ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "New Classroom Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ClassroomDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.ClassroomDto"
                         }
                     },
                     "400": {
@@ -1023,6 +1398,16 @@ var doc = `{
                         "in": "query"
                     },
                     {
+                        "type": "string",
+                        "name": "createdAt_gte",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "createdAt_lte",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "name": "createdBy",
                         "in": "query"
@@ -1044,11 +1429,6 @@ var doc = `{
                     },
                     {
                         "type": "string",
-                        "name": "end_lte",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
                         "name": "id",
                         "in": "query"
                     },
@@ -1074,7 +1454,7 @@ var doc = `{
                     },
                     {
                         "type": "string",
-                        "name": "start_gte",
+                        "name": "thumbnail",
                         "in": "query"
                     },
                     {
@@ -1290,7 +1670,7 @@ var doc = `{
                     },
                     {
                         "type": "string",
-                        "name": "image",
+                        "name": "original",
                         "in": "query"
                     },
                     {
@@ -1332,7 +1712,7 @@ var doc = `{
                     }
                 }
             },
-            "put": {
+            "post": {
                 "security": [
                     {
                         "BasicAuth": []
@@ -1520,6 +1900,277 @@ var doc = `{
                 }
             }
         },
+        "/api/v1/register/availability": {
+            "post": {
+                "description": "Add new user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Add new user",
+                "parameters": [
+                    {
+                        "description": "New User Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserAvailabilityDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserAvailabilityResponseDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/temp_users": {
+            "get": {
+                "description": "Search Department",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Search Department",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "createdAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "createdBy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "email",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "forceYear",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "password",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "phone",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "role",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "updatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updatedBy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "username",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/viewmodels.UserDto"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Add new user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Add new user",
+                "parameters": [
+                    {
+                        "description": "New User Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/temp_users/{id}": {
+            "get": {
+                "description": "Get data by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Get one data by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update user",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "New User Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/user/{id}": {
             "delete": {
                 "security": [
@@ -1602,13 +2253,13 @@ var doc = `{
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "name": "id",
+                        "type": "string",
+                        "name": "forceYear",
                         "in": "query"
                     },
                     {
-                        "type": "boolean",
-                        "name": "isAdmin",
+                        "type": "integer",
+                        "name": "id",
                         "in": "query"
                     },
                     {
@@ -1624,6 +2275,11 @@ var doc = `{
                     {
                         "type": "string",
                         "name": "phone",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "role",
                         "in": "query"
                     },
                     {
@@ -1797,6 +2453,54 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/api/v1/verify_user": {
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Add new user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Add new user",
+                "parameters": [
+                    {
+                        "description": "New User Data",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/viewmodels.UserDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -1812,10 +2516,25 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
+                "email": {
+                    "type": "string"
+                },
+                "facebook": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
+                "instagram": {
+                    "type": "string"
+                },
                 "mission": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "twitter": {
                     "type": "string"
                 },
                 "updatedAt": {
@@ -1896,7 +2615,7 @@ var doc = `{
                 "id": {
                     "type": "integer"
                 },
-                "image": {
+                "original": {
                     "type": "string"
                 },
                 "thumbnail": {
@@ -1928,7 +2647,7 @@ var doc = `{
                 "id": {
                     "type": "integer"
                 },
-                "image": {
+                "original": {
                     "type": "string"
                 },
                 "thumbnail": {
@@ -1957,10 +2676,16 @@ var doc = `{
                 "createdBy": {
                     "type": "integer"
                 },
+                "createdByName": {
+                    "type": "string"
+                },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "image": {
+                    "type": "string"
+                },
+                "thumbnail": {
                     "type": "string"
                 },
                 "title": {
@@ -1989,13 +2714,25 @@ var doc = `{
                 "createdAt": {
                     "type": "string"
                 },
+                "createdAt_gte": {
+                    "type": "string"
+                },
+                "createdAt_lte": {
+                    "type": "string"
+                },
                 "createdBy": {
                     "type": "integer"
                 },
+                "createdByName": {
+                    "type": "string"
+                },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "image": {
+                    "type": "string"
+                },
+                "thumbnail": {
                     "type": "string"
                 },
                 "title": {
@@ -2024,6 +2761,12 @@ var doc = `{
                 "createdBy": {
                     "type": "integer"
                 },
+                "description": {
+                    "type": "string"
+                },
+                "icon": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -2047,11 +2790,98 @@ var doc = `{
                 "createdBy": {
                     "type": "integer"
                 },
+                "description": {
+                    "type": "string"
+                },
+                "icon": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
                 "name": {
                     "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                }
+            }
+        },
+        "viewmodels.AuthorizationModel": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "exp": {
+                    "type": "integer"
+                },
+                "fullName": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                }
+            }
+        },
+        "viewmodels.ClassroomDto": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "level": {
+                    "type": "string"
+                },
+                "major": {
+                    "type": "string"
+                },
+                "seq": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "type": "integer"
+                }
+            }
+        },
+        "viewmodels.ClassroomParam": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "level": {
+                    "type": "string"
+                },
+                "major": {
+                    "type": "string"
+                },
+                "seq": {
+                    "type": "integer"
                 },
                 "updatedAt": {
                     "type": "string"
@@ -2144,7 +2974,7 @@ var doc = `{
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "image": {
                     "type": "string"
@@ -2160,6 +2990,9 @@ var doc = `{
                     "$ref": "#/definitions/viewmodels.UserEventDto"
                 },
                 "start": {
+                    "type": "string"
+                },
+                "thumbnail": {
                     "type": "string"
                 },
                 "title": {
@@ -2182,6 +3015,12 @@ var doc = `{
                 "createdAt": {
                     "type": "string"
                 },
+                "createdAt_gte": {
+                    "type": "string"
+                },
+                "createdAt_lte": {
+                    "type": "string"
+                },
                 "createdBy": {
                     "type": "integer"
                 },
@@ -2194,11 +3033,8 @@ var doc = `{
                 "end": {
                     "type": "string"
                 },
-                "end_lte": {
-                    "type": "string"
-                },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "image": {
                     "type": "string"
@@ -2216,7 +3052,7 @@ var doc = `{
                 "start": {
                     "type": "string"
                 },
-                "start_gte": {
+                "thumbnail": {
                     "type": "string"
                 },
                 "title": {
@@ -2236,11 +3072,16 @@ var doc = `{
         "viewmodels.LoginDto": {
             "type": "object",
             "properties": {
-                "data": {
-                    "type": "object",
-                    "$ref": "#/definitions/viewmodels.UserDto"
+                "email": {
+                    "type": "string"
                 },
                 "password": {
+                    "type": "string"
+                },
+                "refreshToken": {
+                    "type": "string"
+                },
+                "token": {
                     "type": "string"
                 },
                 "username": {
@@ -2257,6 +3098,9 @@ var doc = `{
                 "id": {
                     "type": "integer"
                 },
+                "state": {
+                    "type": "string"
+                },
                 "street": {
                     "type": "string"
                 },
@@ -2268,12 +3112,37 @@ var doc = `{
                 }
             }
         },
+        "viewmodels.UserAvailabilityDto": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "viewmodels.UserAvailabilityResponseDto": {
+            "type": "object",
+            "properties": {
+                "exist": {
+                    "type": "boolean"
+                }
+            }
+        },
         "viewmodels.UserDto": {
             "type": "object",
             "properties": {
                 "address": {
                     "type": "object",
                     "$ref": "#/definitions/viewmodels.UserAddressDto"
+                },
+                "classrooms": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/viewmodels.ClassroomDto"
+                    }
                 },
                 "createdAt": {
                     "type": "string"
@@ -2284,11 +3153,11 @@ var doc = `{
                 "email": {
                     "type": "string"
                 },
+                "forceYear": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
-                },
-                "isAdmin": {
-                    "type": "boolean"
                 },
                 "name": {
                     "type": "string"
@@ -2297,6 +3166,9 @@ var doc = `{
                     "type": "string"
                 },
                 "phone": {
+                    "type": "string"
+                },
+                "role": {
                     "type": "string"
                 },
                 "updatedAt": {
@@ -2337,6 +3209,12 @@ var doc = `{
                     "type": "object",
                     "$ref": "#/definitions/viewmodels.UserAddressDto"
                 },
+                "classrooms": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/viewmodels.ClassroomDto"
+                    }
+                },
                 "createdAt": {
                     "type": "string"
                 },
@@ -2346,11 +3224,11 @@ var doc = `{
                 "email": {
                     "type": "string"
                 },
+                "forceYear": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
-                },
-                "isAdmin": {
-                    "type": "boolean"
                 },
                 "name": {
                     "type": "string"
@@ -2359,6 +3237,9 @@ var doc = `{
                     "type": "string"
                 },
                 "phone": {
+                    "type": "string"
+                },
+                "role": {
                     "type": "string"
                 },
                 "updatedAt": {

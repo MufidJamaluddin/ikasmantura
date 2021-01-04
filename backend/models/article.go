@@ -7,8 +7,8 @@ import (
 )
 
 type Article struct {
-	ID             UUID `gorm:"type:binary(16);primaryKey"`
-	Title          string `gorm:"size:35"`
+	ID             utils.UUID `gorm:"type:binary(16);primaryKey"`
+	Title          string     `gorm:"size:35"`
 	Body           string
 	Image          string `gorm:"size:100"`
 	Thumbnail      string `gorm:"size:100"`
@@ -19,7 +19,7 @@ type Article struct {
 }
 
 func (base *Article) BeforeCreate(scope *gorm.DB) (err error) {
-	base.ID = UUID(uuid.NewV1())
+	base.ID = utils.UUID(uuid.NewV1())
 	return
 }
 
