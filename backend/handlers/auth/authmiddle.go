@@ -7,23 +7,13 @@ import (
 	"github.com/form3tech-oss/jwt-go"
 	"github.com/go-errors/errors"
 	"github.com/gofiber/fiber/v2"
-	ua2 "github.com/mileusna/useragent"
 	history "github.com/vcraescu/gorm-history/v2"
 	"gorm.io/gorm"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
-
-func GetUserAgentData(c *fiber.Ctx) *ua2.UserAgent {
-	var (
-		userAgentStr string
-		userAgent    ua2.UserAgent
-	)
-	userAgentStr = string(c.Context().UserAgent())
-	userAgent = ua2.Parse(userAgentStr)
-	return &userAgent
-}
 
 func DoLogin(
 	c *fiber.Ctx,
@@ -51,7 +41,7 @@ func DoLogin(
 	claims["email"] = userData.Email
 	claims["id"] = userData.Id
 	claims["role"] = userData.Role
-	claims["ip"] = c.IP()
+	claims["ip"] = c.Context().RemoteIP().To16().String()
 	claims["exp"] = expired.Unix()
 
 	// Generate encoded token and send it as response.
@@ -112,7 +102,7 @@ func AuthorizationHandler(c *fiber.Ctx, db *gorm.DB, pageRoles []string) error {
 		exp = int64(claims["exp"].(float64))
 		ip = claims["ip"].(string)
 
-		if ip != c.IP() {
+		if strings.Compare(ip, c.Context().RemoteIP().To16().String()) != 0 {
 			c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
 			c.Status(fiber.StatusUnauthorized)
 
@@ -138,7 +128,6 @@ func AuthorizationHandler(c *fiber.Ctx, db *gorm.DB, pageRoles []string) error {
 
 		c.Locals("user", userdata)
 	} else {
-		c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
 		return c.SendStatus(fiber.StatusUnauthorized)
 	}
 	return c.Next()

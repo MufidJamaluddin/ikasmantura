@@ -3,16 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/docs.go" beforeDir="false" afterPath="$PROJECT_DIR$/docs/docs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handlers/auth/authmiddle.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/auth/authmiddle.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/auth/login.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/auth/login.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/article.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/article/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/article/query.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/event/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/event/query.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/uuid.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/uuid.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,23 +114,21 @@
     <MESSAGE value="Bug fixing PublicAndPrivateHandler" />
     <MESSAGE value="Beautification &amp; Fix Check User Available" />
     <MESSAGE value="Fix Bug Save &amp; Update in Newest Gorm Version" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix Bug Save &amp; Update in Newest Gorm Version" />
+    <MESSAGE value="Fix Bug Login" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix Bug Login" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
-    <state x="441" y="217" key="#Go_Modules" timestamp="1600666951415">
-      <screen x="0" y="0" width="1299" height="768" />
-    </state>
-    <state x="441" y="217" key="#Go_Modules/0.0.1299.768@0.0.1299.768" timestamp="1600666951415" />
     <state x="425" y="186" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1607455092898">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="425" y="186" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1301.768@0.0.1301.768" timestamp="1607455092898" />
-    <state x="276" y="0" key="CommitChangelistDialog2" timestamp="1609110361227">
-      <screen x="0" y="0" width="1301" height="768" />
+    <state x="275" y="0" key="CommitChangelistDialog2" timestamp="1609744114999">
+      <screen x="0" y="0" width="1294" height="768" />
     </state>
+    <state x="275" y="0" key="CommitChangelistDialog2/0.0.1294.768@0.0.1294.768" timestamp="1609744114999" />
     <state x="274" y="0" key="CommitChangelistDialog2/0.0.1298.768@0.0.1298.768" timestamp="1601400251914" />
     <state x="276" y="0" key="CommitChangelistDialog2/0.0.1301.768@0.0.1301.768" timestamp="1609110361227" />
     <state x="122" y="59" key="DiffContextDialog" timestamp="1609110322648">
@@ -147,33 +136,21 @@
     </state>
     <state x="122" y="59" key="DiffContextDialog/0.0.1298.768@0.0.1298.768" timestamp="1601400168939" />
     <state x="122" y="59" key="DiffContextDialog/0.0.1301.768@0.0.1301.768" timestamp="1609110322648" />
-    <state x="542" y="244" key="EnvironmentVariablesDialog" timestamp="1600666945282">
-      <screen x="0" y="0" width="1299" height="768" />
-    </state>
-    <state x="542" y="244" key="EnvironmentVariablesDialog/0.0.1299.768@0.0.1299.768" timestamp="1600666945282" />
-    <state x="429" y="139" key="FileChooserDialogImpl" timestamp="1600958206171">
-      <screen x="0" y="0" width="1299" height="768" />
-    </state>
-    <state x="429" y="139" key="FileChooserDialogImpl/0.0.1299.768@0.0.1299.768" timestamp="1600958206171" />
     <state width="1258" height="239" key="GridCell.Tab.0.bottom" timestamp="1609091894146">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
-    <state width="1255" height="272" key="GridCell.Tab.0.bottom/0.0.1298.768@0.0.1298.768" timestamp="1601052635959" />
     <state width="1258" height="239" key="GridCell.Tab.0.bottom/0.0.1301.768@0.0.1301.768" timestamp="1609091894146" />
     <state width="1258" height="239" key="GridCell.Tab.0.center" timestamp="1609091894146">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
-    <state width="1255" height="272" key="GridCell.Tab.0.center/0.0.1298.768@0.0.1298.768" timestamp="1601052635959" />
     <state width="1258" height="239" key="GridCell.Tab.0.center/0.0.1301.768@0.0.1301.768" timestamp="1609091894146" />
     <state width="1258" height="239" key="GridCell.Tab.0.left" timestamp="1609091894146">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
-    <state width="1255" height="272" key="GridCell.Tab.0.left/0.0.1298.768@0.0.1298.768" timestamp="1601052635959" />
     <state width="1258" height="239" key="GridCell.Tab.0.left/0.0.1301.768@0.0.1301.768" timestamp="1609091894146" />
     <state width="1258" height="239" key="GridCell.Tab.0.right" timestamp="1609091894146">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
-    <state width="1255" height="272" key="GridCell.Tab.0.right/0.0.1298.768@0.0.1298.768" timestamp="1601052635959" />
     <state width="1258" height="239" key="GridCell.Tab.0.right/0.0.1301.768@0.0.1301.768" timestamp="1609091894146" />
     <state width="1258" height="239" key="GridCell.Tab.1.bottom" timestamp="1609091894146">
       <screen x="0" y="0" width="1301" height="768" />
@@ -194,7 +171,6 @@
     <state x="150" y="29" key="SettingsEditor" timestamp="1607605038324">
       <screen x="0" y="0" width="1301" height="768" />
     </state>
-    <state x="149" y="29" key="SettingsEditor/0.0.1296.768@0.0.1296.768" timestamp="1601044222694" />
     <state x="150" y="29" key="SettingsEditor/0.0.1301.768@0.0.1301.768" timestamp="1607605038324" />
     <state x="242" y="117" key="Vcs.Push.Dialog.v2" timestamp="1609110367909">
       <screen x="0" y="0" width="1301" height="768" />
@@ -209,7 +185,6 @@
       <screen x="0" y="0" width="1301" height="768" />
     </state>
     <state x="312" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1298.768@0.0.1298.768" timestamp="1601126189971" />
-    <state x="312" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1299.768@0.0.1299.768" timestamp="1600905904444" />
     <state x="313" y="89" width="674" height="678" key="search.everywhere.popup/0.0.1301.768@0.0.1301.768" timestamp="1607910557094" />
   </component>
 </project>
