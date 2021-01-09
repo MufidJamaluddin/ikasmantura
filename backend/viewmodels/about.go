@@ -5,7 +5,7 @@ import (
 )
 
 type AboutDto struct {
-	Id          uint   `json:"id,omitempty" xml:"id,omitempty" form:"id,omitempty"`
+	Id          int    `json:"id,omitempty" xml:"id,omitempty" form:"id,omitempty"`
 	Title       string `json:"title,omitempty" xml:"title,omitempty" form:"title,omitempty"`
 	Description string `json:"description,omitempty" xml:"description,omitempty" form:"description,omitempty"`
 	Vision      string `json:"vision,omitempty" xml:"vision,omitempty" form:"vision,omitempty"`
@@ -19,7 +19,7 @@ type AboutDto struct {
 }
 
 func (p *AboutDto) GetId() uint {
-	return p.Id
+	return uint(p.Id)
 }
 
 type AlbumParam struct {

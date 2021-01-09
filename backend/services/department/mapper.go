@@ -8,10 +8,10 @@ import (
 )
 
 func toModel(db *gorm.DB, data *viewmodels.DepartmentDto, out *models.Department) {
-	out.ID = data.Id
+	out.ID = uint(data.Id)
 	out.Name = data.Name
-	out.Type = data.Type
-	out.UserId = data.UserId
+	out.Type = uint8(data.Type)
+	out.UserId = uint(data.UserId)
 
 	db.Find(&out.User, data.UserId)
 
@@ -20,10 +20,10 @@ func toModel(db *gorm.DB, data *viewmodels.DepartmentDto, out *models.Department
 }
 
 func toViewModel(in *models.Department, out *viewmodels.DepartmentDto) {
-	out.Id = in.ID
+	out.Id = int(in.ID)
 	out.Name = in.Name
-	out.UserId = in.UserId
-	out.Type = in.Type
+	out.UserId = int(in.UserId)
+	out.Type = int(in.Type)
 	out.UserFullname = in.User.Name
 
 	utils.FillCreated(in, out)

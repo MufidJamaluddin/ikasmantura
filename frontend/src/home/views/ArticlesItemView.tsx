@@ -9,6 +9,7 @@ import DOMPurify from "../../utils/Sanitizer";
 import {useStore} from "../models";
 import {ThemeContext} from "../component/PageTemplate";
 import {ArticleItem} from "../models/ArticleModel";
+import ShareSocialMedia from "../component/ShareSocialMedia";
 
 export default function ArticlesItemView(props)
 {
@@ -45,6 +46,9 @@ export default function ArticlesItemView(props)
                         className="card-img-top"
                         src={image}
                         alt={title}/>
+                    <Card.Body>
+                        <ShareSocialMedia title={title} className="fa-pull-right" />
+                    </Card.Body>
                     <Card.Title>
                         <h1 className="text-center">{title}</h1>
                     </Card.Title>

@@ -1,8 +1,20 @@
 import LoginProvider from "./LoginProvider";
-import inMemoryUserData from './InMemoryUserData'
-import {NotificationManager} from 'react-notifications';
 
 const ApiUrl = process.env.PUBLIC_URL + '/api/v1'
+
+const doRemoteLogin = () => fetch(`${ApiUrl}/auth`, {method: 'get'})
+    .then(data => {
+        if (data.status === 401) {
+            throw new Error("Unauthorized User")
+        }
+        if (data.status < 200 || data.status > 399) {
+            throw new Error("Connection Error")
+        }
+        return data.json()
+    }).catch(err => {
+        return null
+    })
+
 
 const authProvider = {
     // called when the user attempts to log in
@@ -10,18 +22,20 @@ const authProvider = {
 
     // called when the user clicks on the logout button
     logout: () => {
+        localStorage.removeItem('user')
+        localStorage.removeItem('refresh')
+
         return fetch(`${ApiUrl}/auth`, { method: 'delete' })
             .then(_ => {
-                if(!inMemoryUserData.eraseData()){
-                    throw new Error("Error Invalidate User Data")
-                }
+
             })
     },
 
     // called when the API returns an error
     checkError: ({ status }) => {
         if (status === 401 || status === 403) {
-            inMemoryUserData.eraseData()
+            localStorage.removeItem('user')
+            localStorage.removeItem('refresh')
             return Promise.reject();
         }
         return Promise.resolve();
@@ -29,26 +43,21 @@ const authProvider = {
 
     // called when the user navigates to a new location, to check for authentication
     checkAuth: async () => {
-        let userData = inMemoryUserData.getUser()
+        let dtUser = localStorage.getItem('user')
+        let userData
+
+        if(dtUser) {
+            userData = JSON.parse(dtUser)
+        }
 
         if (!userData) {
-            userData = await fetch(`${ApiUrl}/auth`, {method: 'get'})
-                .then(data => {
-                    if (data.status === 401) {
-                        throw new Error("Unauthorized User")
-                    }
-                    if (data.status < 200 || data.status > 399) {
-                        throw new Error("Connection Error")
-                    }
-                    return data.json()
-                }).catch(err => {
-                    NotificationManager.warn('Ada masalah koneksi', 'Oops!')
-                    return null
-                })
+            userData = await doRemoteLogin()
 
             if(userData === null) {
                 return Promise.reject()
             }
+
+            localStorage.setItem('user', JSON.stringify(userData))
         }
 
         let expiration = userData.exp * 1000
@@ -62,23 +71,26 @@ const authProvider = {
     },
 
     // called when the user navigates to a new location, to check for permissions / roles
-    getPermissions: () => {
-        const user = inMemoryUserData.getUser()
+    getPermissions: async () => {
+        let user = localStorage.getItem('user')
+        let dtUser
         if(user === null) {
-            return Promise.reject()
+            dtUser = await doRemoteLogin()
+            if(dtUser === null) {
+                return Promise.reject()
+            }
+            localStorage.setItem('user', JSON.stringify(dtUser))
+        } else {
+            dtUser = JSON.parse(user)
         }
-        return Promise.resolve(user.role)
-    },
-
-    getData: () => {
-        return inMemoryUserData.getUser()
+        return Promise.resolve(dtUser.role)
     },
 
     getIdentity: () => {
         try {
-            const { id, fullName, avatar = '/static/img/ringga.jpg' }
-                = inMemoryUserData.getUser()
-
+            const {
+                id, fullName, avatar = '/static/img/ringga'
+            } = JSON.parse(localStorage.getItem('user'));
             return Promise.resolve({ id, fullName, avatar });
         } catch (error) {
             return Promise.reject(error);

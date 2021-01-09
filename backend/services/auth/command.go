@@ -7,13 +7,14 @@ import (
 )
 
 func toViewModel(in *models.User, out *viewmodels.UserDto) {
-	out.Id = in.ID
+	out.Id = int(in.ID)
 	out.Name = in.Name
 	out.Username = in.Username
 	out.Email = in.Email
 	out.Password = in.Password
 	out.Role = in.Role
-	out.Address.ID = in.Address.ID
+	out.RefreshToken = utils.ToBase64UUID(in.RefreshToken)
+	out.Address.ID = int(in.Address.ID)
 	out.Address.Street = in.Address.Street
 	out.Address.Suite = in.Address.Suite
 	out.Address.City = in.Address.City
@@ -24,13 +25,13 @@ func toViewModel(in *models.User, out *viewmodels.UserDto) {
 }
 
 func toViewModelFromTemp(in *models.TempUser, out *viewmodels.UserDto) {
-	out.Id = in.ID
+	out.Id = int(in.ID)
 	out.Name = in.Name
 	out.Username = in.Username
 	out.Email = in.Email
 	out.Password = in.Password
 	out.Role = ""
-	out.Address.ID = in.Address.ID
+	out.Address.ID = int(in.Address.ID)
 	out.Address.Street = in.Address.Street
 	out.Address.Suite = in.Address.Suite
 	out.Address.City = in.Address.City

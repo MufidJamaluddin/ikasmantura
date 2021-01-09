@@ -16,7 +16,7 @@ export default class DataProviderFactory
         if(DataProviderFactory.dataProvider !== null)
             return DataProviderFactory.dataProvider
 
-
+/*
         if(
             process.env.NODE_ENV === "development"
             || process.env.NODE_ENV === "test"
@@ -30,6 +30,7 @@ export default class DataProviderFactory
         }
         else
         {
+ */
             const apiUrl = process.env.PUBLIC_URL
 
             DataProviderFactory.dataProvider =
@@ -42,7 +43,7 @@ export default class DataProviderFactory
                         params.data instanceof FormData ?
                             params.data : JSON.stringify(params.data)
                     ),
-                }).then(({ json }) => ({
+                }).then(({json}) => ({
                     data: json,
                 }))
 
@@ -54,7 +55,7 @@ export default class DataProviderFactory
                             params.data : JSON.stringify(params.data)
                     ),
                 }).then(({ json }) => ({ data: json }))
-        }
+//        }
 
         return DataProviderFactory.dataProvider
     }

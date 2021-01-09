@@ -68,12 +68,14 @@ func Find(db *gorm.DB, search *viewmodels.ArticleParam, callback func(*viewmodel
 		rows  *sql.Rows
 	)
 
-	tx = db.Model(&model).Select([]string{
-		"id", "title", "SUBSTRING(body, 1, 50) as body", "thumbnail", "image",
-		"created_by", "created_at", "updated_by", "updated_at",
-	})
+	tx = db.Model(&model)
 
 	searchFilter(tx, search, true)
+
+	tx.Select(
+		"id, title, SUBSTRING(body, 1, 50) as body, thumbnail, image, " +
+			"created_by, created_at, updated_by, updated_at",
+	)
 
 	if rows, err = tx.Rows(); err != nil {
 		return err

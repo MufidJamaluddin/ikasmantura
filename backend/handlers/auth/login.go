@@ -2,9 +2,7 @@ package auth
 
 import (
 	authService "backend/services/auth"
-	"backend/utils"
 	"backend/viewmodels"
-	"encoding/base64"
 	"github.com/gofiber/fiber/v2"
 	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
@@ -79,8 +77,7 @@ func Login(c *fiber.Ctx) error {
 	}
 
 	loginData.Token = *token
-	loginData.RefreshToken = base64.StdEncoding.
-		EncodeToString(utils.ToBytes(loginData.Data.RefreshToken))
+	loginData.RefreshToken = loginData.Data.RefreshToken
 
 	err = c.JSON(&loginData.LoginResponseDto)
 	return err
@@ -112,13 +109,14 @@ func RefreshLogin(c *fiber.Ctx) error {
 		refreshToken = c.Get(os.Getenv("HEADER_REFRESH_TOKEN"))
 	}
 
-	userData.Id = authData.ID
+	userData.Id = int(authData.ID)
+	userData.RefreshToken = refreshToken
 
 	if refreshToken != "" && authData.Role != "" {
 
 		if authData.ID == 0 {
-			c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
-			c.ClearCookie(os.Getenv("COOKIE_REFRESH_TOKEN"))
+			// c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
+			// c.ClearCookie(os.Getenv("COOKIE_REFRESH_TOKEN"))
 			return c.SendStatus(fiber.StatusForbidden)
 		}
 
@@ -127,10 +125,9 @@ func RefreshLogin(c *fiber.Ctx) error {
 		}
 
 		if userData.Username != authData.Username &&
-			userData.Role != authData.Role &&
-			userData.RefreshToken != refreshToken {
-			c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
-			c.ClearCookie(os.Getenv("COOKIE_REFRESH_TOKEN"))
+			userData.Role != authData.Role {
+			// c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
+			// c.ClearCookie(os.Getenv("COOKIE_REFRESH_TOKEN"))
 			log.Printf("User ID %s (username %s != %s)",
 				userData.Id, authData.Username, userData.Username)
 			return c.SendStatus(fiber.StatusUnauthorized)
@@ -139,7 +136,9 @@ func RefreshLogin(c *fiber.Ctx) error {
 		userData.Role = authData.Role
 		userData.Username = authData.Username
 		userData.Email = authData.Email
-		userData.RefreshToken = uuid.NewV4().String()
+		if refreshToken == "" {
+			userData.RefreshToken = uuid.NewV4().String()
+		}
 	}
 
 	if token, err = DoLogin(c, &userData, expired); err != nil {
@@ -167,8 +166,22 @@ func RefreshLogin(c *fiber.Ctx) error {
 func Logout(c *fiber.Ctx) error {
 	var err error
 
-	c.ClearCookie(os.Getenv("COOKIE_REFRESH_TOKEN"))
-	c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
+	c.Cookie(&fiber.Cookie{
+		Name:     os.Getenv("COOKIE_REFRESH_TOKEN"),
+		Value:    "",
+		HTTPOnly: true,
+		SameSite: "strict",
+	})
+
+	c.Cookie(&fiber.Cookie{
+		Name:     os.Getenv("COOKIE_TOKEN"),
+		Value:    "",
+		HTTPOnly: true,
+		SameSite: "strict",
+	})
+
+	// c.ClearCookie(os.Getenv("COOKIE_REFRESH_TOKEN"))
+	// c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
 
 	err = c.SendStatus(fiber.StatusOK)
 

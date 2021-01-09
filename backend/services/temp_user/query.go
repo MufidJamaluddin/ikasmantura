@@ -2,7 +2,6 @@ package temp_user
 
 import (
 	"backend/models"
-	"backend/repository"
 	"backend/viewmodels"
 	"database/sql"
 	"gorm.io/gorm"
@@ -65,9 +64,12 @@ func FindById(db *gorm.DB, id uint, out *viewmodels.UserDto) error {
 	var (
 		err   error
 		model models.TempUser
+		tx    *gorm.DB
 	)
 
-	if err = repository.FindById(db, id, &model); err == nil {
+	tx = db.Model(&model)
+
+	if err = tx.First(&model, id).Error; err == nil {
 		toViewModel(&model, out)
 	}
 	return err
@@ -80,12 +82,23 @@ func IsUsernameOrEmailAvailable(
 
 	var err error
 
+	user.Username = strings.Trim(user.Username, " ")
+	user.Email = strings.Trim(user.Email, " ")
+
+	if user.Username == "" {
+		user.Username = "-"
+	}
+
+	if user.Email == "" {
+		user.Email = "-"
+	}
+
 	err = db.Raw(
 		"SELECT EXISTS(SELECT 1 FROM users WHERE username = @username OR email = @email) "+
-			"OR EXISTS(SELECT 1 FROM temp_users WHERE username = @username OR email = @email)"+
+			"OR EXISTS(SELECT 1 FROM temp_users WHERE username = @username OR email = @email) "+
 			"AS exist",
-		sql.Named("username", strings.Trim(user.Username, " ")),
-		sql.Named("email", strings.Trim(user.Email, " ")),
+		sql.Named("username", user.Username),
+		sql.Named("email", user.Email),
 	).Scan(response).Error
 
 	return err

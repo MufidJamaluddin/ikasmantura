@@ -33,8 +33,12 @@ const DepartmentFilter = (props) => (
 
 export const DepartmentList = ({ permissions, ...props}) => {
     const isSmall = useMediaQuery((theme:any) => theme.breakpoints.down('sm'));
+    const isAdmin = permissions === 'admin'
     return (
-        <List title={props.options?.label} filters={<DepartmentFilter {...props} />} {...props}>
+        <List
+            title={props.options?.label}
+            bulkActionButtons={isAdmin ? props.bulkActionButtons : false}
+            filters={<DepartmentFilter {...props} />} {...props}>
             {isSmall ? (
                 <SimpleList
                     primaryText={ record => record.name }
@@ -47,7 +51,7 @@ export const DepartmentList = ({ permissions, ...props}) => {
                         <TextField source="name" />
                     </ReferenceField>
                     <ShowButton/>
-                    { permissions === 'admin' ? <EditButton/> : null }
+                    { isAdmin ? <EditButton/> : null }
                 </Datagrid>
             )
             }

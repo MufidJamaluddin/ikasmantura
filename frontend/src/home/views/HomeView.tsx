@@ -9,7 +9,9 @@ export default function HomeView(props)
 {
     function getHeader() {
         return [
-            <p className="h1 text-center text-white-50 font-weight-bold">Selamat Datang di Portal</p>,
+            <p className="h1 text-center text-white-50 font-weight-bold">
+                Selamat Datang di
+            </p>,
             <div className="divider-custom">
                 <div className="divider-custom-line"/>
                 <div className="divider-custom-icon">

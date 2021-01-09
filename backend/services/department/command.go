@@ -13,7 +13,7 @@ func Update(db *gorm.DB, id uint, out *viewmodels.DepartmentDto) error {
 		model models.Department
 	)
 
-	out.Id = id
+	out.Id = int(id)
 
 	toModel(db, out, &model)
 	err = repository.Update(db, &model)
@@ -28,7 +28,7 @@ func Save(db *gorm.DB, out *viewmodels.DepartmentDto) error {
 
 	toModel(db, out, &model)
 	if err = repository.Save(db, &model); err == nil {
-		out.Id = model.ID
+		out.Id = int(model.ID)
 	}
 	return err
 }

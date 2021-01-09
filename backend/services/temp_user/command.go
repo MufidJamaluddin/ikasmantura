@@ -14,7 +14,7 @@ func Verify(db *gorm.DB, id uint, out *viewmodels.UserDto) error {
 		permanentModel models.User
 	)
 
-	out.Id = id
+	out.Id = int(id)
 
 	toTempModel(out, &tempModel)
 
@@ -43,7 +43,7 @@ func Update(db *gorm.DB, id uint, out *viewmodels.UserDto) error {
 		model models.TempUser
 	)
 
-	out.Id = id
+	out.Id = int(id)
 
 	toTempModel(out, &model)
 	err = repository.Update(db, &model)
@@ -57,8 +57,8 @@ func Save(db *gorm.DB, out *viewmodels.UserDto) error {
 	)
 
 	toTempModel(out, &model)
-	if err = repository.Save(db, &model); err == nil {
-		out.Id = model.ID
+	if err = db.Create(&model).Error; err == nil {
+		out.Id = int(model.ID)
 	}
 	return err
 }

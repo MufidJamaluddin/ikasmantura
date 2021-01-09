@@ -18,11 +18,12 @@ async function checkAvailability({ username = '', email = '' })
         })
         .then((resp:any) => {
             console.log(resp)
-            return !resp?.exist
+            return !resp?.data?.exist
         }, error => {
             NotificationManager.error(error.message, `Cek Ketersediaan Akun: Error Koneksi ${error.name}`);
             return true
         })
+
 
         if(result)
         {
@@ -36,6 +37,7 @@ async function checkAvailability({ username = '', email = '' })
                 `Akun "${username} ${email}" tidak tersedia!`,
                 'Akun tidak tersedia');
         }
+
     }
     catch (e)
     {
@@ -48,12 +50,16 @@ async function checkAvailability({ username = '', email = '' })
 async function registerNewAccount(formData: any) {
     let dataProvider = DataProviderFactory.getDataProvider()
     try {
-        return await dataProvider.create("temp_users", formData).then(_ => {
+        return await dataProvider.create("temp_users", { data: formData }).then(_ => {
             NotificationManager.success(
                 'Pendaftaran Sukses, Mohon Tunggu Konfirmasi Admin!', 'Pendaftaran Sukses')
             return true
         }, error => {
-            NotificationManager.error(error.message, `Pendaftaran Gagal: ${error.name}`)
+            if(error.message.trim().toLowerCase() === 'conflict') {
+                NotificationManager.error(`Data telah terdaftar sebelumnya! ${error.message}`, 'Pendaftaran Gagal')
+            } else {
+                NotificationManager.error(error.message, `Pendaftaran Gagal: ${error.name}`)
+            }
             return false
         })
     } catch (e) {

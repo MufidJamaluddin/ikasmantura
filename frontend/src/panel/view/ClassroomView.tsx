@@ -28,8 +28,12 @@ const ClassroomFilter = (props) => (
 
 export const ClassroomList = ({ permissions, ...props}) => {
     const isSmall = useMediaQuery((theme:any) => theme.breakpoints.down('sm'));
+    const isAdmin = permissions === 'admin'
     return (
-        <List title={props.options?.label} filters={<ClassroomFilter {...props} />} {...props}>
+        <List title={props.options?.label}
+              bulkActionButtons={isAdmin ? props.bulkActionButtons : false}
+              filters={<ClassroomFilter {...props} />}
+              {...props}>
             {isSmall ? (
                 <SimpleList
                     primaryText={ record => `${record.level} - ${record.major} - ${record.seq}` }
@@ -41,13 +45,13 @@ export const ClassroomList = ({ permissions, ...props}) => {
                     <TextField source="major"/>
                     <TextField source="seq"/>
                     <ShowButton/>
-                    { permissions === 'admin' ? <EditButton/> : null }
+                    { isAdmin ? <EditButton/> : null }
                 </Datagrid>
             )
             }
         </List>
     )
-};
+}
 
 export const ClassroomEdit = props => (
     <Edit title={<ClassroomTitle {...props} />} {...props}>

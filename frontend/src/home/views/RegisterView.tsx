@@ -33,7 +33,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
 
         this.state = {
             classrooms: [],
-            formType: TIFormType.TABBED,
+            formType: TIFormType.INLINE,
             formData: {},
             inputValidateQueue: {},
             nextValidation: 0
@@ -50,7 +50,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
     {
         e.preventDefault();
 
-        await this.formElement.current.validateForm();
+        //await this.formElement.current.validateForm();
 
         if(!this.formElement.current.isValid())
         {
@@ -61,7 +61,9 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
         let formData = this.state.formData
 
         formData.classrooms = formData.classrooms.map(item => {
-            return { id: item }
+            return { id: item.value }
+        }).filter(item => {
+            return item !== {} && item.id
         })
 
         let result = await registerNewAccount(formData)
@@ -91,25 +93,52 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
         }))
     }
 
-    async handleChange(e)
+    async handleChange(e, name)
     {
         let form = this.formElement.current
-        if(!form) return;
+        if(!form) return
 
         try
         {
+            if(Array.isArray(e)) {
+                this.setState(state => ({
+                    ...state,
+                    formData: {
+                        ...state.formData,
+                        [name]: e,
+                    }
+                }))
+                return
+            }
+
             if(e.cancelable) {
                 e.preventDefault()
             }
 
             let inputValidateQueue = this.state.inputValidateQueue
-            inputValidateQueue[e.target.name] = e.target
+            inputValidateQueue[name] = e.target
+
+            let value = e.target.value
+
+            let names = name.split('.')
+
+            let data = {}
+
+            if(names.length === 2) {
+                data = {...this.state.formData}
+                if(data[names[0]] === null || data[names[0]] === undefined) {
+                    data[names[0]] = {}
+                }
+                data[names[0]][names[1]] = value
+            } else {
+                data[names[0]] = value
+            }
 
             this.setState(state => ({
                 ...state,
                 formData: {
                     ...state.formData,
-                    [e.target.name]: e.target.value,
+                    ...data
                 },
                 inputValidateQueue: inputValidateQueue
             }))
@@ -187,7 +216,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                                       autoComplete="off"
                                       maxLength={35}
                                       minLength={3}
-                                      onChange={this.handleChange}
+                                      onChange={(e) => this.handleChange(e, 'username')}
                                       required={true}
                         />
                         <FieldFeedbacks for="username">
@@ -221,7 +250,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                                       minLength={5}
                                       maxLength={250}
                                       required={true}
-                                      onChange={this.handleChange}
+                                      onChange={(e) => this.handleChange(e, 'email')}
                         />
                         <FieldFeedbacks for="email">
                             <FieldFeedback when={value => !/[^-\s]/.test(value)} error>
@@ -253,7 +282,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                                       minLength={5}
                                       maxLength={35}
                                       required={true}
-                                      onChange={this.handleChange}
+                                      onChange={(e) => this.handleChange(e,'password')}
                                       ref={(ref) => this.inputPassword = ref}
                         />
                         <FieldFeedbacks for="password">
@@ -262,15 +291,6 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                             </FieldFeedback>
                             <FieldFeedback when="patternMismatch" error>
                                 Minimal lima karakter
-                            </FieldFeedback>
-                            <FieldFeedback when={value => !/\d/.test(value)} warning>
-                                Harus mengandung kombinasi angka
-                            </FieldFeedback>
-                            <FieldFeedback when={value => !/[a-z]/.test(value)} warning>
-                                Harus mengandung kombinasi huruf kecil
-                            </FieldFeedback>
-                            <FieldFeedback when={value => !/[A-Z]/.test(value)} warning>
-                                Harus mengandung kombinasi huruf besar
                             </FieldFeedback>
                         </FieldFeedbacks>
                     </Col>
@@ -286,7 +306,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                                       minLength={5}
                                       maxLength={35}
                                       required={true}
-                                      onChange={this.handleChange}
+                                      onChange={(e) => this.handleChange(e,'confirmPassword')}
                         />
                         <FieldFeedbacks for="confirmPassword">
                             <FieldFeedback when={
@@ -321,7 +341,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                                       minLength={3}
                                       maxLength={35}
                                       required={true}
-                                      onChange={this.handleChange}
+                                      onChange={(e) => this.handleChange(e,'name')}
                         />
                         <FieldFeedbacks for="name">
                             <FieldFeedback when="valueMissing" error>
@@ -345,7 +365,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                                       minLength={10}
                                       maxLength={13}
                                       required={true}
-                                      onChange={this.handleChange}
+                                      onChange={(e) => this.handleChange(e,'hp')}
                         />
                         <FieldFeedbacks for="hp">
                             <FieldFeedback when="valueMissing" error>
@@ -370,7 +390,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                                       maxLength={4}
                                       required={true}
                                       pattern="^[0-9]{4}$"
-                                      onChange={this.handleChange}
+                                      onChange={(e) => this.handleChange(e,'forceYear')}
                         />
                         <FieldFeedbacks for="forceYear">
                             <FieldFeedback when="valueMissing" error>
@@ -401,7 +421,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                             placeholder="Kelas"
                             name="classrooms"
                             value={formData.classrooms ?? []}
-                            onChange={this.handleChange}
+                            onChange={(e) => this.handleChange(e,'classrooms')}
                             required={true}
                         />
                         <FieldFeedbacks for="classroom">
@@ -430,14 +450,15 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                     <Col sm={8}>
                         <Form.Control as="textarea" rows={2}
                                       placeholder="Jalan"
-                                      name="address[street]"
+                                      name="address.street"
                                       value={formData.address?.street}
                                       minLength={5}
                                       maxLength={75}
                                       required={true}
-                                      onChange={this.handleChange}
+                                      onChange={(e) => this.handleChange(e,'address.street')}
+                                      style={{resize: 'none'}}
                         />
-                        <FieldFeedbacks for="address[street]">
+                        <FieldFeedbacks for="address.street">
                             <FieldFeedback when="valueMissing" error>
                                 Wajib diisi
                             </FieldFeedback>
@@ -454,14 +475,14 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                     <Col sm={8}>
                         <Form.Control type="text"
                                       placeholder="Kecamatan"
-                                      name="address[suite]"
+                                      name="address.suite"
                                       value={formData.address?.suite}
                                       minLength={5}
                                       maxLength={53}
                                       required={true}
-                                      onChange={this.handleChange}
+                                      onChange={(e) => this.handleChange(e,'address.suite')}
                         />
-                        <FieldFeedbacks for="address[suite]">
+                        <FieldFeedbacks for="address.suite">
                             <FieldFeedback when="valueMissing" error>
                                 Wajib diisi
                             </FieldFeedback>
@@ -478,14 +499,14 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                     <Col sm={8}>
                         <Form.Control type="text"
                                       placeholder="Kota tempat tinggal anda"
-                                      name="address[city]"
+                                      name="address.city"
                                       value={formData.address?.city}
                                       minLength={3}
                                       maxLength={35}
                                       required={true}
-                                      onChange={this.handleChange}
+                                      onChange={(e) => this.handleChange(e,'address.city')}
                         />
-                        <FieldFeedbacks for="address[city]">
+                        <FieldFeedbacks for="address.city">
                             <FieldFeedback when="valueMissing" error>
                                 Wajib diisi
                             </FieldFeedback>
@@ -502,14 +523,14 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                     <Col sm={8}>
                         <Form.Control type="text"
                                       placeholder="Kode Pos"
-                                      name="address[zipcode]"
+                                      name="address.zipcode"
                                       value={formData.address?.zipcode}
                                       minLength={3}
                                       maxLength={11}
                                       required={true}
-                                      onChange={this.handleChange}
+                                      onChange={(e) => this.handleChange(e,'address.zipcode')}
                         />
-                        <FieldFeedbacks for="address[zipcode]">
+                        <FieldFeedbacks for="address.zipcode">
                             <FieldFeedback when="valueMissing" error>
                                 Wajib diisi
                             </FieldFeedback>
@@ -526,14 +547,14 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                     <Col sm={8}>
                         <Form.Control type="text"
                                       placeholder="Negara"
-                                      name="address[state]"
+                                      name="address.state"
                                       value={formData.address?.state}
                                       minLength={5}
                                       maxLength={16}
                                       required={true}
-                                      onChange={this.handleChange}
+                                      onChange={(e) => this.handleChange(e,'address.state')}
                         />
-                        <FieldFeedbacks for="address[state]">
+                        <FieldFeedbacks for="address.state">
                             <FieldFeedback when="valueMissing" error>
                                 Wajib diisi
                             </FieldFeedback>

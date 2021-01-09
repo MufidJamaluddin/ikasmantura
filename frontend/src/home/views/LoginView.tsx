@@ -30,14 +30,24 @@ function FormLogin(props) {
         }
 
         let formData = new FormData(e.target)
+        let result
 
-        let result = await authProvider.login({
-            username: formData.get('username'),
-            password: formData.get('password')
-        }).then(() => true).catch(() => false)
+        try {
+            result = await authProvider.login({
+                username: formData.get('username'),
+                password: formData.get('password')
+            }).then(() => true).catch(() => false)
+        }
+        catch (e) {
+            NotificationManager.error(
+                'Username/Password salah atau kendala koneksi jaringan!', 'Login Gagal')
+        }
 
         if(result) {
             history.replace('/panel')
+        } else {
+            NotificationManager.error(
+                `Username/Password akun ${formData.get('username')} salah!`, 'Login Gagal')
         }
     }
 

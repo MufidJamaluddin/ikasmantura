@@ -26,7 +26,7 @@ func Update(db *gorm.DB, id uint, out *viewmodels.AboutDto) error {
 		model models.About
 	)
 
-	out.Id = id
+	out.Id = int(id)
 	toModel(out, &model)
 
 	err = db.Transaction(func(tx *gorm.DB) error {

@@ -51,7 +51,7 @@ func SearchEvent(c *fiber.Ctx) error {
 	}
 
 	if authData, ok = viewmodels.GetAuthorizationData(c); ok {
-		data.CurrentUserId = authData.ID
+		data.CurrentUserId = int(authData.ID)
 	} else {
 		data.CurrentUserId = 0
 	}
@@ -134,7 +134,7 @@ func GetOneEvent(c *fiber.Ctx) error {
 	}
 
 	if authData, ok = viewmodels.GetAuthorizationData(c); ok {
-		data.CurrentUserId = authData.ID
+		data.CurrentUserId = int(authData.ID)
 	}
 
 	if err = eventService.FindById(db, id, &data); err != nil {
@@ -208,6 +208,12 @@ func UpdateEvent(c *fiber.Ctx) error {
 		}
 	}
 
+	if data.Image != "" {
+		if err = eventService.Update(db, data.Id, &data); err != nil {
+			return err
+		}
+	}
+
 	c.Status(fiber.StatusAccepted)
 	err = c.JSON(&data)
 
@@ -265,6 +271,12 @@ func SaveEvent(c *fiber.Ctx) error {
 			if image, err = utils.UploadImageThumbJPG(imageFile, fileName); err == nil {
 				data.Thumbnail = image
 			}
+		}
+	}
+
+	if data.Image != "" {
+		if err = eventService.Update(db, data.Id, &data); err != nil {
+			return err
 		}
 	}
 
@@ -398,8 +410,8 @@ func DownloadEventTicket(c *fiber.Ctx) error {
 		return err
 	}
 
-	userEventData.UserId = authData.ID
-	userEventData.EventId = id
+	userEventData.UserId = int(authData.ID)
+	userEventData.EventId = int(id)
 	if err = eventService.GetUserEvent(db, &userEventData); err != nil {
 		return err
 	}

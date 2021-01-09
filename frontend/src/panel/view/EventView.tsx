@@ -28,8 +28,8 @@ import RichTextInput from 'ra-input-rich-text';
 import {useMediaQuery} from '@material-ui/core';
 import moment from "moment";
 import {dateParser} from "../../utils/DateUtil";
-import {useState} from "react";
 import {ToFormData} from "../../utils/Form";
+import {FormWithImage} from "../component/FormWithImage";
 
 const EventTitle = ({ record }) => {
     return <span>{record.name ?? 'Create Event'}</span>;
@@ -48,8 +48,11 @@ const EventFilter = (props) => {
 
 export const EventList = ({ permissions, ...props}) => {
     const isSmall = useMediaQuery((theme:any) => theme.breakpoints.down('sm'));
+    const isAdmin = permissions === 'admin'
     return (
-        <List title={props.options?.label} filters={<EventFilter {...props} />} {...props}>
+        <List title={props.options?.label}
+              bulkActionButtons={isAdmin ? props.bulkActionButtons : false}
+              filters={<EventFilter {...props} />} {...props}>
             {isSmall ? (
                 <SimpleList primaryText={ record => record.title }
                             secondaryText={ record => record.organizer }
@@ -109,63 +112,85 @@ const transformData = (image, data) => {
         end:  moment(data.end).format("YYYY-MM-DDTHH:mm:ssZ"),
     }
 
-    const formData = ToFormData(transformedData)
-
-    if(image && image.selectedFile) {
-        formData.append('image', image.selectedFile)
+    if(image) {
+        const formData = ToFormData(transformedData)
+        formData.append('image', image)
+        return formData
     }
 
-    return formData
+    return transformedData
 }
 
-export const EventEdit = props => {
+export class EventEdit extends FormWithImage {
 
-    const [image, setImage] = useState(null)
-    const transform = data => transformData(image, data)
+    constructor(props) {
+        super(props);
+    }
 
-    return (
-        <Edit transform={transform} title={<EventTitle {...props} />} {...props}>
-            <SimpleForm validate={EventValidation} redirect="show" encType="multipart/form-data">
-                <TextInput disabled source="id"/>
-                <TextInput source="title" validate={[required()]}/>
-                <TextInput source="organizer" validate={[required()]}/>
-                <ReferenceInput disabled label="User" source="userId" reference="users" >
-                    <TextField source="name"/>
-                </ReferenceInput>
-                <RichTextInput source="description" validate={[required()]}/>
-                <ImageInput source="image" label="Image (JPG)"
-                            onChange={file => { setImage(file); }}
-                            accept="image/jpeg" maxSize={500000}>
-                    <ImageField source="src" title="title"/>
-                </ImageInput>
-                <DateInput source="start" validate={[required()]}/>
-                <DateInput source="end" validate={[required()]}/>
-            </SimpleForm>
-        </Edit>
-    )
+    transformData(image: any, data: any): any {
+        return transformData(image, data)
+    }
+
+    render() {
+        let props = this.props
+        // @ts-ignore
+        let title = <EventTitle {...props} />
+        // @ts-ignore
+        return (
+            <Edit transform={this.transform} title={title} {...props}>
+                <SimpleForm validate={EventValidation} redirect="show" encType="multipart/form-data">
+                    <TextInput disabled source="id"/>
+                    <TextInput source="title" validate={[required()]}/>
+                    <TextInput source="organizer" validate={[required()]}/>
+                    <ReferenceInput disabled label="User" source="userId" reference="users">
+                        <TextField source="name"/>
+                    </ReferenceInput>
+                    <RichTextInput source="description" validate={[required()]}/>
+                    <ImageInput source="image" label="Image (JPG)"
+                                onChange={this.dropImage}
+                                accept="image/jpeg" maxSize={500000}>
+                        <ImageField source="src" title="title"/>
+                    </ImageInput>
+                    <DateInput source="start" validate={[required()]}/>
+                    <DateInput source="end" validate={[required()]}/>
+                </SimpleForm>
+            </Edit>
+        )
+    }
 }
 
-export const EventCreate = props => {
+export class EventCreate extends FormWithImage {
 
-    const [image, setImage] = useState(null)
-    const transform = data => transformData(image, data)
+    constructor(props) {
+        super(props);
+    }
 
-    return (
-        <Create transform={transform}
-                title={<EventTitle {...props} />} {...props}>
-            <SimpleForm validate={EventValidation} encType="multipart/form-data">
-                <TextInput disabled source="id"/>
-                <TextInput source="title" validate={[required()]} />
-                <TextInput source="organizer" validate={[required()]} />
-                <RichTextInput source="description" validate={[required()]} />
-                <ImageInput source="image" label="Image (JPG)"
-                            onChange={file => { setImage(file); }}
-                            accept="image/jpeg" maxSize={500000}>
-                    <ImageField source="src" title="title"/>
-                </ImageInput>
-                <DateInput source="start" validate={[required()]}/>
-                <DateInput source="end" validate={[required()]}/>
-            </SimpleForm>
-        </Create>
-    )
+    transformData(image: any, data: any): any {
+        return transformData(image, data)
+    }
+
+    render() {
+        let props = this.props
+        // @ts-ignore
+        let title = <EventTitle {...props} />
+        // @ts-ignore
+        return (
+            <Create transform={this.transform}
+                    title={title} {...props}>
+                <SimpleForm validate={EventValidation} encType="multipart/form-data">
+                    <TextInput disabled source="id"/>
+                    <TextInput source="title" validate={[required()]} />
+                    <TextInput source="organizer" validate={[required()]} />
+                    <RichTextInput source="description" validate={[required()]} />
+                    <ImageInput source="image" label="Image (JPG)"
+                                onChange={this.dropImage}
+                                accept="image/jpeg" maxSize={500000}>
+                        <ImageField source="src" title="title"/>
+                    </ImageInput>
+                    <DateInput source="start" validate={[required()]}/>
+                    <DateInput source="end" validate={[required()]}/>
+                </SimpleForm>
+            </Create>
+        )
+    }
 }

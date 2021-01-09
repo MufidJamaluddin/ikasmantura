@@ -197,6 +197,12 @@ func UpdateArticle(c *fiber.Ctx) error {
 		}
 	}
 
+	if data.Image != "" {
+		if err = articleService.Update(db, data.Id, &data); err != nil {
+			return err
+		}
+	}
+
 	c.Status(fiber.StatusAccepted)
 
 	err = c.JSON(&data)
@@ -256,6 +262,12 @@ func SaveArticle(c *fiber.Ctx) error {
 			if image, err = utils.UploadImageThumbJPG(imageFile, fileName); err == nil {
 				data.Thumbnail = image
 			}
+		}
+	}
+
+	if data.Image != "" {
+		if err = articleService.Update(db, data.Id, &data); err != nil {
+			return err
 		}
 	}
 

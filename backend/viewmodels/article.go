@@ -6,14 +6,14 @@ import (
 )
 
 type ArticleDto struct {
-	UserId        uint   `query:"userId,omitempty" json:"userId,omitempty" xml:"userId,omitempty" form:"userId,omitempty"`
+	UserId        int    `query:"userId,omitempty" json:"userId,omitempty" xml:"userId,omitempty" form:"userId,omitempty"`
 	Title         string `query:"title,omitempty" json:"title,omitempty" xml:"title,omitempty" form:"title,omitempty"`
 	Id            string `query:"-" json:"id,omitempty" xml:"id,omitempty" form:"id,omitempty"`
 	Body          string `query:"-" json:"body,omitempty" xml:"body,omitempty" form:"body,omitempty"`
 	Image         string `query:"-" json:"image,omitempty" xml:"image,omitempty" form:"-"`
 	Thumbnail     string `query:"-" json:"thumbnail,omitempty" xml:"thumbnail,omitempty" form:"-"`
-	TopicId       uint   `query:"-" json:"topicId,omitempty" xml:"topicId,omitempty" form:"topicId,omitempty"`
-	CurrentUserId uint   `query:"-" json:"-" xml:"-" form:"-"`
+	TopicId       int    `query:"topicId,omitempty" json:"topicId,omitempty" xml:"topicId,omitempty" form:"topicId,omitempty"`
+	CurrentUserId int    `query:"-" json:"-" xml:"-" form:"-"`
 	CreatedByName string `query:"-" json:"createdByName" xml:"createdByName" form:"-"`
 	utils.Created
 	utils.Updated

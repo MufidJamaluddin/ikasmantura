@@ -6,7 +6,7 @@ import (
 )
 
 type EventDto struct {
-	UserId               uint         `query:"userId,omitempty" json:"userId,omitempty" xml:"userId,omitempty" form:"userId,omitempty"`
+	UserId               int          `query:"userId,omitempty" json:"userId,omitempty" xml:"userId,omitempty" form:"userId,omitempty"`
 	Organizer            string       `query:"organizer,omitempty" json:"organizer,omitempty" xml:"organizer,omitempty" form:"organizer,omitempty"`
 	Title                string       `query:"title,omitempty" json:"title,omitempty" xml:"title,omitempty" form:"title,omitempty"`
 	IsMyEvent            bool         `query:"myEvent,omitempty" json:"myEvent,omitempty" xml:"myEvent,omitempty" form:"myEvent,omitempty"`
@@ -16,7 +16,7 @@ type EventDto struct {
 	Thumbnail            string       `query:"-" json:"thumbnail,omitempty" xml:"thumbnail,omitempty" form:"-"`
 	Start                time.Time    `query:"-" json:"start,omitempty" xml:"start,omitempty" form:"start,omitempty"`
 	End                  time.Time    `query:"-" json:"end,omitempty" xml:"end,omitempty" form:"end,omitempty"`
-	CurrentUserId        uint         `query:"-" json:"-" xml:"-" form:"-"`
+	CurrentUserId        int          `query:"-" json:"-" xml:"-" form:"-"`
 	CurrentUserRegisData UserEventDto `query:"-" json:"registration" xml:"registration" form:"-"`
 	CreatedByName        string       `query:"-" json:"createdByName,omitempty" xml:"createdByName,omitempty" form:"-"`
 	utils.Created
@@ -24,9 +24,9 @@ type EventDto struct {
 }
 
 type UserEventDto struct {
-	ID      uint `gorm:"primarykey"`
-	UserId  uint
-	EventId uint
+	ID      int `gorm:"primarykey"`
+	UserId  int
+	EventId int
 	utils.Created
 }
 
@@ -42,14 +42,14 @@ func (p *EventParam) GetModel() interface{} {
 }
 
 type UserEventDetailDto struct {
-	UserId       uint
+	UserId       int
 	UserFullName string
 	UserEmail    string
-	EventId      uint
+	EventId      int
 	Organizer    string
 	EventName    string
 	Description  string
-	TicketId     uint
+	TicketId     int
 	StartStr     string
 	EndStr       string
 }

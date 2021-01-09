@@ -30,8 +30,8 @@ import {useMediaQuery} from '@material-ui/core';
 
 import RichTextInput from 'ra-input-rich-text';
 import {dateParser} from "../../utils/DateUtil";
-import {useState} from "react";
 import {ToFormData} from "../../utils/Form";
+import {FormWithImage} from "../component/FormWithImage";
 
 const PostTitle = ({ record }) => {
     return <span>Post {record ? `"${record.title}"` : ''}</span>;
@@ -53,8 +53,11 @@ const PostFilter = (props) => (
 
 export const PostList = ({permissions, ...props}) => {
     const isSmall = useMediaQuery((theme:any) => theme.breakpoints.down('sm'));
+    const isAdmin = permissions === 'admin'
     return (
-        <List title={props.options?.label} filters={<PostFilter {...props} />} {...props}>
+        <List title={props.options?.label}
+              bulkActionButtons={isAdmin ? props.bulkActionButtons : false}
+              filters={<PostFilter {...props} />} {...props}>
             {isSmall ? (
                 <SimpleList
                     primaryText={record => record.title}
@@ -101,60 +104,81 @@ export const PostShow = (props) => (
 );
 
 const transformData = (image, data) => {
+    if(image) {
+        const formData = ToFormData(data)
+        formData.append('image', image)
+        return formData
+    }
+    return data
+}
 
-    const formData = ToFormData(data)
+export class PostEdit extends FormWithImage {
 
-    if(image && image.selectedFile) {
-        formData.append('image', image.selectedFile)
+    constructor(props) {
+        super(props);
     }
 
-    return formData
+    transformData(image: any, data: any): any {
+        return transformData(image, data)
+    }
 
+    render() {
+        let props = this.props
+        // @ts-ignore
+        let title = <PostTitle {...props} />
+        // @ts-ignore
+        return (
+            <Edit transform={this.transform} title={title} {...props}>
+                <SimpleForm redirect="show" encType="multipart/form-data">
+                    <TextInput disabled source="id"/>
+                    <TextInput source="title" validate={[required()]}/>
+                    <ReferenceInput label="Topic" source="topicId"
+                                    reference="article_topics" validate={[required()]}>
+                        <AutocompleteInput optionText="name"/>
+                    </ReferenceInput>
+                    <ImageInput source="image" label="Image (JPG)"
+                                onChange={this.dropImage}
+                                accept="image/jpeg" maxSize={500000}>
+                        <ImageField source="src" title="title"/>
+                    </ImageInput>
+                    <RichTextInput source="body" className="d-inline" validate={[required()]}/>
+                </SimpleForm>
+            </Edit>
+        )
+    }
 }
 
-export const PostEdit = props => {
+export class PostCreate extends FormWithImage {
 
-    const [image, setImage] = useState(null)
-    const transform = data => transformData(image, data)
+    constructor(props) {
+        super(props);
+    }
 
-    return (
-        <Edit transform={transform} title={<PostTitle {...props} />} {...props}>
-            <SimpleForm redirect="show" encType="multipart/form-data">
-                <TextInput disabled source="id" />
-                <TextInput source="title" validate={[required()]} />
-                <ReferenceInput label="Topic" source="topicId" reference="article_topics" validate={[required()]}>
-                    <AutocompleteInput optionText="name" />
-                </ReferenceInput>
-                <ImageInput source="image" label="Image (JPG)"
-                            onChange={file => { setImage(file); }}
-                            accept="image/jpeg" maxSize={500000}>
-                    <ImageField source="src" title="title" />
-                </ImageInput>
-                <RichTextInput source="body" className="d-inline" validate={[required()]} />
-            </SimpleForm>
-        </Edit>
-    )
-}
+    transformData(image: any, data: any): any {
+        return transformData(image, data)
+    }
 
-export const PostCreate = props => {
-
-    const [image, setImage] = useState(null)
-    const transform = data => transformData(image, data)
-
-    return (
-        <Create transform={transform} {...props}>
-            <SimpleForm encType="multipart/form-data" transform={null}>
-                <TextInput source="title" label="Title" validate={[required()]}/>
-                <ReferenceInput label="Topic" source="topicId" reference="article_topics" validate={[required()]}>
-                    <AutocompleteInput optionText="name"/>
-                </ReferenceInput>
-                <ImageInput source="image" label="Image (JPG)"
-                            onChange={file => { setImage(file); }}
-                            accept="image/jpeg" maxSize={500000}>
-                    <ImageField source="src" title="title"/>
-                </ImageInput>
-                <RichTextInput source="body" className="d-inline" validate={[required()]}/>
-            </SimpleForm>
-        </Create>
-    )
+    render() {
+        let props = this.props
+        // @ts-ignore
+        let title = <PostTitle {...props} />
+        // @ts-ignore
+        return (
+            <Create transform={this.transform} {...props}>
+                <SimpleForm encType="multipart/form-data" transform={null}>
+                    <TextInput source="title" label="Title" validate={[required()]}/>
+                    <ReferenceInput label="Topic" source="topicId"
+                                    reference="article_topics" validate={[required()]}>
+                        <AutocompleteInput optionText="name"/>
+                    </ReferenceInput>
+                    <ImageInput source="image" label="Image (JPG)"
+                                onChange={this.dropImage}
+                                accept="image/jpeg" maxSize={500000}>
+                        <ImageField source="src" title="title"/>
+                    </ImageInput>
+                    <RichTextInput source="body" className="d-inline" validate={[required()]}/>
+                </SimpleForm>
+            </Create>
+        )
+    }
 }

@@ -10,21 +10,27 @@ import (
 	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
 	"hash"
+	"strings"
 )
 
 func RefreshToken(db *gorm.DB, data *viewmodels.UserDto) (err error) {
 	var (
-		model models.User
+		model           models.User
+		refreshTokenBin utils.UUID
 	)
+
+	if refreshTokenBin, err = utils.FromBase64UUID(data.RefreshToken); err != nil {
+		return fmt.Errorf("the refresh token [%s] is not valid", data.RefreshToken)
+	}
 
 	if err = db.Model(&model).
 		Where("id = ?", data.Id).
-		First(&model).Error;
-	err != nil {
+		Where("refresh_token = ?", refreshTokenBin.OrderedValue()).
+		First(&model).Error; err != nil {
 		return
 	}
 
-	model.RefreshToken = uuid.NewV4()
+	model.RefreshToken = utils.UUID(uuid.NewV1())
 
 	if err = db.Save(model).Error; err != nil {
 		return err
@@ -34,7 +40,7 @@ func RefreshToken(db *gorm.DB, data *viewmodels.UserDto) (err error) {
 	return
 }
 
-func Login(db *gorm.DB, data *viewmodels.LoginDto) error {
+func Login(db *gorm.DB, data *viewmodels.LoginDto) (err error) {
 	var (
 		model          models.User
 		hasher         hash.Hash
@@ -43,9 +49,13 @@ func Login(db *gorm.DB, data *viewmodels.LoginDto) error {
 		userPwd        []byte
 	)
 
+	data.Username = strings.Trim(data.Username, " ")
+	data.Password = strings.Trim(data.Password, " ")
+
 	db.Where("username = ?", data.Username).FirstOrInit(&model)
 
 	if model.Username != "" && model.Password != "" {
+
 		hasher = sha1.New()
 
 		userPwd = utils.ToBytes(data.Password)
@@ -55,8 +65,12 @@ func Login(db *gorm.DB, data *viewmodels.LoginDto) error {
 		hashUserPwdStr = fmt.Sprintf("%x", hashUserPwd)
 
 		if hashUserPwdStr == model.Password {
+			model.RefreshToken = utils.UUID(uuid.NewV1())
+			if err = db.Save(model).Error; err != nil {
+				return
+			}
 			toViewModel(&model, &data.Data)
-			return nil
+			return
 		}
 	}
 

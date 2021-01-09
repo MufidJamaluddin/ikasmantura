@@ -187,11 +187,17 @@ func UpdateAlbumPhoto(c *fiber.Ctx) error {
 		return err
 	}
 
-	fileName = strconv.Itoa(int(data.Id))
+	fileName = strconv.Itoa(data.Id)
 	if image, err = utils.UploadImageJPG(c, imageFile, fileName); err == nil {
 		data.Image = image
 		if image, err = utils.UploadImageThumbJPG(imageFile, fileName); err == nil {
 			data.Thumbnail = image
+		}
+	}
+
+	if data.Image != "" {
+		if err = albumPhotoService.Update(db, uint(data.Id), &data); err != nil {
+			return err
 		}
 	}
 
@@ -250,11 +256,17 @@ func SaveAlbumPhoto(c *fiber.Ctx) error {
 		return err
 	}
 
-	fileName = strconv.Itoa(int(data.Id))
+	fileName = strconv.Itoa(data.Id)
 	if image, err = utils.UploadImageJPG(c, imageFile, fileName); err == nil {
 		data.Image = image
 		if image, err = utils.UploadImageThumbJPG(imageFile, fileName); err == nil {
 			data.Thumbnail = image
+		}
+	}
+
+	if data.Image != "" {
+		if err = albumPhotoService.Update(db, uint(data.Id), &data); err != nil {
+			return err
 		}
 	}
 

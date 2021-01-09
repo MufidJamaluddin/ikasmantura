@@ -65,20 +65,26 @@ func Route(app *fiber.App, db *gorm.DB) {
 
 	secretHandler := func(allowedRoles []string) fiber.Handler {
 		return jwtWare.New(jwtWare.Config{
-			SigningKey:  []byte(os.Getenv("SECRET_KEY")),
-			TokenLookup: "header:Authorization,cookie:web_ika_id",
+			SigningKey: []byte(os.Getenv("SECRET_KEY")),
+			TokenLookup: fmt.Sprintf(
+				"header:%s,cookie:%s",
+				os.Getenv("HEADER_TOKEN"), os.Getenv("COOKIE_TOKEN")),
 			SuccessHandler: func(ctx *fiber.Ctx) error {
 				return authHandler.AuthorizationHandler(ctx, db, allowedRoles)
 			},
 			ErrorHandler: func(ctx *fiber.Ctx, err error) error {
-				log.Println(err.Error())
-				return ctx.SendStatus(fiber.StatusUnauthorized)
+				var err2 error
+				err2 = ctx.SendStatus(fiber.StatusBadRequest)
+				if err2 == nil {
+					return fmt.Errorf("[error] validasi token:\n %w", err)
+				}
+				return fmt.Errorf("[error] validasi token:\n %w;\n %w", err, err2)
 			},
 		})
 	}
 
 	adminHandler := secretHandler([]string{"admin"})
-	allMemberHandler := secretHandler([]string{"admin", "member", ""})
+	allMemberHandler := secretHandler([]string{"admin", "member"})
 
 	cacheDuration, _ := strconv.Atoi(os.Getenv("CACHE_DURATION"))
 	cacheHandler := cache.New(cache.Config{
@@ -147,10 +153,10 @@ func Route(app *fiber.App, db *gorm.DB) {
 	topics.Delete("/:id", adminHandler, articleTopicHandler.DeleteArticleTopic)
 
 	auth := apiV1.Group("/auth")
-	auth.Get("", allMemberHandler, authHandler.GetLoggedInUser)
+	auth.Get("", secretOrPublicHandler, authHandler.GetLoggedInUser)
 	auth.Post("", publicHandler, authHandler.Login)
 	auth.Put("", allMemberHandler, authHandler.RefreshLogin)
-	auth.Delete("", publicHandler, authHandler.Logout)
+	auth.Delete("", allMemberHandler, authHandler.Logout)
 
 	department := apiV1.Group("/departments")
 	department.Get("", publicHandler, departmentHandler.SearchDepartment)
@@ -176,8 +182,8 @@ func Route(app *fiber.App, db *gorm.DB) {
 	// timeout framework bisa race condition
 
 	user := apiV1.Group("/users")
-	user.Get("", adminHandler, userHandler.SearchUser)
-	user.Get("/:id", adminHandler, userHandler.GetOneUser)
+	user.Get("", allMemberHandler, userHandler.SearchUser)
+	user.Get("/:id", allMemberHandler, userHandler.GetOneUser)
 	user.Post("", adminHandler, userHandler.SaveUser)
 	user.Put("/:id", adminHandler, userHandler.UpdateUser)
 	user.Delete("/:id", adminHandler, userHandler.DeleteUser)
@@ -190,8 +196,8 @@ func Route(app *fiber.App, db *gorm.DB) {
 	classrooms.Delete("/:id", adminHandler, classroomHandler.DeleteClassroom)
 
 	tempUser := apiV1.Group("/temp_users")
-	tempUser.Get("", publicHandler, tempUserHandler.SearchTempUser)
-	tempUser.Get("/:id", publicHandler, tempUserHandler.GetOneTempUser)
+	tempUser.Get("", allMemberHandler, tempUserHandler.SearchTempUser)
+	tempUser.Get("/:id", allMemberHandler, tempUserHandler.GetOneTempUser)
 	tempUser.Post("", publicHandler, tempUserHandler.SaveTempUser)
 	tempUser.Put("/:id", adminHandler, tempUserHandler.UpdateTempUser)
 	tempUser.Delete("/:id", adminHandler, tempUserHandler.DeleteTempUser)

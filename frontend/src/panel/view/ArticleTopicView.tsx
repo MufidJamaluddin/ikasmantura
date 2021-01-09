@@ -31,8 +31,11 @@ const TopicFilter = (props) => (
 
 export const TopicList = ({ permissions, ...props}) => {
     const isSmall = useMediaQuery((theme:any) => theme.breakpoints.down('sm'));
+    const isAdmin = permissions === 'admin'
     return (
-        <List title={props.options?.label} filters={<TopicFilter {...props} />} {...props}>
+        <List title={props.options?.label}
+              bulkActionButtons={isAdmin ? props.bulkActionButtons : false}
+              filters={<TopicFilter {...props} />} {...props}>
             {isSmall ? (
                 <SimpleList primaryText={record => record.name}
                 />

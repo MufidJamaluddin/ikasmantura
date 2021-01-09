@@ -4,6 +4,7 @@ import {Col, Row} from "react-bootstrap";
 import DOMPurify from "../../utils/Sanitizer";
 import { useStore } from "../models";
 import {ThemeContext} from "../component/PageTemplate";
+import ShareSocialMedia from "../component/ShareSocialMedia";
 
 export default function AboutView(props) {
 
@@ -40,6 +41,9 @@ export default function AboutView(props) {
                 <div className="text-justify" dangerouslySetInnerHTML={
                     {__html: mission ? DOMPurify.sanitize(mission) : '-'}}/>
                 <hr/>
+            </Col>
+            <Col sm={12}>
+                <ShareSocialMedia title={'Tentang IKA SMAN Situraja'} className="row justify-content-center" />
             </Col>
         </Row>
     )

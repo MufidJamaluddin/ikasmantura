@@ -9,13 +9,13 @@ import (
 func toModel(data *viewmodels.UserDto, out *models.User) {
 	var classrooms []models.UserClassroom
 
-	out.ID = data.Id
+	out.ID = uint(data.Id)
 	out.Name = data.Name
 	out.Username = data.Username
 	out.Role = data.Role
 	out.Password = data.Password
 	out.ForceYear = data.ForceYear
-	out.Address.ID = data.Address.ID
+	out.Address.ID = uint(data.Address.ID)
 	out.Address.Street = data.Address.Street
 	out.Address.Suite = data.Address.Suite
 	out.Address.City = data.Address.City
@@ -24,8 +24,8 @@ func toModel(data *viewmodels.UserDto, out *models.User) {
 
 	for _, item := range data.Classrooms {
 		classrooms = append(classrooms, models.UserClassroom{
-			ClassroomId: item.Id,
-			UserId:      data.Id,
+			ClassroomId: uint(item.Id),
+			UserId:      uint(data.Id),
 		})
 	}
 
@@ -38,14 +38,14 @@ func toModel(data *viewmodels.UserDto, out *models.User) {
 func toViewModel(in *models.User, out *viewmodels.UserDto) {
 	var classrooms []viewmodels.ClassroomDto
 
-	out.Id = in.ID
+	out.Id = int(in.ID)
 	out.Name = in.Name
 	out.Username = in.Username
 	out.Role = in.Role
 	out.Password = in.Password
 	out.ForceYear = in.ForceYear
-	out.RefreshToken = in.RefreshToken.String()
-	out.Address.ID = in.Address.ID
+	out.RefreshToken = utils.ToBase64UUID(in.RefreshToken)
+	out.Address.ID = int(in.Address.ID)
 	out.Address.Street = in.Address.Street
 	out.Address.Suite = in.Address.Suite
 	out.Address.City = in.Address.City
@@ -54,10 +54,10 @@ func toViewModel(in *models.User, out *viewmodels.UserDto) {
 
 	for _, item := range in.Classrooms {
 		classrooms = append(classrooms, viewmodels.ClassroomDto{
-			Id:    item.ClassroomId,
+			Id:    int(item.ClassroomId),
 			Major: item.Classroom.Major,
 			Level: item.Classroom.Level,
-			Seq:   item.Classroom.Seq,
+			Seq:   int(item.Classroom.Seq),
 		})
 	}
 

@@ -1,4 +1,3 @@
-import inMemoryUserData from './InMemoryUserData'
 import {ParseJwt} from "../utils/Jwt";
 
 export default function LoginProvider({ username, password }) {
@@ -7,8 +6,6 @@ export default function LoginProvider({ username, password }) {
         body: JSON.stringify({ username: username.trim(), password: password.trim() }),
         headers: new Headers({ 'Content-Type': 'application/json' }),
     })
-
-    inMemoryUserData.setRefreshEndpoint('/api/v1/auth')
 
     return fetch(request)
         .then(response => {
@@ -20,7 +17,7 @@ export default function LoginProvider({ username, password }) {
         .then(({ token, refreshToken }) => {
             let userData = ParseJwt(token)
 
-            inMemoryUserData.setUser(userData)
-            inMemoryUserData.setRefreshToken(refreshToken)
+            localStorage.setItem('user', JSON.stringify(userData))
+            localStorage.setItem('refresh', refreshToken)
         });
 }

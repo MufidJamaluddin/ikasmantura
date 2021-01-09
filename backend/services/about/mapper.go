@@ -7,7 +7,7 @@ import (
 )
 
 func toModel(data *viewmodels.AboutDto, out *models.About) {
-	out.ID = data.Id
+	out.ID = uint(data.Id)
 	out.Title = data.Title
 	out.Description = data.Description
 	out.Mission = data.Mission
@@ -22,7 +22,7 @@ func toModel(data *viewmodels.AboutDto, out *models.About) {
 }
 
 func toViewModel(in *models.About, out *viewmodels.AboutDto) {
-	out.Id = in.ID
+	out.Id = int(in.ID)
 	out.Title = in.Title
 	out.Description = in.Description
 	out.Mission = in.Mission

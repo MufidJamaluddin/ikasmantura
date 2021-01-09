@@ -296,7 +296,7 @@ func SaveTempUser(c *fiber.Ctx) error {
 		return err
 	}
 
-	if !(*availabilityRes.Exist) {
+	if *availabilityRes.Exist {
 		return c.Status(fiber.StatusConflict).
 			SendString("Username atau Email telah terdaftar!")
 	}

@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 
 import AuthProvider from "../../dataprovider/authProvider";
 import {useStore} from "../models";
-import InMemoryUserData from "../../dataprovider/InMemoryUserData";
 
 function UserMenu(props) {
 
@@ -35,15 +34,10 @@ function UserMenu(props) {
         }
     }, [])
 
-    useEffect(() => {
-        setUserData(InMemoryUserData.getUser())
-    })
-
     return (
         (isLogin || userData) ? (
             <Nav.Link as={Link} to={"/panel"}>
                 <span><i className="fas fa-user"/></span>
-                {userData?.fullName}
             </Nav.Link>
         ) : (
             <NavDropdown title="Alumni" id="basic-nav-dropdown">

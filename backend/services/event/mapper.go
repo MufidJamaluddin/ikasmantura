@@ -43,9 +43,9 @@ func toViewModel(in *models.Event, out *viewmodels.EventDto, isCurrentUserSearch
 		out.IsMyEvent = total > 0
 		if out.IsMyEvent {
 			item := in.Participants[total-1]
-			out.CurrentUserRegisData.ID = item.ID
-			out.CurrentUserRegisData.UserId = item.UserId
-			out.CurrentUserRegisData.EventId = item.EventId
+			out.CurrentUserRegisData.ID = int(item.ID)
+			out.CurrentUserRegisData.UserId = int(item.UserId)
+			out.CurrentUserRegisData.EventId = int(item.EventId)
 			utils.FillCreated(item, out.CurrentUserRegisData)
 		}
 	}

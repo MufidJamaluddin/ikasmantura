@@ -7,7 +7,7 @@ import (
 )
 
 func toModel(data *viewmodels.AlbumDto, out *models.Album) {
-	out.ID = data.Id
+	out.ID = uint(data.Id)
 	out.Title = data.Title
 
 	utils.FillCreated(data, out)
@@ -15,7 +15,7 @@ func toModel(data *viewmodels.AlbumDto, out *models.Album) {
 }
 
 func toViewModel(in *models.Album, out *viewmodels.AlbumDto) {
-	out.Id = in.ID
+	out.Id = int(in.ID)
 	out.Title = in.Title
 
 	utils.FillCreated(in, out)

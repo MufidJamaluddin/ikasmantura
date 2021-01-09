@@ -6,6 +6,7 @@ import {ThemeContext} from "../component/PageTemplate";
 import {getOrganizations} from "../models/OrganizationModel";
 
 import blankAvatar from './../../resource/blank_avatar.svg'
+import ShareSocialMedia from "../component/ShareSocialMedia";
 
 interface OrganizationViewState {
     data: Array<any>|null;
@@ -77,6 +78,11 @@ export default class OrganizationView
                     data.map((item, key) => (
                         <PeopleProfile {...item} key={item.id} />
                     ))
+                }
+                {
+                    data.length > 0 && (
+                        <ShareSocialMedia title={'Struktur Organisasi IKA SMAN Situraja'} className="fa-pull-right" />
+                    )
                 }
             </div>
         )

@@ -32,8 +32,8 @@ func makeDialer() (*gomail.Dialer, error) {
 	var (
 		dialer *gomail.Dialer
 
-		port int
-		host string
+		port     int
+		host     string
 		usermail string
 		password string
 
@@ -57,19 +57,26 @@ func makeDialer() (*gomail.Dialer, error) {
 	return dialer, err
 }
 
-func sendMessageInBackground()  {
+func sendMessageInBackground() {
+
+	defer func() {
+		if err := recover(); err != nil {
+			log.Println("panic occurred:", err)
+		}
+	}()
+
 	var (
-		sendCloser  gomail.SendCloser
+		sendCloser gomail.SendCloser
 
-		err 		error
-		open 		bool
-		ok 			bool
+		err  error
+		open bool
+		ok   bool
 
-		dialer 		*gomail.Dialer
-		htmlBuf    	bytes.Buffer
+		dialer  *gomail.Dialer
+		htmlBuf bytes.Buffer
 
 		emailMessage gomail.Message
-		vMessage 	*viewmodels.EmailMessage
+		vMessage     *viewmodels.EmailMessage
 	)
 
 	if dialer, err = makeDialer(); err != nil {
@@ -122,5 +129,3 @@ func sendMessageInBackground()  {
 		}
 	}
 }
-
-

@@ -3,9 +3,7 @@ package auth
 import (
 	"backend/utils"
 	"backend/viewmodels"
-	"fmt"
 	"github.com/form3tech-oss/jwt-go"
-	"github.com/go-errors/errors"
 	"github.com/gofiber/fiber/v2"
 	history "github.com/vcraescu/gorm-history/v2"
 	"gorm.io/gorm"
@@ -79,7 +77,6 @@ func AuthorizationHandler(c *fiber.Ctx, db *gorm.DB, pageRoles []string) error {
 		pageRole      string
 		exp           int64
 		authorized    = false
-		ip            string
 	)
 
 	if user := c.Locals("user").(*jwt.Token); user != nil {
@@ -90,7 +87,8 @@ func AuthorizationHandler(c *fiber.Ctx, db *gorm.DB, pageRoles []string) error {
 			authorized = true
 		} else {
 			for _, pageRole = range pageRoles {
-				authorized = authorized || tokenRole == pageRole
+				authorized = authorized ||
+					strings.Compare(tokenRole, pageRole) == 0
 			}
 		}
 
@@ -100,23 +98,12 @@ func AuthorizationHandler(c *fiber.Ctx, db *gorm.DB, pageRoles []string) error {
 
 		currentUserId = int(claims["id"].(float64))
 		exp = int64(claims["exp"].(float64))
-		ip = claims["ip"].(string)
-
-		if strings.Compare(ip, c.Context().RemoteIP().To16().String()) != 0 {
-			c.ClearCookie(os.Getenv("COOKIE_TOKEN"))
-			c.Status(fiber.StatusUnauthorized)
-
-			return errors.New(
-				fmt.Sprintf("User ID %s IP's changed from %s to %s",
-					currentUserId, ip,
-					c.IP()))
-		}
 
 		userdata = &viewmodels.AuthorizationModel{
 			ID:       uint(currentUserId),
 			Username: claims["name"].(string),
 			Email:    claims["email"].(string),
-			Role:     claims["role"].(string),
+			Role:     tokenRole,
 			FullName: claims["fullName"].(string),
 			Exp:      exp,
 		}

@@ -9,6 +9,7 @@ import Image from "../component/Image";
 import DOMPurify from "../../utils/Sanitizer";
 import { ThemeContext } from "../component/PageTemplate";
 import {getEventById, registerEventById} from "../models/EventsModel";
+import ShareSocialMedia from "../component/ShareSocialMedia";
 
 interface EventItemState {
     data: any
@@ -84,6 +85,7 @@ export default class EventItemView
                                         </Button>
                                     )
                             }
+                            <ShareSocialMedia title={title} className="fa-pull-right" />
                         </Card.Body>
                         <Card.Title>
                             <h1 className="text-center">{title}</h1>
