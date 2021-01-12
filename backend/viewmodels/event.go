@@ -33,8 +33,8 @@ type UserEventDto struct {
 type EventParam struct {
 	utils.GetParams
 	EventDto
-	StartFrom *time.Time `json:"createdAt_gte" xml:"createdAt_gte" form:"createdAt_gte"`
-	EndTo     *time.Time `json:"createdAt_lte" xml:"createdAt_lte" form:"createdAt_lte"`
+	StartFrom *time.Time `json:"start_gte" xml:"start_gte" form:"start_gte"`
+	EndTo     *time.Time `json:"start_lte" xml:"start_lte" form:"start_lte"`
 }
 
 func (p *EventParam) GetModel() interface{} {

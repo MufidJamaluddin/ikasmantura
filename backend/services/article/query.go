@@ -5,7 +5,6 @@ import (
 	"backend/utils"
 	"backend/viewmodels"
 	"database/sql"
-	"fmt"
 	"gorm.io/gorm"
 	"strings"
 )
@@ -52,7 +51,8 @@ func searchFilter(tx *gorm.DB, search *viewmodels.ArticleParam, withLimit bool) 
 
 	title = strings.Trim(search.Title, " ")
 	if title != "" {
-		tx.Where("title LIKE ?", fmt.Sprintf("%s%", title))
+		title = utils.ToLikeSQL(title)
+		tx.Where("title LIKE ?", title)
 	}
 
 	if search.TopicId != 0 {
