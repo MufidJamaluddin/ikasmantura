@@ -21,18 +21,26 @@ func Verify(db *gorm.DB, id uint, out *viewmodels.UserDto) error {
 	err = db.Transaction(func(tx *gorm.DB) error {
 		var errorTransact error
 
-		tx.Save(&tempModel)
+		errorTransact = tx.Transaction(func(txi *gorm.DB) (errorTransact2 error) {
+			if errorTransact2 = txi.Save(&tempModel).Error; errorTransact != nil {
+				return errorTransact2
+			}
 
-		toPermanentModel(&tempModel, &permanentModel)
+			toPermanentModel(&tempModel, &permanentModel)
 
-		tx.Save(&permanentModel)
+			if errorTransact = txi.Save(&permanentModel).Error; errorTransact != nil {
+				return errorTransact2
+			}
+
+			return nil
+		})
+
+		if errorTransact == nil {
+			errorTransact = tx.Delete(&tempModel).Error
+		}
 
 		return errorTransact
 	})
-
-	if err == nil {
-		db.Delete(&tempModel)
-	}
 
 	return err
 }
@@ -46,7 +54,7 @@ func Update(db *gorm.DB, id uint, out *viewmodels.UserDto) error {
 	out.Id = int(id)
 
 	toTempModel(out, &model)
-	err = repository.Update(db, &model)
+	err = repository.Update(db.Omit("id", "username", "password"), &model)
 	return err
 }
 

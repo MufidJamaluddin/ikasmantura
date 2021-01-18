@@ -16,7 +16,7 @@ func Update(db *gorm.DB, id uint, out *viewmodels.UserDto) error {
 	out.Id = int(id)
 
 	toModel(out, &model)
-	err = repository.Update(db, &model)
+	err = repository.Update(db.Omit("id", "username", "password"), &model)
 	return err
 }
 

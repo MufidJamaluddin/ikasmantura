@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
+	"log"
 	"mime/multipart"
 	"os"
 	"strconv"
@@ -148,6 +149,7 @@ func UpdateAlbumPhoto(c *fiber.Ctx) error {
 		data      viewmodels.AlbumPhotoDto
 		imageFile *multipart.FileHeader
 		image     string
+		thumbnail string
 		fileName  string
 		err       error
 		id        uint
@@ -169,36 +171,39 @@ func UpdateAlbumPhoto(c *fiber.Ctx) error {
 		return err
 	}
 
+	if err = albumPhotoService.FindById(db, id, &data); err != nil {
+		_ = c.SendStatus(fiber.StatusNotFound)
+		return err
+	}
+
+	imageFile, err = c.FormFile("image")
+
+	if err == nil {
+		if data.Image != "" {
+			_ = os.Remove(fmt.Sprintf("/%s", data.Image))
+		}
+		if data.Thumbnail != "" {
+			_ = os.Remove(fmt.Sprintf("/%s", data.Thumbnail))
+		}
+
+		fileName = strconv.Itoa(data.Id)
+		if image, err = utils.UploadImageJPG(c, imageFile, fileName); err == nil {
+			thumbnail, err = utils.UploadImageThumbJPG(imageFile, fileName)
+		}
+	} else {
+		log.Println(err.Error())
+	}
+
 	if err = c.BodyParser(&data); err != nil {
 		return err
 	}
 
-	data.CreatedBy = authData.ID
-	data.UpdatedBy = authData.ID
-
-	imageFile, err = c.FormFile("image")
-	if err != nil {
-		return c.Status(fiber.StatusBadRequest).SendString("No image data!")
-	}
-
+	data.Image = image
+	data.Thumbnail = thumbnail
 	data.UpdatedBy = authData.ID
 
 	if err = albumPhotoService.Update(db, id, &data); err != nil {
 		return err
-	}
-
-	fileName = strconv.Itoa(data.Id)
-	if image, err = utils.UploadImageJPG(c, imageFile, fileName); err == nil {
-		data.Image = image
-		if image, err = utils.UploadImageThumbJPG(imageFile, fileName); err == nil {
-			data.Thumbnail = image
-		}
-	}
-
-	if data.Image != "" {
-		if err = albumPhotoService.Update(db, uint(data.Id), &data); err != nil {
-			return err
-		}
 	}
 
 	c.Status(fiber.StatusAccepted)
@@ -262,6 +267,10 @@ func SaveAlbumPhoto(c *fiber.Ctx) error {
 		if image, err = utils.UploadImageThumbJPG(imageFile, fileName); err == nil {
 			data.Thumbnail = image
 		}
+	}
+
+	if err != nil {
+		log.Print(err.Error())
 	}
 
 	if data.Image != "" {

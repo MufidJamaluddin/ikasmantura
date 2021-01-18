@@ -33,7 +33,7 @@ func UploadImageJPG(c *fiber.Ctx, imageFile *multipart.FileHeader, fileName stri
 	imagePath = fmt.Sprintf(
 		"./%s/%s/%s", os.Getenv("ASSET_PATH"), "img", fileName)
 
-	if err = c.SaveFile(imageFile, imagePath); err != nil {
+	if err = c.SaveFile(imageFile, imagePath); err == nil {
 		return trimFirstRune(imagePath), err
 	}
 

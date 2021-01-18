@@ -147,6 +147,9 @@ func UpdateUser(c *fiber.Ctx) error {
 		db   *gorm.DB
 		ok   bool
 
+		tempUsername string
+		tempPassword string
+
 		authData *viewmodels.AuthorizationModel
 	)
 
@@ -162,11 +165,22 @@ func UpdateUser(c *fiber.Ctx) error {
 		return err
 	}
 
+	if err = userService.FindById(db, id, &data); err != nil {
+		_ = c.SendStatus(fiber.StatusNotFound)
+		return err
+	}
+
+	tempUsername = data.Username
+	tempPassword = data.Password
+
 	if err = c.BodyParser(&data); err != nil {
 		return err
 	}
 
+	data.Username = tempUsername
+	data.Password = tempPassword
 	data.UpdatedBy = authData.ID
+
 	if err = userService.Update(db, id, &data); err != nil {
 		return err
 	}

@@ -13,6 +13,8 @@ type User struct {
 	Phone        string          `gorm:"size:13"`
 	ForceYear    string          `gorm:"size:4"`
 	Role         string          `gorm:"size:6"`
+	Job          string          `gorm:"size:35"`
+	JobDesc      string          `gorm:"size:85"`
 	RefreshToken utils.UUID      `gorm:"type:binary(16)"`
 	Address      UserAddress     `gorm:"foreignKey:UserId"`
 	MyEvents     []UserEvent     `gorm:"foreignKey:UserId"`

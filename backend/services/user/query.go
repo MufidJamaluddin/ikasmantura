@@ -67,8 +67,8 @@ func FindById(db *gorm.DB, id uint, out *viewmodels.UserDto) error {
 	)
 
 	if err = repository.FindById(
-		db.Joins("Classroom").Joins("UserClassroom"), id, &model);
-	err == nil {
+		db.Preload("Address").Preload("Classrooms"),
+		id, &model); err == nil {
 		toViewModel(&model, out)
 	}
 	return err

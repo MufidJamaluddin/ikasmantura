@@ -10,6 +10,8 @@ type UserDto struct {
 	Email        string         `query:"email,omitempty" json:"email,omitempty" xml:"email,omitempty" form:"email,omitempty"`
 	Phone        string         `query:"phone,omitempty" json:"phone,omitempty" xml:"phone,omitempty" form:"phone,omitempty"`
 	ForceYear    string         `query:"forceYear,omitempty" json:"forceYear,omitempty" xml:"forceYear,omitempty" form:"forceYear,omitempty"`
+	Job          string         `query:"job,omitempty" json:"job,omitempty" xml:"job,omitempty" form:"job,omitempty"`
+	JobDesc      string         `query:"jobDesc,omitempty" json:"jobDesc,omitempty" xml:"jobDesc,omitempty" form:"jobDesc,omitempty"`
 	Password     string         `query:"-" json:"password,omitempty" xml:"password,omitempty" form:"password,omitempty"`
 	RefreshToken string         `query:"-" json:"-" xml:"-" form:"-"`
 	Address      UserAddressDto `query:"-" json:"address,omitempty" xml:"address,omitempty" form:"address,omitempty"`

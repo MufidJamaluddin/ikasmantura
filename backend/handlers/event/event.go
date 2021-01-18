@@ -11,6 +11,7 @@ import (
 	"github.com/go-errors/errors"
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
+	"log"
 	"mime/multipart"
 	"os"
 	"strings"
@@ -166,6 +167,7 @@ func UpdateEvent(c *fiber.Ctx) error {
 	var (
 		data      viewmodels.EventDto
 		image     string
+		thumbnail string
 		fileName  string
 		imageFile *multipart.FileHeader
 		err       error
@@ -188,30 +190,33 @@ func UpdateEvent(c *fiber.Ctx) error {
 		return errors.New("field ID wajib diisi")
 	}
 
-	if err = c.BodyParser(&data); err != nil {
-		return err
-	}
-
-	data.UpdatedBy = authData.ID
-	if err = eventService.Update(db, id, &data); err != nil {
+	if err = eventService.FindById(db, id, &data); err != nil {
+		_ = c.SendStatus(fiber.StatusNotFound)
 		return err
 	}
 
 	imageFile, err = c.FormFile("image")
-	fileName = data.Id
+	fileName = id
 	if err == nil {
 		if image, err = utils.UploadImageJPG(c, imageFile, fileName); err == nil {
-			data.Image = image
-			if image, err = utils.UploadImageThumbJPG(imageFile, fileName); err == nil {
-				data.Thumbnail = image
-			}
+			thumbnail, err = utils.UploadImageThumbJPG(imageFile, fileName)
 		}
 	}
 
-	if data.Image != "" {
-		if err = eventService.Update(db, data.Id, &data); err != nil {
-			return err
-		}
+	if err != nil {
+		log.Print(err.Error())
+	}
+
+	if err = c.BodyParser(&data); err != nil {
+		return err
+	}
+
+	data.Image = image
+	data.Thumbnail = thumbnail
+	data.UpdatedBy = authData.ID
+
+	if err = eventService.Update(db, id, &data); err != nil {
+		return err
 	}
 
 	c.Status(fiber.StatusAccepted)
@@ -274,7 +279,11 @@ func SaveEvent(c *fiber.Ctx) error {
 		}
 	}
 
-	if data.Image != "" {
+	if err != nil {
+		log.Print(err.Error())
+	}
+
+	if data.Image != "" || data.Thumbnail != "" {
 		if err = eventService.Update(db, data.Id, &data); err != nil {
 			return err
 		}

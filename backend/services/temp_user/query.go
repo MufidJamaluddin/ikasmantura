@@ -67,9 +67,11 @@ func FindById(db *gorm.DB, id uint, out *viewmodels.UserDto) error {
 		tx    *gorm.DB
 	)
 
-	tx = db.Model(&model)
+	tx = db.Model(&model).
+		Preload("Address").
+		Preload("Classrooms")
 
-	if err = tx.First(&model, id).Error; err == nil {
+	if err = tx.First(&model, "id = ?", id).Error; err == nil {
 		toViewModel(&model, out)
 	}
 	return err

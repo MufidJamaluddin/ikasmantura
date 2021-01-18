@@ -112,6 +112,8 @@ export const TempUserView = props => (
             <TextField source="name" className={"d-inline"} />
             <TextField source="email" className={"d-inline"} />
             <TextField source="phone" className={"d-inline"}/>
+            <TextField source="job"/>
+            <TextField source="jobDesc"/>
             <TextField source="address.street" className={"d-inline"}/>
             <TextField source="address.suite" className={"d-inline"}/>
             <TextField source="address.city" className={"d-inline"}/>
@@ -132,9 +134,11 @@ export const TempUserEdit = props => (
         <SimpleForm redirect="show">
             <TextInput disabled source="id" />
             <TextInput source="name"/>
-            <TextInput source="username"/>
+            <TextInput disabled source="username"/>
             <TextInput source="email"/>
             <TextInput source="phone"/>
+            <TextInput source="job"/>
+            <TextInput source="jobDesc"/>
             <TextInput source="address.street" />
             <TextInput source="address.suite" />
             <TextInput source="address.city" />
@@ -164,6 +168,8 @@ export const TempUserCreate = props => (
             <PasswordInput label={'Verify Password'} source="password_verify"/>
             <TextInput source="name"/>
             <TextInput source="phone"/>
+            <TextInput source="job"/>
+            <TextInput source="jobDesc"/>
             <TextInput source="address.street" />
             <TextInput source="address.suite" />
             <TextInput source="address.city" />

@@ -89,7 +89,7 @@ const AdminApp = (props: any) => (
             />,
 
             <Resource name="classrooms"
-                options={{"label": "Kelas"}}
+                options={{"label": "Kelas", "hidden": permissions === ""}}
                 list={ClassroomView.ClassroomList}
                 edit={permissions === 'admin' ? ClassroomView.ClassroomEdit : null}
                 create={permissions === 'admin' ? ClassroomView.ClassroomCreate: null}
@@ -97,7 +97,7 @@ const AdminApp = (props: any) => (
             />,
 
             <Resource name="departments"
-                options={{"label": "Departemen", "divider": true}}
+                options={{"label": "Departemen", "divider": true, "hidden": permissions === ""}}
                 list={DepartmentView.DepartmentList}
                 show={DepartmentView.DepartmentShow}
                 edit={permissions === 'admin' ? DepartmentView.DepartmentEdit : null}
@@ -125,7 +125,7 @@ const AdminApp = (props: any) => (
             />,
 
             <Resource name="article_topics"
-                options={{"label": "Topik Artikel", "divider": true}}
+                options={{"label": "Topik Artikel", "divider": true, "hidden": permissions === ""}}
                 list={ArticleTopicView.TopicList}
                 edit={permissions === 'admin' ? ArticleTopicView.TopicEdit : null}
                 create={permissions === 'admin' ? ArticleTopicView.TopicCreate : null}
@@ -133,7 +133,7 @@ const AdminApp = (props: any) => (
             />,
 
             <Resource name="articles"
-                options={{"label": "Artikel", "divider": false}}
+                options={{"label": "Artikel", "divider": false, "hidden": permissions === ""}}
                 list={ArticleView.PostList}
                 show={ArticleView.PostShow}
                 edit={
@@ -146,7 +146,7 @@ const AdminApp = (props: any) => (
             />,
 
             <Resource name="events"
-                options={{"label": "Agenda", "divider": true}}
+                options={{"label": "Agenda", "divider": true, "hidden": permissions === ""}}
                 list={EventView.EventList}
                 show={EventView.EventView}
                 edit={permissions === 'admin' ? EventView.EventEdit : null}
@@ -155,7 +155,7 @@ const AdminApp = (props: any) => (
             />,
 
             <Resource name="albums"
-                options={{"label": "Album", "divider": true}}
+                options={{"label": "Album", "divider": true, "hidden": permissions === ""}}
                 list={AlbumView.AlbumList}
                 show={AlbumView.AlbumView}
                 edit={permissions === 'admin' ? AlbumView.AlbumEdit : null}
@@ -164,7 +164,7 @@ const AdminApp = (props: any) => (
             />,
 
             <Resource name="photos"
-                options={{"label": "Gallery",}}
+                options={{"label": "Gallery", "hidden": permissions === ""}}
                 list={GalleryView.GalleryList}
                 show={GalleryView.GalleryView}
                 edit={permissions === 'admin' ? GalleryView.GalleryEdit : null}

@@ -1,15 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/utils/text.go" afterDir="false" />
+    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="Fix Bugs Pencarian">
+      <change afterPath="$PROJECT_DIR$/error/account.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/common.go" beforeDir="false" afterPath="$PROJECT_DIR$/repository/common.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/article/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/article/query.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/event/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/event/query.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/viewmodels/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/albumphoto/albumphoto.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/albumphoto/albumphoto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/article/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/article/article.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/event/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/event/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/temp_user/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/temp_user/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/user/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/user/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/article.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_temp.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user_temp.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/auth/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/auth/mapper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/auth/login.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/auth/login.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/email/emailservice.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/email/emailservice.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/event/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/event/command.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/temp_user/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/temp_user/command.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/temp_user/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/temp_user/mapper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/temp_user/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/temp_user/query.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/user/command.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/user/mapper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/user/query.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/converter.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/converter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/image.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/image.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/uuidutils.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/uuidutils.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/article.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/dataprovider/DataProviderFactory.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/dataprovider/DataProviderFactory.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/RegisterView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/RegisterView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/ArticleView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/ArticleView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/ClassroomView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/ClassroomView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/TempUserView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/TempUserView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/UserView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/UserView.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +147,8 @@
     <MESSAGE value="Fix Bug Save &amp; Update in Newest Gorm Version" />
     <MESSAGE value="Fix Bug Login" />
     <MESSAGE value="Fix Bugs Login" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix Bugs Login" />
+    <MESSAGE value="Fix Bugs Pencarian" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix Bugs Pencarian" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

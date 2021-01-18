@@ -68,7 +68,7 @@ func sendMessageInBackground() {
 	var (
 		sendCloser gomail.SendCloser
 
-		err  error
+		err  error = nil
 		open bool
 		ok   bool
 
@@ -80,6 +80,7 @@ func sendMessageInBackground() {
 	)
 
 	if dialer, err = makeDialer(); err != nil {
+		log.Println(err.Error())
 		panic("Dialer is not set!")
 		return
 	}
@@ -97,12 +98,14 @@ func sendMessageInBackground() {
 			}
 			if !open {
 				if sendCloser, err = dialer.Dial(); err != nil {
-					log.Println(err)
+					log.Println("error in connecting the email server")
+					log.Println(err.Error())
 				}
 				open = true
 			}
 
 			htmlBuf.Reset()
+			emailMessage.Reset()
 
 			err = utils.HtmlTemplates.ExecuteTemplate(
 				&htmlBuf, "event_ticket.html", vMessage)
@@ -112,17 +115,19 @@ func sendMessageInBackground() {
 			emailMessage.SetHeader("Subject", vMessage.Header)
 			emailMessage.SetBody("text/html", htmlBuf.String())
 
-			if err := gomail.Send(sendCloser, &emailMessage); err != nil {
-				log.Println(err)
+			if err = gomail.Send(sendCloser, &emailMessage); err != nil {
+				log.Println("error in sending email")
+				log.Println(err.Error())
 			}
 
 			htmlBuf.Reset()
 			emailMessage.Reset()
 
-		case <-time.After(30 * time.Second):
+		case <-time.After(35 * time.Second):
 			if open {
-				if err := sendCloser.Close(); err != nil {
-					log.Println(err)
+				if err = sendCloser.Close(); err != nil {
+					log.Println("error in closing the email server")
+					log.Println(err.Error())
 				}
 				open = false
 			}

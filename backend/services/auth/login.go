@@ -23,26 +23,29 @@ func RefreshToken(db *gorm.DB, data *viewmodels.UserDto) (err error) {
 		return fmt.Errorf("the refresh token [%s] is not valid", data.RefreshToken)
 	}
 
-	if err = db.Model(&model).
-		Where("id = ?", data.Id).
-		Where("refresh_token = ?", refreshTokenBin.OrderedValue()).
-		First(&model).Error; err != nil {
-		return
+	if data.Id != 0 {
+		if err = db.Model(&model).
+			Where("id = ?", data.Id).
+			Where("refresh_token = ?", refreshTokenBin.OrderedValue()).
+			First(&model).Error; err != nil {
+			return
+		}
+
+		model.RefreshToken = utils.UUID(uuid.NewV1())
+
+		if err = db.Save(model).Error; err != nil {
+			return err
+		}
+
+		toViewModel(&model, data)
 	}
-
-	model.RefreshToken = utils.UUID(uuid.NewV1())
-
-	if err = db.Save(model).Error; err != nil {
-		return err
-	}
-
-	toViewModel(&model, data)
 	return
 }
 
 func Login(db *gorm.DB, data *viewmodels.LoginDto) (err error) {
 	var (
 		model          models.User
+		tempModel      models.TempUser
 		hasher         hash.Hash
 		hashUserPwd    []byte
 		hashUserPwdStr string
@@ -53,6 +56,11 @@ func Login(db *gorm.DB, data *viewmodels.LoginDto) (err error) {
 	data.Password = strings.Trim(data.Password, " ")
 
 	db.Where("username = ?", data.Username).FirstOrInit(&model)
+
+	if model.Username == "" && model.Password == "" {
+		db.Where("username = ?", data.Username).FirstOrInit(&tempModel)
+		tempUserToUserModel(&tempModel, &model)
+	}
 
 	if model.Username != "" && model.Password != "" {
 
@@ -65,9 +73,13 @@ func Login(db *gorm.DB, data *viewmodels.LoginDto) (err error) {
 		hashUserPwdStr = fmt.Sprintf("%x", hashUserPwd)
 
 		if hashUserPwdStr == model.Password {
-			model.RefreshToken = utils.UUID(uuid.NewV1())
-			if err = db.Save(model).Error; err != nil {
-				return
+			if model.ID != 0 {
+				model.RefreshToken = utils.UUID(uuid.NewV1())
+				if err = db.Save(&model).Error; err != nil {
+					return
+				}
+			} else {
+				model.RefreshToken = utils.UUID(uuid.NewV4())
 			}
 			toViewModel(&model, &data.Data)
 			return

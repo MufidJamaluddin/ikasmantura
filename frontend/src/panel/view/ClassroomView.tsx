@@ -11,10 +11,12 @@ import {
     SimpleList,
     TextField,
     TextInput,
+    NumberInput,
     required
 } from 'react-admin';
 
 import {useMediaQuery} from '@material-ui/core';
+import {number} from "prop-types";
 
 const ClassroomTitle = ({ record }) => {
     return <span>{record.name ?? 'Create Classroom'}</span>;
@@ -36,7 +38,10 @@ export const ClassroomList = ({ permissions, ...props}) => {
               {...props}>
             {isSmall ? (
                 <SimpleList
-                    primaryText={ record => `${record.level} - ${record.major} - ${record.seq}` }
+                    primaryText={ record => {
+                        if(record.major) return `${record.level}-${record.major}-${record.seq}`
+                        else return `${record.level}-${record.seq}`
+                    }}
                 />
             ) : (
                 <Datagrid>
@@ -59,7 +64,7 @@ export const ClassroomEdit = props => (
             <TextInput disabled source="id" />
             <TextInput source="level" validate={[required()]} />
             <TextInput source="major" validate={[required()]} />
-            <TextInput source="seq" validate={[required()]} />
+            <NumberInput source="seq" validate={[required()]} step={1} />
         </SimpleForm>
     </Edit>
 )
@@ -69,7 +74,7 @@ export const ClassroomCreate = props => (
         <SimpleForm onSubmit={props.onSubmit}>
             <TextInput source="level" validate={[required()]} />
             <TextInput source="major" validate={[required()]} />
-            <TextInput source="seq" validate={[required()]} />
+            <NumberInput source="seq" validate={[required()]} step={1} />
         </SimpleForm>
     </Create>
 )

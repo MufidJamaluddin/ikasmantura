@@ -50,7 +50,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
     {
         e.preventDefault();
 
-        //await this.formElement.current.validateForm();
+        await this.formElement.current.validateForm();
 
         if(!this.formElement.current.isValid())
         {
@@ -174,7 +174,13 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
         let classrooms = await getClassrooms() ?? []
 
         let nClassrooms = classrooms.map(item => {
-            let label = `${item.level} - ${item.major} - ${item.seq}`
+            let label
+            if(item.major) {
+                label = `${item.level}-${item.major}-${item.seq}`
+            } else {
+                label = `${item.level}-${item.seq}`
+            }
+
             return {
                 value: item.id,
                 label: label,
@@ -360,14 +366,14 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                     <Col sm={8}>
                         <Form.Control type="text"
                                       placeholder="Nomor HP"
-                                      name="hp"
-                                      value={formData.hp}
+                                      name="phone"
+                                      value={formData.phone}
                                       minLength={10}
                                       maxLength={13}
                                       required={true}
-                                      onChange={(e) => this.handleChange(e,'hp')}
+                                      onChange={(e) => this.handleChange(e,'phone')}
                         />
-                        <FieldFeedbacks for="hp">
+                        <FieldFeedbacks for="phone">
                             <FieldFeedback when="valueMissing" error>
                                 Wajib diisi
                             </FieldFeedback>
@@ -379,11 +385,11 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                     </Col>
                 </Form.Group>
 
-                <Form.Group as={Row} controlId="formAngkatan">
-                    <Form.Label column sm={4}>Angkatan</Form.Label>
+                <Form.Group as={Row} controlId="formForceYear">
+                    <Form.Label column sm={4}>Tahun Lulus</Form.Label>
                     <Col sm={8}>
                         <Form.Control type="text"
-                                      placeholder="Angkatan"
+                                      placeholder="Tahun Lulus"
                                       name="forceYear"
                                       value={formData.forceYear}
                                       minLength={4}
@@ -404,6 +410,52 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                     </Col>
                 </Form.Group>
 
+                <Form.Group as={Row} controlId="formJob">
+                    <Form.Label column sm={4}>Pekerjaan</Form.Label>
+                    <Col sm={8}>
+                        <Form.Control type="text"
+                                      placeholder="Pekerjaan"
+                                      name="job"
+                                      value={formData.job}
+                                      minLength={2}
+                                      maxLength={35}
+                                      required={true}
+                                      onChange={(e) => this.handleChange(e,'job')}
+                        />
+                        <FieldFeedbacks for="job">
+                            <FieldFeedback when="valueMissing" error>
+                                Wajib diisi
+                            </FieldFeedback>
+                            <FieldFeedback when="patternMismatch" error>
+                                Minimal isi tiga karakter dan maksimal 85 karakter
+                            </FieldFeedback>
+                            <FieldFeedback when="*" className="text-error" />
+                        </FieldFeedbacks>
+                    </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formJobDesc">
+                    <Form.Label column sm={4}>Deskripsi Pekerjaan</Form.Label>
+                    <Col sm={8}>
+                        <Form.Control as="textarea" rows={2}
+                                      placeholder="Deskripsi Pekerjaan"
+                                      name="jobDesc"
+                                      value={formData.jobDesc}
+                                      minLength={3}
+                                      maxLength={85}
+                                      required={false}
+                                      onChange={(e) => this.handleChange(e,'jobDesc')}
+                                      style={{resize: 'none'}}
+                        />
+                        <FieldFeedbacks for="jobDesc">
+                            <FieldFeedback when="patternMismatch" error>
+                                Minimal isi tiga karakter dan maksimal 85 karakter
+                            </FieldFeedback>
+                            <FieldFeedback when="*" className="text-error" />
+                        </FieldFeedbacks>
+                    </Col>
+                </Form.Group>
+
                 <Form.Group as={Row} controlId="formKelas">
                     <Form.Label column sm={4}>Kelas SMAN Situraja yang Pernah Dijalani</Form.Label>
                     <Col sm={8}>
@@ -411,7 +463,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                             as={Select}
                             closeMenuOnSelect={false}
                             components={selectAnimatedComponents}
-                            className="no-padding no-border"
+                            className="no-padding no-border small"
                             options={this.state.classrooms}
                             isClearable={true}
                             isMulti={true}
@@ -419,7 +471,6 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                                 this.state.classrooms.length === 0
                             }
                             placeholder="Kelas"
-                            name="classrooms"
                             value={formData.classrooms ?? []}
                             onChange={(e) => this.handleChange(e,'classrooms')}
                             required={true}
@@ -574,56 +625,70 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
     {
         let formType = this.state.formType
 
-        let FormParent = formType === TIFormType.TABBED ? Tabs : Row;
+        let width = (window.innerWidth > 0) ? window.innerWidth : window.screen?.width
+
+        let isSmall = width < 680
+
+        let FormParent
+
+        if(isSmall) {
+            FormParent = Row
+        } else {
+            FormParent = formType === TIFormType.TABBED ? Tabs : Row
+        }
 
         return (
             <Row>
                 <Col md={{span:10, offset:1}}>
                     <Card>
 
-                        <Card.Body>
-                            <div className="fa-pull-left">
-                                Pilih tampilan &nbsp;
-                                <Button
-                                    className={
-                                        formType === TIFormType.TABBED ?
-                                            'btn-kegiatan-active' : 'btn-kegiatan'
-                                    }
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        this.setState(state => ({
-                                            ...state,
-                                            formType: TIFormType.TABBED
-                                        }))
-                                    }}
-                                >
-                                    Isian Tab Ke Samping
-                                </Button>
-                                <Button
-                                    className={
-                                        formType === TIFormType.INLINE ?
-                                            'btn-kegiatan-active' : 'btn-kegiatan'
-                                    }
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        this.setState(state => ({
-                                            ...state,
-                                            formType: TIFormType.INLINE
-                                        }))
-                                    }}
-                                >
-                                    Semua Isian Kebawah
-                                </Button>
-                            </div>
-                            <div className="fa-pull-right">
-                                Sudah pernah daftar? &nbsp;
-                                <Link to={"/login"}>
-                                    <Button variant="warning" size="sm" type="button">
-                                        Masuk
-                                    </Button>
-                                </Link>
-                            </div>
-                        </Card.Body>
+                        {
+                            (!isSmall) && (
+                                <Card.Body>
+                                    <div className="fa-pull-left">
+                                        Pilih tampilan &nbsp;
+                                        <Button
+                                            className={
+                                                formType === TIFormType.TABBED ?
+                                                    'btn-kegiatan-active' : 'btn-kegiatan'
+                                            }
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                this.setState(state => ({
+                                                    ...state,
+                                                    formType: TIFormType.TABBED
+                                                }))
+                                            }}
+                                        >
+                                            Isian Tab Ke Samping
+                                        </Button>
+                                        <Button
+                                            className={
+                                                formType === TIFormType.INLINE ?
+                                                    'btn-kegiatan-active' : 'btn-kegiatan'
+                                            }
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                this.setState(state => ({
+                                                    ...state,
+                                                    formType: TIFormType.INLINE
+                                                }))
+                                            }}
+                                        >
+                                            Semua Isian Kebawah
+                                        </Button>
+                                    </div>
+                                    <div className="fa-pull-right">
+                                        Sudah pernah daftar? &nbsp;
+                                        <Link to={"/login"}>
+                                            <Button variant="warning" size="sm" type="button">
+                                                Masuk
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                </Card.Body>
+                            )
+                        }
 
                         <Card.Title>
                             <h1 className="text-center">Pendaftaran Alumni</h1>

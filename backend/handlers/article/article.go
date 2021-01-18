@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
+	"log"
 	"mime/multipart"
 	"os"
 	"strings"
@@ -147,6 +148,7 @@ func UpdateArticle(c *fiber.Ctx) error {
 	var (
 		data      viewmodels.ArticleDto
 		image     string
+		thumbnail string
 		imageFile *multipart.FileHeader
 		fileName  string
 		err       error
@@ -170,6 +172,7 @@ func UpdateArticle(c *fiber.Ctx) error {
 	}
 
 	if err = articleService.FindById(db, id, &data); err != nil {
+		_ = c.SendStatus(fiber.StatusNotFound)
 		return err
 	}
 
@@ -177,30 +180,35 @@ func UpdateArticle(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusUnauthorized)
 	}
 
+	fileName = id
+	imageFile, err = c.FormFile("image")
+	if err == nil {
+		if data.Image != "" {
+			_ = os.Remove(fmt.Sprintf("/%s", data.Image))
+		}
+		if data.Thumbnail != "" {
+			_ = os.Remove(fmt.Sprintf("/%s", data.Thumbnail))
+		}
+
+		if image, err = utils.UploadImageJPG(c, imageFile, fileName); err == nil {
+			thumbnail, err = utils.UploadImageThumbJPG(imageFile, fileName)
+		}
+	}
+
+	if err != nil {
+		log.Print(err.Error())
+	}
+
 	if err = c.BodyParser(&data); err != nil {
 		return err
 	}
 
+	data.Image = image
+	data.Thumbnail = thumbnail
 	data.UpdatedBy = authData.ID
+
 	if err = articleService.Update(db, id, &data); err != nil {
 		return err
-	}
-
-	fileName = id
-	imageFile, err = c.FormFile("image")
-	if err == nil {
-		if image, err = utils.UploadImageJPG(c, imageFile, fileName); err == nil {
-			data.Image = image
-			if image, err = utils.UploadImageThumbJPG(imageFile, fileName); err == nil {
-				data.Thumbnail = image
-			}
-		}
-	}
-
-	if data.Image != "" {
-		if err = articleService.Update(db, data.Id, &data); err != nil {
-			return err
-		}
 	}
 
 	c.Status(fiber.StatusAccepted)
@@ -265,7 +273,7 @@ func SaveArticle(c *fiber.Ctx) error {
 		}
 	}
 
-	if data.Image != "" {
+	if data.Image != "" || data.Thumbnail != "" {
 		if err = articleService.Update(db, data.Id, &data); err != nil {
 			return err
 		}

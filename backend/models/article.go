@@ -9,9 +9,9 @@ import (
 type Article struct {
 	ID             utils.UUID `gorm:"type:binary(16);primaryKey"`
 	Title          string     `gorm:"size:35"`
-	Body           string
-	Image          string `gorm:"size:100"`
-	Thumbnail      string `gorm:"size:100"`
+	Body           string     `gorm:"type:TEXT"`
+	Image          string     `gorm:"size:100"`
+	Thumbnail      string     `gorm:"size:100"`
 	ArticleTopicId uint
 	ArticleTopic   ArticleTopic `gorm:"foreignKey:ArticleTopicId"`
 	utils.Created

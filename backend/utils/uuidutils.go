@@ -5,18 +5,18 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-func ToBase64UUID(uid UUID) (nid string)  {
-	nid = base64.StdEncoding.EncodeToString(uid.Guid().Bytes())
+func ToBase64UUID(uid UUID) (nid string) {
+	nid = base64.URLEncoding.EncodeToString(uid.Guid().Bytes())
 	return
 }
 
-func FromBase64UUID(nid string) (uid UUID, err error)  {
+func FromBase64UUID(nid string) (uid UUID, err error) {
 	var (
 		oid []byte
-		id uuid.UUID
+		id  uuid.UUID
 	)
 
-	if oid, err = base64.StdEncoding.DecodeString(nid); err != nil {
+	if oid, err = base64.URLEncoding.DecodeString(nid); err != nil {
 		uid = UUID(uuid.Nil)
 		return
 	}

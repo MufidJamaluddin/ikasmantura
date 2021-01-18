@@ -4,17 +4,31 @@ import (
 	"backend/models"
 	"backend/utils"
 	"backend/viewmodels"
+	"crypto/sha1"
+	"fmt"
+	"hash"
 )
 
 func toModel(data *viewmodels.UserDto, out *models.User) {
-	var classrooms []models.UserClassroom
+	var (
+		classrooms []models.UserClassroom
+		hasher     hash.Hash
+	)
 
 	out.ID = uint(data.Id)
 	out.Name = data.Name
 	out.Username = data.Username
 	out.Role = data.Role
-	out.Password = data.Password
+
+	if data.Password != "" {
+		hasher = sha1.New()
+		hasher.Write(utils.ToBytes(data.Password))
+		out.Password = fmt.Sprintf("%x", hasher.Sum(nil))
+	}
+
 	out.ForceYear = data.ForceYear
+	out.Job = data.Job
+	out.JobDesc = data.JobDesc
 	out.Address.ID = uint(data.Address.ID)
 	out.Address.Street = data.Address.Street
 	out.Address.Suite = data.Address.Suite
@@ -44,6 +58,8 @@ func toViewModel(in *models.User, out *viewmodels.UserDto) {
 	out.Role = in.Role
 	out.Password = in.Password
 	out.ForceYear = in.ForceYear
+	out.Job = in.Job
+	out.JobDesc = in.JobDesc
 	out.RefreshToken = utils.ToBase64UUID(in.RefreshToken)
 	out.Address.ID = int(in.Address.ID)
 	out.Address.Street = in.Address.Street

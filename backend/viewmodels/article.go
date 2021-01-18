@@ -14,7 +14,7 @@ type ArticleDto struct {
 	Thumbnail     string `query:"-" json:"thumbnail,omitempty" xml:"thumbnail,omitempty" form:"-"`
 	TopicId       int    `query:"topicId,omitempty" json:"topicId,omitempty" xml:"topicId,omitempty" form:"topicId,omitempty"`
 	CurrentUserId int    `query:"-" json:"-" xml:"-" form:"-"`
-	CreatedByName string `query:"-" json:"createdByName" xml:"createdByName" form:"-"`
+	CreatedByName string `query:"-" json:"createdByName,omitempty" xml:"createdByName,omitempty" form:"createdByName,omitempty"`
 	utils.Created
 	utils.Updated
 }

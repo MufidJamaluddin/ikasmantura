@@ -1,6 +1,7 @@
 package event
 
 import (
+	error2 "backend/error"
 	"backend/models"
 	"backend/repository"
 	"backend/utils"
@@ -64,6 +65,11 @@ func RegisterEvent(db *gorm.DB, eventId uint, userId uint) error {
 
 	db.First(&userModel, userId)
 	db.First(&eventModel, eventId)
+
+	if userModel.ID == 0 {
+		err = &error2.NotVerifiedAccount{}
+		return err
+	}
 
 	if eventModel.ID.Guid() != uuid.Nil && userModel.ID != 0 {
 

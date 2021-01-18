@@ -78,8 +78,7 @@ export const PostList = ({permissions, ...props}) => {
                         <TextField source="name" />
                     </ReferenceField>
                     <ShowButton />
-                    { permissions === 'admin' || permissions === 'member' ?
-                        <EditButton/> : null }
+                    { permissions === 'admin' ? <EditButton/> : null }
                 </Datagrid>
             )}
         </List>
