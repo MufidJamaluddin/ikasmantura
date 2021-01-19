@@ -80,7 +80,7 @@ func sendMessageInBackground() {
 		dialer  *gomail.Dialer
 		htmlBuf bytes.Buffer
 
-		emailMessage gomail.Message
+		emailMessage *gomail.Message
 		vMessage     *viewmodels.EmailMessage
 	)
 
@@ -91,6 +91,7 @@ func sendMessageInBackground() {
 	}
 
 	open = false
+	emailMessage = gomail.NewMessage()
 
 	for {
 		select {
@@ -126,7 +127,7 @@ func sendMessageInBackground() {
 			emailMessage.SetHeader("Subject", vMessage.Header)
 			emailMessage.SetBody("text/html", htmlBuf.String())
 
-			if err = gomail.Send(sendCloser, &emailMessage); err != nil {
+			if err = gomail.Send(sendCloser, emailMessage); err != nil {
 				log.Println("error in sending email")
 				log.Println(err.Error())
 			}
