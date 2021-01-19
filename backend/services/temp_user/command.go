@@ -12,32 +12,39 @@ func Verify(db *gorm.DB, id uint, out *viewmodels.UserDto) error {
 		err            error
 		tempModel      models.TempUser
 		permanentModel models.User
+		session        *gorm.DB
 	)
 
 	out.Id = int(id)
 
 	toTempModel(out, &tempModel)
 
-	err = db.Transaction(func(tx *gorm.DB) error {
+	session = db.Session(&gorm.Session{SkipDefaultTransaction: false, FullSaveAssociations: true})
+
+	err = session.Transaction(func(tx *gorm.DB) error {
 		var errorTransact error
 
-		errorTransact = tx.Transaction(func(txi *gorm.DB) (errorTransact2 error) {
-			if errorTransact2 = txi.Save(&tempModel).Error; errorTransact != nil {
-				return errorTransact2
-			}
-
-			toPermanentModel(&tempModel, &permanentModel)
-
-			if errorTransact = txi.Save(&permanentModel).Error; errorTransact != nil {
-				return errorTransact2
-			}
-
-			return nil
-		})
-
-		if errorTransact == nil {
-			errorTransact = tx.Delete(&tempModel).Error
+		if errorTransact = tx.Model(&tempModel).
+			Where("id = ?", int(id)).
+			Updates(&tempModel).Error; errorTransact != nil {
+			return errorTransact
 		}
+
+		if errorTransact = tx.Model(&tempModel).
+			Preload("Address").
+			Preload("Classrooms").
+			First(&tempModel, "id = ?", int(id)).Error; errorTransact != nil {
+			return errorTransact
+		}
+
+		toPermanentModel(&tempModel, &permanentModel)
+
+		if errorTransact = tx.Model(&permanentModel).
+			Create(&permanentModel).Error; errorTransact != nil {
+			return errorTransact
+		}
+
+		errorTransact = tx.Model(&tempModel).Delete(&tempModel).Error
 
 		return errorTransact
 	})

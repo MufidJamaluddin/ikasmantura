@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="">
+    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="Fix Bugs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/article/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/article/article.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/article/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/article/command.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/article/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/article/query.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/event/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/event/command.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/temp_user/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/temp_user/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/email/emailservice.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/email/emailservice.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/temp_user/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/temp_user/command.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/temp_user/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/temp_user/mapper.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/image.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/image.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

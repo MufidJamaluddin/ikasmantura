@@ -73,9 +73,11 @@ func UploadImageThumbJPG(imageFile *multipart.FileHeader, fileName string) (stri
 
 	originalSourceImage, _, _ = image.Decode(imagePath)
 
-	ratio = float32(originalSourceImage.Bounds().Dx()) / 80
-	width = 80
-	height = int(ratio * float32(originalSourceImage.Bounds().Dy()))
+	ratio = float32(originalSourceImage.Bounds().Dx()) /
+		float32(originalSourceImage.Bounds().Dy())
+
+	width = int(80 * ratio)
+	height = 80
 
 	thumbSourceImage = image.NewRGBA(image.Rect(0, 0, width, height))
 

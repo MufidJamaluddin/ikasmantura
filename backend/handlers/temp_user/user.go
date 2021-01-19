@@ -292,7 +292,6 @@ func SaveTempUser(c *fiber.Ctx) error {
 		err             error
 		db              *gorm.DB
 		ok              bool
-		emailMsg        viewmodels.EmailMessage
 	)
 
 	if db, ok = c.Locals("db").(*gorm.DB); !ok {
@@ -319,6 +318,7 @@ func SaveTempUser(c *fiber.Ctx) error {
 		return err
 	}
 
+	emailMsg := &viewmodels.EmailMessage{}
 	emailMsg.Header = "Registrasi Data Alumni"
 	emailMsg.Title = "Registrasi Anggota Ikatan Alumni SMAN Situraja"
 	emailMsg.To = []string{data.Email}
@@ -327,7 +327,7 @@ func SaveTempUser(c *fiber.Ctx) error {
 			"Mohon Tunggu Kabar Kepengurusan IKA SMAN Situraja Baru! Kontak: info@ikasmansituraja.org",
 		data.Name, data.Username, data.Email)
 
-	email.SendMessage(&emailMsg)
+	email.SendMessage(emailMsg)
 
 	c.Status(fiber.StatusAccepted)
 	err = c.JSON(&data)

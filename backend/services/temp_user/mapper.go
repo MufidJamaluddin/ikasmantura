@@ -14,7 +14,6 @@ import (
 func toPermanentModel(data *models.TempUser, out *models.User) {
 	var classrooms []models.UserClassroom
 
-	out.ID = data.ID
 	out.Name = data.Name
 	out.Username = data.Username
 	out.Email = data.Email

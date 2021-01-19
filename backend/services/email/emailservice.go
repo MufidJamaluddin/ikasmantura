@@ -14,13 +14,16 @@ import (
 )
 
 var emailChannel chan *viewmodels.EmailMessage
+var emailChannelClosed bool
 
 func Open() {
 	emailChannel = make(chan *viewmodels.EmailMessage)
+	emailChannelClosed = false
 	go sendMessageInBackground()
 }
 
 func Exit() {
+	emailChannelClosed = true
 	close(emailChannel)
 }
 
@@ -60,8 +63,10 @@ func makeDialer() (*gomail.Dialer, error) {
 func sendMessageInBackground() {
 
 	defer func() {
-		if err := recover(); err != nil {
-			log.Println("panic occurred:", err)
+		if !emailChannelClosed {
+			if err := recover(); err != nil {
+				log.Println("send email panic occurred:", err)
+			}
 		}
 	}()
 
@@ -94,7 +99,7 @@ func sendMessageInBackground() {
 				return
 			}
 			if vMessage == nil {
-				return
+				continue
 			}
 			if !open {
 				if sendCloser, err = dialer.Dial(); err != nil {
@@ -107,8 +112,14 @@ func sendMessageInBackground() {
 			htmlBuf.Reset()
 			emailMessage.Reset()
 
-			err = utils.HtmlTemplates.ExecuteTemplate(
-				&htmlBuf, "event_ticket.html", vMessage)
+			if err = utils.HtmlTemplates.ExecuteTemplate(
+				&htmlBuf, "email_template.html", vMessage); err != nil {
+
+				log.Println("error in use email HTML template")
+				log.Println(err.Error())
+
+				htmlBuf.WriteString(vMessage.Message)
+			}
 
 			emailMessage.SetHeader("From", os.Getenv("EMAIL_SENDER_NAME"))
 			emailMessage.SetHeader("To", vMessage.To...)
