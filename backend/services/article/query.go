@@ -6,6 +6,7 @@ import (
 	"backend/viewmodels"
 	"database/sql"
 	"gorm.io/gorm"
+	"log"
 	"strings"
 )
 
@@ -93,21 +94,33 @@ func Find(db *gorm.DB, search *viewmodels.ArticleParam, callback func(*viewmodel
 
 func FindById(db *gorm.DB, id string, out *viewmodels.ArticleDto) error {
 	var (
-		err   error
-		model models.Article
-		user  models.User
-		uid   utils.UUID
+		err     error
+		model   models.Article
+		user    models.User
+		uid     utils.UUID
+		session *gorm.DB
 	)
 
 	if uid, err = utils.FromBase64UUID(id); err != nil {
 		return err
 	}
 
-	if err = db.Where("id = ?", uid.OrderedValue().Bytes()).First(&model).Error; err == nil {
+	session = db.Session(&gorm.Session{SkipDefaultTransaction: false})
+
+	if err = session.Model(&model).Table("articles").
+		Where("id = ?", uid).
+		First(&model).Error; err == nil {
 		toViewModel(&model, out)
 
-		db.Select("name").First(&user, model.CreatedBy)
-		out.CreatedByName = user.Name
+		if err = session.Model(&user).Table("users").
+			First(&user, "id = ?", out.CreatedBy).Error; err == nil {
+			out.CreatedByName = user.Name
+		} else {
+			log.Println(err.Error())
+		}
+
+		err = nil
 	}
+
 	return err
 }

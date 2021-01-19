@@ -5,19 +5,26 @@ import (
 	"backend/repository"
 	"backend/viewmodels"
 	"gorm.io/gorm"
+	"log"
 )
 
 func Update(db *gorm.DB, id string, out *viewmodels.ArticleDto) error {
 	var (
-		err   error
 		model models.Article
+		tx    *gorm.DB
 	)
 
 	out.Id = id
 
 	toModel(out, &model)
-	err = repository.Update(db, &model)
-	return err
+	tx = db.Model(&model).Where("id = ?", model.ID).Updates(&model)
+	if tx.Error != nil {
+		if tx.Statement != nil {
+			log.Println(tx.Statement.SQL.String())
+		}
+		log.Println(tx.Error.Error())
+	}
+	return tx.Error
 }
 
 func Save(db *gorm.DB, out *viewmodels.ArticleDto) error {
@@ -28,7 +35,7 @@ func Save(db *gorm.DB, out *viewmodels.ArticleDto) error {
 
 	toModel(out, &model)
 	if err = repository.Save(db, &model); err == nil {
-		out.Id = model.ID.Guid().String()
+		toViewModel(&model, out)
 	}
 	return err
 }

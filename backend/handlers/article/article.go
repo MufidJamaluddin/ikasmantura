@@ -205,7 +205,7 @@ func UpdateArticle(c *fiber.Ctx) error {
 
 	data.Image = image
 	data.Thumbnail = thumbnail
-	data.UpdatedBy = authData.ID
+	data.UserId = int(authData.ID)
 
 	if err = articleService.Update(db, id, &data); err != nil {
 		return err
@@ -322,7 +322,8 @@ func DeleteArticle(c *fiber.Ctx) error {
 	}
 
 	if err = articleService.FindById(db, id, &data); err != nil {
-		return err
+		log.Println(err.Error())
+		return c.SendStatus(fiber.StatusNotFound)
 	}
 
 	if data.CreatedBy != authData.ID && authData.Role != "admin" {

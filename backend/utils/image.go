@@ -47,6 +47,10 @@ func UploadImageThumbJPG(imageFile *multipart.FileHeader, fileName string) (stri
 		imagePath           multipart.File
 		originalSourceImage image.Image
 		thumbSourceImage    *image.RGBA
+
+		ratio  float32
+		width  int
+		height int
 	)
 
 	if imageFile.Header["Content-Type"][0] != "image/jpeg" {
@@ -69,7 +73,11 @@ func UploadImageThumbJPG(imageFile *multipart.FileHeader, fileName string) (stri
 
 	originalSourceImage, _, _ = image.Decode(imagePath)
 
-	thumbSourceImage = image.NewRGBA(image.Rect(0, 0, 80, 80))
+	ratio = float32(originalSourceImage.Bounds().Dx()) / 80
+	width = 80
+	height = int(ratio * float32(originalSourceImage.Bounds().Dy()))
+
+	thumbSourceImage = image.NewRGBA(image.Rect(0, 0, width, height))
 
 	if err = graphics.Thumbnail(thumbSourceImage, originalSourceImage); err != nil {
 		return "", err
