@@ -4,8 +4,10 @@ import (
 	error2 "backend/error"
 	"backend/models"
 	"backend/repository"
+	"backend/services/email"
 	"backend/utils"
 	"backend/viewmodels"
+	"fmt"
 	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
 )
@@ -57,14 +59,17 @@ func Delete(db *gorm.DB, id string, out *viewmodels.EventDto) error {
 
 func RegisterEvent(db *gorm.DB, eventId utils.UUID, userId uint) error {
 	var (
+		tx         *gorm.DB
 		err        error
 		eventModel models.Event
 		userModel  models.User
 		userEvent  models.UserEvent
 	)
 
-	db.First(&userModel, userId)
-	db.First(&eventModel, eventId)
+	tx = db.Session(&gorm.Session{SkipDefaultTransaction: false})
+
+	tx.Model(&userModel).First(&userModel, userId)
+	tx.Model(&eventModel).First(&eventModel, eventId)
 
 	if userModel.ID == 0 {
 		err = &error2.NotVerifiedAccount{}
@@ -76,7 +81,21 @@ func RegisterEvent(db *gorm.DB, eventId utils.UUID, userId uint) error {
 		userEvent.UserId = userId
 		userEvent.EventId = eventId
 
-		err = db.Model(&userEvent).Create(&userEvent).Error
+		err = tx.Model(&userEvent).Create(&userEvent).Error
+	}
+
+	if err == nil {
+		emailMsg := &viewmodels.EmailMessage{}
+		emailMsg.Header = "Registrasi Data Alumni"
+		emailMsg.Title = fmt.Sprintf("Registrasi Acara %v", eventModel.Title)
+		emailMsg.To = []string{userModel.Email}
+		emailMsg.Message = fmt.Sprintf(
+			"Registrasi Event %v, Atas Nama %v, Sukses dengan Nomor Tiket %v. Silakan Download Tiket di Halaman Acara Pribadi!",
+			eventModel.Title,
+			userModel.Name,
+			userEvent.EventId)
+
+		email.SendMessage(emailMsg)
 	}
 
 	return err

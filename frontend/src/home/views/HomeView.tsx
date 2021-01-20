@@ -35,7 +35,7 @@ export default function HomeView(props)
     let topics = state.data ?? []
 
     return (
-        <Row className="text-center">
+        <Row className="text-center justify-content-center">
 
             <Col sm={6} md={4} lg={2}>
                 <HomeMenu

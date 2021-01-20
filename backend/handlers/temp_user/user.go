@@ -10,7 +10,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
 	"log"
-	"os"
+	"net/url"
+	"path"
 )
 
 // @author Mufid Jamaluddin
@@ -287,10 +288,10 @@ func VerifyUser(c *fiber.Ctx) error {
 // @Router /api/v1/confirms/tu_emails/{username}/{token} [post]
 func ConfirmTempUserEmail(c *fiber.Ctx) (err error) {
 	var (
-		db *gorm.DB
-		ok bool
-		username string
-		confirmEmailToken string
+		db                   *gorm.DB
+		ok                   bool
+		username             string
+		confirmEmailToken    string
 		confirmEmailTokenUid utils.UUID
 	)
 
@@ -338,6 +339,7 @@ func SaveTempUser(c *fiber.Ctx) error {
 		err             error
 		db              *gorm.DB
 		ok              bool
+		confirmUrl      *url.URL
 	)
 
 	if db, ok = c.Locals("db").(*gorm.DB); !ok {
@@ -364,21 +366,25 @@ func SaveTempUser(c *fiber.Ctx) error {
 		return err
 	}
 
+	confirmUrl = utils.GetBasePath()
+	confirmUrl.Path = path.Join(confirmUrl.Path,
+		fmt.Sprintf("register_confirm/%v/%v",
+			data.Username, data.ConfirmEmailToken))
+
 	emailMsg := &viewmodels.EmailMessage{}
 	emailMsg.Header = "Registrasi Data Alumni"
 	emailMsg.Title = "Registrasi Anggota Ikatan Alumni SMAN Situraja"
 	emailMsg.To = []string{data.Email}
 	emailMsg.Message = fmt.Sprintf(
 		"Registrasi %v (Username %v - Email %v) Sukses! "+
-			"Mohon Tunggu Kabar dari Kepengurusan IKA SMAN Situraja! " +
-			"<br/><b>Tekan tombol dibawah ini untuk verifikasi pendaftaran anda</b>" +
-			"<br/><a href=\"%v/register_confirm/%v/%v\"><button>Verifikasi Email</button></a>",
+			"<br/><br/>Mohon Tunggu Kabar dari Kepengurusan IKA SMAN Situraja! "+
+			"<br/><br/><i>Tekan tombol Verifikasi Email dibawah ini untuk verifikasi pendaftaran anda</i>"+
+			"<br/><br/><a href=\"%v\">"+
+			"<button style=\"background-color:#212529;color:#ffff;\">Verifikasi Email</button></a>",
 		data.Name,
 		data.Username,
 		data.Email,
-		os.Getenv("BASE_PATH_MAIN"),
-		data.Username,
-		data.ConfirmEmailToken)
+		confirmUrl.String())
 
 	email.SendMessage(emailMsg)
 

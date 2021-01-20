@@ -41,7 +41,7 @@ func Delete(db *gorm.DB, id uint, out *viewmodels.ArticleTopicDto) error {
 
 	out.Id = id
 
-	if err = repository.Delete(db, &model); err == nil {
+	if err = db.Model(&model).Where("id = ?", id).Delete(&model).Error; err == nil {
 		toViewModel(&model, out)
 	}
 	return err
