@@ -25,16 +25,10 @@ async function checkAvailability({ username = '', email = '' })
         })
 
 
-        if(result)
-        {
-            NotificationManager.info(
-                `Akun "${username} ${email}" tersedia!`,
-                'Akun tersedia');
-        }
-        else
+        if(!result)
         {
             NotificationManager.warning(
-                `Akun "${username} ${email}" tidak tersedia!`,
+                `Akun "${username} ${email}" telah dipakai oleh orang lain atau telah terdaftar sebelumnya!`,
                 'Akun tidak tersedia');
         }
 

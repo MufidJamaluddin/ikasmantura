@@ -244,6 +244,9 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                             <FieldFeedback when="tooShort" error className="text-error">
                                 Username yang anda pilih terlalu pendek!
                             </FieldFeedback>
+                            <FieldFeedback when={value => !/^\S*$/.test(value)} error className="text-error">
+                                Username tidak boleh mengandung spasi!
+                            </FieldFeedback>
                             <Async
                                 promise={this.checkUsernameAvailability}
                                 then={available => available ?
