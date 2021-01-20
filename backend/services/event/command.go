@@ -55,7 +55,7 @@ func Delete(db *gorm.DB, id string, out *viewmodels.EventDto) error {
 	return err
 }
 
-func RegisterEvent(db *gorm.DB, eventId uint, userId uint) error {
+func RegisterEvent(db *gorm.DB, eventId utils.UUID, userId uint) error {
 	var (
 		err        error
 		eventModel models.Event
@@ -88,7 +88,8 @@ func GetUserEvent(db *gorm.DB, data *viewmodels.UserEventDetailDto) error {
 		userEvent models.UserEvent
 	)
 
-	db.Where("user_events.user_id = ? AND user_events.event_id = ?", data.UserId, data.EventId).
+	db.Where("user_events.user_id = ? AND user_events.event_id = ?",
+		data.UserId, utils.ToBytes(data.EventId)).
 		Joins("event").
 		Joins("user").
 		First(&userEvent)

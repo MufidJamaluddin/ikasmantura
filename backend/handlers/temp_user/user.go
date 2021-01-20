@@ -9,6 +9,8 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
+	"log"
+	"os"
 )
 
 // @author Mufid Jamaluddin
@@ -130,7 +132,7 @@ func GetOneTempUser(c *fiber.Ctx) error {
 // UpdateTempUser godoc
 // @Security BasicAuth
 // @Security ApiKeyAuth
-// @Tags User
+// @Tags User Management
 // @Summary Update user
 // @Description Update user
 // @Accept  json
@@ -193,7 +195,7 @@ func UpdateTempUser(c *fiber.Ctx) error {
 }
 
 // CheckAvailabilityUser godoc
-// @Tags User
+// @Tags User Management
 // @Summary Add new user
 // @Description Add new user
 // @Accept  json
@@ -232,7 +234,7 @@ func CheckAvailabilityUser(c *fiber.Ctx) error {
 // VerifyUser godoc
 // @Security BasicAuth
 // @Security ApiKeyAuth
-// @Tags User
+// @Tags User Management
 // @Summary Add new user
 // @Description Add new user
 // @Accept  json
@@ -272,10 +274,54 @@ func VerifyUser(c *fiber.Ctx) error {
 	return err
 }
 
+// ConfirmTempUserEmail godoc
+// @Security BasicAuth
+// @Security ApiKeyAuth
+// @Tags User Management
+// @Summary Add new user
+// @Description Add new user
+// @Accept  json
+// @Produce  json
+// @Success 202
+// @Failure 400 {object} string
+// @Router /api/v1/confirms/tu_emails/{username}/{token} [post]
+func ConfirmTempUserEmail(c *fiber.Ctx) (err error) {
+	var (
+		db *gorm.DB
+		ok bool
+		username string
+		confirmEmailToken string
+		confirmEmailTokenUid utils.UUID
+	)
+
+	if db, ok = c.Locals("db").(*gorm.DB); !ok {
+		return c.SendStatus(fiber.StatusInternalServerError)
+	}
+
+	username = c.Path("username")
+	confirmEmailToken = c.Path("token")
+
+	if confirmEmailTokenUid, err = utils.FromBase64UUID(confirmEmailToken); err != nil {
+		log.Println(err.Error())
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+
+	if username == "" {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+
+	if err = tempUserService.ConfirmEmail(db, username, confirmEmailTokenUid); err != nil {
+		log.Println(err.Error())
+		return c.SendStatus(fiber.StatusForbidden)
+	}
+
+	return c.SendStatus(fiber.StatusAccepted)
+}
+
 // SaveTempUser godoc
 // @Security BasicAuth
 // @Security ApiKeyAuth
-// @Tags User
+// @Tags User Management
 // @Summary Add new user
 // @Description Add new user
 // @Accept  json
@@ -324,8 +370,15 @@ func SaveTempUser(c *fiber.Ctx) error {
 	emailMsg.To = []string{data.Email}
 	emailMsg.Message = fmt.Sprintf(
 		"Registrasi %v (Username %v - Email %v) Sukses! "+
-			"Mohon Tunggu Kabar Kepengurusan IKA SMAN Situraja Baru! Kontak: info@ikasmansituraja.org",
-		data.Name, data.Username, data.Email)
+			"Mohon Tunggu Kabar dari Kepengurusan IKA SMAN Situraja! " +
+			"<br/><b>Tekan tombol dibawah ini untuk verifikasi pendaftaran anda</b>" +
+			"<br/><a href=\"%v/register_confirm/%v/%v\"><button>Verifikasi Email</button></a>",
+		data.Name,
+		data.Username,
+		data.Email,
+		os.Getenv("BASE_PATH_MAIN"),
+		data.Username,
+		data.ConfirmEmailToken)
 
 	email.SendMessage(emailMsg)
 

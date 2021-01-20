@@ -22,7 +22,7 @@ import {
     SimpleShowLayout,
     TextField,
     TextInput,
-    required
+    required, useGetIdentity
 } from 'react-admin';
 
 // @ts-ignore
@@ -39,21 +39,34 @@ const PostTitle = ({ record }) => {
 
 const PostFilter = (props) => (
     <Filter {...props}>
-        <TextInput label="Search" source="q" alwaysOn />
-        <DateInput label={"From"} source={"createdAt_gte"} parse={dateParser} allowEmpty />
-        <DateInput label={"To"} source={"createdAt_lte"} parse={dateParser} allowEmpty />
-        <ReferenceInput label="Author" source="userId" reference="users" allowEmpty>
+        <TextInput label="Cari" source="q" alwaysOn />
+        <DateInput label="Dari" source={"createdAt_gte"} parse={dateParser} allowEmpty />
+        <DateInput label="Sampai" source={"createdAt_lte"} parse={dateParser} allowEmpty />
+        <ReferenceInput label="Penulis" source="userId" reference="users" allowEmpty>
             <AutocompleteArrayInput optionText="name" />
         </ReferenceInput>
-        <ReferenceInput label="Topic" source="topicId" reference="article_topics" allowEmpty>
+        <ReferenceInput label="Topik" source="topicId" reference="article_topics" allowEmpty>
             <AutocompleteArrayInput optionText="name" />
         </ReferenceInput>
     </Filter>
 );
 
+function AuthorEditButton(props) {
+    if(props.userId === props.record.createdBy || props.isAdmin) {
+        return (<EditButton {...props} label="Edit"/>)
+    }
+    return null
+}
+
 export const PostList = ({permissions, ...props}) => {
     const isSmall = useMediaQuery((theme:any) => theme.breakpoints.down('sm'));
+    const { identity, loading: identityLoading } = useGetIdentity();
     const isAdmin = permissions === 'admin'
+
+    if(identityLoading) {
+        return <>Loading...</>;
+    }
+
     return (
         <List title={props.options?.label}
               bulkActionButtons={isAdmin ? props.bulkActionButtons : false}
@@ -62,23 +75,27 @@ export const PostList = ({permissions, ...props}) => {
                 <SimpleList
                     primaryText={record => record.title}
                     secondaryText={record =>  <ReferenceField
-                        label="User" source="userId" basePath="userId" reference="users" record={record}>
+                        label="Penulis" source="userId" basePath="userId" reference="users" record={record}>
                         <TextField source="name" />
                     </ReferenceField>}
                 />
             ) : (
-                <Datagrid>
-                    <TextField source="id" />
-                    <TextField source="title" />
-                    <ReferenceField label="Topic" source="topicId" reference="article_topics">
+                <Datagrid rowClick="show">
+                    <TextField source="id" label="ID" />
+                    <TextField source="title" label="Judul" />
+                    <ReferenceField label="Topik" source="topicId" reference="article_topics">
                         <TextField source="name" />
                     </ReferenceField>
-                    <ImageField source="thumbnail" />
-                    <ReferenceField label="Author" source="userId" reference="users">
+                    <ImageField source="thumbnail" label="Gambar" />
+                    <ReferenceField label="Penulis" source="userId" reference="users">
                         <TextField source="name" />
                     </ReferenceField>
-                    <ShowButton />
-                    { permissions === 'admin' ? <EditButton/> : null }
+                    <ShowButton label="Lihat" />
+                    <AuthorEditButton
+                        userId={identity.id}
+                        isAdmin={permissions === 'admin'}
+                        {...props}
+                    />
                 </Datagrid>
             )}
         </List>
@@ -88,16 +105,16 @@ export const PostList = ({permissions, ...props}) => {
 export const PostShow = (props) => (
     <Show title={<PostTitle {...props} />} {...props}>
         <SimpleShowLayout>
-            <TextField source="id" />
-            <ReferenceField label="Author" source="userId" reference="users">
+            <TextField source="id" label="ID" />
+            <ReferenceField label="Penulis" source="userId" reference="users">
                 <TextField source="name" className="d-inline" />
             </ReferenceField>
-            <ReferenceField label="Topic" source="topicId" reference="article_topics" >
+            <ReferenceField label="Topik" source="topicId" reference="article_topics" >
                 <TextField source="name" />
             </ReferenceField>
-            <ImageField source="image" />
-            <TextField source="title" className="d-inline" />
-            <RichTextField source="body" className="d-inline" />
+            <ImageField source="image" label="Gambar" />
+            <TextField source="title" label="Judul" className="d-inline" />
+            <RichTextField source="body" label="Isi" className="d-inline" />
         </SimpleShowLayout>
     </Show>
 );
@@ -129,18 +146,18 @@ export class PostEdit extends FormWithImage {
         return (
             <Edit transform={this.transform} title={title} {...props}>
                 <SimpleForm redirect="show" encType="multipart/form-data">
-                    <TextInput disabled source="id"/>
-                    <TextInput source="title" validate={[required()]}/>
-                    <ReferenceInput label="Topic" source="topicId"
+                    <TextInput disabled source="id" label="ID"/>
+                    <TextInput source="title" validate={[required()]} label="Judul" />
+                    <ReferenceInput label="Topik" source="topicId"
                                     reference="article_topics" validate={[required()]}>
                         <AutocompleteInput optionText="name"/>
                     </ReferenceInput>
-                    <ImageInput source="image" label="Image (JPG)"
+                    <ImageInput source="image" label="Gambar (JPG)"
                                 onChange={this.dropImage}
                                 accept="image/jpeg" maxSize={500000}>
                         <ImageField source="src" title="title"/>
                     </ImageInput>
-                    <RichTextInput source="body" className="d-inline" validate={[required()]}/>
+                    <RichTextInput source="body" label="Isi" className="d-inline" validate={[required()]}/>
                 </SimpleForm>
             </Edit>
         )
@@ -165,17 +182,17 @@ export class PostCreate extends FormWithImage {
         return (
             <Create transform={this.transform} {...props}>
                 <SimpleForm encType="multipart/form-data" transform={null}>
-                    <TextInput source="title" label="Title" validate={[required()]}/>
-                    <ReferenceInput label="Topic" source="topicId"
+                    <TextInput source="title" label="Judul" validate={[required()]}/>
+                    <ReferenceInput label="Topik" source="topicId"
                                     reference="article_topics" validate={[required()]}>
                         <AutocompleteInput optionText="name"/>
                     </ReferenceInput>
-                    <ImageInput source="image" label="Image (JPG)"
+                    <ImageInput source="image" label="Gambar (JPG)"
                                 onChange={this.dropImage}
                                 accept="image/jpeg" maxSize={500000}>
                         <ImageField source="src" title="title"/>
                     </ImageInput>
-                    <RichTextInput source="body" className="d-inline" validate={[required()]}/>
+                    <RichTextInput source="body" label="Isi" className="d-inline" validate={[required()]}/>
                 </SimpleForm>
             </Create>
         )

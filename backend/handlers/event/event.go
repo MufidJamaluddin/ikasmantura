@@ -366,7 +366,7 @@ func DeleteEvent(c *fiber.Ctx) error {
 func RegisterEvent(c *fiber.Ctx) error {
 	var (
 		err error
-		id  uint
+		id  utils.UUID
 		db  *gorm.DB
 		ok  bool
 
@@ -381,7 +381,7 @@ func RegisterEvent(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusUnauthorized)
 	}
 
-	if id, err = utils.ToUint(c.Params("id")); err != nil {
+	if id, err = utils.FromBase64UUID(c.Params("id")); err != nil {
 		return err
 	}
 
@@ -395,7 +395,7 @@ func RegisterEvent(c *fiber.Ctx) error {
 func DownloadEventTicket(c *fiber.Ctx) error {
 	var (
 		err error
-		id  uint
+		id  utils.UUID
 
 		authData *viewmodels.AuthorizationModel
 
@@ -415,12 +415,13 @@ func DownloadEventTicket(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusUnauthorized)
 	}
 
-	if id, err = utils.ToUint(c.Params("id")); err != nil {
+	if id, err = utils.FromBase64UUID(c.Params("id")); err != nil {
 		return err
 	}
 
 	userEventData.UserId = int(authData.ID)
-	userEventData.EventId = int(id)
+	userEventData.EventId = id.OrderedValue().String()
+
 	if err = eventService.GetUserEvent(db, &userEventData); err != nil {
 		return err
 	}

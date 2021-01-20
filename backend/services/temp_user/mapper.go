@@ -7,6 +7,7 @@ import (
 	"crypto/sha1"
 	"fmt"
 	"hash"
+	"log"
 	"strings"
 	"unicode/utf8"
 )
@@ -17,6 +18,7 @@ func toPermanentModel(data *models.TempUser, out *models.User) {
 	out.Name = data.Name
 	out.Username = data.Username
 	out.Email = data.Email
+	out.EmailValid = data.EmailValid
 	out.Role = "member"
 	out.Password = data.Password
 	out.ForceYear = data.ForceYear
@@ -46,12 +48,19 @@ func toTempModel(data *viewmodels.UserDto, out *models.TempUser) {
 	var (
 		classrooms []models.TempUserClassroom
 		hasher     hash.Hash
+		err error
 	)
 
 	out.ID = uint(data.Id)
 	out.Name = data.Name
 	out.Username = data.Username
 	out.Email = data.Email
+	out.EmailValid = data.EmailValid
+
+	if out.ConfirmEmailToken, err = utils.FromBase64UUID(data.ConfirmEmailToken); err != nil {
+		log.Println(err.Error())
+	}
+
 	out.ForceYear = data.ForceYear
 
 	if data.Password != "" {
@@ -110,7 +119,7 @@ func toTempModel(data *viewmodels.UserDto, out *models.TempUser) {
 
 	for _, item := range data.Classrooms {
 		classrooms = append(classrooms, models.TempUserClassroom{
-			ClassroomId: uint(item.Id),
+			ClassroomId: uint(item),
 			UserId:      uint(data.Id),
 		})
 	}
@@ -122,12 +131,14 @@ func toTempModel(data *viewmodels.UserDto, out *models.TempUser) {
 }
 
 func toViewModel(in *models.TempUser, out *viewmodels.UserDto) {
-	var classrooms []viewmodels.ClassroomDto
+	var classrooms []int
 
 	out.Id = int(in.ID)
 	out.Name = in.Name
 	out.Username = in.Username
 	out.Email = in.Email
+	out.EmailValid = in.EmailValid
+	out.ConfirmEmailToken = utils.ToBase64UUID(in.ConfirmEmailToken)
 	out.Phone = in.Phone
 	out.Role = ""
 	out.Password = in.Password
@@ -143,12 +154,7 @@ func toViewModel(in *models.TempUser, out *viewmodels.UserDto) {
 	out.Address.State = in.Address.State
 
 	for _, item := range in.Classrooms {
-		classrooms = append(classrooms, viewmodels.ClassroomDto{
-			Id:    int(item.ClassroomId),
-			Major: item.Classroom.Major,
-			Level: item.Classroom.Level,
-			Seq:   int(item.Classroom.Seq),
-		})
+		classrooms = append(classrooms, int(item.ClassroomId))
 	}
 
 	out.Classrooms = classrooms

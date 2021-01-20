@@ -53,33 +53,37 @@ const LoginView = ({ parenthistory, theme, location }) => {
         parenthistory.push('/')
     }
 
+    const loginForm = () => {
+        return (
+            <>
+                <label htmlFor="username" className="lead-sm"><b>Username</b></label>
+                <input type="text" className="c-input-box"
+                       placeholder="Enter Username" name="username" required minLength={3} maxLength={100}/>
+
+                <label htmlFor="password" className="lead-sm"><b>Password</b></label>
+                <input type="password" className="c-input-box"
+                       placeholder="Enter Password" name="password" required minLength={3} maxLength={100}/>
+
+                <button type="button" className="c-button info" onClick={onHomeClick}>Kembali</button>
+                &nbsp;
+                <button type="submit" className="c-button info">Login</button>
+            </>
+        )
+    }
+
     // @ts-ignore
     return (
         <ThemeProvider theme={theme}>
             <div className="c-g-banner c-f-full-height">
                 <form onSubmit={onSubmit} className="c-container-box c-center-box primary">
                     <div className="c-container c-text-center">
-
                         {
-                            loading ? (
+                            (loading ) ? (
                                 <p>Loading...</p>
                             ) : (
-                                <>
-                                    <label htmlFor="username" className="lead-sm"><b>Username</b></label>
-                                    <input type="text" className="c-input-box"
-                                           placeholder="Enter Username" name="username" required minLength={3} maxLength={100}/>
-
-                                    <label htmlFor="password" className="lead-sm"><b>Password</b></label>
-                                    <input type="password" className="c-input-box"
-                                           placeholder="Enter Password" name="password" required minLength={3} maxLength={100}/>
-
-                                    <button type="button" className="c-button info" onClick={onHomeClick}>Kembali</button>
-                                    &nbsp;
-                                    <button type="submit" className="c-button info">Login</button>
-                                </>
+                                loginForm()
                             )
                         }
-
                     </div>
                 </form>
             </div>

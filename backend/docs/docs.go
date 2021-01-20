@@ -1012,6 +1012,38 @@ var doc = `{
                 }
             }
         },
+        "/api/v1/confirms/tu_emails/{username}/{token}": {
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Add new user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Add new user",
+                "responses": {
+                    "202": {},
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/department/{id}": {
             "delete": {
                 "security": [
@@ -1398,16 +1430,6 @@ var doc = `{
                         "in": "query"
                     },
                     {
-                        "type": "string",
-                        "name": "createdAt_gte",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "name": "createdAt_lte",
-                        "in": "query"
-                    },
-                    {
                         "type": "integer",
                         "name": "createdBy",
                         "in": "query"
@@ -1450,6 +1472,16 @@ var doc = `{
                     {
                         "type": "string",
                         "name": "start",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "start_gte",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "start_lte",
                         "in": "query"
                     },
                     {
@@ -1910,7 +1942,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "User Management"
                 ],
                 "summary": "Add new user",
                 "parameters": [
@@ -1955,6 +1987,14 @@ var doc = `{
                 "summary": "Search Department",
                 "parameters": [
                     {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "name": "classrooms",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "name": "createdAt",
                         "in": "query"
@@ -1970,6 +2010,11 @@ var doc = `{
                         "in": "query"
                     },
                     {
+                        "type": "boolean",
+                        "name": "emailValid",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "name": "forceYear",
                         "in": "query"
@@ -1977,6 +2022,16 @@ var doc = `{
                     {
                         "type": "integer",
                         "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "job",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "jobDesc",
                         "in": "query"
                     },
                     {
@@ -2050,7 +2105,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "User Management"
                 ],
                 "summary": "Add new user",
                 "parameters": [
@@ -2134,7 +2189,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "User Management"
                 ],
                 "summary": "Update user",
                 "parameters": [
@@ -2238,6 +2293,14 @@ var doc = `{
                 "summary": "Search Department",
                 "parameters": [
                     {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "name": "classrooms",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "name": "createdAt",
                         "in": "query"
@@ -2253,6 +2316,11 @@ var doc = `{
                         "in": "query"
                     },
                     {
+                        "type": "boolean",
+                        "name": "emailValid",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "name": "forceYear",
                         "in": "query"
@@ -2260,6 +2328,16 @@ var doc = `{
                     {
                         "type": "integer",
                         "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "job",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "jobDesc",
                         "in": "query"
                     },
                     {
@@ -2333,7 +2411,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "User Management"
                 ],
                 "summary": "Add new user",
                 "parameters": [
@@ -2417,7 +2495,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "User Management"
                 ],
                 "summary": "Update user",
                 "parameters": [
@@ -2472,7 +2550,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "User Management"
                 ],
                 "summary": "Add new user",
                 "parameters": [
@@ -3015,12 +3093,6 @@ var doc = `{
                 "createdAt": {
                     "type": "string"
                 },
-                "createdAt_gte": {
-                    "type": "string"
-                },
-                "createdAt_lte": {
-                    "type": "string"
-                },
                 "createdBy": {
                     "type": "integer"
                 },
@@ -3050,6 +3122,12 @@ var doc = `{
                     "$ref": "#/definitions/viewmodels.UserEventDto"
                 },
                 "start": {
+                    "type": "string"
+                },
+                "start_gte": {
+                    "type": "string"
+                },
+                "start_lte": {
                     "type": "string"
                 },
                 "thumbnail": {
@@ -3141,7 +3219,7 @@ var doc = `{
                 "classrooms": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/viewmodels.ClassroomDto"
+                        "type": "integer"
                     }
                 },
                 "createdAt": {
@@ -3153,11 +3231,20 @@ var doc = `{
                 "email": {
                     "type": "string"
                 },
+                "emailValid": {
+                    "type": "boolean"
+                },
                 "forceYear": {
                     "type": "string"
                 },
                 "id": {
                     "type": "integer"
+                },
+                "job": {
+                    "type": "string"
+                },
+                "jobDesc": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
@@ -3192,7 +3279,7 @@ var doc = `{
                     "type": "integer"
                 },
                 "eventId": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "id": {
                     "type": "integer"
@@ -3212,7 +3299,7 @@ var doc = `{
                 "classrooms": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/viewmodels.ClassroomDto"
+                        "type": "integer"
                     }
                 },
                 "createdAt": {
@@ -3224,11 +3311,20 @@ var doc = `{
                 "email": {
                     "type": "string"
                 },
+                "emailValid": {
+                    "type": "boolean"
+                },
                 "forceYear": {
                     "type": "string"
                 },
                 "id": {
                     "type": "integer"
+                },
+                "job": {
+                    "type": "string"
+                },
+                "jobDesc": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"

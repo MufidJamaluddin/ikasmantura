@@ -12,7 +12,6 @@ import idLocale from '@fullcalendar/core/locales/id'
 import {Col, Row} from "react-bootstrap";
 import {ThemeContext} from "../component/PageTemplate";
 import {initEvents} from "../models/EventsModel";
-import ShareSocialMedia from "../component/ShareSocialMedia";
 
 export default class EventsView extends React.PureComponent<
     RouteComponentProps<unknown, unknown, {view?: string|number, date: Date|string}>|any>

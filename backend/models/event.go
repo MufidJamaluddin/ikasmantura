@@ -33,7 +33,7 @@ func (Event) CreateHistory() interface{} {
 type UserEvent struct {
 	ID      uint `gorm:"primaryKey"`
 	UserId  uint
-	EventId uint
+	EventId utils.UUID `gorm:"type:binary(16)"`
 	User    User  `gorm:"foreignKey:UserId"`
 	Event   Event `gorm:"foreignKey:EventId"`
 	utils.Created

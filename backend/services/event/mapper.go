@@ -45,7 +45,7 @@ func toViewModel(in *models.Event, out *viewmodels.EventDto, isCurrentUserSearch
 			item := in.Participants[total-1]
 			out.CurrentUserRegisData.ID = int(item.ID)
 			out.CurrentUserRegisData.UserId = int(item.UserId)
-			out.CurrentUserRegisData.EventId = int(item.EventId)
+			out.CurrentUserRegisData.EventId = utils.ToBase64UUID(item.EventId)
 			utils.FillCreated(item, out.CurrentUserRegisData)
 		}
 	}

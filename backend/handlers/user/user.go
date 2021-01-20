@@ -120,6 +120,8 @@ func GetOneUser(c *fiber.Ctx) error {
 		return err
 	}
 
+	data.Password = ""
+
 	c.Status(fiber.StatusOK)
 	err = c.JSON(&data)
 
@@ -129,7 +131,7 @@ func GetOneUser(c *fiber.Ctx) error {
 // UpdateUser godoc
 // @Security BasicAuth
 // @Security ApiKeyAuth
-// @Tags User
+// @Tags User Management
 // @Summary Update user
 // @Description Update user
 // @Accept  json
@@ -194,7 +196,7 @@ func UpdateUser(c *fiber.Ctx) error {
 // SaveUser godoc
 // @Security BasicAuth
 // @Security ApiKeyAuth
-// @Tags User
+// @Tags User Management
 // @Summary Add new user
 // @Description Add new user
 // @Accept  json

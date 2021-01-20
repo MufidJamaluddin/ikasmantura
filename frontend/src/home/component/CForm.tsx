@@ -13,7 +13,7 @@ const InlineForm = function ({ title, children }) {
     return (
         <Col sm={12}>
             <hr/>
-            <h4 className="text-center">{title}</h4>
+            <h5 className="text-center">{title}</h5>
             <hr/>
             {children}
         </Col>

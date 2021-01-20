@@ -64,6 +64,8 @@ export default class EventItemView
             image, myEvent, id, start, end, description, title, createdByName
         } = data
 
+        let registerAble = moment(start).isAfter(moment())
+
         return (
             <Row>
                 <Col md={{span:10, offset:1}}>
@@ -79,10 +81,14 @@ export default class EventItemView
                                         className={"c-button info"}>Anda Telah Terdaftar</span>)
                                     :
                                     (
-                                        <Button className={"c-button info"}
+                                        registerAble ? (
+                                        <Button className={"c-button btn-warning"} size="sm"
                                                 onClick={() => this.onDaftarClick(id)}>
                                             Daftar Jadi Peserta
-                                        </Button>
+                                        </Button>) : (
+                                        <Button className={"c-button btn-info"} size="sm">
+                                            Telah Dilaksanakan
+                                        </Button>)
                                     )
                             }
                             <ShareSocialMedia title={title} className="fa-pull-right" />

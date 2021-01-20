@@ -25,7 +25,7 @@ const TopicTitle = ({ record }) => {
 
 const TopicFilter = (props) => (
     <Filter {...props}>
-        <TextInput label="Search" source="q" alwaysOn />
+        <TextInput label="Cari" source="q" alwaysOn />
     </Filter>
 );
 
@@ -41,11 +41,11 @@ export const TopicList = ({ permissions, ...props}) => {
                 />
             ) : (
                 <Datagrid>
-                    <TextField source="id" />
-                    <TextField source="name" />
-                    <TextField source="icon" />
-                    <TextField source="description" />
-                    { permissions === 'admin' ? <EditButton/> : null }
+                    <TextField source="id" label="ID" />
+                    <TextField source="name" label="Nama" />
+                    <TextField source="icon" label="Simbol" />
+                    <TextField source="description" label="Deskripsi" />
+                    { permissions === 'admin' ? <EditButton label="Edit"/> : null }
                 </Datagrid>
             )}
         </List>
@@ -55,10 +55,10 @@ export const TopicList = ({ permissions, ...props}) => {
 export const TopicEdit = props => (
     <Edit title={<TopicTitle {...props} />} {...props}>
         <SimpleForm redirect="list">
-            <TextInput disabled source="id" />
-            <TextInput source="name" className="d-inline" validate={[required()]} />
-            <TextInput source="icon" className="d-inline" validate={[required()]} />
-            <RichTextInput source="description" className="d-inline" validate={[required()]} />
+            <TextInput disabled source="id" label="ID" />
+            <TextInput source="name" className="d-inline" validate={[required()]} label="Nama" />
+            <TextInput source="icon" className="d-inline" validate={[required()]} label="Simbol" />
+            <RichTextInput source="description" className="d-inline" validate={[required()]} label="Deskripsi" />
         </SimpleForm>
     </Edit>
 );
@@ -66,10 +66,10 @@ export const TopicEdit = props => (
 export const TopicCreate = props => (
     <Create {...props}>
         <SimpleForm>
-            <TextInput disabled source="id" />
-            <TextInput source="name" className="d-inline" validate={[required()]} />
-            <TextInput source="icon" className="d-inline" validate={[required()]} />
-            <RichTextInput source="description" className="d-inline" validate={[required()]} />
+            <TextInput disabled source="id" label="ID" />
+            <TextInput source="name" className="d-inline" validate={[required()]} label="Nama" />
+            <TextInput source="icon" className="d-inline" validate={[required()]} label="Simbol" />
+            <RichTextInput source="description" className="d-inline" validate={[required()]} label="Deskripsi" />
         </SimpleForm>
     </Create>
 );

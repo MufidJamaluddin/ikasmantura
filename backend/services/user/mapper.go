@@ -18,6 +18,8 @@ func toModel(data *viewmodels.UserDto, out *models.User) {
 	out.ID = uint(data.Id)
 	out.Name = data.Name
 	out.Username = data.Username
+	out.Email = data.Email
+	out.EmailValid = data.EmailValid
 	out.Role = data.Role
 
 	if data.Password != "" {
@@ -38,7 +40,7 @@ func toModel(data *viewmodels.UserDto, out *models.User) {
 
 	for _, item := range data.Classrooms {
 		classrooms = append(classrooms, models.UserClassroom{
-			ClassroomId: uint(item.Id),
+			ClassroomId: uint(item),
 			UserId:      uint(data.Id),
 		})
 	}
@@ -50,11 +52,13 @@ func toModel(data *viewmodels.UserDto, out *models.User) {
 }
 
 func toViewModel(in *models.User, out *viewmodels.UserDto) {
-	var classrooms []viewmodels.ClassroomDto
+	var classrooms []int
 
 	out.Id = int(in.ID)
 	out.Name = in.Name
 	out.Username = in.Username
+	out.Email = in.Email
+	out.EmailValid = in.EmailValid
 	out.Role = in.Role
 	out.Password = in.Password
 	out.ForceYear = in.ForceYear
@@ -69,12 +73,7 @@ func toViewModel(in *models.User, out *viewmodels.UserDto) {
 	out.Address.State = in.Address.State
 
 	for _, item := range in.Classrooms {
-		classrooms = append(classrooms, viewmodels.ClassroomDto{
-			Id:    int(item.ClassroomId),
-			Major: item.Classroom.Major,
-			Level: item.Classroom.Level,
-			Seq:   int(item.Classroom.Seq),
-		})
+		classrooms = append(classrooms, int(item.ClassroomId))
 	}
 
 	out.Classrooms = classrooms

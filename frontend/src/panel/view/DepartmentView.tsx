@@ -22,12 +22,12 @@ import {
 import {useMediaQuery} from '@material-ui/core';
 
 const DepartmentTitle = ({ record }) => {
-    return <span>{record.name ?? 'Create Department'}</span>;
+    return <span>{record.name ?? 'Tambah Departemen'}</span>;
 };
 
 const DepartmentFilter = (props) => (
     <Filter {...props}>
-        <TextInput label="Department" source="name" alwaysOn />
+        <TextInput label="Departemen" source="name" alwaysOn />
     </Filter>
 );
 
@@ -45,13 +45,13 @@ export const DepartmentList = ({ permissions, ...props}) => {
                 />
             ) : (
                 <Datagrid>
-                    <TextField source="id"/>
-                    <TextField source="name"/>
+                    <TextField source="id" label="ID"/>
+                    <TextField source="name" label="Nama"/>
                     <ReferenceField label="Pejabat" source="userId" reference="users">
                         <TextField source="name" />
                     </ReferenceField>
-                    <ShowButton/>
-                    { isAdmin ? <EditButton/> : null }
+                    <ShowButton label="Lihat"/>
+                    { isAdmin ? <EditButton label="Edit"/> : null }
                 </Datagrid>
             )
             }
@@ -63,8 +63,8 @@ export const DepartmentShow = props => {
     return (
         <Show title={<DepartmentTitle {...props}/>} {...props}>
             <SimpleShowLayout>
-                <TextField source="id" className={"d-inline"}/>
-                <TextField source="name" />
+                <TextField source="id" label="ID" className="d-inline"/>
+                <TextField source="name" label="Nama" />
                 <ReferenceField label="Pejabat" source="userId" reference="users">
                     <TextField source="name" />
                 </ReferenceField>
@@ -77,8 +77,8 @@ export const DepartmentEdit = props => {
     return (
         <Edit title={<DepartmentTitle {...props}/>} {...props}>
             <SimpleForm className={"d-inline"}>
-                <TextInput disabled source="id" />
-                <TextInput label="Department Name"  source="name" validate={[required()]} />
+                <TextInput disabled source="id" label="ID" />
+                <TextInput label="Nama Departemen"  source="name" validate={[required()]} />
                 <ReferenceInput label="Pejabat" source="userId" reference="users" validate={[required()]}>
                     <AutocompleteInput optionText="name" className="d-inline" />
                 </ReferenceInput>
@@ -91,7 +91,7 @@ export const DepartmentCreate = props => {
     return (
         <Create title={<DepartmentTitle {...props}/>} {...props}>
             <SimpleForm className={"d-inline"}>
-                <TextInput label="Department Name" source="name" validate={[required()]}/>
+                <TextInput label="Nama Departemen" source="name" validate={[required()]}/>
                 <ReferenceInput label="Pejabat" source="userId" reference="users" validate={[required()]}>
                     <AutocompleteInput optionText="name" className="d-inline" />
                 </ReferenceInput>

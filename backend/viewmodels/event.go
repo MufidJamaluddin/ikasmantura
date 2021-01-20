@@ -26,7 +26,7 @@ type EventDto struct {
 type UserEventDto struct {
 	ID      int `gorm:"primarykey"`
 	UserId  int
-	EventId int
+	EventId string
 	utils.Created
 }
 
@@ -45,7 +45,7 @@ type UserEventDetailDto struct {
 	UserId       int
 	UserFullName string
 	UserEmail    string
-	EventId      int
+	EventId      string
 	Organizer    string
 	EventName    string
 	Description  string

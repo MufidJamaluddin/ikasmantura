@@ -17,7 +17,14 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function isDeviceSmall(): boolean {
+    let width = (window.innerWidth > 0) ? window.innerWidth : window.screen?.width
+    return width < 680
+}
+
 const selectAnimatedComponents = makeAnimated();
+
+const EmailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export default class RegisterView extends PureComponent<RouteComponentProps<any>|any,
     {classrooms: Array<any>, formType: TIFormType, formData: any, inputValidateQueue: any, nextValidation: number}>
@@ -31,9 +38,11 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
     {
         super(props);
 
+        let isSmall = isDeviceSmall()
+
         this.state = {
             classrooms: [],
-            formType: TIFormType.INLINE,
+            formType: isSmall ? TIFormType.INLINE : TIFormType.TABBED,
             formData: {},
             inputValidateQueue: {},
             nextValidation: 0
@@ -61,9 +70,12 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
         let formData = this.state.formData
 
         formData.classrooms = formData.classrooms.map(item => {
-            return { id: item.value }
+            return item.value
+        }).map(item => {
+            if(item) return parseInt(item)
+            return null
         }).filter(item => {
-            return item !== {} && item.id
+            return item !== null && !isNaN(item)
         })
 
         let result = await registerNewAccount(formData)
@@ -212,6 +224,9 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
 
                 <br/>
 
+                <Row>
+
+                <Col md={6}>
                 <Form.Group as={Row} controlId="formUsername">
                     <Form.Label column sm={4}>Username</Form.Label>
                     <Col sm={8}>
@@ -244,7 +259,9 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                         </FieldFeedbacks>
                     </Col>
                 </Form.Group>
+                </Col>
 
+                <Col md={6}>
                 <Form.Group as={Row} controlId="formEmail">
                     <Form.Label column sm={4}>Email</Form.Label>
                     <Col sm={8}>
@@ -259,8 +276,11 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                                       onChange={(e) => this.handleChange(e, 'email')}
                         />
                         <FieldFeedbacks for="email">
-                            <FieldFeedback when={value => !/[^-\s]/.test(value)} error>
-                                Tidak boleh mengandung spasi!
+                            <FieldFeedback when="valueMissing" error className="text-error">
+                                Wajib diisi
+                            </FieldFeedback>
+                            <FieldFeedback when={value => !EmailPattern.test(value)} error className="text-error">
+                                Format email tidak valid!
                             </FieldFeedback>
                             <Async
                                 promise={this.checkEmailAvailability}
@@ -277,7 +297,9 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                         </FieldFeedbacks>
                     </Col>
                 </Form.Group>
+                </Col>
 
+                <Col md={6}>
                 <Form.Group as={Row} controlId="formPassword">
                     <Form.Label column sm={4}>Password</Form.Label>
                     <Col sm={8}>
@@ -285,23 +307,28 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                                       placeholder="Password"
                                       name="password"
                                       value={formData.password}
-                                      minLength={5}
                                       maxLength={35}
+                                      minLength={5}
                                       required={true}
                                       onChange={(e) => this.handleChange(e,'password')}
                                       ref={(ref) => this.inputPassword = ref}
                         />
                         <FieldFeedbacks for="password">
-                            <FieldFeedback when="valueMissing" error>
+                            <FieldFeedback when="valueMissing" error className="text-error">
                                 Wajib diisi
                             </FieldFeedback>
-                            <FieldFeedback when="patternMismatch" error>
+                            <FieldFeedback when="tooShort" error className="text-error">
+                                Password yang anda pilih terlalu pendek!
+                            </FieldFeedback>
+                            <FieldFeedback when="patternMismatch" error className="text-error">
                                 Minimal lima karakter
                             </FieldFeedback>
                         </FieldFeedbacks>
                     </Col>
                 </Form.Group>
+                </Col>
 
+                <Col md={6}>
                 <Form.Group as={Row} controlId="formConfirmPassword">
                     <Form.Label column sm={4}>Konfirmasi Password</Form.Label>
                     <Col sm={8}>
@@ -323,6 +350,9 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                         </FieldFeedbacks>
                     </Col>
                 </Form.Group>
+                </Col>
+
+                </Row>
 
             </TIForm>
         )
@@ -337,11 +367,14 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
 
                 <br/>
 
+                <Row>
+
+                <Col md={6}>
                 <Form.Group as={Row} controlId="formName">
-                    <Form.Label column sm={4}>Nama</Form.Label>
+                    <Form.Label column sm={4}>Nama Lengkap</Form.Label>
                     <Col sm={8}>
                         <Form.Control type="text"
-                                      placeholder="Nama"
+                                      placeholder="Nama Lengkap"
                                       name="name"
                                       value={formData.name}
                                       minLength={3}
@@ -360,7 +393,9 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                         </FieldFeedbacks>
                     </Col>
                 </Form.Group>
+                </Col>
 
+                <Col md={6}>
                 <Form.Group as={Row} controlId="formHP">
                     <Form.Label column sm={4}>Nomor HP</Form.Label>
                     <Col sm={8}>
@@ -384,7 +419,59 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                         </FieldFeedbacks>
                     </Col>
                 </Form.Group>
+                </Col>
 
+                <Col md={6}>
+                <Form.Group as={Row} controlId="formJob">
+                    <Form.Label column sm={4}>Pekerjaan</Form.Label>
+                    <Col sm={8}>
+                        <Form.Control type="text"
+                                      placeholder="Pekerjaan"
+                                      name="job"
+                                      value={formData.job}
+                                      minLength={2}
+                                      maxLength={35}
+                                      required={true}
+                                      onChange={(e) => this.handleChange(e,'job')}
+                        />
+                        <FieldFeedbacks for="job">
+                            <FieldFeedback when="valueMissing" error>
+                                Wajib diisi
+                            </FieldFeedback>
+                            <FieldFeedback when="patternMismatch" error>
+                                Minimal isi tiga karakter dan maksimal 85 karakter
+                            </FieldFeedback>
+                            <FieldFeedback when="*" className="text-error" />
+                        </FieldFeedbacks>
+                    </Col>
+                </Form.Group>
+                </Col>
+
+                <Col md={6}>
+                <Form.Group as={Row} controlId="formJobDesc">
+                    <Form.Label column sm={4}>Deskripsi Pekerjaan</Form.Label>
+                    <Col sm={8}>
+                        <Form.Control as="textarea" rows={2}
+                                      placeholder="Deskripsi Pekerjaan"
+                                      name="jobDesc"
+                                      value={formData.jobDesc}
+                                      minLength={3}
+                                      maxLength={85}
+                                      required={false}
+                                      onChange={(e) => this.handleChange(e,'jobDesc')}
+                                      style={{resize: 'none'}}
+                        />
+                        <FieldFeedbacks for="jobDesc">
+                            <FieldFeedback when="patternMismatch" error>
+                                Minimal isi tiga karakter dan maksimal 85 karakter
+                            </FieldFeedback>
+                            <FieldFeedback when="*" className="text-error" />
+                        </FieldFeedbacks>
+                    </Col>
+                </Form.Group>
+                </Col>
+
+                <Col md={6}>
                 <Form.Group as={Row} controlId="formForceYear">
                     <Form.Label column sm={4}>Tahun Lulus</Form.Label>
                     <Col sm={8}>
@@ -409,55 +496,11 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                         </FieldFeedbacks>
                     </Col>
                 </Form.Group>
+                </Col>
 
-                <Form.Group as={Row} controlId="formJob">
-                    <Form.Label column sm={4}>Pekerjaan</Form.Label>
-                    <Col sm={8}>
-                        <Form.Control type="text"
-                                      placeholder="Pekerjaan"
-                                      name="job"
-                                      value={formData.job}
-                                      minLength={2}
-                                      maxLength={35}
-                                      required={true}
-                                      onChange={(e) => this.handleChange(e,'job')}
-                        />
-                        <FieldFeedbacks for="job">
-                            <FieldFeedback when="valueMissing" error>
-                                Wajib diisi
-                            </FieldFeedback>
-                            <FieldFeedback when="patternMismatch" error>
-                                Minimal isi tiga karakter dan maksimal 85 karakter
-                            </FieldFeedback>
-                            <FieldFeedback when="*" className="text-error" />
-                        </FieldFeedbacks>
-                    </Col>
-                </Form.Group>
-
-                <Form.Group as={Row} controlId="formJobDesc">
-                    <Form.Label column sm={4}>Deskripsi Pekerjaan</Form.Label>
-                    <Col sm={8}>
-                        <Form.Control as="textarea" rows={2}
-                                      placeholder="Deskripsi Pekerjaan"
-                                      name="jobDesc"
-                                      value={formData.jobDesc}
-                                      minLength={3}
-                                      maxLength={85}
-                                      required={false}
-                                      onChange={(e) => this.handleChange(e,'jobDesc')}
-                                      style={{resize: 'none'}}
-                        />
-                        <FieldFeedbacks for="jobDesc">
-                            <FieldFeedback when="patternMismatch" error>
-                                Minimal isi tiga karakter dan maksimal 85 karakter
-                            </FieldFeedback>
-                            <FieldFeedback when="*" className="text-error" />
-                        </FieldFeedbacks>
-                    </Col>
-                </Form.Group>
-
+                <Col md={6}>
                 <Form.Group as={Row} controlId="formKelas">
-                    <Form.Label column sm={4}>Kelas SMAN Situraja yang Pernah Dijalani</Form.Label>
+                    <Form.Label column sm={4}>Kelas SMA yang Pernah Dijalani</Form.Label>
                     <Col sm={8}>
                         <Form.Control
                             as={Select}
@@ -483,12 +526,15 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                         </FieldFeedbacks>
                     </Col>
                 </Form.Group>
+                </Col>
+
+                </Row>
 
             </TIForm>
         )
     }
 
-    renderAddress({ eventKey, title, type })
+    renderAddress({ eventKey, title, type, isSmall })
     {
         let formData = this.state.formData
         return (
@@ -496,10 +542,13 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
 
                 <br/>
 
+                <Row>
+
+                <Col md={12}>
                 <Form.Group as={Row} controlId="formStreet">
-                    <Form.Label column sm={4}>Jalan</Form.Label>
-                    <Col sm={8}>
-                        <Form.Control as="textarea" rows={2}
+                    <Form.Label column sm={2}>Jalan</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control as="textarea" rows={isSmall ? 2 : 1}
                                       placeholder="Jalan"
                                       name="address.street"
                                       value={formData.address?.street}
@@ -520,7 +569,9 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                         </FieldFeedbacks>
                     </Col>
                 </Form.Group>
+                </Col>
 
+                <Col md={6}>
                 <Form.Group as={Row} controlId="formSuite">
                     <Form.Label column sm={4}>Kecamatan</Form.Label>
                     <Col sm={8}>
@@ -544,9 +595,11 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                         </FieldFeedbacks>
                     </Col>
                 </Form.Group>
+                </Col>
 
+                <Col md={6}>
                 <Form.Group as={Row} controlId="formCity">
-                    <Form.Label column sm={4}>Kabupaten / Kota</Form.Label>
+                    <Form.Label column sm={4}>Kabupaten/Kota</Form.Label>
                     <Col sm={8}>
                         <Form.Control type="text"
                                       placeholder="Kota tempat tinggal anda"
@@ -568,7 +621,9 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                         </FieldFeedbacks>
                     </Col>
                 </Form.Group>
+                </Col>
 
+                <Col md={6}>
                 <Form.Group as={Row} controlId="formZipCode">
                     <Form.Label column sm={4}>Kode Pos</Form.Label>
                     <Col sm={8}>
@@ -592,7 +647,9 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                         </FieldFeedbacks>
                     </Col>
                 </Form.Group>
+                </Col>
 
+                <Col md={6}>
                 <Form.Group as={Row} controlId="formNation">
                     <Form.Label column sm={4}>Negara</Form.Label>
                     <Col sm={8}>
@@ -616,6 +673,9 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                         </FieldFeedbacks>
                     </Col>
                 </Form.Group>
+                </Col>
+
+                </Row>
 
             </TIForm>
         )
@@ -625,9 +685,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
     {
         let formType = this.state.formType
 
-        let width = (window.innerWidth > 0) ? window.innerWidth : window.screen?.width
-
-        let isSmall = width < 680
+        let isSmall = isDeviceSmall()
 
         let FormParent
 
@@ -639,8 +697,8 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
 
         return (
             <Row>
-                <Col md={{span:10, offset:1}}>
-                    <Card>
+                <Col lg={{span:10, offset:1}}>
+                    <Card className={formType === TIFormType.TABBED ? 'abu' : ''}>
 
                         {
                             (!isSmall) && (
@@ -652,6 +710,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                                                 formType === TIFormType.TABBED ?
                                                     'btn-kegiatan-active' : 'btn-kegiatan'
                                             }
+                                            size="sm"
                                             onClick={(e) => {
                                                 e.preventDefault()
                                                 this.setState(state => ({
@@ -667,6 +726,7 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                                                 formType === TIFormType.INLINE ?
                                                     'btn-kegiatan-active' : 'btn-kegiatan'
                                             }
+                                            size="sm"
                                             onClick={(e) => {
                                                 e.preventDefault()
                                                 this.setState(state => ({
@@ -690,8 +750,8 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                             )
                         }
 
-                        <Card.Title>
-                            <h1 className="text-center">Pendaftaran Alumni</h1>
+                        <Card.Title className="text-center tabTitle">
+                            Pendaftaran Alumni SMAN Situraja
                         </Card.Title>
 
                         <FormWithConstraints
@@ -701,7 +761,10 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
 
                             <Card.Body>
 
-                                <FormParent defaultActiveKey="account" id="uncontrolled-forms">
+                                <FormParent className="myTab"
+                                            defaultActiveKey="account"
+                                            id="uncontrolled-forms">
+
                                     {this.renderAccount(
                                         {
                                             title: 'Data Akun',
@@ -722,7 +785,8 @@ export default class RegisterView extends PureComponent<RouteComponentProps<any>
                                         {
                                             title: 'Data Alamat Saat Ini',
                                             eventKey: 'address',
-                                            type: formType
+                                            type: formType,
+                                            isSmall: isSmall
                                         }
                                     )}
                                 </FormParent>

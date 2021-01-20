@@ -24,13 +24,13 @@ import {
 import {useMediaQuery} from '@material-ui/core';
 
 const AlbumTitle = ({ record }) => {
-    return <span>{record.name ?? 'Create Album'}</span>;
+    return <span>{record.name ?? 'Tambah Album'}</span>;
 };
 
 const AlbumFilter = (props) => (
     <Filter {...props}>
-        <TextInput label="Search" source="q" alwaysOn />
-        <ReferenceInput label="Author" source="userId" reference="users" allowEmpty>
+        <TextInput label="Cari" source="q" alwaysOn />
+        <ReferenceInput label="Penulis" source="userId" reference="users" allowEmpty>
             <AutocompleteArrayInput optionText="name" />
         </ReferenceInput>
     </Filter>
@@ -44,19 +44,19 @@ export const AlbumList = ({ permissions, ...props }) => {
                 <SimpleList
                     primaryText={ record => record.title }
                     secondaryText={record =>  <ReferenceField
-                        label="Author" source="userId" basePath="userId" reference="users" record={record}>
+                        label="Penulis" source="userId" basePath="userId" reference="users" record={record}>
                         <TextField source="name" />
                     </ReferenceField>}
                 />
             ) : (
-                <Datagrid>
-                    <TextField source="id"/>
-                    <TextField source="title"/>
-                    <ReferenceField label="Author" source="userId" reference="users">
+                <Datagrid rowClick="show">
+                    <TextField source="id" label="ID"/>
+                    <TextField source="title" label="Judul" />
+                    <ReferenceField label="Penulis" source="userId" reference="users">
                         <TextField source="name" />
                     </ReferenceField>
-                    <ShowButton/>
-                    { permissions === 'admin' ? <EditButton/> : null }
+                    <ShowButton label="Lihat"/>
+                    { permissions === 'admin' ? <EditButton label="Edit"/> : null }
                 </Datagrid>
             )
             }
@@ -67,15 +67,15 @@ export const AlbumList = ({ permissions, ...props }) => {
 export const AlbumView = props => (
     <Show title={<AlbumTitle {...props} />} {...props}>
         <SimpleShowLayout className={"d-inline"}>
-            <TextField source="id" />
-            <TextField source="title"/>
-            <ReferenceField label="Author" source="userId" reference="users">
+            <TextField source="id" label="ID" />
+            <TextField source="title" label="Judul" />
+            <ReferenceField label="Penulis" source="userId" reference="users">
                 <TextField source="name" />
             </ReferenceField>
-            <ReferenceManyField label={"Gallery"} source="id" reference="photos" target="albumId">
+            <ReferenceManyField label="Galeri" source="id" reference="photos" target="albumId">
                 <Datagrid>
-                    <TextField source={'title'}/>
-                    <ImageField source={'thumbnail'} />
+                    <TextField source={'title'} label="Nama Foto"/>
+                    <ImageField source={'thumbnail'} label="Foto" />
                 </Datagrid>
             </ReferenceManyField>
         </SimpleShowLayout>
@@ -86,8 +86,8 @@ export const AlbumEdit = props => (
     <Edit title={<AlbumTitle {...props} />} {...props}>
         <SimpleForm redirect="show">
             <TextInput disabled source="id" />
-            <TextInput source="title" validate={[required()]} />
-            <ReferenceField label="Author" source="userId" reference="users">
+            <TextInput source="title" validate={[required()]} label="Judul" />
+            <ReferenceField label="Penulis" source="userId" reference="users">
                 <TextField source="name"/>
             </ReferenceField>
         </SimpleForm>
@@ -97,7 +97,7 @@ export const AlbumEdit = props => (
 export const AlbumCreate = props => (
     <Create title={<AlbumTitle {...props} />} {...props}>
         <SimpleForm>
-            <TextInput label={'Title'} source="title" validate={[required()]} />
+            <TextInput label="Judul" source="title" validate={[required()]} />
         </SimpleForm>
     </Create>
 )

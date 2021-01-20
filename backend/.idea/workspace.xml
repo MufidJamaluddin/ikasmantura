@@ -1,9 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="">
+    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="Fix Bugs">
+      <change afterPath="$PROJECT_DIR$/../frontend/src/home/views/ConfirmEmailView.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/panel/Util.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/email/emailservice.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/email/emailservice.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/docs.go" beforeDir="false" afterPath="$PROJECT_DIR$/docs/docs.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/event/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/event/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/temp_user/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/temp_user/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/user/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/user/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_temp.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user_temp.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/albumphoto/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/albumphoto/mapper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/event/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/event/command.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/event/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/event/mapper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/temp_user/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/temp_user/command.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/temp_user/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/temp_user/mapper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user/mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/user/mapper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewmodels/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/Landing.css" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/Landing.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/component/CForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/component/CForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/EventsItemView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/EventsItemView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/EventsView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/EventsView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/home/views/RegisterView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/home/views/RegisterView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/AboutView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/AboutView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/AlbumView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/AlbumView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/ArticleTopicView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/ArticleTopicView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/ArticleView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/ArticleView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/ClassroomView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/ClassroomView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/DepartmentView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/DepartmentView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/EventView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/EventView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/GalleryView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/GalleryView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/LoginView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/LoginView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/TempUserView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/TempUserView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/panel/view/UserView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/panel/view/UserView.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -335,10 +335,6 @@ definitions:
     properties:
       createdAt:
         type: string
-      createdAt_gte:
-        type: string
-      createdAt_lte:
-        type: string
       createdBy:
         type: integer
       createdByName:
@@ -359,6 +355,10 @@ definitions:
         $ref: '#/definitions/viewmodels.UserEventDto'
         type: object
       start:
+        type: string
+      start_gte:
+        type: string
+      start_lte:
         type: string
       thumbnail:
         type: string
@@ -418,7 +418,7 @@ definitions:
         type: object
       classrooms:
         items:
-          $ref: '#/definitions/viewmodels.ClassroomDto'
+          type: integer
         type: array
       createdAt:
         type: string
@@ -426,10 +426,16 @@ definitions:
         type: integer
       email:
         type: string
+      emailValid:
+        type: boolean
       forceYear:
         type: string
       id:
         type: integer
+      job:
+        type: string
+      jobDesc:
+        type: string
       name:
         type: string
       password:
@@ -452,7 +458,7 @@ definitions:
       createdBy:
         type: integer
       eventId:
-        type: integer
+        type: string
       id:
         type: integer
       userId:
@@ -465,7 +471,7 @@ definitions:
         type: object
       classrooms:
         items:
-          $ref: '#/definitions/viewmodels.ClassroomDto'
+          type: integer
         type: array
       createdAt:
         type: string
@@ -473,10 +479,16 @@ definitions:
         type: integer
       email:
         type: string
+      emailValid:
+        type: boolean
       forceYear:
         type: string
       id:
         type: integer
+      job:
+        type: string
+      jobDesc:
+        type: string
       name:
         type: string
       password:
@@ -1115,6 +1127,25 @@ paths:
       summary: Update classroom
       tags:
       - Classroom
+  /api/v1/confirms/tu_emails/{username}/{token}:
+    post:
+      consumes:
+      - application/json
+      description: Add new user
+      produces:
+      - application/json
+      responses:
+        "202": {}
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      - ApiKeyAuth: []
+      summary: Add new user
+      tags:
+      - User Management
   /api/v1/department/{id}:
     delete:
       consumes:
@@ -1352,12 +1383,6 @@ paths:
         name: createdAt
         type: string
       - in: query
-        name: createdAt_gte
-        type: string
-      - in: query
-        name: createdAt_lte
-        type: string
-      - in: query
         name: createdBy
         type: integer
       - in: query
@@ -1383,6 +1408,12 @@ paths:
         type: string
       - in: query
         name: start
+        type: string
+      - in: query
+        name: start_gte
+        type: string
+      - in: query
+        name: start_lte
         type: string
       - in: query
         name: thumbnail
@@ -1692,13 +1723,18 @@ paths:
             type: string
       summary: Add new user
       tags:
-      - User
+      - User Management
   /api/v1/temp_users:
     get:
       consumes:
       - application/json
       description: Search Department
       parameters:
+      - in: query
+        items:
+          type: integer
+        name: classrooms
+        type: array
       - in: query
         name: createdAt
         type: string
@@ -1709,11 +1745,20 @@ paths:
         name: email
         type: string
       - in: query
+        name: emailValid
+        type: boolean
+      - in: query
         name: forceYear
         type: string
       - in: query
         name: id
         type: integer
+      - in: query
+        name: job
+        type: string
+      - in: query
+        name: jobDesc
+        type: string
       - in: query
         name: name
         type: string
@@ -1778,7 +1823,7 @@ paths:
       - ApiKeyAuth: []
       summary: Add new user
       tags:
-      - User
+      - User Management
   /api/v1/temp_users/{id}:
     get:
       consumes:
@@ -1836,7 +1881,7 @@ paths:
       - ApiKeyAuth: []
       summary: Update user
       tags:
-      - User
+      - User Management
   /api/v1/user/{id}:
     delete:
       consumes:
@@ -1876,6 +1921,11 @@ paths:
       description: Search Department
       parameters:
       - in: query
+        items:
+          type: integer
+        name: classrooms
+        type: array
+      - in: query
         name: createdAt
         type: string
       - in: query
@@ -1885,11 +1935,20 @@ paths:
         name: email
         type: string
       - in: query
+        name: emailValid
+        type: boolean
+      - in: query
         name: forceYear
         type: string
       - in: query
         name: id
         type: integer
+      - in: query
+        name: job
+        type: string
+      - in: query
+        name: jobDesc
+        type: string
       - in: query
         name: name
         type: string
@@ -1954,7 +2013,7 @@ paths:
       - ApiKeyAuth: []
       summary: Add new user
       tags:
-      - User
+      - User Management
   /api/v1/users/{id}:
     get:
       consumes:
@@ -2012,7 +2071,7 @@ paths:
       - ApiKeyAuth: []
       summary: Update user
       tags:
-      - User
+      - User Management
   /api/v1/verify_user:
     post:
       consumes:
@@ -2041,5 +2100,5 @@ paths:
       - ApiKeyAuth: []
       summary: Add new user
       tags:
-      - User
+      - User Management
 swagger: "2.0"

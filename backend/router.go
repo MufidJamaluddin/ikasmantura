@@ -202,6 +202,10 @@ func Route(app *fiber.App, db *gorm.DB) {
 	tempUser.Put("/:id", adminHandler, tempUserHandler.UpdateTempUser)
 	tempUser.Delete("/:id", adminHandler, tempUserHandler.DeleteTempUser)
 
+	confirms := apiV1.Group("/confirms")
+	confirms.Post("/tu_emails/:username/:token",
+		publicHandler, tempUserHandler.ConfirmTempUserEmail)
+
 	verifyUser := apiV1.Group("/verify_user")
 	verifyUser.Post("/:id", adminHandler, tempUserHandler.VerifyUser)
 

@@ -8,14 +8,16 @@ type UserDto struct {
 	Username     string         `query:"username,omitempty" json:"username,omitempty" xml:"username,omitempty" form:"username,omitempty"`
 	Role         string         `query:"role" json:"role" xml:"role" form:"role"`
 	Email        string         `query:"email,omitempty" json:"email,omitempty" xml:"email,omitempty" form:"email,omitempty"`
+	EmailValid   bool		    `query:"emailValid,omitempty" json:"emailValid,omitempty" xml:"emailValid,omitempty" form:"emailValid,omitempty"`
 	Phone        string         `query:"phone,omitempty" json:"phone,omitempty" xml:"phone,omitempty" form:"phone,omitempty"`
 	ForceYear    string         `query:"forceYear,omitempty" json:"forceYear,omitempty" xml:"forceYear,omitempty" form:"forceYear,omitempty"`
 	Job          string         `query:"job,omitempty" json:"job,omitempty" xml:"job,omitempty" form:"job,omitempty"`
 	JobDesc      string         `query:"jobDesc,omitempty" json:"jobDesc,omitempty" xml:"jobDesc,omitempty" form:"jobDesc,omitempty"`
 	Password     string         `query:"-" json:"password,omitempty" xml:"password,omitempty" form:"password,omitempty"`
 	RefreshToken string         `query:"-" json:"-" xml:"-" form:"-"`
+	ConfirmEmailToken string    `query:"-" json:"-" xml:"-" form:"-"`
 	Address      UserAddressDto `query:"-" json:"address,omitempty" xml:"address,omitempty" form:"address,omitempty"`
-	Classrooms   []ClassroomDto `query:"-" json:"classrooms,omitempty" xml:"classrooms,omitempty" form:"classrooms,omitempty"`
+	Classrooms   []int 		    `query:"-" json:"classrooms,omitempty" xml:"classrooms,omitempty" form:"classrooms,omitempty"`
 	utils.Created
 	utils.Updated
 }

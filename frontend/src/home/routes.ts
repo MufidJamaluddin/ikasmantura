@@ -9,6 +9,7 @@ import GalleryView from "./views/GalleryView";
 import EventsListView from "./views/EventsListView";
 import RegisterView from "./views/RegisterView";
 import LoginView from "./views/LoginView";
+import {ConfirmEmailView} from "./views/ConfirmEmailView";
 
 const ROUTES = [
     { title: 'IKA', path: '', exact: true, menu: true, component: HomeView },
@@ -27,6 +28,9 @@ const ROUTES = [
 
     { title: 'Login', path: 'login', exact: true, menu: true, component: LoginView },
     { title: 'Register', path: 'register', exact: true, menu: true, component: RegisterView },
+
+    { title: 'Confirm Email', path: 'register_confirm/:username/:token',
+        exact: true, menu: false, component: ConfirmEmailView }
 ]
 
 export default ROUTES

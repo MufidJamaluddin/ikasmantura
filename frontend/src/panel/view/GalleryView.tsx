@@ -36,7 +36,7 @@ const GalleryFilter = (props) => (
         <ReferenceInput label="Album" source="albumId" reference="albums" alwaysOn>
             <AutocompleteArrayInput optionText="title" />
         </ReferenceInput>
-        <TextInput label="Search" source="q" alwaysOn />
+        <TextInput label="Cari" source="q" alwaysOn />
     </Filter>
 );
 
@@ -81,7 +81,7 @@ export const GalleryList = props => {
             perPage={20}
             {...props}
         >
-            <GalleryListItem customTitle={props.options?.label ?? 'Gallery'} isSmall={isSmall} {...props}/>
+            <GalleryListItem customTitle={props.options?.label ?? 'Galeri'} isSmall={isSmall} {...props}/>
         </ListBase>
     )
 }
@@ -89,12 +89,12 @@ export const GalleryList = props => {
 export const GalleryView = props => (
     <Show title={<GalleryTitle {...props} />} {...props}>
         <SimpleShowLayout className={"d-inline"}>
-            <TextField source="id"/>
-            <TextField source="title"/>
+            <TextField source="id" label="ID"/>
+            <TextField source="title" label="Judul"/>
             <ReferenceField label="Album" source="albumId" reference="albums">
                 <TextField source="name" />
             </ReferenceField>
-            <ImageField source="original" />
+            <ImageField source="original" label="Gambar"/>
         </SimpleShowLayout>
     </Show>
 )
@@ -130,12 +130,12 @@ export class GalleryEdit extends FormWithImage {
             <Edit transform={this.transform} title={title} {...props}>
                 <SimpleForm redirect="show" encType="multipart/form-data">
                     <TextInput disabled source="id"/>
-                    <TextInput label="Title" source="title" validate={[required()]}/>
+                    <TextInput label="Judul" source="title" validate={[required()]}/>
                     <ReferenceInput label="Album" source="albumId"
                                     reference="albums" validate={[required()]}>
                         <AutocompleteInput optionText="title"/>
                     </ReferenceInput>
-                    <ImageInput source="original" label="Image (JPG)"
+                    <ImageInput source="original" label="Gambar (JPG)"
                                 onChange={this.dropImage}
                                 accept="image/jpeg" maxSize={500000} validate={[required()]}>
                         <ImageField source="src" title="title"/>
@@ -164,12 +164,12 @@ export class GalleryCreate extends FormWithImage {
         return (
             <Create transform={this.transform} title={title} {...props}>
                 <SimpleForm encType="multipart/form-data">
-                    <TextInput source="title" label="Title" validate={[required()]}/>
+                    <TextInput source="title" label="Judul" validate={[required()]}/>
                     <ReferenceInput label="Album" source="albumId"
                                     reference="albums" validate={[required()]}>
                         <AutocompleteInput optionText="title"/>
                     </ReferenceInput>
-                    <ImageInput source="original" label="Image (JPG)"
+                    <ImageInput source="original" label="Gambar (JPG)"
                                 onChange={this.dropImage}
                                 accept="image/jpeg" maxSize={500000} validate={[required()]}>
                         <ImageField source="src" title="title"/>

@@ -38,11 +38,11 @@ const EventTitle = ({ record }) => {
 const EventFilter = (props) => {
     return (
     <Filter {...props}>
-        <TextInput label="Search" source="q" alwaysOn/>
-        <DateInput label="From" source="createdAt_gte" parse={dateParser} alwaysOn/>
-        <DateInput label="To" source="createdAt_lte" parse={dateParser} alwaysOn/>
-        <TextInput label="Organizer" source="organizer" allowEmpty/>
-        <TextInput label="Title" source="title" allowEmpty/>
+        <TextInput label="Cari" source="q" alwaysOn/>
+        <DateInput label="Dari" source="createdAt_gte" parse={dateParser} alwaysOn/>
+        <DateInput label="Sampai" source="createdAt_lte" parse={dateParser} alwaysOn/>
+        <TextInput label="Penyelenggara" source="organizer" allowEmpty/>
+        <TextInput label="Judul" source="title" allowEmpty/>
     </Filter>)
 };
 
@@ -59,18 +59,18 @@ export const EventList = ({ permissions, ...props}) => {
                             tertiaryText={ record => `${record.start} - ${record.end}` }
                 />
             ) : (
-                <Datagrid>
-                    <TextField source="id"/>
-                    <TextField source="title"/>
-                    <TextField source="organizer"/>
-                    <ReferenceField label="User" source="userId" reference="users">
+                <Datagrid rowClick="show">
+                    <TextField source="id" label="ID"/>
+                    <TextField source="title" label="Judul"/>
+                    <TextField source="organizer" label="Penyelenggara"/>
+                    <ReferenceField label="Penulis" source="userId" reference="users">
                         <TextField source="name" />
                     </ReferenceField>
-                    <DateField source="start"/>
-                    <DateField source="end"/>
-                    <ImageField source="thumbnail"/>
-                    <ShowButton/>
-                    { permissions === 'admin' ? <EditButton/> : null }
+                    <DateField source="start" label="Dari"/>
+                    <DateField source="end" label="Sampai"/>
+                    <ImageField source="thumbnail" label="Gambar"/>
+                    <ShowButton label="Lihat" />
+                    { permissions === 'admin' ? <EditButton label="Edit"/> : null }
                 </Datagrid>
             )
             }
@@ -81,16 +81,16 @@ export const EventList = ({ permissions, ...props}) => {
 export const EventView = props => (
     <Show title={<EventTitle {...props} />} {...props}>
         <SimpleShowLayout className={"d-inline"}>
-            <TextField source="id" />
-            <TextField source="title"/>
-            <TextField source="organizer"/>
-            <ReferenceField label="User" source="userId" reference="users">
+            <TextField source="id" label="ID" />
+            <TextField source="title" label="Judul" />
+            <TextField source="organizer" label="Penyelenggara" />
+            <ReferenceField label="Penulis" source="userId" reference="users">
                 <TextField source="name" />
             </ReferenceField>
-            <RichTextField source="description"/>
-            <ImageField source="image"/>
-            <DateField source="start"/>
-            <DateField source="end"/>
+            <RichTextField source="description" label="Deskripsi"/>
+            <ImageField source="image" label="Gambar"/>
+            <DateField source="start" label="Waktu Dimulai (Dari)"/>
+            <DateField source="end" label="Waktu Selesai (Sampai)"/>
         </SimpleShowLayout>
     </Show>
 )
@@ -99,8 +99,8 @@ const EventValidation = (data) => {
     const errors:any = {}
     if(moment(data.start) > moment(data.end))
     {
-        errors.start = 'start times must before end times!'
-        errors.end = 'end times must after start times!'
+        errors.start = 'waktu dimulai harus berada sebelum waktu selesai!'
+        errors.end = 'waktu selesai harus berada setelah waktu dimulai!'
     }
     return errors
 }
@@ -140,19 +140,19 @@ export class EventEdit extends FormWithImage {
             <Edit transform={this.transform} title={title} {...props}>
                 <SimpleForm validate={EventValidation} redirect="show" encType="multipart/form-data">
                     <TextInput disabled source="id"/>
-                    <TextInput source="title" validate={[required()]}/>
-                    <TextInput source="organizer" validate={[required()]}/>
-                    <ReferenceInput disabled label="User" source="userId" reference="users">
+                    <TextInput source="title" validate={[required()]} label="Judul"/>
+                    <TextInput source="organizer" validate={[required()]} label="Penyelenggara"/>
+                    <ReferenceInput disabled label="Penulis" source="userId" reference="users">
                         <TextField source="name"/>
                     </ReferenceInput>
-                    <RichTextInput source="description" validate={[required()]}/>
-                    <ImageInput source="image" label="Image (JPG)"
+                    <RichTextInput source="description" label="Deskripsi" validate={[required()]}/>
+                    <ImageInput source="image" label="Gambar (JPG)"
                                 onChange={this.dropImage}
                                 accept="image/jpeg" maxSize={500000}>
                         <ImageField source="src" title="title"/>
                     </ImageInput>
-                    <DateInput source="start" validate={[required()]}/>
-                    <DateInput source="end" validate={[required()]}/>
+                    <DateInput source="start" validate={[required()]} label="Waktu Dimulai (Dari)"/>
+                    <DateInput source="end" validate={[required()]} label="Waktu Selesai (Sampai)"/>
                 </SimpleForm>
             </Edit>
         )
@@ -179,16 +179,16 @@ export class EventCreate extends FormWithImage {
                     title={title} {...props}>
                 <SimpleForm validate={EventValidation} encType="multipart/form-data">
                     <TextInput disabled source="id"/>
-                    <TextInput source="title" validate={[required()]} />
-                    <TextInput source="organizer" validate={[required()]} />
-                    <RichTextInput source="description" validate={[required()]} />
-                    <ImageInput source="image" label="Image (JPG)"
+                    <TextInput source="title" validate={[required()]} label="Judul" />
+                    <TextInput source="organizer" validate={[required()]} label="Penyelenggara" />
+                    <RichTextInput source="description" validate={[required()]} label="Deskripsi" />
+                    <ImageInput source="image" label="Gambar (JPG)"
                                 onChange={this.dropImage}
                                 accept="image/jpeg" maxSize={500000}>
                         <ImageField source="src" title="title"/>
                     </ImageInput>
-                    <DateInput source="start" validate={[required()]}/>
-                    <DateInput source="end" validate={[required()]}/>
+                    <DateInput source="start" validate={[required()]} label="Waktu Dimulai (Dari)" />
+                    <DateInput source="end" validate={[required()]} label="Waktu Selesai (Sampai)" />
                 </SimpleForm>
             </Create>
         )
