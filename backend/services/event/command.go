@@ -108,12 +108,19 @@ func GetUserEvent(db *gorm.DB, data *viewmodels.UserEventDetailDto) error {
 		userEvent models.UserEvent
 	)
 
-	db.Where("user_events.user_id = ? AND user_events.event_id = ?",
-		data.UserId, utils.ToBytes(data.EventId)).
-		Joins("event").
-		Joins("user").
-		First(&userEvent)
+	err = db.Model(&userEvent).
+		Where("user_events.user_id = ? AND user_events.event_id = ?",
+			data.UserId, utils.ToBytes(data.EventId)).
+		Preload("Event").
+		Preload("User").
+		First(&userEvent).
+		Error
 
+	if err != nil {
+		return err
+	}
+
+	data.TicketId = int(userEvent.ID)
 	data.Description = userEvent.Event.Description
 	data.EventName = userEvent.Event.Title
 	data.Organizer = userEvent.Event.Organizer

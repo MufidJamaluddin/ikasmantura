@@ -420,11 +420,13 @@ func DownloadEventTicket(c *fiber.Ctx) error {
 	}
 
 	userEventData.UserId = int(authData.ID)
-	userEventData.EventId = id.OrderedValue().String()
+	userEventData.EventId = string(id.OrderedValue().Bytes())
 
 	if err = eventService.GetUserEvent(db, &userEventData); err != nil {
 		return err
 	}
+
+	userEventData.EventId = id.Guid().String()
 
 	htmlBuf.Reset()
 
@@ -437,17 +439,31 @@ func DownloadEventTicket(c *fiber.Ctx) error {
 
 	if pdfGen, err = wkhtmltopdf.NewPDFGenerator(); err == nil {
 
-		pdfGen.AddPage(wkhtmltopdf.NewPage(htmlBuf.String()))
+		pdfGen.AddPage(wkhtmltopdf.NewPageReader(&htmlBuf))
 		pdfGen.Orientation.Set(wkhtmltopdf.OrientationPortrait)
 		pdfGen.PageSize.Set(wkhtmltopdf.PageSizeA4)
 		pdfGen.Dpi.Set(300)
+
+		err = pdfGen.Create()
+		if err != nil {
+			log.Println(err.Error())
+			return c.SendStatus(fiber.StatusInternalServerError)
+		}
 
 		c.Response().Reset()
 
 		c.Set("Content-Type", "application/pdf")
 		c.Set("Content-Disposition", "attachment;filename=ticket.pdf")
 
-		pdfGen.SetOutput(c.Response().BodyWriter())
+		//pdfGen.SetOutput(c.Response().BodyWriter())
+		err = c.SendStream(pdfGen.Buffer())
+	}
+
+	if err != nil {
+		log.Println(err)
+
+		c.Response().Reset()
+		_ = c.SendStatus(fiber.StatusInternalServerError)
 	}
 
 	return err

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="Update Tickets">
+    <list default="true" id="fa8125ec-b973-4032-8a55-cd80e074efa7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handlers/event/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/event/event.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/temp_user/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/temp_user/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/email/emailservice.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/email/emailservice.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/event/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/event/command.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/viewmodels/email.go" beforeDir="false" afterPath="$PROJECT_DIR$/viewmodels/email.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/event/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/event/query.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/template/event_ticket.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/template/event_ticket.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +124,8 @@
     <MESSAGE value="Fix Bugs Pencarian" />
     <MESSAGE value="Fix Bugs" />
     <MESSAGE value="Update Tickets" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update Tickets" />
+    <MESSAGE value="fix: Email" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: Email" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
