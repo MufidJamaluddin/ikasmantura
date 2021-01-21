@@ -403,6 +403,8 @@ func DownloadEventTicket(c *fiber.Ctx) error {
 		pdfGen        *wkhtmltopdf.PDFGenerator
 		htmlBuf       bytes.Buffer
 
+		fileName string
+
 		db *gorm.DB
 		ok bool
 	)
@@ -437,6 +439,9 @@ func DownloadEventTicket(c *fiber.Ctx) error {
 		return err
 	}
 
+	fileName = fmt.Sprintf("%v_%v.pdf",
+		userEventData.EventName, userEventData.UserFullName)
+
 	if pdfGen, err = wkhtmltopdf.NewPDFGenerator(); err == nil {
 
 		pdfGen.AddPage(wkhtmltopdf.NewPageReader(&htmlBuf))
@@ -453,7 +458,7 @@ func DownloadEventTicket(c *fiber.Ctx) error {
 		c.Response().Reset()
 
 		c.Set("Content-Type", "application/pdf")
-		c.Set("Content-Disposition", "attachment;filename=ticket.pdf")
+		c.Set("Content-Disposition", fmt.Sprintf("attachment;filename=%v", fileName))
 
 		//pdfGen.SetOutput(c.Response().BodyWriter())
 		err = c.SendStream(pdfGen.Buffer())

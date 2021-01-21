@@ -47,7 +47,7 @@ func GetTotal(db *gorm.DB, search *viewmodels.EventParam) (uint, error) {
 	)
 
 	if search.IsMyEvent && search.CurrentUserId != 0 {
-		tx = db.Model(&model).Joins("JOIN user_events ON user_id = ?", search.CurrentUserId)
+		tx = db.Model(&model).Joins("INNER JOIN user_events ON user_id = ?", search.CurrentUserId)
 	} else {
 		tx = db.Model(&model)
 	}
@@ -78,7 +78,7 @@ func Find(db *gorm.DB, search *viewmodels.EventParam, callback func(*viewmodels.
 	if isCurrentUserSearch {
 		if search.IsMyEvent {
 			tx.Statement.Joins = nil
-			tx = tx.Joins("JOIN user_events ON user_id = ?", search.CurrentUserId)
+			tx = tx.Joins("INNER JOIN user_events ON user_id = ?", search.CurrentUserId)
 		} else {
 			tx.Statement.Preloads = nil
 			tx = tx.Preload("Participants", "user_id = ?", search.CurrentUserId)
