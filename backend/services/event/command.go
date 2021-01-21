@@ -10,6 +10,7 @@ import (
 	"fmt"
 	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
+	"html/template"
 )
 
 func Update(db *gorm.DB, id string, out *viewmodels.EventDto) error {
@@ -89,11 +90,11 @@ func RegisterEvent(db *gorm.DB, eventId utils.UUID, userId uint) error {
 		emailMsg.Header = "Registrasi Data Alumni"
 		emailMsg.Title = fmt.Sprintf("Registrasi Acara %v", eventModel.Title)
 		emailMsg.To = []string{userModel.Email}
-		emailMsg.Message = fmt.Sprintf(
+		emailMsg.Message = template.HTML(fmt.Sprintf(
 			"Registrasi Event %v, Atas Nama %v, Sukses dengan Nomor Tiket %v. Silakan Download Tiket di Halaman Acara Pribadi!",
 			eventModel.Title,
 			userModel.Name,
-			userEvent.EventId)
+			userEvent.ID))
 
 		email.SendMessage(emailMsg)
 	}

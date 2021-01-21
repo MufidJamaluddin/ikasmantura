@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
+	"html/template"
 	"log"
 	"net/url"
 	"path"
@@ -375,7 +376,7 @@ func SaveTempUser(c *fiber.Ctx) error {
 	emailMsg.Header = "Registrasi Data Alumni"
 	emailMsg.Title = "Registrasi Anggota Ikatan Alumni SMAN Situraja"
 	emailMsg.To = []string{data.Email}
-	emailMsg.Message = fmt.Sprintf(
+	emailMsg.Message = template.HTML(fmt.Sprintf(
 		"Registrasi %v (Username %v - Email %v) Sukses! "+
 			"<br/><br/>Mohon Tunggu Kabar dari Kepengurusan IKA SMAN Situraja! "+
 			"<br/><br/><i>Tekan tombol Verifikasi Email dibawah ini untuk verifikasi pendaftaran anda</i>"+
@@ -384,7 +385,7 @@ func SaveTempUser(c *fiber.Ctx) error {
 		data.Name,
 		data.Username,
 		data.Email,
-		confirmUrl.String())
+		confirmUrl.String()))
 
 	email.SendMessage(emailMsg)
 

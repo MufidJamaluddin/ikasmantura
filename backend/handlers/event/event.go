@@ -437,7 +437,7 @@ func DownloadEventTicket(c *fiber.Ctx) error {
 
 	if pdfGen, err = wkhtmltopdf.NewPDFGenerator(); err == nil {
 
-		pdfGen.AddPage(wkhtmltopdf.NewPageReader(&htmlBuf))
+		pdfGen.AddPage(wkhtmltopdf.NewPage(htmlBuf.String()))
 		pdfGen.Orientation.Set(wkhtmltopdf.OrientationPortrait)
 		pdfGen.PageSize.Set(wkhtmltopdf.PageSizeA4)
 		pdfGen.Dpi.Set(300)

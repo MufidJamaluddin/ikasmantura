@@ -119,7 +119,7 @@ func sendMessageInBackground() {
 				log.Println("error in use email HTML template")
 				log.Println(err.Error())
 
-				htmlBuf.WriteString(vMessage.Message)
+				htmlBuf.WriteString(string(vMessage.Message))
 			}
 
 			emailMessage.SetHeader("From", os.Getenv("EMAIL_SENDER_NAME"))
